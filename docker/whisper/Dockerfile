@@ -15,6 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN git clone --depth 1 --branch "${WHISPER_TAG}" https://github.com/ggml-org/whisper.cpp /src \
     && test "$(git -C /src rev-parse HEAD)" = "${WHISPER_COMMIT}"
 
+COPY patches /patches
+
+RUN git -C /src apply --check /patches/*.patch \
+    && git -C /src apply /patches/*.patch
+
 WORKDIR /src
 
 RUN cmake -B build \

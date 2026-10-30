@@ -1,0 +1,13 @@
+diff --git a/examples/server/server.cpp b/examples/server/server.cpp
+index b745f4d..04dbc1a 100644
+--- a/examples/server/server.cpp
++++ b/examples/server/server.cpp
+@@ -859,6 +859,8 @@ int main(int argc, char ** argv) {
+             std::string error_resp = "{\"error\":\"Failed to execute ffmpeg command.\"}";
+             const bool is_converted = convert_to_wav(temp_filename, error_resp, params.diarize);
+             if (!is_converted) {
++                std::remove(temp_filename.c_str());
++                std::remove((temp_filename + "_temp.wav").c_str());
+                 res.status = 500;
+                 res.set_content(error_resp, "application/json");
+                 return;

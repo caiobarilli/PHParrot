@@ -113,6 +113,7 @@ resource "docker_image" "whisper" {
 
   triggers = {
     dockerfile = filesha1("${path.module}/../docker/whisper/Dockerfile")
+    patch      = filesha1("${path.module}/../docker/whisper/patches/0001-apaga-temporario-na-falha-de-conversao.patch")
     modelo     = var.whisper_modelo
   }
 
