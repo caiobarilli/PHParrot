@@ -1,0 +1,8 @@
+# Termos do titular do repositório que podem ficar no código (aviso de copyright, LICENSE).
+# A allowlist vence a denylist. Um termo por linha. "#" comenta. Linha vazia é ignorada.
+#
+# Nome de pessoa e de cliente de terceiros não entra aqui.
+#
+# A denylist não mora neste diretório: ela é segredo e fica fora do working tree.
+# Formato e caminho em privacidade-denylist.txt.example.
+Caio Barilli

@@ -1,0 +1,4 @@
+sh .husky/node-exec.sh node .husky/check-privacidade.mjs
+sh .husky/node-exec.sh node .husky/check-comentarios.mjs
+
+sh .husky/node-exec.sh node_modules/.bin/lint-staged --relative

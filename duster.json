@@ -1,0 +1,19 @@
+{
+    "include": [
+        "app",
+        "config",
+        "database",
+        "routes",
+        "tests"
+    ],
+    "exclude": [
+        "**/vendor/**",
+        "**/node_modules/**"
+    ],
+    "scripts": {
+        "lint": {
+            "phpstan": ["./vendor/bin/phpstan", "analyse", "--memory-limit=2G"]
+        }
+    },
+    "processTimeout": 180
+}

@@ -1,0 +1,19 @@
+# Exemplo de formato da denylist do gate de privacidade.
+#
+# Este arquivo é só o formato. A denylist de verdade não mora no repositório nem no working tree:
+# o conteúdo é tratado como segredo, no mesmo molde de credencial.
+#
+# Onde ela mora:
+#   $HOME/.config/phparrot/privacidade-denylist.txt
+#
+# Para apontar para outro lugar:
+#   PHPARROT_PRIVACIDADE_DENYLIST=/caminho/para/o/arquivo
+#
+# Sem o arquivo, o pre-commit falha de propósito: gate que passa verde sem lista se desligou em silêncio.
+#
+# Formato: um termo por linha. "#" comenta. Linha vazia é ignorada.
+# Casa como palavra inteira, sem diferenciar maiúscula de minúscula.
+#
+# Exemplos (não são termos reais):
+#   Sobrenome Exemplo
+#   Empresa Exemplo Ltda

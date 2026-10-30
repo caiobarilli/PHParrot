@@ -1,0 +1,3 @@
+project_path = "/home/usuario/code/PHParrot"
+app_port     = 8090
+vite_port    = 5174

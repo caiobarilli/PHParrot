@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+
+:root {
+    --bg: #ffffff;
+    --panel: #fafbfc;
+    --line: #d6d9de;
+    --ink: #1b1f24;
+    --mut: #6b7280;
+    --btn: #262626;
+    --btn-fg: #ffffff;
+    --btn-hover: #3a3a3a;
+    --ok: #15803d;
+    --bad: #b91c1c;
+    --bad-bg: #fef2f2;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-tema='claro']) {
+        --bg: #16181d;
+        --panel: #1d2026;
+        --line: #343a43;
+        --ink: #e6e8eb;
+        --mut: #9aa3ae;
+        --btn: #e6e8eb;
+        --btn-fg: #16181d;
+        --btn-hover: #c9cdd3;
+        --ok: #4ade80;
+        --bad: #f87171;
+        --bad-bg: #2a1517;
+    }
+}
+
+:root[data-tema='escuro'] {
+    --bg: #16181d;
+    --panel: #1d2026;
+    --line: #343a43;
+    --ink: #e6e8eb;
+    --mut: #9aa3ae;
+    --btn: #e6e8eb;
+    --btn-fg: #16181d;
+    --btn-hover: #c9cdd3;
+    --ok: #4ade80;
+    --bad: #f87171;
+    --bad-bg: #2a1517;
+}
+
+@theme inline {
+    --color-bg: var(--bg);
+    --color-panel: var(--panel);
+    --color-line: var(--line);
+    --color-ink: var(--ink);
+    --color-mut: var(--mut);
+    --color-btn: var(--btn);
+    --color-btn-fg: var(--btn-fg);
+    --color-btn-hover: var(--btn-hover);
+    --color-ok: var(--ok);
+    --color-bad: var(--bad);
+    --color-bad-bg: var(--bad-bg);
+    --font-sans: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+    --font-mono: ui-monospace, Consolas, 'Courier New', monospace;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+}

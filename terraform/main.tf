@@ -1,0 +1,104 @@
+locals {
+  project_path = coalesce(var.project_path, abspath("${path.module}/.."))
+}
+
+resource "docker_network" "phparrot_network" {
+  name = "phparrot-network"
+}
+
+resource "docker_image" "php" {
+  name = "phparrot-php"
+
+  triggers = {
+    dockerfile = filesha1("${path.module}/../docker/php/Dockerfile")
+    php_ini    = filesha1("${path.module}/../docker/php/php.ini")
+  }
+
+  build {
+    context    = "${path.module}/../docker/php"
+    dockerfile = "Dockerfile"
+  }
+}
+
+resource "docker_container" "php" {
+  name  = "phparrot-php"
+  image = docker_image.php.image_id
+  user  = "1000:1000"
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  volumes {
+    host_path      = local.project_path
+    container_path = "/var/www/html"
+  }
+
+  env = [
+    "COMPOSER_MEMORY_LIMIT=-1",
+    "COMPOSER_PROCESS_TIMEOUT=2000"
+  ]
+}
+
+resource "docker_image" "nginx" {
+  name = "nginx:1.30.6-alpine"
+}
+
+resource "docker_container" "nginx" {
+  name  = "phparrot-nginx"
+  image = docker_image.nginx.image_id
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  volumes {
+    host_path      = abspath("${path.module}/../docker/nginx/default.conf")
+    container_path = "/etc/nginx/conf.d/default.conf"
+  }
+
+  volumes {
+    host_path      = local.project_path
+    container_path = "/var/www/html"
+  }
+
+  ports {
+    internal = 80
+    external = var.app_port
+  }
+
+  depends_on = [
+    docker_container.php
+  ]
+}
+
+resource "docker_image" "node" {
+  name = "node:24.22.2"
+}
+
+resource "docker_container" "node" {
+  name        = "phparrot-node"
+  image       = docker_image.node.image_id
+  user        = "1000:1000"
+  working_dir = "/var/www/html"
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  volumes {
+    host_path      = local.project_path
+    container_path = "/var/www/html"
+  }
+
+  ports {
+    internal = 5173
+    external = var.vite_port
+  }
+
+  env = [
+    "VITE_HOST_PORT=${var.vite_port}"
+  ]
+
+  tty = true
+}
