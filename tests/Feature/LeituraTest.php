@@ -166,3 +166,11 @@ it('mostra a interface em inglês quando a língua nativa é inglês', function 
 
     get('/leitura')->assertOk()->assertSee('Back to original')->assertSee('Swap')->assertSee('New text');
 });
+
+it('entrega o aviso de voz ausente e os nomes das línguas para o navegador', function (): void {
+    $componente = leitura();
+
+    expect(mapa($componente, 'nomes'))->toBe(['pt-BR' => 'Português (Brasil)', 'en' => 'Inglês']);
+
+    get('/leitura')->assertOk()->assertSee('data-sem-voz-idioma="Nenhuma voz em :idioma instalada neste sistema."', false);
+});

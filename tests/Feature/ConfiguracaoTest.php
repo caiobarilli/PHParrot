@@ -54,3 +54,18 @@ it('não tem campo para a chave nem a seção de gestão', function (): void {
         ->assertDontSee('Gerenciar textos')
         ->assertDontSee('type="password"', false);
 });
+
+it('oferece um select de voz para cada idioma ativo, com Automática', function (): void {
+    $html = (string) get('/configuracao')->assertOk()->getContent();
+
+    expect($html)->toContain('Voz em Inglês')
+        ->and($html)->toContain('Voz em Português (Brasil)')
+        ->and($html)->toContain('id="voz-en"')
+        ->and($html)->toContain('id="voz-pt-BR"')
+        ->and(substr_count($html, '>Automática</option>'))->toBe(2)
+        ->and($html)->not->toContain('id="voz-es"');
+});
+
+it('entrega as vozes de cada idioma ativo para o JavaScript', function (): void {
+    get('/configuracao')->assertOk()->assertSee('"vozes":{"en":"en-US","pt-BR":"pt-BR"}', false);
+});

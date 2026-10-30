@@ -17,5 +17,4 @@ return [
     'gerar_novo' => 'Gerar novo',
     'lendo' => 'Lendo em voz alta',
     'vazio' => 'O texto está vazio. Escreva algo na caixa ou clique em Gerar novo.',
-    'sem_voz' => 'Este navegador não tem voz sintetizada. Tente o Chrome, o Edge ou o Safari.',
 ];

@@ -17,5 +17,4 @@ return [
     'gerar_novo' => 'New text',
     'lendo' => 'Reading aloud',
     'vazio' => 'The text is empty. Write something in the box or click New text.',
-    'sem_voz' => 'This browser has no speech synthesis. Try Chrome, Edge or Safari.',
 ];

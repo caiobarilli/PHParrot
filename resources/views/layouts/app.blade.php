@@ -7,6 +7,10 @@
         'padrao' => \App\Preferencias\Preferencias::padrao()->paraJs(),
         'servidor' => $prefs->paraJs(),
         'ativos' => array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $ativos),
+        'vozes' => array_combine(
+            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $ativos),
+            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->voz(), $ativos),
+        ),
         'cookie' => \App\Preferencias\Preferencias::COOKIE,
         'google' => filled(config('services.google_translate.key')),
     ];

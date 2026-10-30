@@ -1,4 +1,4 @@
-<main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="leitura">
+<main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="leitura" data-sem-voz-idioma="{{ __('voz.sem_voz_idioma') }}">
 <h1 class="sr-only">{{ __('nav.leitura') }}</h1>
 
 <section class="painel flex flex-col gap-4" aria-labelledby="t-texto">
@@ -30,7 +30,7 @@
   </div>
 
   <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-[10px]">
-    <button type="button" class="btn" x-on:click="tocar()" x-bind:disabled="vazio || lendo || semVoz"><x-icone nome="play" />{{ __('leitura.play') }}</button>
+    <button type="button" class="btn" x-on:click="tocar()" x-bind:disabled="vazio || lendo || semVoz || carregando || semVozDoIdioma"><x-icone nome="play" />{{ __('leitura.play') }}</button>
     <button type="button" class="btn btn-ghost" x-on:click="parar()" x-bind:disabled="! lendo" disabled><x-icone nome="pausa" />{{ __('leitura.pausa') }}</button>
     <button type="button" class="btn btn-ghost" x-on:click="inverter()" x-bind:disabled="! podeInverter" x-bind:aria-pressed="invertido ? 'true' : 'false'" aria-pressed="false"><x-icone nome="inverter" /><span class="text-left sm:text-center">{{ __('leitura.inverter') }} <span class="text-mut font-normal whitespace-nowrap max-sm:block max-sm:text-[12px] max-sm:mt-1">{{ $nativaSigla }} ⇄ {{ $treinoSigla }}</span></span></button>
     <button type="button" class="btn btn-ghost" wire:click="gerarNovo"><x-icone nome="gerar" />{{ __('leitura.gerar_novo') }}</button>
@@ -39,7 +39,8 @@
   <div aria-live="polite" class="contents">
     <p class="flex items-center gap-2 text-[13px] text-ink" x-show="lendo" x-cloak><span class="ponto-rec !bg-ok"></span>{{ __('leitura.lendo') }} · <span x-text="voz"></span></p>
     <p class="flex items-center gap-2 text-[13px] text-mut" x-show="vazio" x-cloak>{{ __('leitura.vazio') }}</p>
-    <p class="flex items-center gap-2 text-[13px] text-mut" x-show="semVoz" x-cloak>{{ __('leitura.sem_voz') }}</p>
+    <p class="flex items-center gap-2 text-[13px] text-mut" x-show="semVoz" x-cloak>{{ __('voz.indisponivel') }}</p>
+    <div class="aviso" x-show="semVozDoIdioma" x-cloak><x-icone nome="alerta" /><p x-text="avisoSemVoz"></p></div>
   </div>
 </section>
 </main>

@@ -25,5 +25,7 @@ export default {
 
   '.husky/*.sh': (files) => [`sh -n ${files.join(' ')}`],
 
+  'resources/js/*.{js,mjs}': () => [node('--test "resources/js/**/*.test.mjs"')],
+
   '.husky/*.mjs': () => [node('--test .husky/check-privacidade.test.mjs .husky/check-comentarios.test.mjs')],
 }

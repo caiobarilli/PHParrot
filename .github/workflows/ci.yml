@@ -36,5 +36,8 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Testes de JavaScript
+        run: npm run test:js
+
       - name: Portão de qualidade
         run: composer gate

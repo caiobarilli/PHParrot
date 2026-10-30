@@ -1,3 +1,5 @@
+import { removerVozesSalvas } from './voz';
+
 const CHAVE = 'phparrot.preferencias';
 const CHAVE_TEMA = 'phparrot.tema';
 const CHAVE_SINCRONIA = 'phparrot.sincronia';
@@ -53,6 +55,7 @@ export const preferencias = () => {
                 localStorage.removeItem(CHAVE_TEMA);
             });
 
+            removerVozesSalvas();
             document.cookie = `${cfg.cookie}=; path=/; max-age=0; SameSite=Lax`;
         },
     };

@@ -5,6 +5,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite --host",
+        "test:js": "node --test \"resources/js/**/*.test.mjs\"",
         "prepare": "husky"
     },
     "devDependencies": {

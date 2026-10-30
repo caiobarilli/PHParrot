@@ -31,6 +31,10 @@ final class Leitura extends Component
     #[Locked]
     public array $vozes = [];
 
+    /** @var array<string, string> */
+    #[Locked]
+    public array $nomes = [];
+
     #[Locked]
     public string $nativa = '';
 
@@ -45,6 +49,11 @@ final class Leitura extends Component
         $this->vozes = [
             $this->nativa => $preferencias->nativa->voz(),
             $this->treino => $preferencias->treino->voz(),
+        ];
+
+        $this->nomes = [
+            $this->nativa => $preferencias->nativa->nome(),
+            $this->treino => $preferencias->treino->nome(),
         ];
 
         $this->sortear($catalogo, null);

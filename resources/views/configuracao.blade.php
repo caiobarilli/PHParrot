@@ -22,6 +22,21 @@
     </div>
     @endforeach
   </div>
+  <div class="grid gap-3 sm:grid-cols-2">
+    @foreach ($ativos as $idioma)
+    <div class="flex flex-col gap-1.5">
+      <label for="voz-{{ $idioma->value }}" class="text-[13px] font-medium">{{ __('voz.titulo', ['idioma' => $idioma->nome()]) }}</label>
+      <select id="voz-{{ $idioma->value }}" class="campo campo-sm" x-model="vozSalva['{{ $idioma->value }}']" x-on:change="salvarVoz('{{ $idioma->value }}')">
+        <option value="">{{ __('voz.automatica') }}</option>
+        <template x-for="voz in vozes['{{ $idioma->value }}'] ?? []" x-bind:key="voz.voiceURI">
+          <option x-bind:value="voz.voiceURI" x-text="voz.name + ' (' + voz.lang + ')'"></option>
+        </template>
+      </select>
+      <p class="text-[12px] text-mut" x-show="carregouVozes && (vozes['{{ $idioma->value }}'] ?? []).length === 0" x-cloak>{{ __('voz.sem_voz_idioma', ['idioma' => $idioma->nome()]) }}</p>
+      <p class="text-[12px] text-mut" x-show="! carregouVozes || (vozes['{{ $idioma->value }}'] ?? []).length > 0">{{ __('voz.ajuda') }}</p>
+    </div>
+    @endforeach
+  </div>
   <div id="idiomas-erro" aria-live="polite">
     <div class="alerta-erro" x-show="mesma" x-cloak><x-icone nome="alerta" /><p class="text-[13px]">{{ __('config.idiomas.erro_mesma') }}</p></div>
   </div>
