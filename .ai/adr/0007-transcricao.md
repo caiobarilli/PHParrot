@@ -45,11 +45,11 @@ Pré-requisitos do deploy:
 - A VM do Hyper-V precisa de folga para ~388 MB residentes do `base`, e o Terraform define `memory` no `phparrot-whisper`.
 - A política de privacidade cita o áudio, junto do envio ao Google do 0006.
 
-Não verificado nas fontes, a conferir na entrega:
-- o algoritmo do hash do models/README (40 caracteres, provavelmente SHA-1);
-- o mutex que serializa as inferências, o apagamento do temporário do `--convert` e o que o servidor imprime;
-- `language` e `duration` por requisição, que estão no `server.cpp` mas não no README;
-- a WER de `base` e `small` em PT e EN.
+Verificado na entrega (detalhes e números no `.ai/fila.md`):
+- o hash do models/README é SHA-1 (40 caracteres) e bate com `base` e `small`;
+- o servidor serializa as inferências com um mutex, e o temporário do `--convert` só era apagado após converter com sucesso (daí o patch);
+- `language` e `duration` por requisição funcionam, e o stdout não traz o texto transcrito;
+- `base` e `small` na WER: PT melhora com o `small` e EN fica igual, ao custo de cerca de 3,7 vezes mais tempo.
 
 Fontes:
 - https://github.com/ggml-org/whisper.cpp (memória, Docker), https://github.com/ggml-org/whisper.cpp/blob/master/models/README.md (tamanhos, SHA) e https://github.com/ggml-org/whisper.cpp/releases (v1.9.5)

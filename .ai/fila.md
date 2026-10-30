@@ -10,7 +10,7 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | 2 | Dados | em curso | `textos.json` com códigos de idioma, o catálogo que lê o JSON e os testes de validação |
 | 3 | Layout e Configurações | feito (`c51cbf8`, `feab9f3`) | Barra superior com abas, par ativo e engrenagem, a home, a tela de configurações (idiomas, tema, tradução, restaurar fábrica no navegador) e as strings em `lang/` |
 | 4 | Leitura | feito (tela: `0020472`, `d2fe431`; voz: `981f5d5`; tradução: `623ead1`, `aa6044b`, `9394fa6`, `ad54182`) | A tela completa, com TTS, inverter, editado, voltar ao original, gerar novo e troca de nível. Tradução: "Apenas Chrome" no navegador e, no servidor, a interface com o motor Google, a rota com limite de uso e testes com o Google simulado |
-| 5 | Transcrição | em curso, parada na verificação de privacidade (container: `2cbc9b5`) | `whisper-server` v1.9.5 em container próprio (ADR 0007), motor `TranscritorWhisperServer`, `POST /transcrever` com limites e trava, gravação de 30 s no navegador, testes com Whisper fake |
+| 5 | Transcrição | em curso (container: `2cbc9b5`, `f49139f`, `7b7f1f2`; rota: `6e87e5f`; gravação: `989a0e2`) | `whisper-server` v1.9.5 em container próprio (ADR 0007), motor `TranscritorWhisperServer`, `POST /transcrever` com limites e trava, gravação de 30 s no navegador, testes com Whisper fake |
 | 6 | Fala | pendente | A tela completa |
 | 7 | Escuta | pendente | A tela completa |
 | 8 | Gerenciar textos | pendente | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela de textos no SQLite, criar, editar, apagar e traduzir, apagar banco com confirmação em duas etapas e testes de acesso sem token |
@@ -34,8 +34,11 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Entrega 4: o projeto já tinha runner de JS (`node --test`, usado nos `.mjs` do Husky). A lógica de voz tem `resources/js/voz.test.mjs`, ligada ao `lint-staged`, ao `npm run test:js` e a um passo novo do CI. O `composer gate` não roda esse teste.
 - Entrega 3: as preferências ficam no `localStorage` e são espelhadas no cookie `phparrot_prefs`, sem criptografia, só para o servidor montar a interface no idioma certo.
 
-- Entrega 5: o sha1sum do `base` bate com o models/README (`465707469ff3a37a2b9b8d8f89f2f99de7299dac`, 40 caracteres, SHA-1) e o build confere o commit `d1be6fde` da tag v1.9.5. `duration` e `language` por requisição existem no `server.cpp` (linhas 490 e 558).
-- Entrega 5: com log ligado, o stdout do servidor não traz o texto transcrito, e o `/tmp` fica vazio após pedido válido. Falha: com áudio que o ffmpeg não decodifica (`FFmpeg conversion failed.`), o arquivo enviado fica no `/tmp` (3000 bytes no teste) e não é apagado. O aviso de privacidade NÃO entrou no `lang/`.
+- Entrega 5: o `sha1sum` do `base` e do `small` bate com o models/README (SHA-1, 40 caracteres), e o build confere o commit `d1be6fde` da tag v1.9.5. `duration` e `language` por requisição existem no `server.cpp` (linhas 490 e 558).
+- Entrega 5, privacidade (log ligado só no teste, container temporário já removido): com o patch `0001`, o `/tmp` fica vazio após áudio inválido e após áudio válido, e o stdout não traz o texto transcrito (só `Received request: <nome do arquivo>`). Sem o patch, o inválido deixava o arquivo. A limpeza de 2 min apagou um arquivo velho e manteve o novo, com o `whisper-server` como PID 1.
+- Entrega 5, mutex: 3 pedidos simultâneos direto no servidor levaram 2,2 s, 4,5 s e 6,8 s (serializa). Pelo app, 5 simultâneos deram 4 respostas 200 (até 9,4 s no total) e 1 resposta 503 com `Retry-After: 5`. O nginx barra 4 MB com 413 (HTML) e o Laravel barra 2,5 MB com 422.
+- Entrega 5, `base` x `small` (10 frases do catálogo por idioma, voz sintética do Piper, webm/opus, i7-1255U, 4 threads): EN igual nos dois (9/10 exatas, WER 1,6%). PT: `base` 5/10 e WER 18,8%; `small` 6/10 e WER 12,5%. Tempo médio por frase: `base` 1,6 a 1,8 s, `small` 6,3 a 6,5 s. Memória: `base` 266 MiB, `small` 653 MiB. Voz sintética limpa não representa microfone real; a decisão de trocar para `small` é do Maintainer.
+- Entrega 5: o build do whisper usa `-DGGML_NATIVE=OFF` com AVX2, FMA e F16C ligados, para a imagem rodar em outra CPU. Uma CPU sem AVX2 não roda a imagem.
 
 ## Notas de desenho
 
