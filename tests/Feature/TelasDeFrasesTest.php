@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Livewire\Escuta;
 use App\Livewire\Fala;
 use App\Textos\Catalogo;
 use Livewire\Component;
@@ -42,7 +43,7 @@ it('sorteia só frases do nível, na língua para treinar', function (string $cl
     $item = app(Catalogo::class)->buscar((string) valor($tela, 'itemId'));
 
     expect(valor($tela, 'frase'))->toBe($item?->traducao('en'));
-})->with([Fala::class]);
+})->with([Fala::class, Escuta::class]);
 
 it('usa o nível e a língua do cookie', function (string $classe): void {
     $tela = telaDeFrases($classe, '{"nativa":"en","treino":"pt-BR","nivel":7,"traducao":"chrome"}');
@@ -52,7 +53,7 @@ it('usa o nível e a língua do cookie', function (string $classe): void {
     expect(valor($tela, 'nivel'))->toBe(7)
         ->and(valor($tela, 'itemId'))->toStartWith('n7-f')
         ->and(valor($tela, 'frase'))->toBe($item?->traducao('pt-BR'));
-})->with([Fala::class]);
+})->with([Fala::class, Escuta::class]);
 
 it('passa para a próxima frase do mesmo nível, nunca a atual', function (string $classe): void {
     $tela = telaDeFrases($classe);
@@ -64,7 +65,7 @@ it('passa para a próxima frase do mesmo nível, nunca a atual', function (strin
         expect(valor($tela, 'itemId'))->not->toBe($antes)
             ->and(valor($tela, 'itemId'))->toStartWith('n1-f');
     }
-})->with([Fala::class]);
+})->with([Fala::class, Escuta::class]);
 
 it('troca o nível e ignora níveis fora de 1 a 10', function (string $classe): void {
     $tela = telaDeFrases($classe)->call('mudarNivel', 5);
@@ -76,11 +77,13 @@ it('troca o nível e ignora níveis fora de 1 a 10', function (string $classe): 
     }
 
     expect(valor($tela, 'nivel'))->toBe(5);
-})->with([Fala::class]);
+})->with([Fala::class, Escuta::class]);
 
 it('não deixa o navegador mudar as propriedades da tela', function (string $classe, string $propriedade): void {
     telaDeFrases($classe)->set($propriedade, 'x');
 })->with([
     [Fala::class, 'frase'],
     [Fala::class, 'nivel'],
+    [Escuta::class, 'frase'],
+    [Escuta::class, 'itemId'],
 ])->throws(Exception::class, 'Cannot update locked property');

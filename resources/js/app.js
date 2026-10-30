@@ -1,3 +1,4 @@
+import { escuta } from './escuta.js';
 import { fala } from './fala.js';
 import { leitura } from './leitura.js';
 import { preferencias, sincronizar } from './preferencias.js';
@@ -8,6 +9,7 @@ sincronizar();
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('leitura', leitura);
     window.Alpine.data('fala', fala);
+    window.Alpine.data('escuta', escuta);
 
     window.Alpine.data('configuracao', () => {
         const api = preferencias();
