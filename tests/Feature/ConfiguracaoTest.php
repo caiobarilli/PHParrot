@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use function Pest\Laravel\get;
+use function Pest\Laravel\withUnencryptedCookie;
 
 it('mostra as cinco seções esperadas', function (): void {
     get('/configuracao')->assertOk()
@@ -68,4 +69,17 @@ it('oferece um select de voz para cada idioma ativo, com Automática', function 
 
 it('entrega as vozes de cada idioma ativo para o JavaScript', function (): void {
     get('/configuracao')->assertOk()->assertSee('"vozes":{"en":"en-US","pt-BR":"pt-BR"}', false);
+});
+
+it('explica de forma honesta o que cada opção de tradução faz', function (): void {
+    get('/configuracao')->assertOk()
+        ->assertSee('Tradução feita pelo próprio navegador. Sem custo, só no Chrome.')
+        ->assertSee('Funciona em qualquer navegador. O texto que você editar é enviado ao Google para tradução.');
+});
+
+it('explica as opções de tradução em inglês', function (): void {
+    withUnencryptedCookie('phparrot_prefs', json_encode(['nativa' => 'en', 'treino' => 'pt-BR', 'nivel' => 1, 'traducao' => 'chrome'], JSON_THROW_ON_ERROR))
+        ->get('/configuracao')->assertOk()
+        ->assertSee('Translation done by the browser itself. Free, Chrome only.')
+        ->assertSee('Works in any browser. The text you edit is sent to Google for translation.');
 });

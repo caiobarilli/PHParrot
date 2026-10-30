@@ -22,9 +22,9 @@ return [
     'traducao' => [
         'titulo' => 'Automatic translation',
         'chrome_titulo' => 'Chrome only',
-        'chrome_texto' => 'The browser\'s own translator. Free, Chrome only.',
+        'chrome_texto' => 'Translation done by the browser itself. Free, Chrome only.',
         'google_titulo' => 'Google API',
-        'google_texto' => 'Works in any browser. Set up on the server.',
+        'google_texto' => 'Works in any browser. The text you edit is sent to Google for translation.',
         'sem_chave' => 'Key not configured on the server.',
         'ajuda' => 'Used by Swap in Reading and by Translate in the texts. The choice is kept only in this browser.',
     ],

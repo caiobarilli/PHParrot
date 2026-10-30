@@ -22,9 +22,9 @@ return [
     'traducao' => [
         'titulo' => 'Tradução automática',
         'chrome_titulo' => 'Apenas Chrome',
-        'chrome_texto' => 'Tradutor do próprio navegador. Sem custo, só no Chrome.',
+        'chrome_texto' => 'Tradução feita pelo próprio navegador. Sem custo, só no Chrome.',
         'google_titulo' => 'Google API',
-        'google_texto' => 'Funciona em qualquer navegador. Configurada no servidor.',
+        'google_texto' => 'Funciona em qualquer navegador. O texto que você editar é enviado ao Google para tradução.',
         'sem_chave' => 'Chave não configurada no servidor.',
         'ajuda' => 'Usada no Inverter da Leitura e no Traduzir dos textos. A escolha fica guardada só neste navegador.',
     ],
