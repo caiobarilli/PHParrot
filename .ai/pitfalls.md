@@ -27,3 +27,9 @@ Evidência: `boost.json:13`.
 O TLint do Duster recusa `@json($var)`. Passar um array com `fn` dentro do `@json([...])` gera `ParseError` na view compilada, porque o Blade fecha a diretiva no primeiro `)`. O layout monta o array num `@php` e imprime com `{!! json_encode($configuracaoJs, JSON_HEX_TAG | JSON_HEX_AMP) !!}`.
 
 Evidência: `resources/views/layouts/app.blade.php:6` (o array no `@php`) e `:39` (a impressão).
+
+## `import` sem extensão em `resources/js` quebra o `node --test`
+
+O Vite resolve `'./voz'`, mas o Node não: o teste de `preferencias.js` falhou com `ERR_MODULE_NOT_FOUND`. Os imports de `resources/js` levam `.js`.
+
+Evidência: `resources/js/preferencias.js:1` e `resources/js/preferencias.test.mjs`.
