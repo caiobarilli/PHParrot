@@ -56,4 +56,9 @@ enum Idioma: string
     {
         return __('idiomas.'.$this->value);
     }
+
+    public function nomeNaFrase(): string
+    {
+        return app()->getLocale() === 'pt_BR' ? mb_strtolower($this->nome()) : $this->nome();
+    }
 }

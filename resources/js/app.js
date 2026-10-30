@@ -1,3 +1,4 @@
+import { fala } from './fala.js';
 import { leitura } from './leitura.js';
 import { preferencias, sincronizar } from './preferencias.js';
 import { carregarVozes, gravarVozSalva, lerVozesSalvas, vozesDoIdioma } from './voz.js';
@@ -6,6 +7,7 @@ sincronizar();
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('leitura', leitura);
+    window.Alpine.data('fala', fala);
 
     window.Alpine.data('configuracao', () => {
         const api = preferencias();
