@@ -17,6 +17,11 @@ final readonly class Nivel
         }
     }
 
+    public static function tentar(int $valor): ?self
+    {
+        return $valor >= self::MINIMO && $valor <= self::MAXIMO ? new self($valor) : null;
+    }
+
     /**
      * @return list<self>
      */

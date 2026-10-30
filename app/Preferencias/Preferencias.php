@@ -6,7 +6,6 @@ namespace App\Preferencias;
 
 use App\Textos\Idioma;
 use App\Textos\Nivel;
-use App\Textos\NivelInvalido;
 
 final readonly class Preferencias
 {
@@ -61,15 +60,7 @@ final readonly class Preferencias
 
     private static function nivel(mixed $valor): ?Nivel
     {
-        if (! is_int($valor)) {
-            return null;
-        }
-
-        try {
-            return new Nivel($valor);
-        } catch (NivelInvalido) {
-            return null;
-        }
+        return is_int($valor) ? Nivel::tentar($valor) : null;
     }
 
     public function par(): string

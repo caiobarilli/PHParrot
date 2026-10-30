@@ -25,3 +25,9 @@ it('compara níveis pelo valor', function (): void {
     expect((new Nivel(3))->igualA(new Nivel(3)))->toBeTrue()
         ->and((new Nivel(3))->igualA(new Nivel(4)))->toBeFalse();
 });
+
+it('tenta criar um nível sem lançar exceção', function (): void {
+    expect(Nivel::tentar(5)?->valor)->toBe(5)
+        ->and(Nivel::tentar(0))->toBeNull()
+        ->and(Nivel::tentar(11))->toBeNull();
+});

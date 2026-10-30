@@ -95,11 +95,7 @@ final readonly class CatalogoJson implements Catalogo
             throw CatalogoInvalido::chaveDeNivel($chave);
         }
 
-        try {
-            return new Nivel((int) $partes[1]);
-        } catch (NivelInvalido) {
-            throw CatalogoInvalido::chaveDeNivel($chave);
-        }
+        return Nivel::tentar((int) $partes[1]) ?? throw CatalogoInvalido::chaveDeNivel($chave);
     }
 
     private static function item(mixed $bruto, string $chave, Nivel $nivel, TipoDeItem $tipo): ItemDeTexto
