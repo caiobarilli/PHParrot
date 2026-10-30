@@ -18,3 +18,7 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 ## Decisões abertas
 
 - O destino das migrations do esqueleto (`users`, `cache`, `jobs`) é decidido na entrega 2.
+
+## Melhorias
+
+- Entrega 1: setup em um comando. Hoje o `terraform apply`, o `composer setup` e o `npm install` e `npm run build` rodam à mão, em dois containers.
