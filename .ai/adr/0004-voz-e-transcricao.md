@@ -8,7 +8,7 @@ O app lê texto em voz alta e transcreve a fala do usuário, sem serviço pago.
 
 ## Decisão
 
-Voz: `speechSynthesis` do navegador, em `en-US` e `pt-BR`. Gravação: `MediaRecorder`, que envia o áudio ao Laravel. Transcrição: `b7s/whisper-php` com o Whisper rodando localmente, começando pelo modelo `base.en`.
+Voz: `speechSynthesis` do navegador, com a voz da língua do texto (hoje `en-US` e `pt-BR`). Gravação: `MediaRecorder`, que envia o áudio ao Laravel. Transcrição: `b7s/whisper-php` com o Whisper rodando localmente, com um modelo multilíngue (por exemplo `base`, não o `base.en`), para servir a outros idiomas no futuro.
 
 ## Consequência
 

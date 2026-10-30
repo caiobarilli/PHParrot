@@ -2,14 +2,15 @@
 
 Teto: 60 linhas
 
-Treino de inglês em três telas, de uso pessoal, sem login.
+Treino de idiomas em três telas, aberto ao público e sem login. Hoje o par com conteúdo é português (Brasil) e inglês.
 
 ## Dentro
 
 - Três abas: Leitura, Fala e Escuta.
 - Textos e frases fixos em `resources/data/textos.json`, níveis N1 a N10.
-- Voz do navegador (`speechSynthesis`) em `en-US` e `pt-BR`.
-- Gravação pelo `MediaRecorder` e transcrição local com `b7s/whisper-php`.
+- Idiomas: um campo por código de idioma no JSON. O par ativo hoje é `pt-BR` e `en`. Outro idioma só fica ativo quando todos os itens têm o campo dele.
+- Voz do navegador (`speechSynthesis`), com a voz da língua do texto.
+- Gravação pelo `MediaRecorder` e transcrição local com `b7s/whisper-php`, com modelo multilíngue.
 - Laravel 13, Livewire 4, Tailwind 4 e SQLite.
 - O visual do PHPorto, com temas Claro, Escuro e Sistema.
 
