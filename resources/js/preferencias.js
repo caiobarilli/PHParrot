@@ -1,4 +1,4 @@
-import { removerVozesSalvas } from './voz';
+import { removerVozesSalvas } from './voz.js';
 
 const CHAVE = 'phparrot.preferencias';
 const CHAVE_TEMA = 'phparrot.tema';
@@ -11,6 +11,8 @@ const tentar = (acao, padrao = null) => {
         return padrao;
     }
 };
+
+const seguro = () => (window.location.protocol === 'https:' ? '; Secure' : '');
 
 const config = () => JSON.parse(document.getElementById('phparrot-config').textContent);
 
@@ -38,7 +40,7 @@ const validar = (bruto, cfg) => {
 const gravar = (prefs, cfg) => {
     tentar(() => localStorage.setItem(CHAVE, JSON.stringify(prefs)));
 
-    document.cookie = `${cfg.cookie}=${encodeURIComponent(JSON.stringify(prefs))}; path=/; max-age=31536000; SameSite=Lax`;
+    document.cookie = `${cfg.cookie}=${encodeURIComponent(JSON.stringify(prefs))}; path=/; max-age=31536000; SameSite=Lax${seguro()}`;
 };
 
 export const preferencias = () => {
@@ -56,7 +58,7 @@ export const preferencias = () => {
             });
 
             removerVozesSalvas();
-            document.cookie = `${cfg.cookie}=; path=/; max-age=0; SameSite=Lax`;
+            document.cookie = `${cfg.cookie}=; path=/; max-age=0; SameSite=Lax${seguro()}`;
         },
     };
 

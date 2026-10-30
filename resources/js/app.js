@@ -1,6 +1,6 @@
-import { leitura } from './leitura';
-import { preferencias, sincronizar } from './preferencias';
-import { carregarVozes, gravarVozSalva, lerVozesSalvas, vozesDoIdioma } from './voz';
+import { leitura } from './leitura.js';
+import { preferencias, sincronizar } from './preferencias.js';
+import { carregarVozes, gravarVozSalva, lerVozesSalvas, vozesDoIdioma } from './voz.js';
 
 sincronizar();
 
