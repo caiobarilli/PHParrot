@@ -7,12 +7,12 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | # | Entrega | Estado | Conteúdo |
 |---|---|---|---|
 | 1 | Base (Fase 0) | feito | Docker, Terraform, Laravel, portão de qualidade, Husky, CI, `.ai/`, skills, README e LICENSE. Commits `ac1010e` e `e830f45` |
-| 2 | Dados | em curso | `textos.json` com códigos de idioma, o catálogo que lê o JSON e os testes de validação |
+| 2 | Dados | feito (PR #1, `ec7aac8`) | `textos.json` com códigos de idioma, o catálogo que lê o JSON e os testes de validação |
 | 3 | Layout e Configurações | feito (`c51cbf8`, `feab9f3`) | Barra superior com abas, par ativo e engrenagem, a home, a tela de configurações (idiomas, tema, tradução, restaurar fábrica no navegador) e as strings em `lang/` |
 | 4 | Leitura | feito (tela: `0020472`, `d2fe431`; voz: `981f5d5`; tradução: `623ead1`, `aa6044b`, `9394fa6`, `ad54182`) | A tela completa, com TTS, inverter, editado, voltar ao original, gerar novo e troca de nível. Tradução: "Apenas Chrome" no navegador e, no servidor, a interface com o motor Google, a rota com limite de uso e testes com o Google simulado |
-| 5 | Transcrição | em curso (container: `2cbc9b5`, `f49139f`, `7b7f1f2`; rota: `6e87e5f`; gravação: `989a0e2`) | `whisper-server` v1.9.5 em container próprio (ADR 0007), motor `TranscritorWhisperServer`, `POST /transcrever` com limites e trava, gravação de 30 s no navegador, testes com Whisper fake |
-| 6 | Fala | pendente | A tela completa |
-| 7 | Escuta | pendente | A tela completa |
+| 5 | Transcrição | feito (container: `2cbc9b5`, `f49139f`, `7b7f1f2`; rota: `6e87e5f`; gravação: `989a0e2`; privacidade e comparativo abaixo) | `whisper-server` v1.9.5 em container próprio (ADR 0007), motor `TranscritorWhisperServer`, `POST /transcrever` com limites e trava, gravação de 30 s no navegador, testes com Whisper fake |
+| 6 | Fala | feito (`9d47db4`, `0e0b8ad`) | A tela completa |
+| 7 | Escuta | feito (`d95406c`) | A tela completa |
 | 8 | Gerenciar textos | pendente | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela de textos no SQLite, criar, editar, apagar e traduzir, apagar banco com confirmação em duas etapas e testes de acesso sem token |
 | 9 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
 
@@ -39,6 +39,9 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Entrega 5, mutex: 3 pedidos simultâneos direto no servidor levaram 2,2 s, 4,5 s e 6,8 s (serializa). Pelo app, 5 simultâneos deram 4 respostas 200 (até 9,4 s no total) e 1 resposta 503 com `Retry-After: 5`. O nginx barra 4 MB com 413 (HTML) e o Laravel barra 2,5 MB com 422.
 - Entrega 5, `base` x `small` (10 frases do catálogo por idioma, voz sintética do Piper, webm/opus, i7-1255U, 4 threads): EN igual nos dois (9/10 exatas, WER 1,6%). PT: `base` 5/10 e WER 18,8%; `small` 6/10 e WER 12,5%. Tempo médio por frase: `base` 1,6 a 1,8 s, `small` 6,3 a 6,5 s. Memória: `base` 266 MiB, `small` 653 MiB. Voz sintética limpa não representa microfone real; a decisão de trocar para `small` é do Maintainer.
 - Entrega 5: o build do whisper usa `-DGGML_NATIVE=OFF` com AVX2, FMA e F16C ligados, para a imagem rodar em outra CPU. Uma CPU sem AVX2 não roda a imagem.
+- Entregas 6 e 7: o Chromium do WSL não tem vozes, então Play e o player da voz do app ficam desativados com o aviso de voz. A gravação foi validada de ponta a ponta com microfone falso lendo um WAV (`--use-file-for-fake-audio-capture`): `MediaRecorder`, nginx, Laravel, Whisper e a transcrição na tela. O áudio do player da gravação tocou com `--autoplay-policy=no-user-gesture-required`.
+- Entregas 6 e 7: o aviso de privacidade (ADR 0007) fica abaixo dos botões do microfone, como `nota`, e não existe no design. Erro de transcrição (limite, ocupado, formato) e "não ouvi nada" usam o `alerta-erro`, também fora do design, que só tem o erro de microfone. O Repetir só liga depois da primeira gravação, como diz o PLANO.
+- Entregas 6 e 7: a Escuta não mostra o texto transcrito, só o lê com a voz do app (como no design). Ao trocar de frase ela esconde o texto de novo.
 
 ## Notas de desenho
 
