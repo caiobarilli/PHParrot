@@ -20,7 +20,7 @@ export const extensao = (tipo) => {
     return tipo.includes('mp4') ? 'm4a' : 'webm';
 };
 
-export const criarGravador = ({ midia, Gravador, relogio = { agora: () => Date.now(), repetir: setInterval, parar: clearInterval }, limiteMs = LIMITE_MS, aoTempo = () => {}, aoFim = () => {} }) => {
+export const criarGravador = ({ midia, Gravador, relogio = { agora: () => Date.now(), repetir: (acao, ms) => setInterval(acao, ms), parar: (id) => clearInterval(id) }, limiteMs = LIMITE_MS, aoTempo = () => {}, aoFim = () => {} }) => {
     let gravador = null;
     let fluxo = null;
     let ticker = null;

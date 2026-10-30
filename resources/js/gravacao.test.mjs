@@ -151,3 +151,13 @@ test('parar sem gravar não faz nada', () => {
 
     assert.equal(c.eventos.fim, null);
 });
+
+test('usa o relógio padrão e limpa o temporizador ao parar', async () => {
+    const c = cenario({ relogio: undefined });
+
+    await c.api.iniciar();
+    c.api.parar();
+
+    assert.equal(c.api.gravando, false);
+    assert.equal(c.eventos.fim.blob.size, 3);
+});

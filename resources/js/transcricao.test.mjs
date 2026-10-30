@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { ErroDeTranscricao, transcreverNoServidor } from './transcricao.js';
+import { ErroDeTranscricao, limparTranscricao, transcreverNoServidor } from './transcricao.js';
 
 const resposta = (corpo, ok = true) => ({ ok, json: async () => corpo });
 const opcoes = () => ({ blob: new Blob(['abc'], { type: 'audio/webm' }), idioma: 'en', xsrf: 'tok', mensagem: 'genérica' });
@@ -39,4 +39,11 @@ test('resposta que não é JSON (413 do nginx), rede caída e formato torto vira
     await assert.rejects(transcreverNoServidor(html, opcoes()), { message: 'genérica' });
     await assert.rejects(transcreverNoServidor(caida, opcoes()), { message: 'genérica' });
     await assert.rejects(transcreverNoServidor(torta, opcoes()), { message: 'genérica' });
+});
+
+test('tira as marcas de silêncio e de som do Whisper', () => {
+    assert.equal(limparTranscricao(' [BLANK_AUDIO]\n'), '');
+    assert.equal(limparTranscricao('(silence)'), '');
+    assert.equal(limparTranscricao('[Music] I saw a movie. [Applause]'), 'I saw a movie.');
+    assert.equal(limparTranscricao('  She  called   me.\n'), 'She called me.');
 });

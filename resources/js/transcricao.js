@@ -32,3 +32,5 @@ export const transcreverNoServidor = async (buscar, { blob, idioma, xsrf, mensag
 
     return dados.texto;
 };
+
+export const limparTranscricao = (texto) => texto.replace(/\[[^\]]*\]|\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
