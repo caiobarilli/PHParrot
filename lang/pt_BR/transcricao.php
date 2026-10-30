@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'aviso' => 'O áudio é transcrito neste servidor e apagado em seguida. Nada é gravado.',
     'audio_ausente' => 'Envie uma gravação de áudio.',
     'audio_grande' => 'A gravação passa de 2 MB. Grave um trecho mais curto.',
     'audio_tipo' => 'Formato de áudio não aceito.',

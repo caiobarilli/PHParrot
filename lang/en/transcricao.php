@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'aviso' => 'Your audio is transcribed on this server and deleted right after. Nothing is stored.',
     'audio_ausente' => 'Send an audio recording.',
     'audio_grande' => 'The recording is over 2 MB. Record a shorter clip.',
     'audio_tipo' => 'Audio format not accepted.',
