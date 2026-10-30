@@ -174,3 +174,31 @@ it('entrega o aviso de voz ausente e os nomes das línguas para o navegador', fu
 
     get('/leitura')->assertOk()->assertSee('data-sem-voz-idioma="Nenhuma voz em :idioma instalada neste sistema."', false);
 });
+
+it('traz as mensagens de tradução em pt_BR para o navegador', function (): void {
+    $html = (string) get('/leitura')->assertOk()->getContent();
+
+    expect($html)->toContain('data-mensagens=')
+        ->and($html)->toContain('Preparando o tradutor…')
+        ->and($html)->toContain('Traduzindo…')
+        ->and($html)->toContain('Não foi possível traduzir agora. Tente de novo.')
+        ->and($html)->toContain('traduzido automaticamente')
+        ->and($html)->toContain('Tradução automática só no Chrome. Ative a Google API nas configurações.');
+});
+
+it('traz as mensagens de tradução em inglês quando a nativa é inglês', function (): void {
+    $html = (string) withUnencryptedCookie('phparrot_prefs', json_encode(['nativa' => 'en', 'treino' => 'pt-BR', 'nivel' => 1, 'traducao' => 'chrome'], JSON_THROW_ON_ERROR))
+        ->get('/leitura')->assertOk()->getContent();
+
+    expect($html)->toContain('Translating…')
+        ->and($html)->toContain('translated automatically')
+        ->and($html)->toContain('Automatic translation only works in Chrome. Turn on the Google API in settings.');
+});
+
+it('não mostra a chave de tradução em nenhuma tela', function (): void {
+    config(['services.google_translate.key' => 'chave-secreta-de-teste']);
+
+    foreach (['/', '/leitura', '/fala', '/escuta', '/configuracao'] as $rota) {
+        expect((string) get($rota)->assertOk()->getContent())->not->toContain('chave-secreta-de-teste');
+    }
+});

@@ -1,4 +1,4 @@
-<main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="leitura" data-sem-voz-idioma="{{ __('voz.sem_voz_idioma') }}">
+<main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="leitura" data-sem-voz-idioma="{{ __('voz.sem_voz_idioma') }}" data-mensagens="{{ json_encode(['preparando' => __('leitura.preparando'), 'traduzindo' => __('leitura.traduzindo'), 'erro' => __('leitura.erro_traducao')], JSON_UNESCAPED_UNICODE) }}">
 <h1 class="sr-only">{{ __('nav.leitura') }}</h1>
 
 <section class="painel flex flex-col gap-4" aria-labelledby="t-texto">
@@ -7,6 +7,7 @@
       <h2 id="t-texto" class="rotulo">{{ __('leitura.texto') }}</h2>
       <span class="tag" x-text="idioma.toUpperCase()">{{ strtoupper($treino) }}</span>
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="editado && ! vazio" x-cloak>{{ __('leitura.editado') }}</span>
+      <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="traduzidoAuto" x-cloak>{{ __('leitura.traduzido_auto') }}</span>
     </div>
     <div class="flex items-center gap-2" role="group" aria-label="{{ __('leitura.nivel') }}">
       <button type="button" class="btn btn-sm btn-ghost btn-icone" aria-label="{{ __('leitura.descer_nivel') }}" wire:click="mudarNivel({{ $nivel - 1 }})" @disabled($nivel <= \App\Textos\Nivel::MINIMO)><x-icone nome="baixo" /></button>
@@ -41,6 +42,9 @@
     <p class="flex items-center gap-2 text-[13px] text-mut" x-show="vazio" x-cloak>{{ __('leitura.vazio') }}</p>
     <p class="flex items-center gap-2 text-[13px] text-mut" x-show="semVoz" x-cloak>{{ __('voz.indisponivel') }}</p>
     <div class="aviso" x-show="semVozDoIdioma" x-cloak><x-icone nome="alerta" /><p x-text="avisoSemVoz"></p></div>
+    <p class="flex items-center gap-2 text-[13px] text-mut" x-show="ocupado" x-cloak><span class="giro" aria-hidden="true"></span><span x-text="avisoEstado"></span></p>
+    <div class="aviso" x-show="semTraducao" x-cloak><x-icone nome="alerta" /><p>{{ __('leitura.so_chrome') }}</p></div>
+    <div class="alerta-erro" role="alert" x-show="erro !== ''" x-cloak><x-icone nome="alerta" /><p x-text="erro"></p></div>
   </div>
 </section>
 </main>

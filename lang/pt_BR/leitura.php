@@ -17,4 +17,9 @@ return [
     'gerar_novo' => 'Gerar novo',
     'lendo' => 'Lendo em voz alta',
     'vazio' => 'O texto está vazio. Escreva algo na caixa ou clique em Gerar novo.',
+    'traduzido_auto' => 'traduzido automaticamente',
+    'preparando' => 'Preparando o tradutor… :porcento%',
+    'traduzindo' => 'Traduzindo…',
+    'so_chrome' => 'Tradução automática só no Chrome. Ative a Google API nas configurações.',
+    'erro_traducao' => 'Não foi possível traduzir agora. Tente de novo.',
 ];
