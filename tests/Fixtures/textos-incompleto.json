@@ -1,0 +1,19 @@
+{
+  "n1": {
+    "textos": [
+      { "id": "n1-t01", "en": "I have a cat.", "pt-BR": "Eu tenho um gato.", "es": "Tengo un gato." }
+    ],
+    "frases": [
+      { "id": "n1-f01", "en": "Good morning.", "pt-BR": "Bom dia.", "es": "Buenos días." },
+      { "id": "n1-f02", "en": "Thank you.", "pt-BR": "Obrigado.", "es": "" }
+    ]
+  },
+  "n2": {
+    "textos": [
+      { "id": "n2-t01", "en": "We walk to school.", "pt-BR": "Nós andamos até a escola." }
+    ],
+    "frases": [
+      { "id": "n2-f01", "en": "Where is the bank?", "pt-BR": "Onde fica o banco?" }
+    ]
+  }
+}
