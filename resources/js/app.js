@@ -1,8 +1,11 @@
+import { leitura } from './leitura';
 import { preferencias, sincronizar } from './preferencias';
 
 sincronizar();
 
 document.addEventListener('alpine:init', () => {
+    window.Alpine.data('leitura', leitura);
+
     window.Alpine.data('configuracao', () => {
         const api = preferencias();
 
