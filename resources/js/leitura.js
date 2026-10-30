@@ -1,6 +1,7 @@
 import { preferencias } from './preferencias.js';
 import { chaveDoPar, criarProvedorChrome, decidir, ErroDeTraducao, traduzirNoServidor } from './traducao.js';
 import { carregarVozes, escolherVoz, lerVozesSalvas } from './voz.js';
+import { xsrf } from './xsrf.js';
 
 export const leitura = () => ({
     texto: '',
@@ -169,7 +170,7 @@ export const leitura = () => ({
         this.progresso = 0;
 
         const promessa = preferencias().atual.traducao === 'google'
-            ? traduzirNoServidor(window.fetch.bind(window), { texto: fonte, de, para, xsrf: this.xsrf(), mensagem: this.mensagens.erro ?? '' })
+            ? traduzirNoServidor(window.fetch.bind(window), { texto: fonte, de, para, xsrf: xsrf(), mensagem: this.mensagens.erro ?? '' })
             : this.chrome.obter(de, para).then((tradutor) => {
                 if (sequencia === this.sequencia) {
                     this.estado = 'traduzindo';
@@ -206,11 +207,6 @@ export const leitura = () => ({
                     this.estado = '';
                 }
             });
-    },
-    xsrf() {
-        const cookie = document.cookie.split('; ').find((linha) => linha.startsWith('XSRF-TOKEN='));
-
-        return cookie === undefined ? '' : decodeURIComponent(cookie.slice('XSRF-TOKEN='.length));
     },
     limparTraducao() {
         this.sequencia++;
