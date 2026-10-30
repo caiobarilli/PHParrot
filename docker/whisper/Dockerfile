@@ -56,6 +56,7 @@ RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin whis
 
 COPY --from=compilacao /src/build/bin/whisper-server /usr/local/bin/whisper-server
 COPY --from=modelo /modelo.bin /models/ggml-${MODELO}.bin
+COPY --chmod=755 iniciar.sh /usr/local/bin/iniciar.sh
 
 ENV MODELO=${MODELO}
 
@@ -63,4 +64,4 @@ USER whisper
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "exec whisper-server --host 0.0.0.0 --port 8080 --convert --tmp-dir /tmp -m /models/ggml-${MODELO}.bin"]
+CMD ["/usr/local/bin/iniciar.sh"]
