@@ -21,3 +21,9 @@ Evidência: `.mcp.json:4` (`docker`, `exec`, `-i`, `phparrot-php`).
 `php artisan boost:list-skills` lista `testing-best-practices` e `pest-plugin-agent`, e nenhuma `pest-testing`. O `boost.json` usa `testing-best-practices`.
 
 Evidência: `boost.json:13`.
+
+## `@json` no Blade barra o lint e `@json([...])` com closure quebra a compilação
+
+O TLint do Duster recusa `@json($var)`. Passar um array com `fn` dentro do `@json([...])` gera `ParseError` na view compilada, porque o Blade fecha a diretiva no primeiro `)`. O layout monta o array num `@php` e imprime com `{!! json_encode($configuracaoJs, JSON_HEX_TAG | JSON_HEX_AMP) !!}`.
+
+Evidência: `resources/views/layouts/app.blade.php:6` (o array no `@php`) e `:39` (a impressão).
