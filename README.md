@@ -33,7 +33,7 @@ Os prints entram com as entregas 4, 6 e 7. Hoje o repositório tem só a base.
 | Banco | SQLite |
 | Voz | `speechSynthesis` do navegador |
 | Gravação | `MediaRecorder` |
-| Transcrição | `b7s/whisper-php` com Whisper local |
+| Transcrição | `whisper-server` (whisper.cpp) em container próprio, com modelo multilíngue |
 | Qualidade | Pest, Larastan no nível `max`, Pint e Duster |
 | Ambiente | WSL2, Docker e Terraform |
 | CI | GitHub Actions |

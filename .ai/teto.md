@@ -10,7 +10,7 @@ Treino de idiomas em três telas, aberto ao público e sem login. Hoje o par com
 - Textos e frases fixos em `resources/data/textos.json`, níveis N1 a N10.
 - Idiomas: um campo por código de idioma no JSON. O par ativo hoje é `pt-BR` e `en`. Outro idioma só fica ativo quando todos os itens têm o campo dele.
 - Voz do navegador (`speechSynthesis`), com a voz da língua do texto.
-- Gravação pelo `MediaRecorder` e transcrição local com `b7s/whisper-php`, com modelo multilíngue.
+- Gravação pelo `MediaRecorder` e transcrição local com `whisper-server` em container próprio (ADR 0007), com modelo multilíngue.
 - Laravel 13, Livewire 4, Tailwind 4 e SQLite.
 - O visual do PHPorto, com temas Claro, Escuro e Sistema.
 
