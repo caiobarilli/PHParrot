@@ -129,10 +129,11 @@ resource "docker_image" "whisper" {
 }
 
 resource "docker_container" "whisper" {
-  name       = "phparrot-whisper"
-  image      = docker_image.whisper.image_id
-  memory     = var.whisper_memoria
-  log_driver = "none"
+  name        = "phparrot-whisper"
+  image       = docker_image.whisper.image_id
+  memory      = var.whisper_memoria
+  memory_swap = var.whisper_memoria * 2
+  log_driver  = "none"
 
   networks_advanced {
     name = docker_network.phparrot_network.name
