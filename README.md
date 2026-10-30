@@ -82,16 +82,17 @@ O pre-commit roda três gates: privacidade (nenhum nome de pessoa ou de cliente 
 
 ## Roteiro
 
-1. Base (esta entrega).
-2. Dados: o `textos.json` e a classe que o lê.
-3. Layout: as três abas.
-4. Leitura.
+1. Base: ambiente, Laravel, portão de qualidade, CI e `.ai/`.
+2. Dados: o `textos.json` com um campo por idioma e o catálogo que o lê.
+3. Layout e Configurações: a barra superior, a home, os idiomas, o tema e a tradução.
+4. Leitura: voz, inverter, texto editado, gerar novo e troca de nível, com a tradução.
 5. Transcrição com o Whisper local.
 6. Fala.
 7. Escuta.
-8. Deploy.
+8. Gerenciar textos: token, textos criados no SQLite e apagar banco.
+9. Deploy.
 
-Segunda etapa: Ollama, para tradução, textos novos e comentários sobre pronúncia, e Piper, para uma voz local.
+Segunda etapa: Ollama, como motor de tradução, para textos novos e comentários sobre pronúncia; Piper, para uma voz local; e conteúdo em Español, Français, Deutsch e Italiano.
 
 ## Licença
 
