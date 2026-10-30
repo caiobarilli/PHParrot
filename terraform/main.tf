@@ -1,5 +1,10 @@
 locals {
   project_path = coalesce(var.project_path, abspath("${path.module}/.."))
+
+  whisper_sha1 = {
+    base  = "465707469ff3a37a2b9b8d8f89f2f99de7299dac"
+    small = "55356645c2b361a969dfd0ef2c5a50d530afd8d5"
+  }
 }
 
 resource "docker_network" "phparrot_network" {
@@ -101,4 +106,37 @@ resource "docker_container" "node" {
   ]
 
   tty = true
+}
+
+resource "docker_image" "whisper" {
+  name = "phparrot-whisper"
+
+  triggers = {
+    dockerfile = filesha1("${path.module}/../docker/whisper/Dockerfile")
+    modelo     = var.whisper_modelo
+  }
+
+  build {
+    context    = "${path.module}/../docker/whisper"
+    dockerfile = "Dockerfile"
+    build_args = {
+      MODELO      = var.whisper_modelo
+      MODELO_SHA1 = local.whisper_sha1[var.whisper_modelo]
+    }
+  }
+}
+
+resource "docker_container" "whisper" {
+  name       = "phparrot-whisper"
+  image      = docker_image.whisper.image_id
+  memory     = var.whisper_memoria
+  log_driver = "none"
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  tmpfs = {
+    "/tmp" = "rw,noexec,nosuid,size=64m,uid=10001,gid=10001"
+  }
 }

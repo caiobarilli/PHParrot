@@ -12,3 +12,13 @@ variable "vite_port" {
   type    = number
   default = 5174
 }
+
+variable "whisper_modelo" {
+  type    = string
+  default = "base"
+}
+
+variable "whisper_memoria" {
+  type    = number
+  default = 1024
+}
