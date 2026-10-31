@@ -7,9 +7,12 @@ use App\Textos\Catalogo;
 use App\Textos\MeusTextos;
 use App\Textos\Nivel;
 use App\Textos\Origem;
+use App\Textos\Tema;
 use App\Textos\TextoInvalido;
 use App\Textos\TipoDeItem;
 use Illuminate\Support\Facades\DB;
+
+use function Pest\Laravel\travelTo;
 
 const ATIVOS = ['pt-BR', 'en'];
 
@@ -101,20 +104,21 @@ it('os itens Meus entram no catálogo do app, do mesmo nível e tipo', function 
         ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
 });
 
-it('exporta no formato do textos.json só os itens Meus, por nível e tipo', function (): void {
+it('exporta no formato 2 só os itens Meus, do mais antigo ao mais novo', function (): void {
     $frase = criarMeu('First.', 'Primeira.', 2, TipoDeItem::Frase);
     $texto = criarMeu('Second.', 'Segunda.', 2, TipoDeItem::Texto);
-    $outro = criarMeu('Third.', 'Terceira.', 1, TipoDeItem::Frase);
 
-    expect(app(MeusTextos::class)->exportar())->toBe([
-        'n1' => ['textos' => [], 'frases' => [['id' => $outro, 'en' => 'Third.', 'pt-BR' => 'Terceira.']]],
-        'n2' => [
-            'textos' => [['id' => $texto, 'en' => 'Second.', 'pt-BR' => 'Segunda.']],
-            'frases' => [['id' => $frase, 'en' => 'First.', 'pt-BR' => 'Primeira.']],
-        ],
-    ]);
+    travelTo(now()->addMinute());
+    app(MeusTextos::class)->criar(new Nivel(1), TipoDeItem::Frase, ['en' => 'Third.', 'pt-BR' => 'Terceira.'], ['en', 'pt-BR'], Tema::Comida);
+
+    $exportado = app(MeusTextos::class)->exportar(['en', 'pt-BR'])->paraArray();
+
+    expect($exportado['pacote'])->toMatchArray(['slug' => 'meus-textos', 'idiomas' => ['en', 'pt-BR']])
+        ->and(array_column($exportado['itens'], 'id'))->toBe([$frase, $texto, $exportado['itens'][2]['id']])
+        ->and($exportado['itens'][2])->toMatchArray(['tema' => 'comida', 'nivel' => 1, 'tipo' => 'frase', 'en' => 'Third.']);
 });
 
-it('exporta vazio quando não há itens Meus', function (): void {
-    expect(app(MeusTextos::class)->exportar())->toBe([]);
+it('exporta vazio quando não há itens Meus, com os idiomas ativos', function (): void {
+    expect(app(MeusTextos::class)->exportar(['en', 'pt-BR'])->paraArray())->toMatchArray(['itens' => []])
+        ->and(app(MeusTextos::class)->exportar(['en', 'pt-BR'])->idiomas)->toBe(['en', 'pt-BR']);
 });

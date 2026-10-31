@@ -30,10 +30,11 @@ final readonly class ConferenciaDoConjunto
     public function conferir(Pacote $pacote, Contexto $contexto, Apontamentos $apontamentos): void
     {
         $porTema = [];
+        $faixaGrave = $pacote->slug !== Pacote::SLUG_MEUS;
 
         foreach ($pacote->itens as $indice => $item) {
             if ($item->tema instanceof Tema) {
-                $this->faixas("itens[{$indice}].en", $item, $apontamentos);
+                $this->faixas("itens[{$indice}].en", $item, $faixaGrave, $apontamentos);
                 $porTema[$item->tema->value][$item->nivel->valor][$item->tipo->value][] = $item;
             }
         }
@@ -51,27 +52,24 @@ final readonly class ConferenciaDoConjunto
         }
     }
 
-    private function faixas(string $caminho, ItemDeTexto $item, Apontamentos $apontamentos): void
+    private function faixas(string $caminho, ItemDeTexto $item, bool $grave, Apontamentos $apontamentos): void
     {
         $frases = Faixas::frases(self::texto($item));
+        $medidas = [];
 
         if ($item->tipo === TipoDeItem::Texto) {
-            $this->faixa($caminho, count(Faixas::palavras(self::texto($item))), Faixas::palavrasPorTexto($item->nivel), 'palavras_texto', $apontamentos);
-            $this->faixa($caminho, count($frases), Faixas::frasesPorTexto($item->nivel), 'frases_texto', $apontamentos);
+            $medidas[] = [count(Faixas::palavras(self::texto($item))), Faixas::palavrasPorTexto($item->nivel), 'palavras_texto', 0];
+            $medidas[] = [count($frases), Faixas::frasesPorTexto($item->nivel), 'frases_texto', 0];
         }
 
         foreach ($frases as $posicao => $frase) {
-            $this->faixa($caminho, count(Faixas::palavras($frase)), Faixas::palavrasPorFrase($item->nivel), 'palavras_frase', $apontamentos, $posicao + 1);
+            $medidas[] = [count(Faixas::palavras($frase)), Faixas::palavrasPorFrase($item->nivel), 'palavras_frase', $posicao + 1];
         }
-    }
 
-    /**
-     * @param  array{int, int}  $faixa
-     */
-    private function faixa(string $caminho, int $valor, array $faixa, string $chave, Apontamentos $apontamentos, int $frase = 0): void
-    {
-        if (! Faixas::dentro($valor, $faixa)) {
-            $apontamentos->erro($caminho, $chave, ['valor' => $valor, 'min' => $faixa[0], 'max' => $faixa[1], 'frase' => $frase]);
+        foreach ($medidas as [$valor, $faixa, $chave, $frase]) {
+            if (! Faixas::dentro($valor, $faixa)) {
+                $apontamentos->conforme($grave, $caminho, $chave, ['valor' => $valor, 'min' => $faixa[0], 'max' => $faixa[1], 'frase' => $frase]);
+            }
         }
     }
 

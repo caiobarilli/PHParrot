@@ -259,7 +259,7 @@ it('a tela da gestão fala inglês com a nativa em inglês', function (): void {
         ->assertSee('Read only');
 });
 
-it('exporta os itens Meus com o nome datado e o formato do textos.json', function (): void {
+it('exporta os itens Meus com o nome datado, no formato 2', function (): void {
     comGestao();
     travelTo(now()->setDate(2026, 10, 30)->setTime(21, 45));
     $id = criarItemMeu('Exported.', 'Exportado.', 2);
@@ -269,16 +269,18 @@ it('exporta os itens Meus com o nome datado e o formato do textos.json', functio
 
     expect($resposta->headers->get('Content-Type'))->toContain('application/json')
         ->and(json_decode((string) $resposta->getContent(), true))->toBe([
-            'n2' => ['textos' => [], 'frases' => [['id' => $id, 'en' => 'Exported.', 'pt-BR' => 'Exportado.']]],
+            'formato' => 2,
+            'pacote' => ['slug' => 'meus-textos', 'nome' => 'Meus textos', 'versao' => '2026.10.1', 'idiomas' => ['en', 'pt-BR']],
+            'itens' => [['id' => $id, 'tema' => null, 'nivel' => 2, 'tipo' => 'frase', 'en' => 'Exported.', 'pt-BR' => 'Exportado.']],
         ]);
 });
 
-it('o arquivo exportado sem itens é um JSON vazio válido', function (): void {
+it('o arquivo exportado sem itens é um pacote vazio válido', function (): void {
     comGestao();
 
     $resposta = get('/textos/exportar')->assertOk();
 
-    expect(json_decode((string) $resposta->getContent(), true))->toBe([]);
+    expect(json_decode((string) $resposta->getContent(), true))->toMatchArray(['formato' => 2, 'itens' => []]);
 });
 
 it('o JSON da Base continua servindo depois do Apagar banco', function (): void {

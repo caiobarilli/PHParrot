@@ -175,11 +175,11 @@ final readonly class CatalogoJson implements Catalogo
         return $this->porId[$id] ?? null;
     }
 
-    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null): ?ItemDeTexto
+    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null, ?Tema $tema = null): ?ItemDeTexto
     {
         $candidatos = array_values(array_filter(
             $this->listar($nivel, $tipo),
-            fn (ItemDeTexto $item): bool => $item->id !== $excluirId,
+            fn (ItemDeTexto $item): bool => $item->id !== $excluirId && (! $tema instanceof Tema || $item->tema === $tema),
         ));
 
         if ($candidatos === []) {
@@ -189,8 +189,20 @@ final readonly class CatalogoJson implements Catalogo
         return $candidatos[$this->sorteador->getInt(0, count($candidatos) - 1)];
     }
 
+    public function temas(Nivel $nivel, TipoDeItem $tipo): array
+    {
+        $presentes = array_map(fn (ItemDeTexto $item): ?Tema => $item->tema, $this->listar($nivel, $tipo));
+
+        return array_values(array_filter(Tema::cases(), fn (Tema $tema): bool => in_array($tema, $presentes, true)));
+    }
+
     public function idiomas(): array
     {
         return $this->idiomas;
+    }
+
+    public function incompleto(ItemDeTexto $item): bool
+    {
+        return array_diff($this->idiomas, $item->idiomas()) !== [];
     }
 }

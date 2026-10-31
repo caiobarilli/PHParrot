@@ -242,3 +242,11 @@ it('o comando falha e lista os erros de um arquivo inválido', function (): void
 it('o comando falha com arquivo que não existe', function (): void {
     expect(Artisan::call('textos:validar', ['arquivo' => '/nao/existe.json']))->toBe(1);
 });
+
+it('no pacote meus-textos, a faixa vira alerta para o export voltar sem edição', function (): void {
+    $meu = [...PacoteDeTeste::item(Tema::Comida, new Nivel(5), TipoDeItem::Frase, 1, 'Rice.'), 'id' => 'meu-01abc'];
+    $relatorio = validarPacote(PacoteDeTeste::pacote([$meu], Pacote::SLUG_MEUS));
+
+    expect($relatorio->ok())->toBeTrue()
+        ->and($relatorio->alertas[0]->motivo)->toBe('1 palavras na frase 1, fora da faixa 6–10');
+});

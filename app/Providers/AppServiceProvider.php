@@ -6,10 +6,8 @@ use App\Gestao\LimiteDoEntrar;
 use App\Http\Middleware\ExigirGestao;
 use App\Preferencias\Preferencias;
 use App\Textos\Catalogo;
-use App\Textos\CatalogoComBanco;
-use App\Textos\CatalogoJson;
 use App\Textos\Idioma;
-use App\Textos\MeusTextos;
+use App\Textos\Pacotes;
 use App\Traducao\Tradutor;
 use App\Traducao\TradutorGoogle;
 use App\Transcricao\Transcritor;
@@ -27,13 +25,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->scoped(
-            Catalogo::class,
-            fn (Application $app): Catalogo => new CatalogoComBanco(
-                CatalogoJson::doArquivo(resource_path('data/textos.json')),
-                $app->make(MeusTextos::class)->todos(),
-            ),
-        );
+        $this->app->scoped(Catalogo::class, fn (Application $app): Catalogo => $app->make(Pacotes::class)->catalogo());
 
         $this->app->scoped(
             Preferencias::class,

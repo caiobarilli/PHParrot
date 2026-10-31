@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
 
-it('o banco tem só sessions, cache e textos', function (): void {
-    foreach (['sessions', 'cache', 'cache_locks', 'textos'] as $tabela) {
+it('o banco tem só sessions, cache, textos e pacotes', function (): void {
+    foreach (['sessions', 'cache', 'cache_locks', 'textos', 'pacotes'] as $tabela) {
         expect(Schema::hasTable($tabela))->toBeTrue();
     }
 
@@ -15,7 +15,11 @@ it('o banco tem só sessions, cache e textos', function (): void {
 });
 
 it('a tabela textos guarda as traduções em JSON', function (): void {
-    expect(Schema::getColumnListing('textos'))->toBe(['id', 'nivel', 'tipo', 'traducoes', 'created_at', 'updated_at']);
+    expect(Schema::getColumnListing('textos'))->toBe(['id', 'nivel', 'tipo', 'traducoes', 'created_at', 'updated_at', 'tema']);
+});
+
+it('a tabela pacotes guarda o pacote importado e qual está ativo', function (): void {
+    expect(Schema::getColumnListing('pacotes'))->toBe(['id', 'slug', 'nome', 'versao', 'idiomas', 'conteudo', 'hash', 'ativo', 'importado_em']);
 });
 
 it('o esqueleto de usuário saiu e a fila é síncrona', function (): void {

@@ -44,6 +44,7 @@ final class MeusTextos
             TipoDeItem::from($texto->tipo),
             $texto->traducoes,
             Origem::Meu,
+            Tema::tentar($texto->tema),
         );
     }
 
@@ -63,7 +64,7 @@ final class MeusTextos
      * @param  array<string, string>  $traducoes
      * @param  list<string>  $ativos
      */
-    public function criar(Nivel $nivel, TipoDeItem $tipo, array $traducoes, array $ativos): ItemDeTexto
+    public function criar(Nivel $nivel, TipoDeItem $tipo, array $traducoes, array $ativos, ?Tema $tema = null): ItemDeTexto
     {
         $limpas = self::validar($traducoes, $ativos);
 
@@ -71,6 +72,7 @@ final class MeusTextos
             'id' => Origem::PREFIXO.strtolower((string) Str::ulid()),
             'nivel' => $nivel->valor,
             'tipo' => $tipo->value,
+            'tema' => $tema?->value,
             'traducoes' => $limpas,
         ]);
 
@@ -81,7 +83,7 @@ final class MeusTextos
      * @param  array<string, string>  $traducoes
      * @param  list<string>  $ativos
      */
-    public function atualizar(string $id, Nivel $nivel, TipoDeItem $tipo, array $traducoes, array $ativos): ?ItemDeTexto
+    public function atualizar(string $id, Nivel $nivel, TipoDeItem $tipo, array $traducoes, array $ativos, ?Tema $tema = null): ?ItemDeTexto
     {
         $limpas = self::validar($traducoes, $ativos);
         $texto = $this->meu($id);
@@ -90,7 +92,7 @@ final class MeusTextos
             return null;
         }
 
-        $texto->update(['nivel' => $nivel->valor, 'tipo' => $tipo->value, 'traducoes' => [...$texto->traducoes, ...$limpas]]);
+        $texto->update(['nivel' => $nivel->valor, 'tipo' => $tipo->value, 'tema' => $tema?->value, 'traducoes' => [...$texto->traducoes, ...$limpas]]);
 
         return self::item($texto);
     }
@@ -110,22 +112,47 @@ final class MeusTextos
     }
 
     /**
-     * @return array<string, array<string, list<array<string, string>>>>
+     * @param  list<ItemDeTexto>  $itens
      */
-    public function exportar(): array
+    public function substituirTodos(array $itens, bool $substituir): ResultadoDaImportacao
     {
-        $saida = [];
+        $existiam = Texto::query()->exists();
 
-        foreach (array_reverse($this->todos()) as $item) {
-            $chave = $item->nivel->chave();
-
-            $saida[$chave] ??= ['textos' => [], 'frases' => []];
-            $saida[$chave][$item->tipo->chaveNoJson()][] = ['id' => $item->id, ...$item->traducoes];
+        if ($existiam && ! $substituir) {
+            return ResultadoDaImportacao::SlugExiste;
         }
 
-        uksort($saida, fn (string $a, string $b): int => (int) substr($a, 1) <=> (int) substr($b, 1));
+        $linhas = array_map(fn (ItemDeTexto $item, int $posicao): array => [
+            'id' => $item->id,
+            'nivel' => $item->nivel->valor,
+            'tipo' => $item->tipo->value,
+            'tema' => $item->tema?->value,
+            'traducoes' => json_encode($item->traducoes, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
+            'created_at' => now()->addSeconds($posicao),
+            'updated_at' => now(),
+        ], $itens, array_keys($itens));
 
-        return $saida;
+        DB::transaction(function () use ($linhas): void {
+            Texto::query()->delete();
+
+            foreach (array_chunk($linhas, 200) as $lote) {
+                Texto::query()->insert($lote);
+            }
+        });
+
+        return $existiam ? ResultadoDaImportacao::Substituido : ResultadoDaImportacao::Importado;
+    }
+
+    /**
+     * @param  list<string>  $ativos
+     */
+    public function exportar(array $ativos): Pacote
+    {
+        $itens = array_reverse($this->todos());
+        $idiomas = $itens === [] ? $ativos : array_values(array_intersect(...array_map(fn (ItemDeTexto $item): array => $item->idiomas(), $itens)));
+        sort($idiomas);
+
+        return new Pacote(Pacote::SLUG_MEUS, __('pacotes.meus_textos'), now()->format('Y.m').'.1', $idiomas, $itens);
     }
 
     private function meu(string $id): ?Texto

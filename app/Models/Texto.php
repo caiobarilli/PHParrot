@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $id
  * @property int $nivel
  * @property string $tipo
+ * @property string|null $tema
  * @property array<string, string> $traducoes
  */
 final class Texto extends Model
@@ -20,7 +21,7 @@ final class Texto extends Model
 
     protected $table = 'textos';
 
-    protected $fillable = ['id', 'nivel', 'tipo', 'traducoes'];
+    protected $fillable = ['id', 'nivel', 'tipo', 'tema', 'traducoes'];
 
     /**
      * @return array<string, string>
