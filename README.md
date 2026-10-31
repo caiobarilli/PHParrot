@@ -90,7 +90,8 @@ O pre-commit roda três gates: privacidade (nenhum nome de pessoa ou de cliente 
 6. Fala.
 7. Escuta.
 8. Gerenciar textos: token, textos criados no SQLite e apagar banco.
-9. Deploy.
+9. CI de containers e caminho de escala: Hadolint, Trivy, varredura semanal e `docs/escala.md`.
+10. Deploy.
 
 Segunda etapa: Ollama, como motor de tradução, para textos novos e comentários sobre pronúncia; Piper, para uma voz local; e conteúdo em Español, Français, Deutsch e Italiano.
 

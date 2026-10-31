@@ -13,12 +13,9 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | 5 | Transcrição | feito (container: `2cbc9b5`, `f49139f`, `7b7f1f2`; rota: `6e87e5f`; gravação: `989a0e2`; privacidade e comparativo abaixo) | `whisper-server` v1.9.5 em container próprio (ADR 0007), motor `TranscritorWhisperServer`, `POST /transcrever` com limites e trava, gravação de 30 s no navegador, testes com Whisper fake |
 | 6 | Fala | feito (`9d47db4`, `0e0b8ad`; ajuste de escopo abaixo) | Exemplo (frase, Play, Ver tradução, Próxima) e o bloco Testar compartilhado |
 | 7 | Escuta | feito (`d95406c`; ajuste de escopo abaixo) | Áudio (texto escondido, Play, olho, Ver tradução, Próxima) e o mesmo bloco Testar |
-| 8 | Gerenciar textos | pendente | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela de textos no SQLite, criar, editar, apagar e traduzir, apagar banco com confirmação em duas etapas e testes de acesso sem token |
-| 9 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
-
-## Decisões abertas
-
-- O destino das migrations do esqueleto (`users`, `cache`, `jobs`) é decidido na entrega 8, quando o SQLite passa a guardar textos, sessão, cache e limite de uso.
+| 8 | Gerenciar textos | feito (migrations: `5c243ac`; gestão: `8a8656d`) | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela `textos` no SQLite, criar, editar, apagar, traduzir e exportar, Apagar banco em duas etapas e testes de acesso sem token (ADR 0008) |
+| 9 | CI de containers e caminho de escala | pendente | Hadolint, build do Whisper com cache, Trivy (imagens, Dockerfile e Terraform), SARIF, varredura semanal com SBOM e `docs/escala.md` (PLANO, não implementar nesta rodada) |
+| 10 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
 
 ## Diferenças do design (validação no Chromium do WSL)
 
@@ -46,12 +43,10 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Olho na Fala (pedido do Maintainer): o componente `x-frase-escondivel` e o mixin `frase-escondivel.js` agora servem a Fala e a Escuta, as duas escondidas por padrão (o Maintainer trocou o padrão da Fala de visível para escondida depois de testar). Ao transcrever a frase é revelada; ao trocar de frase volta ao padrão da tela. O olho funciona com a frase editada, e o Ver tradução é independente. Validado em claro e escuro, 1100 e 360 px.
 - Ver tradução: a frase na língua nativa (`fraseNativa`, vinda do catálogo) como dica. Na Fala, se o visitante editar a frase, o botão desliga, porque a dica deixaria de valer.
 - Validação (claro e escuro, 1100 e 360 px, microfone falso e `/transcrever` simulado no CDP, porque o WSL não tem voz sintética): gravar, parar, transcrever, resultado e revelar o texto funcionam. Um sinal sonoro do Windows serviu de "voz" e o "Ouvir minha gravação" tocou o Blob local. Contraste AA conferido por conta: verde 5,0:1 e vermelho 6,5:1 no claro; cinza 4,8:1. No 360 px com a fonte monoespaçada do WSL, "Ver tradução" quebra em duas linhas.
-
-## Notas de desenho
-
-- Entrega 8: `ItemDeTexto` vai precisar de uma origem: Base (do JSON, só leitura) ou Meu (do SQLite, editável).
-- Entrega 8: ids criados no banco não podem colidir com os do JSON (por exemplo, um prefixo próprio).
-- Entrega 8: o catálogo compõe JSON e SQLite atrás do mesmo contrato `Catalogo`.
+- Entrega 8: a Restaurar da zona de perigo continua visível sem token (só mexe no navegador); o design a esconde junto do Apagar banco. A palavra de confirmação vem do `lang/`: `apagar` em pt_BR e `delete` em en (o ADR cita só `apagar`).
+- Entrega 8: o Traduzir da gestão leva a língua para treinar à nativa pelas mesmas regras da Leitura (Chrome ou Google API), sem o par do Inverter. A lista abre no nível do visitante, e o formulário usa o par de idiomas dele.
+- Entrega 8: as migrations foram reescritas, então um SQLite de desenvolvimento antigo pede `php artisan migrate:fresh`. O `.env` local não foi aberto, e o `QUEUE_CONNECTION=sync` está no `.env.example` e no padrão do `config/queue.php`.
+- Entrega 8: o `.env` do dev não tem token. Para ver as telas, o token entrou por um `fastcgi_param` temporário no nginx, depois revertido (`git diff docker/` vazio). A validação achou o 429 do `entrar` em inglês, corrigido na lista de prioridade (pitfall registrado).
 
 ## Melhorias
 
