@@ -1,112 +1,72 @@
-# PHParrot
+<h1 align="center">PHParrot</h1>
 
-Treino de inglês em três telas: Leitura, Fala e Escuta.
+<p align="center">Treino de idiomas pela fala, com transcrição local e correção palavra por palavra.</p>
 
-[![CI](https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml/badge.svg)](https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml)
-[![Containers](https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml/badge.svg)](https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml)
+<p align="center">
+  <a href="https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml"><img src="https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml"><img src="https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml/badge.svg" alt="Containers"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licen%C3%A7a-MIT-blue.svg" alt="Licença MIT"></a>
+  <img src="https://img.shields.io/badge/PHP-8.5-777BB4.svg" alt="PHP 8.5">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20.svg" alt="Laravel 13">
+</p>
 
-## Telas
+## O que é
 
-Os prints entram com as entregas 4, 6 e 7. Hoje o repositório tem só a base.
+O PHParrot é um app para treinar idiomas falando. Você ouve uma frase, grava a sua voz, o Whisper transcreve o áudio no próprio servidor e o app compara a transcrição com a frase palavra por palavra, marcando o que você acertou, trocou, esqueceu ou acrescentou.
 
-## O que cada tela faz
+São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta e traduzido), **Fala** (repetir uma frase) e **Escuta** (ouvir sem ver e repetir). Uma área de gestão, protegida por token, cria, edita e exporta textos próprios.
 
-**Leitura**
-- Uma caixa grande com um texto editável.
-- Play e pausa: o app lê o texto em voz alta.
-- Inverter alterna o texto entre PT-BR e EN-US, e a voz acompanha o idioma.
-- Gerar novo pega outro texto do mesmo nível. Subir e descer nível vai do N1 ao N10.
+## Destaques técnicos
 
-**Fala**
-- Caixa "Exemplo": uma frase, com Play para ouvir e Transcrever para ver as palavras sublinhadas.
-- Caixa "Testar": o microfone grava e a transcrição do áudio aparece embaixo. Repetir fica ao lado.
-
-**Escuta**
-- Um campo com o texto escondido e um olho para mostrar ou esconder.
-- Play para ouvir sem ver e Gravar para repetir o que ouviu.
-- Dois players: a sua gravação e a voz do app lendo o que foi transcrito dela.
-
-## Stack
-
-| Parte | Escolha |
-|---|---|
-| App | Laravel 13, PHP 8.5, Livewire 4 e Tailwind 4 |
-| Banco | SQLite |
-| Voz | `speechSynthesis` do navegador |
-| Gravação | `MediaRecorder` |
-| Transcrição | `whisper-server` (whisper.cpp) em container próprio, com modelo multilíngue |
-| Qualidade | Pest, Larastan no nível `max`, Pint e Duster |
-| Ambiente | WSL2, Docker e Terraform |
-| CI | GitHub Actions |
+- Transcrição local com o `whisper-server` (whisper.cpp) em container isolado, sem porta publicada e sem API paga.
+- Tradução pelo tradutor embutido do Chrome ou pela Google Cloud Translation, com limite por IP e teto diário.
+- Portão de qualidade com Larastan no nível `max`, 286 testes Pest e 71 testes de JavaScript.
+- Ambiente em Docker com Terraform: versões fixas, bases do Whisper e do nginx por digest e commit e hash do modelo conferidos no build.
+- Varredura de vulnerabilidades com Hadolint e Trivy, SARIF na aba Security e SBOM de cada imagem.
+- Privacidade verificada: áudio e texto do visitante não ficam em log, banco nem disco.
 
 ## Como rodar
 
-Pré-requisitos: Docker, com integração ao WSL2, e Terraform.
+Requisitos: Docker (no Windows, com o Docker Desktop integrado ao WSL2), Terraform 1.3 ou superior, CPU com AVX2 e um usuário com UID 1000, que é o dos containers.
 
+```sh
+git clone https://github.com/caiobarilli/PHParrot.git
+cd PHParrot
+terraform -chdir=terraform init
+terraform -chdir=terraform apply
+docker exec phparrot-php composer setup
+docker exec phparrot-node npm install
+docker exec phparrot-node npm run build
 ```
-cd terraform
-cp terraform.tfvars.example terraform.tfvars
-terraform init
-terraform apply
-cd ..
-docker exec -it phparrot-php composer setup
-docker exec -it phparrot-node npm install
-docker exec -it phparrot-node npm run build
-```
 
-O app sobe em `http://localhost:8090` e o Vite em `http://localhost:5174`. As portas são as variáveis `app_port` e `vite_port` do Terraform.
+O primeiro `apply` compila o whisper.cpp e baixa o modelo, e leva alguns minutos. O `composer setup` cria o `.env`, gera a chave e o banco SQLite. Depois, o app abre em http://localhost:8090.
 
-Para o servidor de desenvolvimento do Vite: `docker exec -it phparrot-node npm run dev`.
+Sem nenhuma chave configurada, o app funciona por inteiro: a tradução usa o Chrome e a gestão de textos fica desligada.
 
-Para ativar os hooks do Git (o `.npmrc` desliga os scripts do npm): `sh .husky/node-exec.sh node_modules/.bin/husky`. É preciso ter o Node do Linux instalado no WSL, por exemplo pelo nvm.
+## Configuração
 
-## Portão de qualidade
+Tudo o que é opcional mora no `.env`: a chave do Google para a tradução, o token da gestão e os limites de uso. As portas e o modelo do Whisper são variáveis do Terraform.
 
-`composer gate` roda, nesta ordem:
+Detalhes, padrões e o passo a passo da chave e do token em [docs/configuracao.md](docs/configuracao.md).
 
-1. `composer lint`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer e TLint) e PHPStan.
-2. `composer stan`: Larastan no nível `max`, em `app`, `config`, `database`, `routes` e `tests`.
-3. `composer sloppy`: análise estática de código largado por IA.
-4. `composer test`: Pest.
+## Portões de qualidade
 
-Roda no container: `docker exec -it phparrot-php composer gate`. O CI roda o mesmo comando a cada push e PR.
+- `docker exec phparrot-php composer gate`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer, TLint), Larastan `max`, Sloppy e Pest.
+- `docker exec phparrot-node npm run test:js`: testes do JavaScript com `node --test`.
+- O workflow `containers.yml` roda Hadolint, build das imagens e Trivy a cada mudança em `docker/` ou `terraform/` e toda semana.
 
-### Containers
+O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](docs/qualidade.md).
 
-O workflow `containers.yml` cuida das imagens `php`, `whisper` e `nginx` e do `terraform/`:
+## Documentação
 
-1. Hadolint em todos os Dockerfiles. A única exceção, com o motivo, está no `.hadolint.yaml`.
-2. Build das três imagens com cache do GitHub Actions. O build do Whisper falha se o commit, o patch ou o hash do modelo não baterem.
-3. Trivy em cada imagem e em modo config (Dockerfiles e Terraform). Falha só com vulnerabilidade CRITICAL ou HIGH que já tenha correção.
-4. Resultado em SARIF na aba Security e SBOM CycloneDX de cada imagem como artifact do run.
-
-Roda em push e PR que mexam em `docker/`, `terraform/` ou no workflow, toda segunda-feira e à mão. As actions dos dois workflows são pinadas por SHA. Decisões e limites no ADR 0009, e o caminho de escala em `docs/escala.md`.
-
-## Como trabalhamos com IA
-
-- **Maintainer:** decide, valida na tela, dá push e faz o merge.
-- **Orquestrador:** fatia o trabalho, escreve os prompts e revisa o que volta.
-- **Executor:** escreve, roda o gate e commita só com tudo verde.
-
-A memória dos agentes mora em `.ai/`: regras, teto de escopo, fila de entregas, armadilhas provadas e ADRs.
-
-O pre-commit roda três gates: privacidade (nenhum nome de pessoa ou de cliente entra), comentários (só anotações do PHPStan no código) e `lint-staged`. A denylist de privacidade fica fora do repositório. O formato está em `.husky/privacidade-denylist.txt.example`.
-
-## Roteiro
-
-1. Base: ambiente, Laravel, portão de qualidade, CI e `.ai/`.
-2. Dados: o `textos.json` com um campo por idioma e o catálogo que o lê.
-3. Layout e Configurações: a barra superior, a home, os idiomas, o tema e a tradução.
-4. Leitura: voz, inverter, texto editado, gerar novo e troca de nível, com a tradução.
-5. Transcrição com o Whisper local.
-6. Fala.
-7. Escuta.
-8. Gerenciar textos: token, textos criados no SQLite e apagar banco.
-9. CI de containers e caminho de escala: Hadolint, Trivy, varredura semanal e `docs/escala.md`.
-10. Deploy.
-
-Segunda etapa: Ollama, como motor de tradução, para textos novos e comentários sobre pronúncia; Piper, para uma voz local; e conteúdo em Español, Français, Deutsch e Italiano.
+- [Arquitetura](docs/arquitetura.md): as peças, o fluxo da Fala e o diagrama.
+- [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google e token.
+- [Qualidade](docs/qualidade.md): portão, hooks, CI de containers e limites.
+- [Escala](docs/escala.md): como o app cresce sem reescrever.
+- [Processo](docs/processo.md): como o projeto é desenvolvido com IA.
+- [Roadmap](docs/roadmap.md): próximos passos.
+- [Decisões (ADRs)](.ai/adr/): o porquê de cada escolha.
 
 ## Licença
 
-MIT. Veja `LICENSE`.
+MIT. Veja [LICENSE](LICENSE).
