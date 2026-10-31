@@ -1,0 +1,13 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-comida", "nome": "Rascunho: Comida", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "comida-n1-t01", "tema": "comida", "nivel": 1, "tipo": "texto", "en": "I like coffee. I drink coffee in the morning. It is hot and good.", "pt-BR": "Eu gosto de café. Eu bebo café de manhã. Ele é quente e gostoso."},
+    {"id": "comida-n1-f01", "tema": "comida", "nivel": 1, "tipo": "frase", "en": "I am hungry.", "pt-BR": "Eu estou com fome."},
+    {"id": "comida-n2-f01", "tema": "comida", "nivel": 2, "tipo": "frase", "en": "I usually drink tea in the afternoon.", "pt-BR": "Eu geralmente tomo chá à tarde."},
+    {"id": "comida-n2-f02", "tema": "comida", "nivel": 2, "tipo": "frase", "en": "He doesn't eat meat.", "pt-BR": "Ele não come carne."},
+    {"id": "comida-n3-f01", "tema": "comida", "nivel": 3, "tipo": "frase", "en": "We didn't have time for lunch.", "pt-BR": "Nós não tivemos tempo para almoçar."},
+    {"id": "comida-n5-t01", "tema": "comida", "nivel": 5, "tipo": "texto", "en": "Have you ever tried Japanese food? I tried it for the first time last year, and since then I have eaten sushi almost every week.", "pt-BR": "Você já experimentou comida japonesa? Eu experimentei pela primeira vez no ano passado e, desde então, como sushi quase toda semana."},
+    {"id": "comida-n6-t01", "tema": "comida", "nivel": 6, "tipo": "texto", "en": "If I had more free time, I would learn to cook properly. I would invite my friends for dinner every Friday and try a new recipe each week.", "pt-BR": "Se eu tivesse mais tempo livre, aprenderia a cozinhar direito. Eu convidaria os meus amigos para jantar toda sexta-feira e testaria uma receita nova a cada semana."}
+  ]
+}

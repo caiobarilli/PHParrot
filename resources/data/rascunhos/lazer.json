@@ -1,0 +1,18 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-lazer", "nome": "Rascunho: Lazer", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "lazer-n1-f01", "tema": "lazer", "nivel": 1, "tipo": "frase", "en": "She likes music.", "pt-BR": "Ela gosta de música."},
+    {"id": "lazer-n2-t01", "tema": "lazer", "nivel": 2, "tipo": "texto", "en": "On weekends, my family usually goes to the park. My kids play soccer and I read a book under a tree.", "pt-BR": "Nos fins de semana, minha família geralmente vai ao parque. Meus filhos jogam futebol e eu leio um livro debaixo de uma árvore."},
+    {"id": "lazer-n2-f01", "tema": "lazer", "nivel": 2, "tipo": "frase", "en": "They play video games at night.", "pt-BR": "Eles jogam videogame à noite."},
+    {"id": "lazer-n3-f01", "tema": "lazer", "nivel": 3, "tipo": "frase", "en": "I saw a great movie last night.", "pt-BR": "Eu vi um filme ótimo ontem à noite."},
+    {"id": "lazer-n4-t01", "tema": "lazer", "nivel": 4, "tipo": "texto", "en": "This year, I'm going to learn something new. Maybe I will take guitar lessons, or maybe I will start running. The most important thing is to keep going.", "pt-BR": "Este ano, eu vou aprender algo novo. Talvez eu faça aulas de violão, ou talvez eu comece a correr. O mais importante é não parar."},
+    {"id": "lazer-n4-f01", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "What are you going to do this weekend?", "pt-BR": "O que você vai fazer neste fim de semana?"},
+    {"id": "lazer-n4-f02", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "She is the best player on the team.", "pt-BR": "Ela é a melhor jogadora do time."},
+    {"id": "lazer-n4-f03", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "This is the most interesting book I own.", "pt-BR": "Este é o livro mais interessante que eu tenho."},
+    {"id": "lazer-n6-t01", "tema": "lazer", "nivel": 6, "tipo": "texto", "en": "Unless it rains, we will have the party in the garden. If the weather changes, we could move everything to the living room. It shouldn't be a problem.", "pt-BR": "A menos que chova, faremos a festa no jardim. Se o tempo mudar, poderíamos levar tudo para a sala. Não deve ser um problema."},
+    {"id": "lazer-n6-f01", "tema": "lazer", "nivel": 6, "tipo": "frase", "en": "If it's sunny, we'll go to the beach.", "pt-BR": "Se fizer sol, nós vamos à praia."},
+    {"id": "lazer-n7-f01", "tema": "lazer", "nivel": 7, "tipo": "frase", "en": "This is the book that I told you about.", "pt-BR": "Este é o livro de que eu te falei."},
+    {"id": "lazer-n9-f01", "tema": "lazer", "nivel": 9, "tipo": "frase", "en": "I wish I had more time to read.", "pt-BR": "Eu queria ter mais tempo para ler."}
+  ]
+}

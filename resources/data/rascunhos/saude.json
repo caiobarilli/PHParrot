@@ -1,0 +1,11 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-saude", "nome": "Rascunho: Saúde", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "saude-n2-f01", "tema": "saude", "nivel": 2, "tipo": "frase", "en": "We go to the gym three times a week.", "pt-BR": "Nós vamos à academia três vezes por semana."},
+    {"id": "saude-n5-t01", "tema": "saude", "nivel": 5, "tipo": "texto", "en": "Lucas has been a doctor since 2015. He has worked in three different hospitals and has helped thousands of patients. He has always loved his job.", "pt-BR": "Lucas é médico desde 2015. Ele já trabalhou em três hospitais diferentes e já ajudou milhares de pacientes. Ele sempre amou o seu trabalho."},
+    {"id": "saude-n5-f01", "tema": "saude", "nivel": 5, "tipo": "frase", "en": "He has lost a lot of weight.", "pt-BR": "Ele perdeu muito peso."},
+    {"id": "saude-n6-f01", "tema": "saude", "nivel": 6, "tipo": "frase", "en": "You should see a doctor.", "pt-BR": "Você deveria ir ao médico."},
+    {"id": "saude-n7-t01", "tema": "saude", "nivel": 7, "tipo": "texto", "en": "The doctor explained that the pain was caused by bad posture. He recommended that I take short breaks and said I should adjust the height of my chair.", "pt-BR": "O médico explicou que a dor era causada por má postura. Ele recomendou que eu fizesse pausas curtas e disse que eu deveria ajustar a altura da minha cadeira."}
+  ]
+}

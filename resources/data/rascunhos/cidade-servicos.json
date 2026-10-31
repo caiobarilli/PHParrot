@@ -1,0 +1,12 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-cidade-servicos", "nome": "Rascunho: Cidade e serviços", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "cidade-servicos-n2-f01", "tema": "cidade-servicos", "nivel": 2, "tipo": "frase", "en": "Do you live near here?", "pt-BR": "Você mora perto daqui?"},
+    {"id": "cidade-servicos-n4-t01", "tema": "cidade-servicos", "nivel": 4, "tipo": "texto", "en": "Living in a big city is more exciting than living in the countryside, but it is also more stressful. The traffic is worse and everything costs more.", "pt-BR": "Morar em uma cidade grande é mais empolgante do que morar no interior, mas também é mais estressante. O trânsito é pior e tudo custa mais caro."},
+    {"id": "cidade-servicos-n5-t01", "tema": "cidade-servicos", "nivel": 5, "tipo": "texto", "en": "I have lived in this neighborhood for five years. I have met many people here, and I have found my favorite bakery. I have never wanted to move.", "pt-BR": "Eu moro neste bairro há cinco anos. Eu conheci muitas pessoas aqui e encontrei a minha padaria favorita. Eu nunca quis me mudar."},
+    {"id": "cidade-servicos-n6-t01", "tema": "cidade-servicos", "nivel": 6, "tipo": "texto", "en": "You can't park here after six o'clock. If you leave your car on this street, it might get towed. You'd better use the parking lot around the corner.", "pt-BR": "Você não pode estacionar aqui depois das seis horas. Se deixar o carro nesta rua, ele pode ser guinchado. É melhor você usar o estacionamento ali na esquina."},
+    {"id": "cidade-servicos-n7-f01", "tema": "cidade-servicos", "nivel": 7, "tipo": "frase", "en": "My car is being repaired.", "pt-BR": "O meu carro está sendo consertado."},
+    {"id": "cidade-servicos-n10-t01", "tema": "cidade-servicos", "nivel": 10, "tipo": "texto", "en": "Cities that invest in public transport, green spaces and affordable housing are not merely improving their residents' quality of life; they are also laying the groundwork for a more sustainable economy, one in which growth does not come at the expense of the environment.", "pt-BR": "As cidades que investem em transporte público, áreas verdes e moradia acessível não estão apenas melhorando a qualidade de vida dos seus moradores; elas também estão preparando o terreno para uma economia mais sustentável, na qual o crescimento não acontece às custas do meio ambiente."}
+  ]
+}

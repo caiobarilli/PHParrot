@@ -1,0 +1,16 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-rotina-casa", "nome": "Rascunho: Rotina e casa", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "rotina-casa-n1-t01", "tema": "rotina-casa", "nivel": 1, "tipo": "texto", "en": "My name is Anna. I live in a small house. I have a cat.", "pt-BR": "Meu nome é Anna. Eu moro em uma casa pequena. Eu tenho um gato."},
+    {"id": "rotina-casa-n1-f01", "tema": "rotina-casa", "nivel": 1, "tipo": "frase", "en": "The door is open.", "pt-BR": "A porta está aberta."},
+    {"id": "rotina-casa-n1-f02", "tema": "rotina-casa", "nivel": 1, "tipo": "frase", "en": "We are at home.", "pt-BR": "Nós estamos em casa."},
+    {"id": "rotina-casa-n1-f03", "tema": "rotina-casa", "nivel": 1, "tipo": "frase", "en": "The book is on the table.", "pt-BR": "O livro está em cima da mesa."},
+    {"id": "rotina-casa-n2-t01", "tema": "rotina-casa", "nivel": 2, "tipo": "texto", "en": "I wake up at seven o'clock. I take a shower and have breakfast. Then I walk to work.", "pt-BR": "Eu acordo às sete horas. Eu tomo banho e tomo café da manhã. Depois eu vou a pé para o trabalho."},
+    {"id": "rotina-casa-n3-t01", "tema": "rotina-casa", "nivel": 3, "tipo": "texto", "en": "Yesterday it rained all day, so I stayed at home. I watched two movies and finally cleaned my room.", "pt-BR": "Ontem choveu o dia todo, então eu fiquei em casa. Eu assisti a dois filmes e finalmente arrumei o meu quarto."},
+    {"id": "rotina-casa-n3-f01", "tema": "rotina-casa", "nivel": 3, "tipo": "frase", "en": "I lost my keys this morning.", "pt-BR": "Eu perdi as minhas chaves hoje de manhã."},
+    {"id": "rotina-casa-n3-f02", "tema": "rotina-casa", "nivel": 3, "tipo": "frase", "en": "They moved to a new apartment.", "pt-BR": "Eles se mudaram para um apartamento novo."},
+    {"id": "rotina-casa-n5-f01", "tema": "rotina-casa", "nivel": 5, "tipo": "frase", "en": "Have you seen my glasses?", "pt-BR": "Você viu os meus óculos?"},
+    {"id": "rotina-casa-n9-f01", "tema": "rotina-casa", "nivel": 9, "tipo": "frase", "en": "I'm used to waking up early.", "pt-BR": "Eu estou acostumado a acordar cedo."}
+  ]
+}

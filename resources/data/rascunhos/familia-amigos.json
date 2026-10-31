@@ -1,0 +1,14 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-familia-amigos", "nome": "Rascunho: Família e amigos", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "familia-amigos-n1-t01", "tema": "familia-amigos", "nivel": 1, "tipo": "texto", "en": "My friend is a teacher. She works at a school. She is very kind.", "pt-BR": "Minha amiga é professora. Ela trabalha em uma escola. Ela é muito gentil."},
+    {"id": "familia-amigos-n1-f01", "tema": "familia-amigos", "nivel": 1, "tipo": "frase", "en": "I have two brothers.", "pt-BR": "Eu tenho dois irmãos."},
+    {"id": "familia-amigos-n3-t01", "tema": "familia-amigos", "nivel": 3, "tipo": "texto", "en": "Last Saturday, I visited my grandparents. We cooked lunch together and talked for hours. I went home very late.", "pt-BR": "No sábado passado, eu visitei meus avós. Nós cozinhamos o almoço juntos e conversamos por horas. Eu voltei para casa muito tarde."},
+    {"id": "familia-amigos-n3-f01", "tema": "familia-amigos", "nivel": 3, "tipo": "frase", "en": "She called me two hours ago.", "pt-BR": "Ela me ligou duas horas atrás."},
+    {"id": "familia-amigos-n3-f02", "tema": "familia-amigos", "nivel": 3, "tipo": "frase", "en": "He forgot my birthday.", "pt-BR": "Ele esqueceu o meu aniversário."},
+    {"id": "familia-amigos-n4-f01", "tema": "familia-amigos", "nivel": 4, "tipo": "frase", "en": "We are meeting them at eight.", "pt-BR": "Nós vamos encontrar eles às oito."},
+    {"id": "familia-amigos-n5-f01", "tema": "familia-amigos", "nivel": 5, "tipo": "frase", "en": "They have known each other since school.", "pt-BR": "Eles se conhecem desde a escola."},
+    {"id": "familia-amigos-n7-f01", "tema": "familia-amigos", "nivel": 7, "tipo": "frase", "en": "The man who called you is my uncle.", "pt-BR": "O homem que te ligou é o meu tio."}
+  ]
+}

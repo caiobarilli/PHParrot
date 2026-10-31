@@ -1,0 +1,17 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-transporte-viagem", "nome": "Rascunho: Transporte e viagem", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "transporte-viagem-n1-f01", "tema": "transporte-viagem", "nivel": 1, "tipo": "frase", "en": "Where is the bus?", "pt-BR": "Onde está o ônibus?"},
+    {"id": "transporte-viagem-n2-f01", "tema": "transporte-viagem", "nivel": 2, "tipo": "frase", "en": "She always takes the train.", "pt-BR": "Ela sempre pega o trem."},
+    {"id": "transporte-viagem-n3-t01", "tema": "transporte-viagem", "nivel": 3, "tipo": "texto", "en": "Last year, Maria bought her first car. It wasn't new, but it worked well. She drove it to the beach the next weekend.", "pt-BR": "No ano passado, Maria comprou o seu primeiro carro. Ele não era novo, mas funcionava bem. Ela foi com ele até a praia no fim de semana seguinte."},
+    {"id": "transporte-viagem-n4-t01", "tema": "transporte-viagem", "nivel": 4, "tipo": "texto", "en": "Next month, I'm going to travel to Chile with two friends. We are going to visit Santiago and then drive to the mountains. I think it will be colder than São Paulo.", "pt-BR": "No mês que vem, eu vou viajar para o Chile com dois amigos. Nós vamos visitar Santiago e depois dirigir até as montanhas. Eu acho que vai estar mais frio do que em São Paulo."},
+    {"id": "transporte-viagem-n4-f01", "tema": "transporte-viagem", "nivel": 4, "tipo": "frase", "en": "This road is shorter than the other one.", "pt-BR": "Esta estrada é mais curta do que a outra."},
+    {"id": "transporte-viagem-n4-f02", "tema": "transporte-viagem", "nivel": 4, "tipo": "frase", "en": "I'll help you with the bags.", "pt-BR": "Eu te ajudo com as malas."},
+    {"id": "transporte-viagem-n5-f01", "tema": "transporte-viagem", "nivel": 5, "tipo": "frase", "en": "I have never been to Europe.", "pt-BR": "Eu nunca fui para a Europa."},
+    {"id": "transporte-viagem-n7-t01", "tema": "transporte-viagem", "nivel": 7, "tipo": "texto", "en": "The bridge was built in 1920 and was restored last year. It is visited by thousands of tourists every summer, who take photos of the old stone towers.", "pt-BR": "A ponte foi construída em 1920 e foi restaurada no ano passado. Ela é visitada por milhares de turistas todo verão, que tiram fotos das antigas torres de pedra."},
+    {"id": "transporte-viagem-n7-t02", "tema": "transporte-viagem", "nivel": 7, "tipo": "texto", "en": "The woman who lives next door is a pilot. She has flown to more than forty countries, which is something I have always dreamed of doing.", "pt-BR": "A mulher que mora ao lado é piloto. Ela já voou para mais de quarenta países, algo que eu sempre sonhei em fazer."},
+    {"id": "transporte-viagem-n7-f01", "tema": "transporte-viagem", "nivel": 7, "tipo": "frase", "en": "The tickets will be sent by email.", "pt-BR": "Os ingressos serão enviados por e-mail."},
+    {"id": "transporte-viagem-n9-t01", "tema": "transporte-viagem", "nivel": 9, "tipo": "texto", "en": "Had I known about the traffic, I would have left much earlier. By the time I arrived, the presentation had already started, and I had to sneak in through the back door.", "pt-BR": "Se eu soubesse do trânsito, teria saído bem mais cedo. Quando cheguei, a apresentação já tinha começado, e tive que entrar de fininho pela porta dos fundos."}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "formato": 2,
+  "pacote": {"slug": "rascunho-compras", "nome": "Rascunho: Compras", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
+  "itens": [
+    {"id": "compras-n2-t01", "tema": "compras", "nivel": 2, "tipo": "texto", "en": "The supermarket is near my house. I go there twice a week. I usually buy fruit, bread and milk.", "pt-BR": "O supermercado fica perto da minha casa. Eu vou lá duas vezes por semana. Eu geralmente compro frutas, pão e leite."},
+    {"id": "compras-n2-f01", "tema": "compras", "nivel": 2, "tipo": "frase", "en": "How much is this shirt?", "pt-BR": "Quanto custa esta camisa?"},
+    {"id": "compras-n3-f01", "tema": "compras", "nivel": 3, "tipo": "frase", "en": "Where did you buy that jacket?", "pt-BR": "Onde você comprou essa jaqueta?"},
+    {"id": "compras-n7-f01", "tema": "compras", "nivel": 7, "tipo": "frase", "en": "The package was delivered this morning.", "pt-BR": "O pacote foi entregue hoje de manhã."}
+  ]
+}
