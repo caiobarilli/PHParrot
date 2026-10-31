@@ -6,7 +6,7 @@ import { preferencias } from './preferencias.js';
 import { comVoz } from './voz-da-tela.js';
 
 export const fala = () =>
-    mesclar(comVoz(), comGravacao(), comDica(), comFraseEscondivel(true), {
+    mesclar(comVoz(), comGravacao(), comDica(), comFraseEscondivel(false), {
         frase: '',
         init() {
             this.iniciarVoz();

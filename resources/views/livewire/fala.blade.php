@@ -6,7 +6,7 @@
     <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
     <x-nivel :nivel="$nivel" />
   </div>
-  <x-frase-escondivel>
+  <x-frase-escondivel :escondida="true">
     <div wire:ignore>
       <input id="frase" type="text" class="campo pr-14 text-[17px] sm:text-[19px]" aria-labelledby="t-exemplo" placeholder="{{ __('fala.placeholder', ['idioma' => $nomeNaFrase]) }}" spellcheck="false" x-model="frase">
     </div>

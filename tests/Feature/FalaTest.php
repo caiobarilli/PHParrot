@@ -31,14 +31,15 @@ it('a Fala não transcreve o exemplo: o Transcrever só existe no Testar', funct
         ->and($html)->not->toContain('Frase transcrita');
 });
 
-it('a Fala mostra a frase por padrão e usa o mesmo olho da Escuta', function (): void {
+it('a Fala esconde a frase por padrão e usa o mesmo olho da Escuta', function (): void {
     $html = telaDeFrases(Fala::class)->html();
 
     expect($html)->toContain('x-data="fala"')
         ->and($html)->toContain('aria-pressed="true"')
         ->and($html)->toContain('aria-pressed="false"')
         ->and($html)->toContain('esconde')
-        ->and($html)->toContain('x-model="frase"');
+        ->and($html)->toContain('x-model="frase"')
+        ->and($html)->toMatch('/x-show="visivel"[^>]*x-cloak/');
 });
 
 it('mostra a Fala em inglês quando a nativa é inglês', function (): void {
