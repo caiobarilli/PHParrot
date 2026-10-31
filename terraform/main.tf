@@ -46,7 +46,16 @@ resource "docker_container" "php" {
 }
 
 resource "docker_image" "nginx" {
-  name = "nginx:1.30.6-alpine"
+  name = "phparrot-nginx"
+
+  triggers = {
+    dockerfile = filesha1("${path.module}/../docker/nginx/Dockerfile")
+  }
+
+  build {
+    context    = "${path.module}/../docker/nginx"
+    dockerfile = "Dockerfile"
+  }
 }
 
 resource "docker_container" "nginx" {
