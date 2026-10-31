@@ -4,7 +4,6 @@
     $gestao = app(\App\Gestao\Gestao::class);
     $gestaoLigada = $gestao->ligada();
     $gestaoAtiva = $gestao->ativa();
-    $arquivoJson = '<code>textos.json</code>';
     $pacoteAtivo = $gestaoAtiva ? app(\App\Textos\Pacotes::class)->ativo()->slug : '';
 @endphp
 <x-layouts::app :title="__('config.titulo')" tela="configuracao">
@@ -123,7 +122,7 @@
   <hr class="border-line">
   <div class="flex flex-col gap-2">
     <p class="font-medium">{{ __('config.perigo.apagar_titulo') }}</p>
-    <p class="text-[12px] text-mut">{!! __('config.perigo.apagar_texto', ['arquivo' => $arquivoJson]) !!}</p>
+    <p class="text-[12px] text-mut">{{ __('config.perigo.apagar_texto') }}</p>
     @if ($gestaoAtiva)
     <div><button type="button" class="btn btn-sm btn-perigo" x-on:click="abrirApagar()"><x-icone nome="lixeira" />{{ __('config.perigo.apagar_botao') }}</button></div>
     @elseif ($gestaoLigada)
@@ -149,7 +148,7 @@
     <p class="rotulo" x-text="$root.dataset.etapa.replace(':n', apagar)">{{ __('config.perigo.etapa', ['n' => 1]) }}</p>
     <h3 id="m-titulo" class="text-[17px] font-semibold">{{ __('config.perigo.modal_titulo') }}</h3>
     <div class="flex flex-col gap-3" x-show="apagar === 1">
-      <p class="text-[13px] text-mut">{!! __('config.perigo.etapa1_texto', ['arquivo' => $arquivoJson]) !!}</p>
+      <p class="text-[13px] text-mut">{{ __('config.perigo.etapa1_texto') }}</p>
       <p class="text-[13px] text-mut">{{ __('config.perigo.exportar_antes') }}</p>
       <div class="flex flex-wrap gap-2">
         <a href="{{ route('pacotes.exportar', $pacoteAtivo) }}" class="btn btn-sm btn-ghost" download><x-icone nome="baixar" />{{ __('pacotes.exportar_ativo') }}</a>

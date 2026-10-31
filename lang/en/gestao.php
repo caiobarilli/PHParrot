@@ -13,7 +13,7 @@ return [
     'destravado' => 'Sign-in limit released.',
     'palavra' => 'delete',
     'apagar_palavra' => 'Type the right word to confirm.',
-    'banco_apagado' => 'Database deleted. Only the textos.json items remain.',
+    'banco_apagado' => 'Database deleted. The catalog is back to the factory package.',
     'textos' => [
         'titulo' => 'Manage texts',
         'novo' => 'New',

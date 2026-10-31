@@ -289,7 +289,7 @@ it('o JSON da Base continua servindo depois do Apagar banco', function (): void 
     criarItemMeu();
 
     post('/banco/apagar', ['confirmacao' => 'apagar'])->assertRedirect(route('configuracao'))
-        ->assertSessionHas('status', 'Banco apagado. Só os textos do textos.json ficaram.');
+        ->assertSessionHas('status', 'Banco apagado. O catálogo voltou para a fábrica.');
 
     expect(Texto::query()->count())->toBe(0);
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\RateLimiter;
 
 use function Pest\Laravel\get;
@@ -76,8 +77,8 @@ it('em inglês a palavra de confirmação e os textos seguem a língua', functio
 it('mostra o aviso de banco apagado e o erro de confirmação', function (): void {
     comGestao();
 
-    withSession(['status' => 'Banco apagado. Só os textos do textos.json ficaram.'])->get('/configuracao')
-        ->assertOk()->assertSee('Banco apagado. Só os textos do textos.json ficaram.');
+    withSession(['status' => 'Banco apagado. O catálogo voltou para a fábrica.'])->get('/configuracao')
+        ->assertOk()->assertSee('Banco apagado. O catálogo voltou para a fábrica.');
 
     withSession(['erro_apagar' => 'Digite a palavra certa para confirmar.'])->get('/configuracao')
         ->assertOk()->assertSee('Digite a palavra certa para confirmar.');
@@ -126,4 +127,27 @@ it('o comando apaga só as chaves do limitador entrar', function (): void {
     expect(RateLimiter::attempts(md5('entrar'.'entrar:total')))->toBe(0)
         ->and(RateLimiter::attempts(md5('entrar'.'entrar:ip:9.9.9.9')))->toBe(0)
         ->and(RateLimiter::attempts(md5('outro'.'outro:total')))->toBe(1);
+});
+
+it('os textos do Apagar banco saem escapados, sem HTML cru', function (): void {
+    comGestao();
+    Lang::addLines([
+        'config.perigo.apagar_texto' => '<b>cru</b>',
+        'config.perigo.etapa1_texto' => '<img src=x onerror=alert(1)>',
+    ], 'pt_BR');
+
+    get('/configuracao')->assertOk()
+        ->assertSee('&lt;b&gt;cru&lt;/b&gt;', false)
+        ->assertSee('&lt;img src=x onerror=alert(1)&gt;', false)
+        ->assertDontSee('<b>cru</b>', false)
+        ->assertDontSee('<img src=x', false);
+});
+
+it('o Restaurar fala em aparência e tema, e o Apagar banco nos pacotes', function (): void {
+    comGestao();
+
+    get('/configuracao')->assertOk()
+        ->assertSee('Volta idiomas, aparência, tema, tradução e nível ao padrão.')
+        ->assertSee('Apaga os textos que você criou e os pacotes importados.')
+        ->assertDontSee('textos.json');
 });

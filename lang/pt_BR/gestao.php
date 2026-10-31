@@ -13,7 +13,7 @@ return [
     'destravado' => 'Limite da tela entrar liberado.',
     'palavra' => 'apagar',
     'apagar_palavra' => 'Digite a palavra certa para confirmar.',
-    'banco_apagado' => 'Banco apagado. Só os textos do textos.json ficaram.',
+    'banco_apagado' => 'Banco apagado. O catálogo voltou para a fábrica.',
     'textos' => [
         'titulo' => 'Gerenciar textos',
         'novo' => 'Novo',
