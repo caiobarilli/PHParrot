@@ -23,7 +23,13 @@ trait SorteiaFrases
     public string $frase = '';
 
     #[Locked]
+    public string $fraseNativa = '';
+
+    #[Locked]
     public string $treino = '';
+
+    #[Locked]
+    public string $nativa = '';
 
     /** @var array<string, string> */
     #[Locked]
@@ -37,6 +43,7 @@ trait SorteiaFrases
     {
         $this->nivel = $preferencias->nivel->valor;
         $this->treino = $preferencias->treino->value;
+        $this->nativa = $preferencias->nativa->value;
         $this->vozes = [$this->treino => $preferencias->treino->voz()];
         $this->nomes = [$this->treino => $preferencias->treino->nome()];
 
@@ -66,5 +73,6 @@ trait SorteiaFrases
 
         $this->itemId = $item instanceof ItemDeTexto ? $item->id : '';
         $this->frase = $item instanceof ItemDeTexto ? $item->traducao($this->treino) ?? '' : '';
+        $this->fraseNativa = $item instanceof ItemDeTexto ? $item->traducao($this->nativa) ?? '' : '';
     }
 }

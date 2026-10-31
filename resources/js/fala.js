@@ -1,12 +1,12 @@
+import { comDica } from './dica-da-tela.js';
 import { comGravacao } from './gravacao-da-tela.js';
 import { mesclar } from './mesclar.js';
 import { preferencias } from './preferencias.js';
 import { comVoz } from './voz-da-tela.js';
 
 export const fala = () =>
-    mesclar(comVoz(), comGravacao(), {
+    mesclar(comVoz(), comGravacao(), comDica(), {
         frase: '',
-        exemplo: '',
         init() {
             this.iniciarVoz();
             this.iniciarGravacao();
@@ -14,9 +14,8 @@ export const fala = () =>
 
             this.$wire.$watch('itemId', () => {
                 this.pararVoz();
-                this.pararGravacao();
-                this.limparGravacao();
-                this.exemplo = '';
+                this.reiniciarTeste();
+                this.traducaoVisivel = false;
                 this.frase = this.$wire.frase;
             });
             this.$wire.$watch('nivel', (nivel) => preferencias().definir({ nivel }));
@@ -27,13 +26,8 @@ export const fala = () =>
         get vazio() {
             return this.frase.trim() === '';
         },
-        get palavras() {
-            return this.exemplo === '' ? [] : this.exemplo.split(/\s+/);
-        },
         tocar() {
+            this.pararAudicao();
             this.falar(this.frase);
-        },
-        transcreverExemplo() {
-            this.exemplo = this.frase.trim();
         },
     });

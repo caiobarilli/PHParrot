@@ -90,7 +90,11 @@
   .nota { font-size: 13px; color: var(--mut); }
   .alerta-erro { display: flex; gap: 10px; align-items: flex-start; background: var(--bad-bg); color: var(--bad); border: 1px solid var(--bad); border-radius: 10px; padding: 12px 14px; }
   .alerta-erro svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
-  .palavra { display: inline-block; border-bottom: 2px solid var(--mut); padding-bottom: 1px; line-height: 1.25; }
+  .pal { display: inline-block; line-height: 1.25; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .pal-certa { color: var(--ok); text-decoration-line: underline; text-decoration-style: solid; }
+  .pal-trocada { color: var(--bad); text-decoration-line: underline; text-decoration-style: wavy; }
+  .pal-faltando { color: var(--bad); text-decoration-line: underline; text-decoration-style: dotted; }
+  .pal-extra { color: var(--mut); text-decoration-line: line-through; }
   .esconde { display: inline-block; height: .8em; border-radius: 4px; background: var(--line); vertical-align: middle; }
   .giro { width: 16px; height: 16px; border-radius: 999px; border: 2px solid var(--line); border-top-color: var(--ink); animation: giro .8s linear infinite; flex: none; }
   .ponto-rec { width: 10px; height: 10px; border-radius: 999px; background: var(--bad); flex: none; animation: pulsa 1.2s ease-in-out infinite; }

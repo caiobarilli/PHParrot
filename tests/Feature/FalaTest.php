@@ -9,28 +9,21 @@ it('mostra os elementos principais da Fala', function (): void {
     get('/fala')->assertOk()
         ->assertSee('Exemplo')
         ->assertSee('Play')
-        ->assertSee('Transcrever')
+        ->assertSee('Ver tradução')
+        ->assertSee('Esconder tradução')
         ->assertSee('Próxima frase')
-        ->assertSee('Testar')
-        ->assertSee('Gravar')
-        ->assertSee('Parar')
-        ->assertSee('Repetir')
         ->assertSee('Escreva uma frase em inglês.', false)
-        ->assertSee('A frase aparece aqui, palavra por palavra, quando você clicar em Transcrever.')
-        ->assertSee('Sua transcrição aparece aqui depois de gravar.')
         ->assertSee('N1')
         ->assertSee('Descer nível')
         ->assertSee('Subir nível');
 });
 
-it('mostra os estados da Fala: gravando, transcrevendo, erro de microfone e aviso de privacidade', function (): void {
-    get('/fala')->assertOk()
-        ->assertSee('Gravando')
-        ->assertSee('0:00 / 0:30')
-        ->assertSee('Transcrevendo o áudio…')
-        ->assertSee('Não consegui acessar o microfone.')
-        ->assertSee('Libere o microfone para este site nas permissões do navegador e tente de novo.')
-        ->assertSee('O áudio é transcrito neste servidor e apagado em seguida. Nada é gravado.');
+it('a Fala não transcreve o exemplo: o Transcrever só existe no Testar', function (): void {
+    $html = get('/fala')->assertOk()->getContent();
+
+    expect(substr_count((string) $html, 'Transcrever'))->toBe(1)
+        ->and($html)->not->toContain('A frase aparece aqui, palavra por palavra')
+        ->and($html)->not->toContain('Frase transcrita');
 });
 
 it('mostra a Fala em inglês quando a nativa é inglês', function (): void {
@@ -38,6 +31,7 @@ it('mostra a Fala em inglês quando a nativa é inglês', function (): void {
 
     withUnencryptedCookie('phparrot_prefs', $cookie)->get('/fala')->assertOk()
         ->assertSee('Example')
+        ->assertSee('Show translation')
         ->assertSee('Write a sentence in Portuguese (Brazil).', false)
         ->assertSee('Your audio is transcribed on this server and deleted right after. Nothing is stored.');
 });

@@ -20,6 +20,7 @@ final class Escuta extends Component
         return view('livewire.escuta', [
             'treinoSigla' => Idioma::from($this->treino)->sigla(),
             'nomeNaFrase' => Idioma::from($this->treino)->nomeNaFrase(),
+            'nativaSigla' => Idioma::from($this->nativa)->sigla(),
         ])->title(__('nav.escuta'));
     }
 }

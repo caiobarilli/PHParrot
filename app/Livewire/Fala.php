@@ -20,6 +20,7 @@ final class Fala extends Component
         return view('livewire.fala', [
             'treinoSigla' => Idioma::from($this->treino)->sigla(),
             'nomeNaFrase' => Idioma::from($this->treino)->nomeNaFrase(),
+            'nativaSigla' => Idioma::from($this->nativa)->sigla(),
         ])->title(__('nav.fala'));
     }
 }
