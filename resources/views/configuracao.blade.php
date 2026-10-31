@@ -5,6 +5,7 @@
     $gestaoLigada = $gestao->ligada();
     $gestaoAtiva = $gestao->ativa();
     $arquivoJson = '<code>textos.json</code>';
+    $pacoteAtivo = $gestaoAtiva ? app(\App\Textos\Pacotes::class)->ativo()->slug : '';
 @endphp
 <x-layouts::app :title="__('config.titulo')" tela="configuracao">
 <main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="configuracao" data-palavra="{{ mb_strtolower(__('gestao.palavra')) }}" data-etapa="{{ __('config.perigo.etapa') }}">
@@ -89,6 +90,7 @@
   @if ($gestaoAtiva)
   <div class="flex flex-wrap items-center gap-3">
     <a href="{{ route('textos') }}" class="btn btn-sm"><x-icone nome="textos" />{{ __('config.textos.gerenciar') }}</a>
+    <a href="{{ route('pacotes') }}" class="btn btn-sm btn-ghost"><x-icone nome="pacote" />{{ __('pacotes.lista') }}</a>
     <p class="text-[12px] text-mut flex-1 min-w-[200px]">{{ __('config.textos.ajuda') }}</p>
   </div>
   @elseif ($gestaoLigada)
@@ -148,7 +150,11 @@
     <h3 id="m-titulo" class="text-[17px] font-semibold">{{ __('config.perigo.modal_titulo') }}</h3>
     <div class="flex flex-col gap-3" x-show="apagar === 1">
       <p class="text-[13px] text-mut">{!! __('config.perigo.etapa1_texto', ['arquivo' => $arquivoJson]) !!}</p>
-      <p class="text-[13px] text-mut">{{ __('config.perigo.exportar_antes') }} <a href="{{ route('textos.exportar') }}" class="link" download>{{ __('gestao.textos.exportar') }}</a></p>
+      <p class="text-[13px] text-mut">{{ __('config.perigo.exportar_antes') }}</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="{{ route('pacotes.exportar', $pacoteAtivo) }}" class="btn btn-sm btn-ghost" download><x-icone nome="baixar" />{{ __('pacotes.exportar_ativo') }}</a>
+        <a href="{{ route('textos.exportar') }}" class="btn btn-sm btn-ghost" download><x-icone nome="baixar" />{{ __('gestao.textos.exportar') }}</a>
+      </div>
     </div>
     <div class="flex flex-col gap-1.5" x-show="apagar === 2" x-cloak>
       <label for="m-confirma" class="text-[13px]">{!! __('config.perigo.confirme', ['palavra' => '<strong>'.e(__('gestao.palavra')).'</strong>']) !!}</label>

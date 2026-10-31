@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\ApagarBancoController;
 use App\Http\Controllers\EntrarController;
+use App\Http\Controllers\ExportarPacoteController;
 use App\Http\Controllers\ExportarTextosController;
+use App\Http\Controllers\ImportarPacoteController;
 use App\Http\Controllers\TraduzirController;
 use App\Http\Controllers\TranscreverController;
 use App\Http\Middleware\ExigirGestao;
 use App\Http\Middleware\GestaoLigada;
 use App\Livewire\Escuta;
 use App\Livewire\Fala;
+use App\Livewire\GestaoDePacotes;
 use App\Livewire\Leitura;
 use App\Livewire\Textos;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +30,8 @@ Route::post('entrar', [EntrarController::class, 'entrar'])->middleware([GestaoLi
 Route::middleware(ExigirGestao::class)->group(function (): void {
     Route::livewire('textos', Textos::class)->name('textos');
     Route::get('textos/exportar', ExportarTextosController::class)->name('textos.exportar');
+    Route::livewire('pacotes', GestaoDePacotes::class)->name('pacotes');
+    Route::post('pacotes/importar', ImportarPacoteController::class)->name('pacotes.importar');
+    Route::get('pacotes/{slug}/exportar', ExportarPacoteController::class)->where('slug', '[a-z0-9-]+')->name('pacotes.exportar');
     Route::post('banco/apagar', ApagarBancoController::class)->name('banco.apagar');
 });

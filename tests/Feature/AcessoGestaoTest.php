@@ -35,6 +35,9 @@ it('sem token configurado, tudo da gestão responde 404', function (?string $tok
     post('/entrar', ['token' => 'x'])->assertNotFound();
     get('/textos')->assertNotFound();
     get('/textos/exportar')->assertNotFound();
+    get('/pacotes')->assertNotFound();
+    post('/pacotes/importar')->assertNotFound();
+    get('/pacotes/fabrica/exportar')->assertNotFound();
     post('/banco/apagar', ['confirmacao' => 'apagar'])->assertNotFound();
 })->with(['ausente' => [null], 'vazio' => [''], 'curto' => [str_repeat('a', 31)]]);
 
@@ -48,6 +51,9 @@ it('sem sessão de gestão, as telas mandam para o entrar e nada é feito', func
 
     get('/textos')->assertRedirect(route('entrar'));
     get('/textos/exportar')->assertRedirect(route('entrar'));
+    get('/pacotes')->assertRedirect(route('entrar'));
+    post('/pacotes/importar')->assertRedirect(route('entrar'));
+    get('/pacotes/fabrica/exportar')->assertRedirect(route('entrar'));
     post('/banco/apagar', ['confirmacao' => 'apagar'])->assertRedirect(route('entrar'));
 
     expect(app(MeusTextos::class)->todos())->toHaveCount(1);
