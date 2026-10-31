@@ -14,7 +14,7 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | 6 | Fala | feito (`9d47db4`, `0e0b8ad`; ajuste de escopo abaixo) | Exemplo (frase, Play, Ver tradução, Próxima) e o bloco Testar compartilhado |
 | 7 | Escuta | feito (`d95406c`; ajuste de escopo abaixo) | Áudio (texto escondido, Play, olho, Ver tradução, Próxima) e o mesmo bloco Testar |
 | 8 | Gerenciar textos | feito (migrations: `5c243ac`; gestão: `8a8656d`) | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela `textos` no SQLite, criar, editar, apagar, traduzir e exportar, Apagar banco em duas etapas e testes de acesso sem token (ADR 0008) |
-| 9 | CI de containers e caminho de escala | pendente | Hadolint, build do Whisper com cache, Trivy (imagens, Dockerfile e Terraform), SARIF, varredura semanal com SBOM e `docs/escala.md` (PLANO, não implementar nesta rodada) |
+| 9 | CI de containers e caminho de escala | feito (branch `entrega-9-ci`: `75f7215`, `4652f8d`, `2f9b679`, `97bb0db`, `9e49bad`) | `containers.yml` com Hadolint, build com cache, Trivy nas imagens e em config, SARIF por alvo, SBOM e varredura semanal; actions pinadas por SHA nos dois workflows; ADR 0009 e `docs/escala.md` (plano, nada implementado) |
 | 10 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
 
 ## Diferenças do design (validação no Chromium do WSL)
@@ -47,7 +47,11 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Entrega 8: o Traduzir da gestão leva a língua para treinar à nativa pelas mesmas regras da Leitura (Chrome ou Google API), sem o par do Inverter. A lista abre no nível do visitante, e o formulário usa o par de idiomas dele.
 - Entrega 8: as migrations foram reescritas, então um SQLite de desenvolvimento antigo pede `php artisan migrate:fresh`. O `.env` local não foi aberto, e o `QUEUE_CONNECTION=sync` está no `.env.example` e no padrão do `config/queue.php`.
 - Entrega 8: o `.env` do dev não tem token. Para ver as telas, o token entrou por um `fastcgi_param` temporário no nginx, depois revertido (`git diff docker/` vazio). A validação achou o 429 do `entrar` em inglês, corrigido na lista de prioridade (pitfall registrado).
+- Entrega 9: a `nginx:1.30.6-alpine` tinha `brotli-libs` (CRITICAL) e `curl` (HIGH) com correção e sem tag nova. Virou `docker/nginx/Dockerfile`: sem `curl`, `brotli-libs` atualizado e sem root (o Trivy config pediu `USER`), com o pid em `/tmp`. Telas, CSS, `/transcrever` (200) e o 413 do nginx conferidos (ADR 0009).
+- Entrega 9: `USER` numérico no php (1000) e no whisper (10001), sem GID, para o hadolint; o uid:gid em execução não mudou (999 no whisper). O `ci.yml` saiu do checkout e do setup-node v4 (aviso de Node.js 20) para v7.
 
 ## Melhorias
 
 - Entrega 1: setup em um comando. Hoje o `terraform apply`, o `composer setup` e o `npm install` e `npm run build` rodam à mão, em dois containers.
+- Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config).
+- Entrega 9: o `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI). Fixar `ubuntu-24.04` se algo quebrar.

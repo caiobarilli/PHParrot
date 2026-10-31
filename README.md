@@ -3,6 +3,7 @@
 Treino de inglês em três telas: Leitura, Fala e Escuta.
 
 [![CI](https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml/badge.svg)](https://github.com/caiobarilli/PHParrot/actions/workflows/ci.yml)
+[![Containers](https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml/badge.svg)](https://github.com/caiobarilli/PHParrot/actions/workflows/containers.yml)
 
 ## Telas
 
@@ -69,6 +70,17 @@ Para ativar os hooks do Git (o `.npmrc` desliga os scripts do npm): `sh .husky/n
 4. `composer test`: Pest.
 
 Roda no container: `docker exec -it phparrot-php composer gate`. O CI roda o mesmo comando a cada push e PR.
+
+### Containers
+
+O workflow `containers.yml` cuida das imagens `php`, `whisper` e `nginx` e do `terraform/`:
+
+1. Hadolint em todos os Dockerfiles. A única exceção, com o motivo, está no `.hadolint.yaml`.
+2. Build das três imagens com cache do GitHub Actions. O build do Whisper falha se o commit, o patch ou o hash do modelo não baterem.
+3. Trivy em cada imagem e em modo config (Dockerfiles e Terraform). Falha só com vulnerabilidade CRITICAL ou HIGH que já tenha correção.
+4. Resultado em SARIF na aba Security e SBOM CycloneDX de cada imagem como artifact do run.
+
+Roda em push e PR que mexam em `docker/`, `terraform/` ou no workflow, toda segunda-feira e à mão. As actions dos dois workflows são pinadas por SHA. Decisões e limites no ADR 0009, e o caminho de escala em `docs/escala.md`.
 
 ## Como trabalhamos com IA
 
