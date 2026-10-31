@@ -1,6 +1,4 @@
-ARG DEBIAN=debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
-
-FROM ${DEBIAN} AS compilacao
+FROM debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4 AS compilacao
 
 ARG WHISPER_TAG=v1.9.5
 ARG WHISPER_COMMIT=d1be6fde11ac6e0407606b4e42fe72d34add8037
@@ -32,7 +30,7 @@ RUN cmake -B build \
         -DWHISPER_BUILD_TESTS=OFF \
     && cmake --build build --config Release --target whisper-server -j "$(nproc)"
 
-FROM ${DEBIAN} AS modelo
+FROM debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4 AS modelo
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -46,7 +44,7 @@ RUN test -n "${MODELO_SHA1}" \
     && curl -fsSL -o /modelo.bin "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-${MODELO}.bin" \
     && echo "${MODELO_SHA1}  /modelo.bin" | sha1sum -c -
 
-FROM ${DEBIAN}
+FROM debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
 
 ARG MODELO=base
 
