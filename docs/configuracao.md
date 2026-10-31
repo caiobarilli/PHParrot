@@ -65,3 +65,14 @@ A gestão de textos (`/entrar` e `/textos`) só existe com um token de 64 caract
 - **Desligar:** apague o valor e rode `config:clear`. As rotas da gestão passam a responder 404.
 
 Detalhes e testes no [ADR 0008](../.ai/adr/0008-gestao.md).
+
+## Pacotes de textos
+
+Com a gestão aberta, a tela **Pacotes** (`/pacotes`) lista a fábrica e os pacotes importados.
+
+- **Importar:** um `.json` no formato 2 (ou no formato 1 antigo), até 2 MB. Tudo ou nada: com qualquer erro, nada entra, e a tela mostra até 50 linhas `caminho: motivo` e o total. O pacote entra inativo. Slug repetido só é trocado com "Substituir" marcado.
+- **Ativar:** antes de confirmar, a tela mostra os idiomas que entram e saem. O visitante com um par que deixou de valer volta ao padrão.
+- **Exportar:** qualquer pacote, e os Meus textos (slug `meus-textos`), no formato 2. Os dois voltam pelo importador sem edição. O `meus-textos` importado substitui os Meus textos.
+- **Apagar:** não vale para a fábrica nem para o ativo. O Apagar banco da configuração apaga os Meus textos e todos os pacotes importados, e o catálogo volta para a fábrica.
+
+Para conferir um arquivo antes de importar: `docker exec phparrot-php php artisan textos:validar caminho/do/pacote.json`. Na fábrica (`resources/data/textos.json`), o comando usa as regras mais duras do [ADR 0011](../.ai/adr/0011-temas-e-pacotes.md) e roda no `composer gate`.

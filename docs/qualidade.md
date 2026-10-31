@@ -9,9 +9,10 @@ Três camadas: o portão do app, os hooks de pre-commit e o CI de containers. Um
 1. **`composer lint`:** Duster, com Pint, PHP_CodeSniffer, PHP-CS-Fixer e TLint.
 2. **`composer stan`:** Larastan no nível `max`, em `app`, `config`, `database`, `routes` e `tests`.
 3. **`composer sloppy`:** análise estática determinística (sem modelo, sem rede) de código que costuma virar dívida: métodos gigantes, exceções engolidas, consultas N+1.
-4. **`composer test`:** Pest, com 286 testes. Rotas, limites de uso, gestão sem token, CSRF, fixação de sessão, privacidade do log e o catálogo de textos.
+4. **`composer textos`:** `textos:validar` sobre a fábrica, com as regras do ADR 0011 e do anexo de níveis.
+5. **`composer test`:** Pest, com 384 testes. Rotas, limites de uso, gestão sem token, CSRF, fixação de sessão, privacidade do log, o catálogo, os pacotes e o validador.
 
-`docker exec phparrot-node npm run test:js` roda os 71 testes do JavaScript com `node --test`: comparação de palavras, números por extenso, gravação, transcrição, tradução, voz e preferências.
+`docker exec phparrot-node npm run test:js` roda os 73 testes do JavaScript com `node --test`: comparação de palavras, números por extenso, gravação, transcrição, tradução, voz e preferências.
 
 O workflow `ci.yml` roda os dois em cada push e PR, com PHP 8.5 e Node 24.
 

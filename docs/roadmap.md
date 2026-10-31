@@ -16,7 +16,8 @@ Próximos passos, em ordem aproximada. Nada aqui está implementado.
 
 - **Ollama** como motor local de tradução, de geração de textos novos e de comentários sobre a pronúncia a partir da transcrição.
 - **Piper** como voz local, no lugar da voz do navegador, para ter a mesma voz em qualquer navegador.
-- **Mais idiomas:** espanhol, francês, alemão e italiano. O formato dos textos já tem um campo por idioma, e um idioma só fica ativo quando todos os itens estão traduzidos.
+- **Conteúdo por tema:** 3 textos e 6 frases por tema e nível, escritos por um autor em inglês e adaptados por um especialista em pt-BR, partindo da semente em `resources/data/rascunhos/`. Primeiro cinco temas, depois os outros cinco.
+- **Tradução do conteúdo:** espanhol, francês, alemão, italiano e russo como línguas para treinar, traduzidas do inglês em lotes com cache, sem o visitante disparar tradução ([ADR 0012](../.ai/adr/0012-traducao-de-conteudo.md)).
 
 ## Operação
 

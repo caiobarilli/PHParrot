@@ -14,13 +14,14 @@
 
 O PHParrot é um app para treinar idiomas falando. Você ouve uma frase, grava a sua voz, o Whisper transcreve o áudio no próprio servidor e o app compara a transcrição com a frase palavra por palavra, marcando o que você acertou, trocou, esqueceu ou acrescentou.
 
-São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta e traduzido), **Fala** (repetir uma frase) e **Escuta** (ouvir sem ver e repetir). Uma área de gestão, protegida por token, cria, edita e exporta textos próprios.
+São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta e traduzido), **Fala** (repetir uma frase) e **Escuta** (ouvir sem ver e repetir). O conteúdo vem em pacotes, com dez temas do dia a dia, e o visitante escolhe o tema e o nível. Uma área de gestão, protegida por token, importa, ativa e exporta pacotes e cria textos próprios.
 
 ## Destaques técnicos
 
 - Transcrição local com o `whisper-server` (whisper.cpp) em container isolado, sem porta publicada e sem API paga.
 - Tradução pelo tradutor embutido do Chrome ou pela Google Cloud Translation, com limite por IP e teto diário.
-- Portão de qualidade com Larastan no nível `max`, 286 testes Pest e 71 testes de JavaScript.
+- Pacotes de textos validados por um comando único (`textos:validar`), com faixas de palavras por nível do A1 ao C2, usado no importador e no portão.
+- Portão de qualidade com Larastan no nível `max`, 384 testes Pest e 73 testes de JavaScript.
 - Ambiente em Docker com Terraform: versões fixas, bases do Whisper e do nginx por digest e commit e hash do modelo conferidos no build.
 - Varredura de vulnerabilidades com Hadolint e Trivy, SARIF na aba Security e SBOM de cada imagem.
 - Privacidade verificada: áudio e texto do visitante não ficam em log, banco nem disco.
@@ -51,7 +52,7 @@ Detalhes, padrões e o passo a passo da chave e do token em [docs/configuracao.m
 
 ## Portões de qualidade
 
-- `docker exec phparrot-php composer gate`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer, TLint), Larastan `max`, Sloppy e Pest.
+- `docker exec phparrot-php composer gate`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer, TLint), Larastan `max`, Sloppy, `textos:validar` na fábrica e Pest.
 - `docker exec phparrot-node npm run test:js`: testes do JavaScript com `node --test`.
 - O workflow `containers.yml` roda Hadolint, build das imagens e Trivy a cada mudança em `docker/` ou `terraform/` e toda semana.
 
@@ -59,8 +60,8 @@ O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](do
 
 ## Documentação
 
-- [Arquitetura](docs/arquitetura.md): as peças, o fluxo da Fala e o diagrama.
-- [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google e token.
+- [Arquitetura](docs/arquitetura.md): as peças, os pacotes e temas, o fluxo da Fala e o diagrama.
+- [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google, token e pacotes.
 - [Qualidade](docs/qualidade.md): portão, hooks, CI de containers e limites.
 - [Escala](docs/escala.md): como o app cresce sem reescrever.
 - [Processo](docs/processo.md): como o projeto é desenvolvido com IA.
