@@ -1,0 +1,105 @@
+version: 2
+
+updates:
+  - package-ecosystem: docker
+    directories:
+      - /docker/php
+      - /docker/whisper
+      - /docker/nginx
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "build"
+    groups:
+      docker-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      docker:
+        patterns:
+          - "*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      composer-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      composer:
+        patterns:
+          - "*"
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      npm-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      npm:
+        patterns:
+          - "*"
+
+  - package-ecosystem: terraform
+    directory: /terraform
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "build"
+    groups:
+      terraform-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      terraform:
+        patterns:
+          - "*"
