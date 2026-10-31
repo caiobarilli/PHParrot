@@ -45,6 +45,10 @@ O workflow `containers.yml` roda em push e PR que mexam em `docker/`, `terraform
 
 Nos dois workflows, as actions são pinadas por SHA de commit, com a versão em comentário. As permissões começam em `contents: read`, e todo job tem timeout e cancelamento por branch.
 
+## Atualização de dependências
+
+O Dependabot (`.github/dependabot.yml`) confere toda segunda-feira as imagens base dos três Dockerfiles, as actions, o Composer, o npm e o provider do Terraform. Ele abre no máximo dois PRs agrupados por ecossistema: um com os saltos de versão major e outro com o resto (minor, patch e digest novo da mesma tag). Cada PR passa pelo CI e, quando mexe em imagens ou Terraform, pelo workflow de containers. O merge é manual. A versão do whisper.cpp e o hash do modelo ficam fora do bot e são atualizados à mão, com revisão do patch. Decisões em [ADR 0010](../.ai/adr/0010-dependencias.md).
+
 ## Limites
 
 - **`ignore-unfixed`:** as imagens Debian carregam centenas de CVEs sem correção publicada. Elas não falham o CI, porque não há o que fazer além de esperar. O SBOM permite consultá-las a qualquer momento.

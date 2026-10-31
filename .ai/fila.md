@@ -16,6 +16,7 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | 8 | Gerenciar textos | feito (migrations: `5c243ac`; gestão: `8a8656d`) | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela `textos` no SQLite, criar, editar, apagar, traduzir e exportar, Apagar banco em duas etapas e testes de acesso sem token (ADR 0008) |
 | 9 | CI de containers e caminho de escala | feito (branch `entrega-9-ci`: `75f7215`, `4652f8d`, `2f9b679`, `97bb0db`, `9e49bad`) | `containers.yml` com Hadolint, build com cache, Trivy nas imagens e em config, SARIF por alvo, SBOM e varredura semanal; actions pinadas por SHA nos dois workflows; ADR 0009 e `docs/escala.md` (plano, nada implementado) |
 | 10 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
+| 11 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
 
 ## Diferenças do design (validação no Chromium do WSL)
 
@@ -55,3 +56,4 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Entrega 1: setup em um comando. Hoje o `terraform apply`, o `composer setup` e o `npm install` e `npm run build` rodam à mão, em dois containers.
 - Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config).
 - Entrega 9: o `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI). Fixar `ubuntu-24.04` se algo quebrar.
+- Dependabot: Renovate para o whisper.cpp (tag, commit e hash do modelo), se a atualização manual pesar. Auto-merge de patch e digest depois da proteção da `main`.

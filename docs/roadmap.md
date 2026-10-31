@@ -23,5 +23,7 @@ Próximos passos, em ordem aproximada. Nada aqui está implementado.
 - Ambiente em um comando: hoje o `terraform apply`, o `composer setup` e o build do front rodam em passos separados.
 - `HEALTHCHECK` nas imagens, para o orquestrador de containers saber quando cada serviço está pronto.
 - Runner do CI fixo numa versão do Ubuntu, se a troca do `ubuntu-latest` causar diferença.
+- Auto-merge dos PRs de patch e de digest do Dependabot, depois da proteção da `main`.
+- Renovate para acompanhar a versão do whisper.cpp, se a atualização manual pesar.
 
 Para o crescimento além de uma VM (réplicas do Whisper, GPU, PostgreSQL e Redis, k3s), veja [escala.md](escala.md).
