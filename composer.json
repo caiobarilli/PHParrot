@@ -57,6 +57,7 @@
         "lint": "vendor/bin/duster lint",
         "stan": "vendor/bin/phpstan analyse --memory-limit=2G",
         "sloppy": "vendor/bin/sloppy",
+        "textos": "@php artisan textos:validar resources/data/textos.json",
         "test": [
             "@php artisan config:clear --ansi",
             "vendor/bin/pest"
@@ -65,6 +66,7 @@
             "@lint",
             "@stan",
             "@sloppy",
+            "@textos",
             "@test"
         ],
         "post-autoload-dump": [
