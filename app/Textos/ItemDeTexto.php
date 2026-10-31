@@ -15,6 +15,7 @@ final readonly class ItemDeTexto
         public TipoDeItem $tipo,
         public array $traducoes,
         public Origem $origem = Origem::Base,
+        public ?Tema $tema = null,
     ) {}
 
     public function traducao(string $idioma): ?string

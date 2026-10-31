@@ -43,4 +43,19 @@ final class CatalogoInvalido extends RuntimeException
     {
         return new self("Id duplicado: {$id}.");
     }
+
+    public static function formato(): self
+    {
+        return new self('Pacote fora do formato 2.');
+    }
+
+    public static function campoDoPacote(string $campo): self
+    {
+        return new self("Campo do pacote inválido: {$campo}.");
+    }
+
+    public static function itemDoPacote(string $id): self
+    {
+        return new self("Item do pacote mal formado: {$id}.");
+    }
 }

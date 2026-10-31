@@ -20,8 +20,9 @@ final readonly class CatalogoJson implements Catalogo
 
     /**
      * @param  list<ItemDeTexto>  $itens
+     * @param  list<string>|null  $idiomasDeclarados
      */
-    public function __construct(array $itens, private Randomizer $sorteador = new Randomizer)
+    public function __construct(array $itens, private Randomizer $sorteador = new Randomizer, ?array $idiomasDeclarados = null)
     {
         $porId = [];
         $porGrupo = [];
@@ -37,7 +38,7 @@ final readonly class CatalogoJson implements Catalogo
 
         $this->porId = $porId;
         $this->porGrupo = $porGrupo;
-        $this->idiomas = self::idiomasEmTodos($itens);
+        $this->idiomas = $idiomasDeclarados ?? self::idiomasEmTodos($itens);
     }
 
     public static function doArquivo(string $caminho, Randomizer $sorteador = new Randomizer): self
@@ -56,6 +57,10 @@ final readonly class CatalogoJson implements Catalogo
 
         if (! is_array($dados)) {
             throw CatalogoInvalido::arquivoIlegivel($caminho);
+        }
+
+        if (array_key_exists('formato', $dados)) {
+            return self::doPacote(Pacote::doArray($dados), $sorteador);
         }
 
         $itens = [];
@@ -82,6 +87,14 @@ final readonly class CatalogoJson implements Catalogo
         }
 
         return new self($itens, $sorteador);
+    }
+
+    public static function doPacote(Pacote $pacote, Randomizer $sorteador = new Randomizer): self
+    {
+        $idiomas = $pacote->idiomas;
+        sort($idiomas);
+
+        return new self($pacote->itens, $sorteador, $idiomas);
     }
 
     private static function chaveDoGrupo(Nivel $nivel, TipoDeItem $tipo): string
