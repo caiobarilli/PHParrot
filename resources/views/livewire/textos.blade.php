@@ -13,7 +13,7 @@
 @if ($formAberto)
 <section class="painel flex flex-col gap-4" aria-labelledby="t-form">
   <h2 id="t-form" class="rotulo">{{ $editandoId === '' ? __('gestao.textos.novo_item') : __('gestao.textos.editar_item') }}</h2>
-  <div class="grid gap-3 grid-cols-2">
+  <div class="grid gap-3 grid-cols-2 sm:grid-cols-3">
     <fieldset class="flex flex-col gap-1.5">
       <legend class="text-[13px] font-medium mb-1.5">{{ __('gestao.textos.tipo') }}</legend>
       <div class="flex gap-2" role="group">
@@ -29,6 +29,16 @@
         <option value="{{ $n }}">N{{ $n }}</option>
         @endfor
       </select>
+    </div>
+    <div class="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
+      <label for="f-tema" class="text-[13px] font-medium">{{ __('temas.titulo') }}</label>
+      <select id="f-tema" class="campo campo-sm" wire:model="tema" @error('tema') aria-invalid="true" @enderror>
+        <option value="">{{ __('temas.sem_tema') }}</option>
+        @foreach ($temas as $opcao)
+        <option value="{{ $opcao->value }}">{{ $opcao->nome() }}</option>
+        @endforeach
+      </select>
+      @error('tema')<p class="text-[13px] text-bad" role="alert">{{ $message }}</p>@enderror
     </div>
   </div>
   <div class="flex flex-col gap-1.5">
@@ -71,6 +81,16 @@
       </select>
     </div>
     <div class="flex flex-col gap-1.5">
+      <label for="filtro-tema" class="text-[13px] font-medium">{{ __('temas.titulo') }}</label>
+      <select id="filtro-tema" class="campo campo-sm w-[180px]" wire:model.live="filtroTema">
+        <option value="">{{ __('gestao.textos.todos') }}</option>
+        <option value="sem">{{ __('temas.sem_tema') }}</option>
+        @foreach ($temas as $opcao)
+        <option value="{{ $opcao->value }}">{{ $opcao->nome() }}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="flex flex-col gap-1.5">
       <span id="filtro-tipo" class="text-[13px] font-medium">{{ __('gestao.textos.tipo') }}</span>
       <div class="flex gap-2" role="group" aria-labelledby="filtro-tipo">
         @foreach (['' => 'todos', 'texto' => 'texto', 'frase' => 'frase'] as $valor => $rotulo)
@@ -86,7 +106,7 @@
     @foreach ($itens as $item)
     <li class="rounded-md border border-line bg-bg p-4 flex flex-col gap-3" wire:key="item-{{ $item->id }}">
       <div class="flex flex-wrap items-center gap-2">
-        <span class="tag {{ $item->origem === \App\Textos\Origem::Meu ? '!bg-btn !text-btn-fg' : '' }}">{{ __('gestao.textos.'.$item->origem->value) }}</span><span class="tag">N{{ $item->nivel->valor }}</span><span class="tag">{{ __('gestao.textos.'.$item->tipo->value) }}</span><span class="tag" title="{{ __('gestao.textos.par') }}">{{ strtoupper($treinoIdioma->value) }} · {{ strtoupper($nativaIdioma->value) }}</span>
+        <span class="tag {{ $item->origem === \App\Textos\Origem::Meu ? '!bg-btn !text-btn-fg' : '' }}">{{ __('gestao.textos.'.$item->origem->value) }}</span><span class="tag">N{{ $item->nivel->valor }}</span><span class="tag">{{ __('gestao.textos.'.$item->tipo->value) }}</span>@if ($item->tema)<span class="tag">{{ $item->tema->nome() }}</span>@endif<span class="tag" title="{{ __('gestao.textos.par') }}">{{ strtoupper($treinoIdioma->value) }} · {{ strtoupper($nativaIdioma->value) }}</span>@if ($catalogo->incompleto($item))<span class="tag !bg-transparent border border-bad !text-bad" title="{{ __('gestao.textos.incompleto_ajuda') }}">{{ __('gestao.textos.incompleto') }}</span>@endif
         <span class="ml-auto">
           @if ($item->origem === \App\Textos\Origem::Meu)
           @if ($apagandoId !== $item->id)

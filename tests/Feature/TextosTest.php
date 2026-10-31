@@ -9,6 +9,7 @@ use App\Models\Texto;
 use App\Textos\Catalogo;
 use App\Textos\MeusTextos;
 use App\Textos\Nivel;
+use App\Textos\Tema;
 use App\Textos\TipoDeItem;
 
 use function Pest\Laravel\get;
@@ -347,4 +348,52 @@ it('os itens criados aparecem nas telas de treino', function (): void {
     }
 
     expect($sorteou)->toBeTrue();
+});
+
+it('cria e edita um item com tema, e o tema aparece na lista', function (): void {
+    comGestao();
+
+    $tela = telaLivewire(Textos::class);
+    $tela->call('novo')
+        ->set('tema', 'compras')
+        ->set('treino', 'How much is it?')
+        ->set('nativa', 'Quanto custa?')
+        ->call('salvar')
+        ->assertSee('Compras')
+        ->assertHasNoErrors();
+
+    $texto = Texto::query()->sole();
+
+    expect($texto->tema)->toBe('compras');
+
+    $tela->call('editar', $texto->id)->assertSet('tema', 'compras')->set('tema', '')->call('salvar');
+
+    expect(Texto::query()->sole()->tema)->toBeNull();
+});
+
+it('recusa tema desconhecido no formulário', function (): void {
+    comGestao();
+
+    telaLivewire(Textos::class)->call('novo')->set('tema', 'esporte')->set('treino', 'Hi.')->set('nativa', 'Oi.')
+        ->call('salvar')->assertSee('Escolha um tema da lista ou Sem tema.')->assertHasErrors('tema');
+
+    expect(Texto::query()->count())->toBe(0);
+});
+
+it('filtra por tema e por sem tema', function (): void {
+    comGestao();
+    app(MeusTextos::class)->criar(new Nivel(1), TipoDeItem::Frase, ['en' => 'Lunch time.', 'pt-BR' => 'Hora do almoço.'], ['pt-BR', 'en'], Tema::Comida);
+
+    telaLivewire(Textos::class)
+        ->set('filtroTema', 'comida')->assertSee('Lunch time.')->assertSee('1 item')
+        ->set('filtroTema', 'sem')->assertDontSee('Lunch time.')->assertSee('15 itens')
+        ->set('filtroTema', 'lazer')->assertSee('Nada por aqui.')
+        ->set('filtroTema', '')->assertSee('16 itens');
+});
+
+it('marca como incompleto o item Meu sem um idioma ativo', function (): void {
+    comGestao();
+    Texto::query()->create(['id' => 'meu-parcial', 'nivel' => 1, 'tipo' => 'frase', 'traducoes' => ['en' => 'Only English.']]);
+
+    telaLivewire(Textos::class)->assertSee('Only English.')->assertSee('Incompleto');
 });

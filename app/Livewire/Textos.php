@@ -12,6 +12,7 @@ use App\Textos\ItemDeTexto;
 use App\Textos\MeusTextos;
 use App\Textos\Nivel;
 use App\Textos\Origem;
+use App\Textos\Tema;
 use App\Textos\TextoInvalido;
 use App\Textos\TipoDeItem;
 use Illuminate\Contracts\View\View;
@@ -28,6 +29,8 @@ final class Textos extends Component
 
     public string $filtroTipo = '';
 
+    public string $filtroTema = '';
+
     public bool $formAberto = false;
 
     #[Locked]
@@ -39,6 +42,8 @@ final class Textos extends Component
     public string $tipo = 'frase';
 
     public string $nivel = '1';
+
+    public string $tema = '';
 
     public string $treino = '';
 
@@ -81,6 +86,7 @@ final class Textos extends Component
         $this->editandoId = $item->id;
         $this->tipo = $item->tipo->value;
         $this->nivel = (string) $item->nivel->valor;
+        $this->tema = $item->tema->value ?? '';
         $this->treino = $item->traducao($this->codigoTreino) ?? '';
         $this->nativa = $item->traducao($this->codigoNativa) ?? '';
         $this->formAberto = true;
@@ -99,11 +105,13 @@ final class Textos extends Component
         $this->validate([
             'tipo' => ['required', 'in:'.implode(',', array_map(fn (TipoDeItem $tipo): string => $tipo->value, TipoDeItem::cases()))],
             'nivel' => ['required', 'integer', 'between:'.Nivel::MINIMO.','.Nivel::MAXIMO],
+            'tema' => ['nullable', 'in:'.implode(',', Tema::slugs())],
             'treino' => ['required', 'string', 'max:'.self::MAX_CARACTERES],
             'nativa' => ['required', 'string', 'max:'.self::MAX_CARACTERES],
         ], [
             'tipo.*' => __('gestao.textos.validacao.tipo'),
             'nivel.*' => __('gestao.textos.validacao.nivel'),
+            'tema.*' => __('gestao.textos.validacao.tema'),
             'treino.*' => __('gestao.textos.validacao.treino', ['max' => self::MAX_CARACTERES]),
             'nativa.*' => __('gestao.textos.validacao.nativa', ['max' => self::MAX_CARACTERES]),
         ]);
@@ -111,11 +119,12 @@ final class Textos extends Component
         $nivel = new Nivel((int) $this->nivel);
         $tipo = TipoDeItem::from($this->tipo);
         $traducoes = [$this->codigoTreino => $this->treino, $this->codigoNativa => $this->nativa];
+        $tema = Tema::tentar($this->tema);
 
         try {
             $this->editandoId === ''
-                ? $meus->criar($nivel, $tipo, $traducoes, $catalogo->idiomas())
-                : $meus->atualizar($this->editandoId, $nivel, $tipo, $traducoes, $catalogo->idiomas());
+                ? $meus->criar($nivel, $tipo, $traducoes, $catalogo->idiomas(), $tema)
+                : $meus->atualizar($this->editandoId, $nivel, $tipo, $traducoes, $catalogo->idiomas(), $tema);
         } catch (TextoInvalido) {
             $this->addError('treino', __('gestao.textos.validacao.idiomas'));
 
@@ -163,6 +172,8 @@ final class Textos extends Component
 
         return view('livewire.textos', [
             'itens' => $this->itens($catalogo),
+            'catalogo' => $catalogo,
+            'temas' => Tema::cases(),
             'treinoIdioma' => Idioma::from($this->codigoTreino),
             'nativaIdioma' => Idioma::from($this->codigoNativa),
         ])->title(__('gestao.textos.titulo'));
@@ -183,6 +194,11 @@ final class Textos extends Component
             }
         }
 
+        if ($this->filtroTema !== '') {
+            $tema = Tema::tentar($this->filtroTema);
+            $itens = array_values(array_filter($itens, fn (ItemDeTexto $item): bool => $item->tema === $tema));
+        }
+
         usort($itens, fn (ItemDeTexto $a, ItemDeTexto $b): int => ($a->origem === Origem::Base) <=> ($b->origem === Origem::Base));
 
         return $itens;
@@ -195,6 +211,7 @@ final class Textos extends Component
         $this->editandoId = '';
         $this->tipo = 'frase';
         $this->nivel = $this->filtroNivel === '' ? '1' : $this->filtroNivel;
+        $this->tema = Tema::tentar($this->filtroTema)->value ?? '';
         $this->treino = '';
         $this->nativa = '';
     }
