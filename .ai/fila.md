@@ -2,7 +2,7 @@
 
 Teto: 60 linhas
 
-Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente`.
+Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer integra na `main` e envia. Estado: `feito`, `em curso` ou `pendente`.
 
 | # | Entrega | Estado | Conteúdo |
 |---|---|---|---|
@@ -15,28 +15,25 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 | 7 | Escuta | feito (`d95406c`; ajuste de escopo abaixo) | Áudio (texto escondido, Play, olho, Ver tradução, Próxima) e o mesmo bloco Testar |
 | 8 | Gerenciar textos | feito (migrations: `5c243ac`; gestão: `8a8656d`) | Token (`PHPARROT_TOKEN`) e tela `entrar`, tabela `textos` no SQLite, criar, editar, apagar, traduzir e exportar, Apagar banco em duas etapas e testes de acesso sem token (ADR 0008) |
 | 9 | CI de containers e caminho de escala | feito (branch `entrega-9-ci`: `75f7215`, `4652f8d`, `2f9b679`, `97bb0db`, `9e49bad`) | `containers.yml` com Hadolint, build com cache, Trivy nas imagens e em config, SARIF por alvo, SBOM e varredura semanal; actions pinadas por SHA nos dois workflows; ADR 0009 e `docs/escala.md` (plano, nada implementado) |
-| 10 | Deploy | pendente | VM no Hyper-V, Cloudflare e deploy automático pelo GitHub Actions |
-| 11 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
+| 10 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
+| 11 | Temas e pacotes | feito (branch `entrega-11-temas`) | Enum `Tema`, formato 2, tabela `pacotes` com o ativo, importar e exportar, `textos:validar` no portão, seletor de tema, "Aparência" no visual, escape do Apagar banco, fábrica de transição e semente em `rascunhos/` (ADR 0011) |
+| 12 | Tradução do conteúdo | pendente | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
+| 13 | Conteúdo, 5 primeiros temas | pendente | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
+| 14 | Teste da Google API | pendente | Chave real, restrita, com cota e alerta no console |
+| 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
+| 16 | Deploy | pendente | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
 
 ## Diferenças do design (validação no Chromium do WSL)
 
 - Entrega 3: a fonte `Segoe UI`/`system-ui` não existe no WSL. O Chromium cai em `Liberation Mono`, então os prints saem em monoespaçada. Medidas, cores e posições batem com os prints do design.
 - Entrega 3: a seção "Textos" e o "Apagar banco" da configuração só entram na entrega 8, como diz o PLANO.
 - Entrega 3: as telas Fala e Escuta mostram "em construção" até as entregas 6 e 7.
-- Entrega 4: o botão Pausa cancela a fala (`speechSynthesis.cancel`), porque o design desativa o Play enquanto lê. O Chrome não retoma a fala de forma confiável.
-- Entrega 4: o ADR 0006 manda 429 no limite de uso e `max:2000` no texto. A rota responde 429 ao estourar o limite e 422 ao passar de 2000 caracteres, os dois com mensagem do `lang/`.
-- Entrega 4: o Inverter também volta ao `gerado` quando o texto é igual à `fonte` do par (e não só o contrário), para não gastar tradução à toa. Só vale no idioma em que o par foi feito.
-- Entrega 4: no Chrome 138+ do WSL a `Translator` real existe; a validação usou uma `Translator` falsa (progresso 45%, par indisponível e ausência da API). A Google API só foi validada pelo Pest e pelo teste de JS, porque o `.env` do dev não tem chave.
-- Entrega 4: sem `TrustProxies`, o IP do limite é o do proxy. Fica para o deploy, como diz o ADR 0006.
-- Entrega 4: a voz do TTS vive em `resources/js/voz.js`, para Fala e Escuta reusarem. O `lang` do `SpeechSynthesisUtterance` é o da voz escolhida, que sempre é do idioma do texto (por exemplo `en-GB` quando só existe essa para `en-US`).
-- Entrega 4: o projeto já tinha runner de JS (`node --test`, usado nos `.mjs` do Husky). A lógica de voz tem `resources/js/voz.test.mjs`, ligada ao `lint-staged`, ao `npm run test:js` e a um passo novo do CI. O `composer gate` não roda esse teste.
+- Entrega 4: o botão Pausa cancela a fala (`speechSynthesis.cancel`), porque o design desativa o Play enquanto lê. O Chrome não retoma a fala de forma confiável. O ADR 0006 manda 429 no limite de uso e `max:2000` no texto. A rota responde 429 ao estourar o limite e 422 ao passar de 2000 caracteres, os dois com mensagem do `lang/`. O Inverter também volta ao `gerado` quando o texto é igual à `fonte` do par (e não só o contrário), para não gastar tradução à toa. Só vale no idioma em que o par foi feito. No Chrome 138+ do WSL a `Translator` real existe; a validação usou uma `Translator` falsa (progresso 45%, par indisponível e ausência da API). A Google API só foi validada pelo Pest e pelo teste de JS, porque o `.env` do dev não tem chave. Sem `TrustProxies`, o IP do limite é o do proxy. Fica para o deploy, como diz o ADR 0006. A voz do TTS vive em `resources/js/voz.js`, para Fala e Escuta reusarem. O `lang` do `SpeechSynthesisUtterance` é o da voz escolhida, que sempre é do idioma do texto (por exemplo `en-GB` quando só existe essa para `en-US`). O projeto já tinha runner de JS (`node --test`, usado nos `.mjs` do Husky). A lógica de voz tem `resources/js/voz.test.mjs`, ligada ao `lint-staged`, ao `npm run test:js` e a um passo novo do CI. O `composer gate` não roda esse teste.
 - Entrega 3: as preferências ficam no `localStorage` e são espelhadas no cookie `phparrot_prefs`, sem criptografia, só para o servidor montar a interface no idioma certo.
-
-- Entrega 5: o `sha1sum` do `base` e do `small` bate com o models/README (SHA-1, 40 caracteres), e o build confere o commit `d1be6fde` da tag v1.9.5. `duration` e `language` por requisição existem no `server.cpp` (linhas 490 e 558).
+- Entrega 5: o `sha1sum` do `base` e do `small` bate com o models/README (SHA-1, 40 caracteres), e o build confere o commit `d1be6fde` da tag v1.9.5. `duration` e `language` por requisição existem no `server.cpp` (linhas 490 e 558). O build do whisper usa `-DGGML_NATIVE=OFF` com AVX2, FMA e F16C ligados, para a imagem rodar em outra CPU. Uma CPU sem AVX2 não roda a imagem.
 - Entrega 5, privacidade (log ligado só no teste, container temporário já removido): com o patch `0001`, o `/tmp` fica vazio após áudio inválido e após áudio válido, e o stdout não traz o texto transcrito (só `Received request: <nome do arquivo>`). Sem o patch, o inválido deixava o arquivo. A limpeza de 2 min apagou um arquivo velho e manteve o novo, com o `whisper-server` como PID 1.
 - Entrega 5, mutex: 3 pedidos simultâneos direto no servidor levaram 2,2 s, 4,5 s e 6,8 s (serializa). Pelo app, 5 simultâneos deram 4 respostas 200 (até 9,4 s no total) e 1 resposta 503 com `Retry-After: 5`. O nginx barra 4 MB com 413 (HTML) e o Laravel barra 2,5 MB com 422.
 - Entrega 5, `base` x `small` (10 frases do catálogo por idioma, voz sintética do Piper, webm/opus, i7-1255U, 4 threads): EN igual nos dois (9/10 exatas, WER 1,6%). PT: `base` 5/10 e WER 18,8%; `small` 6/10 e WER 12,5%. Tempo médio por frase: `base` 1,6 a 1,8 s, `small` 6,3 a 6,5 s. Memória: `base` 266 MiB, `small` 653 MiB. Voz sintética limpa não representa microfone real; a decisão de trocar para `small` é do Maintainer.
-- Entrega 5: o build do whisper usa `-DGGML_NATIVE=OFF` com AVX2, FMA e F16C ligados, para a imagem rodar em outra CPU. Uma CPU sem AVX2 não roda a imagem.
 - Entregas 6 e 7: o Chromium do WSL não tem vozes, então Play e o player da voz do app ficam desativados com o aviso de voz. A gravação foi validada de ponta a ponta com microfone falso lendo um WAV (`--use-file-for-fake-audio-capture`): `MediaRecorder`, nginx, Laravel, Whisper e a transcrição na tela. O áudio do player da gravação tocou com `--autoplay-policy=no-user-gesture-required`.
 - Entregas 6 e 7: o aviso de privacidade (ADR 0007) fica abaixo dos botões do microfone, como `nota`, e não existe no design. Erro de transcrição (limite, ocupado, formato) e "não ouvi nada" usam o `alerta-erro`, também fora do design, que só tem o erro de microfone.
 - Mudança de escopo (pedido do Maintainer, vale sobre o PLANO e o design): Fala e Escuta usam o mesmo componente `x-testar` (Gravar, Ouvir minha gravação, Transcrever, Repetir). Gravar só grava e o áudio só vai a `POST /transcrever` no Transcrever. O Repetir descarta gravação e resultado. Saíram o "Transcrever" do Exemplo da Fala, o sublinhado da frase e o player "Voz do app lendo a transcrição" da Escuta.
@@ -50,6 +47,8 @@ Entregas do `PLANO.md`, um PR por item. Estado: `feito`, `em curso` ou `pendente
 - Entrega 8: o `.env` do dev não tem token. Para ver as telas, o token entrou por um `fastcgi_param` temporário no nginx, depois revertido (`git diff docker/` vazio). A validação achou o 429 do `entrar` em inglês, corrigido na lista de prioridade (pitfall registrado).
 - Entrega 9: a `nginx:1.30.6-alpine` tinha `brotli-libs` (CRITICAL) e `curl` (HIGH) com correção e sem tag nova. Virou `docker/nginx/Dockerfile`: sem `curl`, `brotli-libs` atualizado e sem root (o Trivy config pediu `USER`), com o pid em `/tmp`. Telas, CSS, `/transcrever` (200) e o 413 do nginx conferidos (ADR 0009).
 - Entrega 9: `USER` numérico no php (1000) e no whisper (10001), sem GID, para o hadolint; o uid:gid em execução não mudou (999 no whisper). O `ci.yml` saiu do checkout e do setup-node v4 (aviso de Node.js 20) para v7.
+- Entrega 11: o pacote ativo é a coluna `ativo` de `pacotes`; o pacote exige `en` e `pt-BR`; `fabrica` é slug reservado; o `meus-textos` importado volta para os Meus textos, com a faixa como alerta e substituição só com confirmação; o importador aceita tema nulo, para os exports voltarem sem edição (ADR 0011, Consequência).
+- Entrega 11: a gestão de pacotes é a tela `/pacotes`, com link na gestão de textos e na configuração. Sem tema na fábrica, o select de tema fica desativado só com "Todos". A semente em `rascunhos/` não passa nas faixas do anexo (curva plana do legado), e isso fica para a entrega 13.
 
 ## Melhorias
 
