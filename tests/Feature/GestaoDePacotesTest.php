@@ -52,7 +52,7 @@ it('importa um pacote válido, que entra inativo, com a mensagem de sucesso', fu
 
     post('/pacotes/importar', ['arquivo' => arquivoDePacote(comidaBruta())])
         ->assertRedirect(route('pacotes'))
-        ->assertSessionHas('status', 'Teste importado, com 90 itens.');
+        ->assertSessionHas('status', 'Importado: Teste, com 90 itens.');
 
     expect(PacoteImportado::query()->sole()->only(['slug', 'ativo']))->toBe(['slug' => 'comida-1', 'ativo' => false]);
 });
@@ -105,7 +105,7 @@ it('slug repetido pede Substituir, e com Substituir troca o pacote', function ()
     post('/pacotes/importar', ['arquivo' => arquivoDePacote(comidaBruta())])
         ->assertSessionHas('erro_importar', 'Já existe comida-1. Marque Substituir para trocar.');
     post('/pacotes/importar', ['arquivo' => arquivoDePacote(comidaBruta()), 'substituir' => '1'])
-        ->assertSessionHas('status', 'Teste substituído, com 90 itens.');
+        ->assertSessionHas('status', 'Substituído: Teste, com 90 itens.');
 
     expect(PacoteImportado::query()->count())->toBe(1);
 });
@@ -142,7 +142,7 @@ it('o export da fábrica volta pelo importador sem edição, com outro slug', fu
         ->assertSessionHas('relatorio', fn (array $relatorio): bool => $relatorio['erros'] === ['pacote.slug: o slug fabrica é reservado']);
 
     $fabrica['pacote']['slug'] = 'copia';
-    post('/pacotes/importar', ['arquivo' => arquivoDePacote($fabrica)])->assertSessionHas('status', 'Fábrica importado, com 150 itens.');
+    post('/pacotes/importar', ['arquivo' => arquivoDePacote($fabrica)])->assertSessionHas('status', 'Importado: Fábrica, com 150 itens.');
 });
 
 it('exportar um slug desconhecido responde 404', function (): void {

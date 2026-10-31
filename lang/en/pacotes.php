@@ -30,8 +30,8 @@ return [
         'botao' => 'Import',
         'sem_arquivo' => 'Choose a .json file.',
         'slug_existe' => ':slug already exists. Check Replace to swap it.',
-        'importado' => ':nome imported, with :itens items.',
-        'substituido' => ':nome replaced, with :itens items.',
+        'importado' => 'Imported: :nome, with :itens items.',
+        'substituido' => 'Replaced: :nome, with :itens items.',
     ],
     'relatorio' => [
         'erros' => '{1} :arquivo has 1 error. Nothing was imported.|[2,*] :arquivo has :count errors. Nothing was imported.',

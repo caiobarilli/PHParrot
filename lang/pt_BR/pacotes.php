@@ -30,8 +30,8 @@ return [
         'botao' => 'Importar',
         'sem_arquivo' => 'Escolha um arquivo .json.',
         'slug_existe' => 'Já existe :slug. Marque Substituir para trocar.',
-        'importado' => ':nome importado, com :itens itens.',
-        'substituido' => ':nome substituído, com :itens itens.',
+        'importado' => 'Importado: :nome, com :itens itens.',
+        'substituido' => 'Substituído: :nome, com :itens itens.',
     ],
     'relatorio' => [
         'erros' => '{1} :arquivo tem 1 erro. Nada foi importado.|[2,*] :arquivo tem :count erros. Nada foi importado.',
