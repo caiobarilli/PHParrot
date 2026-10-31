@@ -14,8 +14,8 @@ A Fala e a Escuta gravam com `MediaRecorder` e precisam do texto falado, transcr
    - 10 por minuto por IP e 200 por dia no total, de `PHPARROT_TRANSCRICAO_POR_MINUTO` e `PHPARROT_TRANSCRICAO_POR_DIA` no `config/phparrot.php` e no `.env.example`.
    - `location = /transcrever` no nginx com `client_max_body_size 3m`.
 2. **Modelo:**
-   - `base` multilíngue por padrão, configurável por `PHPARROT_WHISPER_MODELO`. Nunca `.en`, nunca `--prompt` com a frase esperada.
-   - Na entrega, comparar `base` e `small` com umas 10 frases em PT e EN (acerto e tempo), registrado no `.ai/fila.md`.
+   - `base` multilíngue, escolhido só pela variável `whisper_modelo` do Terraform: o modelo vai na imagem e o Laravel não lê `PHPARROT_WHISPER_MODELO`. Nunca `.en`, nunca `--prompt` com a frase esperada.
+   - Comparados `base` e `small` com 10 frases em PT e EN (acerto e tempo), registrado no `.ai/fila.md`. O Maintainer decidiu ficar com o `base`.
 3. **Arquitetura:**
    - Container `phparrot-whisper` com o `whisper-server`, no Terraform, na `phparrot-network`, sem porta publicada no host.
    - O contrato `Transcritor` fica, e o motor é o `TranscritorWhisperServer`, com o `Http` do Laravel.
@@ -43,6 +43,7 @@ A Fala e a Escuta gravam com `MediaRecorder` e precisam do texto falado, transcr
 
 Pré-requisitos do deploy:
 - A VM do Hyper-V precisa de folga para ~388 MB residentes do `base`, e o Terraform define `memory` no `phparrot-whisper`.
+- A CPU da VM precisa de AVX2: a imagem compila com `-DGGML_NATIVE=OFF` e AVX2, FMA e F16C ligados, e não roda sem AVX2.
 - A política de privacidade cita o áudio, junto do envio ao Google do 0006.
 
 Verificado na entrega (detalhes e números no `.ai/fila.md`):
