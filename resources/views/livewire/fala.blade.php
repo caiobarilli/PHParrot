@@ -6,9 +6,11 @@
     <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
     <x-nivel :nivel="$nivel" />
   </div>
-  <div wire:ignore>
-    <input id="frase" type="text" class="campo text-[17px] sm:text-[19px]" aria-labelledby="t-exemplo" placeholder="{{ __('fala.placeholder', ['idioma' => $nomeNaFrase]) }}" spellcheck="false" x-model="frase">
-  </div>
+  <x-frase-escondivel>
+    <div wire:ignore>
+      <input id="frase" type="text" class="campo pr-14 text-[17px] sm:text-[19px]" aria-labelledby="t-exemplo" placeholder="{{ __('fala.placeholder', ['idioma' => $nomeNaFrase]) }}" spellcheck="false" x-model="frase">
+    </div>
+  </x-frase-escondivel>
   <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-[10px]">
     <button type="button" class="btn" x-on:click="tocar()" x-bind:disabled="vazio || ! vozPronta || ocupadoGravando"><x-icone nome="play" />{{ __('leitura.play') }}</button>
     <x-ver-traducao />

@@ -6,12 +6,9 @@
     <div class="flex items-center gap-2"><h2 id="t-escuta" class="rotulo">{{ __('escuta.audio') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
     <x-nivel :nivel="$nivel" />
   </div>
-  <div class="campo relative min-h-[88px] pr-14 flex items-center">
-    <p class="text-[19px] sm:text-[22px]" x-show="visivel" x-cloak x-text="frase">{{ $frase }}</p>
-    <p class="flex flex-wrap gap-x-2 gap-y-2 text-[19px] sm:text-[22px]" x-show="! visivel"><span class="sr-only">{{ __('escuta.escondido') }}</span><span aria-hidden="true" class="contents"><template x-for="largura in larguras"><span class="esconde" x-bind:style="{ width: largura }"></span></template></span></p>
-    <button type="button" class="btn btn-sm btn-ghost btn-icone absolute top-1/2 -translate-y-1/2 right-3" x-show="! visivel" x-on:click="visivel = true" aria-pressed="false" aria-label="{{ __('escuta.mostrar') }}"><x-icone nome="olho" /></button>
-    <button type="button" class="btn btn-sm btn-ghost btn-icone absolute top-1/2 -translate-y-1/2 right-3" x-show="visivel" x-cloak x-on:click="visivel = false" aria-pressed="true" aria-label="{{ __('escuta.esconder') }}"><x-icone nome="olho-cortado" /></button>
-  </div>
+  <x-frase-escondivel :escondida="true" minimo="min-h-[88px]">
+    <div class="campo min-h-[88px] pr-14 flex items-center"><p class="text-[19px] sm:text-[22px]" x-text="frase">{{ $frase }}</p></div>
+  </x-frase-escondivel>
   <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-[10px]">
     <button type="button" class="btn" x-on:click="tocar()" x-bind:disabled="vazio || ! vozPronta || ocupadoGravando"><x-icone nome="play" />{{ __('leitura.play') }}</button>
     <x-ver-traducao />

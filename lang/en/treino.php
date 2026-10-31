@@ -28,4 +28,7 @@ return [
     'palavra_trocada' => 'wrong word',
     'palavra_faltando' => 'missing',
     'palavra_extra' => 'extra',
+    'mostrar' => 'Show text',
+    'esconder' => 'Hide text',
+    'escondida' => 'Text hidden. Use the eye button to show it.',
 ];

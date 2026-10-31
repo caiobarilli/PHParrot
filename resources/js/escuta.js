@@ -1,15 +1,13 @@
 import { comDica } from './dica-da-tela.js';
+import { comFraseEscondivel } from './frase-escondivel.js';
 import { comGravacao } from './gravacao-da-tela.js';
 import { mesclar } from './mesclar.js';
 import { preferencias } from './preferencias.js';
 import { comVoz } from './voz-da-tela.js';
 
-const LARGURA_POR_LETRA = 0.55;
-
 export const escuta = () =>
-    mesclar(comVoz(), comGravacao(), comDica(), {
+    mesclar(comVoz(), comGravacao(), comDica(), comFraseEscondivel(false), {
         frase: '',
-        visivel: false,
         init() {
             this.iniciarVoz();
             this.iniciarGravacao();
@@ -19,7 +17,7 @@ export const escuta = () =>
                 this.pararVoz();
                 this.reiniciarTeste();
                 this.traducaoVisivel = false;
-                this.visivel = false;
+                this.restaurarVisibilidade();
                 this.frase = this.$wire.frase;
             });
             this.$wire.$watch('nivel', (nivel) => preferencias().definir({ nivel }));
@@ -30,17 +28,8 @@ export const escuta = () =>
         get vazio() {
             return this.frase.trim() === '';
         },
-        get larguras() {
-            return this.frase
-                .split(/\s+/)
-                .filter((palavra) => palavra !== '')
-                .map((palavra) => `${(palavra.length * LARGURA_POR_LETRA).toFixed(2)}em`);
-        },
         tocar() {
             this.pararAudicao();
             this.falar(this.frase);
-        },
-        aoTranscrito() {
-            this.visivel = true;
         },
     });

@@ -28,4 +28,7 @@ return [
     'palavra_trocada' => 'trocada',
     'palavra_faltando' => 'faltando',
     'palavra_extra' => 'a mais',
+    'mostrar' => 'Mostrar texto',
+    'esconder' => 'Esconder texto',
+    'escondida' => 'Texto escondido. Use o botão de olho para mostrar.',
 ];

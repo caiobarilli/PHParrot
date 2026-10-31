@@ -28,7 +28,7 @@ it('a Escuta não tem mais a voz do app lendo a transcrição nem o Gravar fora 
         ->and(substr_count($html, 'Transcrever'))->toBe(1);
 });
 
-it('só a Escuta esconde o texto da frase por padrão, com uma barra por palavra', function (): void {
+it('a Escuta esconde a frase por padrão, com uma barra por palavra, no mesmo componente da Fala', function (): void {
     $html = telaDeFrases(Escuta::class)->html();
 
     expect($html)->toContain('x-show="! visivel"')
