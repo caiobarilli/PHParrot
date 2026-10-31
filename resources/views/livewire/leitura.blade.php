@@ -9,7 +9,10 @@
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="editado && ! vazio" x-cloak>{{ __('leitura.editado') }}</span>
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="traduzidoAuto" x-cloak>{{ __('leitura.traduzido_auto') }}</span>
     </div>
-    <x-nivel :nivel="$nivel" />
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <x-tema :tema="$tema" :temas="$temas" :vazio="$temaVazio" />
+      <x-nivel :nivel="$nivel" />
+    </div>
   </div>
   <div class="-mt-1" x-show="editado && ! vazio" x-cloak>
     <button type="button" class="btn btn-sm btn-ghost" x-on:click="voltarAoOriginal()"><x-icone nome="desfazer" />{{ __('leitura.voltar_ao_original') }}</button>

@@ -28,12 +28,14 @@ const validar = (bruto, cfg) => {
     const par = cfg.ativos.includes(dados.nativa) && cfg.ativos.includes(dados.treino) && dados.nativa !== dados.treino;
     const nivel = Number.isInteger(dados.nivel) && dados.nivel >= 1 && dados.nivel <= 10 ? dados.nivel : padrao.nivel;
     const traducao = dados.traducao === 'google' && cfg.google ? 'google' : 'chrome';
+    const tema = (cfg.temas ?? []).includes(dados.tema) ? dados.tema : null;
 
     return {
         nativa: par ? dados.nativa : padrao.nativa,
         treino: par ? dados.treino : padrao.treino,
         nivel,
         traducao,
+        tema,
     };
 };
 

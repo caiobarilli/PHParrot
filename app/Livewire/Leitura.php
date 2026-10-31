@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Livewire\Concerns\EscolheTema;
 use App\Preferencias\Preferencias;
 use App\Textos\Catalogo;
 use App\Textos\ItemDeTexto;
@@ -17,6 +18,8 @@ use Livewire\Component;
 #[Layout('layouts::app', ['tela' => 'leitura'])]
 final class Leitura extends Component
 {
+    use EscolheTema;
+
     #[Locked]
     public int $nivel = Nivel::MINIMO;
 
@@ -56,6 +59,7 @@ final class Leitura extends Component
             $this->treino => $preferencias->treino->nome(),
         ];
 
+        $this->tema = $preferencias->tema->value ?? '';
         $this->sortear($catalogo, null);
     }
 
@@ -86,7 +90,8 @@ final class Leitura extends Component
 
     private function sortear(Catalogo $catalogo, ?string $excluirId): void
     {
-        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Texto, $excluirId);
+        $tema = $this->temaDoSorteio($catalogo, TipoDeItem::Texto);
+        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Texto, $excluirId, $tema);
 
         $this->itemId = $item instanceof ItemDeTexto ? $item->id : '';
         $this->textos = $item instanceof ItemDeTexto

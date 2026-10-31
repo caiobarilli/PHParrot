@@ -11,6 +11,7 @@
             array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $ativos),
             array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->voz(), $ativos),
         ),
+        'temas' => \App\Textos\Tema::slugs(),
         'cookie' => \App\Preferencias\Preferencias::COOKIE,
         'google' => filled(config('services.google_translate.key')),
     ];

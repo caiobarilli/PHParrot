@@ -4,7 +4,10 @@
 <section class="painel flex flex-col gap-4" aria-labelledby="t-escuta">
   <div class="flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-2"><h2 id="t-escuta" class="rotulo">{{ __('escuta.audio') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
-    <x-nivel :nivel="$nivel" />
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <x-tema :tema="$tema" :temas="$temas" :vazio="$temaVazio" />
+      <x-nivel :nivel="$nivel" />
+    </div>
   </div>
   <x-frase-escondivel :escondida="true" minimo="min-h-[88px]">
     <div class="campo min-h-[88px] pr-14 flex items-center"><p class="text-[19px] sm:text-[22px]" x-text="frase">{{ $frase }}</p></div>

@@ -13,6 +13,8 @@ use Livewire\Attributes\Locked;
 
 trait SorteiaFrases
 {
+    use EscolheTema;
+
     #[Locked]
     public int $nivel = Nivel::MINIMO;
 
@@ -46,6 +48,7 @@ trait SorteiaFrases
         $this->nativa = $preferencias->nativa->value;
         $this->vozes = [$this->treino => $preferencias->treino->voz()];
         $this->nomes = [$this->treino => $preferencias->treino->nome()];
+        $this->tema = $preferencias->tema->value ?? '';
 
         $this->sortear($catalogo, null);
     }
@@ -69,7 +72,8 @@ trait SorteiaFrases
 
     private function sortear(Catalogo $catalogo, ?string $excluirId): void
     {
-        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Frase, $excluirId);
+        $tema = $this->temaDoSorteio($catalogo, TipoDeItem::Frase);
+        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Frase, $excluirId, $tema);
 
         $this->itemId = $item instanceof ItemDeTexto ? $item->id : '';
         $this->frase = $item instanceof ItemDeTexto ? $item->traducao($this->treino) ?? '' : '';

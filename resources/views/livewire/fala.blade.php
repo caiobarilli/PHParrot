@@ -4,7 +4,10 @@
 <section class="painel flex flex-col gap-4" aria-labelledby="t-exemplo">
   <div class="flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
-    <x-nivel :nivel="$nivel" />
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <x-tema :tema="$tema" :temas="$temas" :vazio="$temaVazio" />
+      <x-nivel :nivel="$nivel" />
+    </div>
   </div>
   <x-frase-escondivel :escondida="true">
     <div wire:ignore>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Preferencias\ModoTraducao;
 use App\Preferencias\Preferencias;
 use App\Textos\Idioma;
+use App\Textos\Tema;
 
 /**
  * @return list<Idioma>
@@ -67,3 +68,15 @@ it('recusa nível e tradução inválidos', function (array $dados): void {
 it('mostra o par ativo', function (): void {
     expect(Preferencias::padrao()->par())->toBe('PT → EN');
 });
+
+it('lê o tema do cookie e troca slug desconhecido por Todos', function (mixed $tema, ?Tema $esperado): void {
+    $prefs = Preferencias::doCookie((string) json_encode(['tema' => $tema]), ativos());
+
+    expect($prefs->tema)->toBe($esperado)
+        ->and($prefs->paraJs()['tema'])->toBe($esperado?->value);
+})->with([
+    'conhecido' => ['comida', Tema::Comida],
+    'desconhecido' => ['esporte', null],
+    'número' => [3, null],
+    'ausente' => [null, null],
+]);

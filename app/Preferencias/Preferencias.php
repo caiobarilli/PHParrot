@@ -6,6 +6,7 @@ namespace App\Preferencias;
 
 use App\Textos\Idioma;
 use App\Textos\Nivel;
+use App\Textos\Tema;
 
 final readonly class Preferencias
 {
@@ -16,6 +17,7 @@ final readonly class Preferencias
         public Idioma $treino,
         public Nivel $nivel,
         public ModoTraducao $traducao,
+        public ?Tema $tema = null,
     ) {}
 
     public static function padrao(): self
@@ -45,7 +47,13 @@ final readonly class Preferencias
 
         $traducao = is_string($dados['traducao'] ?? null) ? ModoTraducao::tryFrom($dados['traducao']) : null;
 
-        return new self($nativa, $treino, self::nivel($dados['nivel'] ?? null) ?? $padrao->nivel, $traducao ?? $padrao->traducao);
+        return new self(
+            $nativa,
+            $treino,
+            self::nivel($dados['nivel'] ?? null) ?? $padrao->nivel,
+            $traducao ?? $padrao->traducao,
+            Tema::tentar($dados['tema'] ?? null),
+        );
     }
 
     /**
@@ -69,7 +77,7 @@ final readonly class Preferencias
     }
 
     /**
-     * @return array{nativa: string, treino: string, nivel: int, traducao: string}
+     * @return array{nativa: string, treino: string, nivel: int, traducao: string, tema: ?string}
      */
     public function paraJs(): array
     {
@@ -78,6 +86,7 @@ final readonly class Preferencias
             'treino' => $this->treino->value,
             'nivel' => $this->nivel->valor,
             'traducao' => $this->traducao->value,
+            'tema' => $this->tema?->value,
         ];
     }
 }
