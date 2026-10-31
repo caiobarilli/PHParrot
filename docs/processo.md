@@ -6,7 +6,7 @@ O PHParrot é desenvolvido por uma pessoa com agentes de IA, em papéis separado
 
 | Papel | Faz | Não faz |
 |---|---|---|
-| **Maintainer** (humano) | Decide escopo e trade-offs, valida na tela, faz push e merge. É a ponte entre as sessões. | Delegar a decisão final. |
+| **Maintainer** (humano) | Decide escopo e trade-offs, valida na tela, faz o merge na `main` pelo terminal e o push. É a ponte entre as sessões. | Delegar a decisão final. |
 | **Orquestrador** | Fatia o plano em entregas, escreve o pedido de cada uma e revisa o que volta. | Executar ou commitar. |
 | **Executor** | Implementa numa branch, roda o portão e commita só com tudo verde. Para e pergunta quando algo não fecha. | Push, merge, ou estender o escopo. |
 
@@ -14,11 +14,11 @@ Orquestrador e Executor rodam em sessões separadas. Um revisa o trabalho do out
 
 ## Ciclo de uma entrega
 
-1. **Plano:** o escopo do produto, fatiado em entregas pequenas, uma por PR.
+1. **Plano:** o escopo do produto, fatiado em entregas pequenas. Cada entrega é feita numa branch, e uma rodada longa pode cobrir várias.
 2. **Sabatina:** antes de codar, o plano da entrega passa por uma sessão de perguntas duras. Ali aparecem as pontas soltas: limites, falhas, privacidade, o que fica de fora.
 3. **ADR:** o que foi decidido vira um registro curto em `.ai/adr/`, com contexto, decisão, consequência e fontes.
 4. **Execução:** o Executor implementa contra o ADR, valida no ambiente real e devolve um relatório: o que fez, o que mudou do pedido e por quê, os resultados dos portões.
-5. **Revisão e merge:** o Orquestrador revisa, o Maintainer valida na tela e integra.
+5. **Revisão e integração:** o Orquestrador revisa, e o Maintainer valida na tela, faz o merge da branch na `main` pelo terminal e o push, que dispara o CI.
 
 Se a execução esbarra em algo que o ADR não previu (uma vulnerabilidade sem correção, um hash que não bate, uma medida que contradiz o plano), o Executor para e reporta com opções. Não decide sozinho.
 
