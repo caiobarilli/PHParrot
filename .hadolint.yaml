@@ -1,0 +1,4 @@
+ignored:
+  - DL3008
+
+# DL3008: as imagens base estão travadas por tag e digest, e o Debian tira do espelho as versões antigas dos pacotes, então travar a versão no apt quebraria o build sem ganho. As CVEs dos pacotes ficam com o Trivy.

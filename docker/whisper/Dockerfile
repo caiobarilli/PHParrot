@@ -34,6 +34,8 @@ RUN cmake -B build \
 
 FROM ${DEBIAN} AS modelo
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ARG MODELO=base
 ARG MODELO_SHA1
 
@@ -60,7 +62,7 @@ COPY --chmod=755 iniciar.sh /usr/local/bin/iniciar.sh
 
 ENV MODELO=${MODELO}
 
-USER whisper
+USER 10001
 
 EXPOSE 8080
 

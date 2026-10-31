@@ -28,4 +28,4 @@ RUN groupadd -g 1000 appuser \
 RUN sed -i 's/www-data/appuser/g' /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /var/www/html
-USER appuser
+USER 1000
