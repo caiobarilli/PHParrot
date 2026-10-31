@@ -10,9 +10,9 @@ Como o PHParrot está hoje, por que esse é o tamanho certo e como ele cresce se
 | Banco | SQLite num arquivo | Quase nenhum dado: só os textos criados na gestão ([ADR 0008](../.ai/adr/0008-gestao.md)) |
 | Sessão, cache e trava | Driver `database`, no mesmo SQLite | Uma instância só, sem Redis para manter |
 | Transcrição | Um `phparrot-whisper`, CPU, modelo `base`, uma inferência por vez | O servidor serializa por mutex. A rota tem trava, limite por IP e teto diário ([ADR 0007](../.ai/adr/0007-transcricao.md)) |
-| Infra | Terraform com o provider Docker numa máquina ([ADR 0002](../.ai/adr/0002-ambiente.md)) | O mesmo arquivo sobe o dev e, na entrega 10, a VM |
+| Infra | Terraform com o provider Docker numa máquina ([ADR 0002](../.ai/adr/0002-ambiente.md)) | O mesmo arquivo sobe o dev e, no deploy, a VM |
 
-Medido na entrega 5 (i7-1255U, 4 threads): 1,6 a 1,8 s por frase no `base`, com cerca de 270 MiB de memória. Três pedidos simultâneos terminam em 2,2 s, 4,5 s e 6,8 s. Com cinco simultâneos pelo app, quatro deram 200 e um recebeu 503 com `Retry-After`.
+Medido em desenvolvimento (i7-1255U, 4 threads): 1,6 a 1,8 s por frase no `base`, com cerca de 270 MiB de memória. Três pedidos simultâneos terminam em 2,2 s, 4,5 s e 6,8 s. Com cinco simultâneos pelo app, quatro deram 200 e um recebeu 503 com `Retry-After`.
 
 O gargalo é a transcrição, não o PHP nem o banco. Enquanto o teto diário (200) e a fila curta bastarem, crescer só aumenta custo e manutenção.
 
