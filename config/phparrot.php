@@ -20,4 +20,12 @@ return [
         'url' => env('PHPARROT_WHISPER_URL', 'http://phparrot-whisper:8080'),
     ],
 
+    'gestao' => [
+        'token' => env('PHPARROT_TOKEN'),
+        'token_minimo' => 32,
+        'validade_minutos' => 30,
+        'entrar_por_minuto' => (int) env('PHPARROT_ENTRAR_POR_MINUTO', 5),
+        'entrar_por_hora' => (int) env('PHPARROT_ENTRAR_POR_HORA', 20),
+    ],
+
 ];

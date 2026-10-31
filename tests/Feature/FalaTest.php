@@ -32,7 +32,7 @@ it('a Fala não transcreve o exemplo: o Transcrever só existe no Testar', funct
 });
 
 it('a Fala esconde a frase por padrão e usa o mesmo olho da Escuta', function (): void {
-    $html = telaDeFrases(Fala::class)->html();
+    $html = telaLivewire(Fala::class)->html();
 
     expect($html)->toContain('x-data="fala"')
         ->and($html)->toContain('aria-pressed="true"')

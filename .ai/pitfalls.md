@@ -33,3 +33,21 @@ Evidência: `resources/views/layouts/app.blade.php:6` (o array no `@php`) e `:39
 O Vite resolve `'./voz'`, mas o Node não: o teste de `preferencias.js` falhou com `ERR_MODULE_NOT_FOUND`. Os imports de `resources/js` levam `.js`.
 
 Evidência: `resources/js/preferencias.js:1` e `resources/js/preferencias.test.mjs`.
+
+## `Livewire::test()` roda sem middleware
+
+O `RequestBroker` do Livewire chama `withoutMiddleware()`. O `ExigirGestao` persistente nunca age num `Livewire::test()`, então ele só se prova por HTTP: um POST ao endpoint de update com o snapshot de `/textos`, depois de limpar a flag da sessão, deve redirecionar para o `entrar`.
+
+Evidência: `vendor/livewire/livewire/src/Features/SupportTesting/RequestBroker.php:30` e o teste "o Livewire reaplica o ExigirGestao" em `tests/Feature/AcessoGestaoTest.php`.
+
+## Middleware de rota roda antes do `DefinirIdiomaDaInterface`
+
+A resposta 429 do `throttle:entrar` saiu em inglês no navegador, porque o `ThrottleRequests` está na lista de prioridade e passou à frente do middleware de idioma. A lista em `bootstrap/app.php` põe o de idioma antes dele. O `phpunit.xml` fixa `APP_LOCALE=pt_BR`, então o teste não reproduz a falha.
+
+Evidência: `bootstrap/app.php` (`prependToPriorityList`).
+
+## O Laravel mescla os padrões do framework em `config/auth.php`
+
+Deixar `guards` e `providers` vazios não os esvazia: `LoadConfiguration` completa com `web` e `users`. Sem `User`, isso só vale enquanto ninguém usar o guard.
+
+Evidência: `tests/Feature/MigracoesTest.php` (só `auth.defaults.passwords` fica nulo).

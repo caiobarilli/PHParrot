@@ -2,6 +2,7 @@ import { escuta } from './escuta.js';
 import { fala } from './fala.js';
 import { leitura } from './leitura.js';
 import { preferencias, sincronizar } from './preferencias.js';
+import { textosGestao } from './textos.js';
 import { carregarVozes, gravarVozSalva, lerVozesSalvas, vozesDoIdioma } from './voz.js';
 
 sincronizar();
@@ -10,6 +11,7 @@ document.addEventListener('alpine:init', () => {
     window.Alpine.data('leitura', leitura);
     window.Alpine.data('fala', fala);
     window.Alpine.data('escuta', escuta);
+    window.Alpine.data('textosGestao', textosGestao);
 
     window.Alpine.data('configuracao', () => {
         const api = preferencias();
@@ -20,6 +22,19 @@ document.addEventListener('alpine:init', () => {
             traducao: api.atual.traducao,
             tema: document.documentElement.dataset.preferencia ?? 'sistema',
             confirmando: false,
+            apagar: 0,
+            confirma: '',
+            get palavraCerta() {
+                return this.confirma.trim().toLowerCase() === (this.$root.dataset.palavra ?? '');
+            },
+            abrirApagar() {
+                this.confirma = '';
+                this.apagar = 1;
+            },
+            fecharApagar() {
+                this.apagar = 0;
+                this.confirma = '';
+            },
             vozes: {},
             vozSalva: { ...lerVozesSalvas() },
             carregouVozes: false,

@@ -5,39 +5,12 @@ declare(strict_types=1);
 use App\Livewire\Escuta;
 use App\Livewire\Fala;
 use App\Textos\Catalogo;
-use Livewire\Component;
-use Livewire\Features\SupportTesting\Testable;
-use Livewire\LivewireManager;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\withUnencryptedCookie;
 
-/**
- * @return Testable<Component>
- */
-function telaDeFrases(string $classe, ?string $cookie = null): Testable
-{
-    $livewire = app(LivewireManager::class);
-
-    if ($cookie !== null) {
-        $livewire->withCookie('phparrot_prefs', $cookie);
-    }
-
-    return $livewire->test($classe);
-}
-
-/**
- * @param  Testable<Component>  $tela
- */
-function valor(Testable $tela, string $propriedade): string|int
-{
-    $valor = $tela->get($propriedade);
-
-    return is_string($valor) || is_int($valor) ? $valor : '';
-}
-
 it('sorteia só frases do nível, na língua para treinar', function (string $classe): void {
-    $tela = telaDeFrases($classe);
+    $tela = telaLivewire($classe);
 
     expect(valor($tela, 'nivel'))->toBe(1)
         ->and(valor($tela, 'itemId'))->toStartWith('n1-f')
@@ -49,7 +22,7 @@ it('sorteia só frases do nível, na língua para treinar', function (string $cl
 })->with([Fala::class, Escuta::class]);
 
 it('guarda a mesma frase na língua nativa, para a dica', function (string $classe): void {
-    $tela = telaDeFrases($classe);
+    $tela = telaLivewire($classe);
     $item = app(Catalogo::class)->buscar((string) valor($tela, 'itemId'));
 
     expect(valor($tela, 'nativa'))->toBe('pt-BR')
@@ -62,7 +35,7 @@ it('guarda a mesma frase na língua nativa, para a dica', function (string $clas
 })->with([Fala::class, Escuta::class]);
 
 it('usa o nível e a língua do cookie', function (string $classe): void {
-    $tela = telaDeFrases($classe, '{"nativa":"en","treino":"pt-BR","nivel":7,"traducao":"chrome"}');
+    $tela = telaLivewire($classe, '{"nativa":"en","treino":"pt-BR","nivel":7,"traducao":"chrome"}');
 
     $item = app(Catalogo::class)->buscar((string) valor($tela, 'itemId'));
 
@@ -73,7 +46,7 @@ it('usa o nível e a língua do cookie', function (string $classe): void {
 })->with([Fala::class, Escuta::class]);
 
 it('passa para a próxima frase do mesmo nível, nunca a atual', function (string $classe): void {
-    $tela = telaDeFrases($classe);
+    $tela = telaLivewire($classe);
 
     for ($vez = 0; $vez < 30; $vez++) {
         $antes = valor($tela, 'itemId');
@@ -85,7 +58,7 @@ it('passa para a próxima frase do mesmo nível, nunca a atual', function (strin
 })->with([Fala::class, Escuta::class]);
 
 it('troca o nível e ignora níveis fora de 1 a 10', function (string $classe): void {
-    $tela = telaDeFrases($classe)->call('mudarNivel', 5);
+    $tela = telaLivewire($classe)->call('mudarNivel', 5);
 
     expect(valor($tela, 'nivel'))->toBe(5)->and(valor($tela, 'itemId'))->toStartWith('n5-f');
 
@@ -97,7 +70,7 @@ it('troca o nível e ignora níveis fora de 1 a 10', function (string $classe): 
 })->with([Fala::class, Escuta::class]);
 
 it('não deixa o navegador mudar as propriedades da tela', function (string $classe, string $propriedade): void {
-    telaDeFrases($classe)->set($propriedade, 'x');
+    telaLivewire($classe)->set($propriedade, 'x');
 })->with([
     [Fala::class, 'frase'],
     [Fala::class, 'nivel'],

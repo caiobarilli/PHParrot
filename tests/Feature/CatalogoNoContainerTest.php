@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use App\Textos\Catalogo;
-use App\Textos\CatalogoJson;
+use App\Textos\CatalogoComBanco;
 
 it('registra o catálogo no container', function (): void {
-    expect(app(Catalogo::class))->toBeInstanceOf(CatalogoJson::class)
+    expect(app(Catalogo::class))->toBeInstanceOf(CatalogoComBanco::class)
         ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
 });
 

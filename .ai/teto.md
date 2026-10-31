@@ -11,6 +11,7 @@ Treino de idiomas em três telas, aberto ao público e sem login. Hoje o par com
 - Idiomas: um campo por código de idioma no JSON. O par ativo hoje é `pt-BR` e `en`. Outro idioma só fica ativo quando todos os itens têm o campo dele.
 - Voz do navegador (`speechSynthesis`), com a voz da língua do texto.
 - Gravação pelo `MediaRecorder` e transcrição local com `whisper-server` em container próprio (ADR 0007), com modelo multilíngue.
+- Gestão de textos atrás de um token único no `.env` (`PHPARROT_TOKEN`, ADR 0008): criar, editar, apagar, traduzir e exportar os textos do SQLite, e Apagar banco.
 - Laravel 13, Livewire 4, Tailwind 4 e SQLite.
 - O visual do PHPorto, com temas Claro, Escuro e Sistema.
 

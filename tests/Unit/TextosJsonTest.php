@@ -81,3 +81,11 @@ it('não tem campo vazio nem o campo antigo pt', function (): void {
         }
     }
 });
+
+it('nenhum id do arquivo usa o prefixo reservado aos textos criados', function (): void {
+    foreach (listasDoArquivo() as [, , $itens]) {
+        foreach ($itens as $item) {
+            expect(is_string($item['id']) && str_starts_with($item['id'], 'meu-'))->toBeFalse();
+        }
+    }
+});

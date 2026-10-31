@@ -49,11 +49,8 @@ it('libera a Google API com chave e nunca a mostra', function (): void {
         ->and($html)->not->toContain('segredo-de-teste');
 });
 
-it('não tem campo para a chave nem a seção de gestão', function (): void {
-    get('/configuracao')->assertOk()
-        ->assertDontSee('Apagar banco')
-        ->assertDontSee('Gerenciar textos')
-        ->assertDontSee('type="password"', false);
+it('não tem campo para a chave do Google nem campo de senha', function (): void {
+    get('/configuracao')->assertOk()->assertDontSee('type="password"', false);
 });
 
 it('oferece um select de voz para cada idioma ativo, com Automática', function (): void {

@@ -144,6 +144,14 @@ final readonly class CatalogoJson implements Catalogo
         return $comuns;
     }
 
+    /**
+     * @return list<ItemDeTexto>
+     */
+    public function itens(): array
+    {
+        return array_values($this->porId);
+    }
+
     public function listar(Nivel $nivel, TipoDeItem $tipo): array
     {
         return $this->porGrupo[self::chaveDoGrupo($nivel, $tipo)] ?? [];

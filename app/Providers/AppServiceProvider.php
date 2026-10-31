@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Gestao\LimiteDoEntrar;
+use App\Http\Middleware\ExigirGestao;
 use App\Preferencias\Preferencias;
 use App\Textos\Catalogo;
+use App\Textos\CatalogoComBanco;
 use App\Textos\CatalogoJson;
 use App\Textos\Idioma;
+use App\Textos\MeusTextos;
 use App\Traducao\Tradutor;
 use App\Traducao\TradutorGoogle;
 use App\Transcricao\Transcritor;
@@ -14,8 +18,10 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,7 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->scoped(
             Catalogo::class,
-            fn (): Catalogo => CatalogoJson::doArquivo(resource_path('data/textos.json')),
+            fn (Application $app): Catalogo => new CatalogoComBanco(
+                CatalogoJson::doArquivo(resource_path('data/textos.json')),
+                $app->make(MeusTextos::class)->todos(),
+            ),
         );
 
         $this->app->scoped(
@@ -48,6 +57,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->limitar('traduzir', 'traducao', 'traducao.limite');
         $this->limitar('transcrever', 'transcricao', 'transcricao.limite');
+        $this->limitarEntrar();
+
+        Livewire::addPersistentMiddleware([ExigirGestao::class]);
     }
 
     private function limitar(string $nome, string $chave, string $mensagem): void
@@ -60,6 +72,22 @@ class AppServiceProvider extends ServiceProvider
                 ->response($estourou),
             Limit::perDay(max(1, config()->integer("phparrot.{$chave}.por_dia")))
                 ->by("{$nome}:total")
+                ->response($estourou),
+        ]);
+    }
+
+    private function limitarEntrar(): void
+    {
+        $estourou = fn (Request $pedido, array $cabecalhos): Response|JsonResponse => $pedido->expectsJson()
+            ? response()->json(['message' => __('gestao.limite')], 429, $cabecalhos)
+            : response()->view('entrar', ['limite' => true], 429, $cabecalhos);
+
+        RateLimiter::for(LimiteDoEntrar::NOME, fn (Request $pedido): array => [
+            Limit::perMinute(max(1, config()->integer('phparrot.gestao.entrar_por_minuto')))
+                ->by(LimiteDoEntrar::chaveIp((string) $pedido->ip()))
+                ->response($estourou),
+            Limit::perHour(max(1, config()->integer('phparrot.gestao.entrar_por_hora')))
+                ->by(LimiteDoEntrar::chaveTotal())
                 ->response($estourou),
         ]);
     }
