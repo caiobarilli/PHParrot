@@ -51,3 +51,9 @@ Evidência: `bootstrap/app.php` (`prependToPriorityList`).
 Deixar `guards` e `providers` vazios não os esvazia: `LoadConfiguration` completa com `web` e `users`. Sem `User`, isso só vale enquanto ninguém usar o guard.
 
 Evidência: `tests/Feature/MigracoesTest.php` (só `auth.defaults.passwords` fica nulo).
+
+## Apagar a branch remota com o run dela em andamento quebra o upload do SARIF
+
+O job `sarif` do `containers.yml` falhou nas quatro categorias com "ref 'refs/heads/entrega-9-ci' not found": a branch foi apagada no GitHub enquanto o run rodava, e o `upload-sarif` precisa do ref. Esperar o run terminar antes de apagar a branch. O run da `main` com o mesmo commit passou inteiro.
+
+Evidência: `.github/workflows/containers.yml` (job `sarif`, `github/codeql-action/upload-sarif`).
