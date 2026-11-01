@@ -5,6 +5,9 @@ declare(strict_types=1);
 use App\Textos\ItemDeTexto;
 use App\Textos\Pacote;
 use App\Textos\Tema;
+use App\Textos\Validacao\ConferenciaDoConjunto;
+use App\Textos\Validacao\Contexto;
+use App\Textos\Validacao\ValidadorDePacote;
 
 /**
  * @return array<string, Pacote>
@@ -22,6 +25,11 @@ function rascunhos(): array
     return $pacotes;
 }
 
+function temaCompleto(Pacote $pacote): bool
+{
+    return count($pacote->itens) === (ConferenciaDoConjunto::TEXTOS_POR_NIVEL + ConferenciaDoConjunto::FRASES_POR_NIVEL) * 10;
+}
+
 it('tem um rascunho por tema, com o slug, o tema e o id do formato 2', function (): void {
     foreach (rascunhos() as $tema => $pacote) {
         expect(Tema::tryFrom($tema))->not->toBeNull()
@@ -34,12 +42,25 @@ it('tem um rascunho por tema, com o slug, o tema e o id do formato 2', function 
     }
 });
 
-it('a semente reclassifica itens da fábrica, sem repetir nenhum', function (): void {
+it('a semente dos temas ainda não escritos reclassifica itens da fábrica, sem repetir nenhum', function (): void {
     /** @var array{itens: list<array{en: string}>} $fabrica */
     $fabrica = json_decode((string) file_get_contents(__DIR__.'/../../resources/data/textos.json'), true, flags: JSON_THROW_ON_ERROR);
-    $textos = array_merge(...array_map(fn (Pacote $pacote): array => array_map(fn (ItemDeTexto $item): string => (string) $item->traducao('en'), $pacote->itens), array_values(rascunhos())));
+    $sementes = array_filter(rascunhos(), fn (Pacote $pacote): bool => ! temaCompleto($pacote));
+    $textos = array_merge(...array_map(fn (Pacote $pacote): array => array_map(fn (ItemDeTexto $item): string => (string) $item->traducao('en'), $pacote->itens), array_values($sementes)));
 
-    expect($textos)->toHaveCount(101)
-        ->and(array_unique($textos))->toHaveCount(101)
+    expect($textos)->toHaveCount(91)
+        ->and(array_unique($textos))->toHaveCount(91)
         ->and(array_diff($textos, array_column($fabrica['itens'], 'en')))->toBe([]);
+});
+
+it('o rascunho de um tema escrito passa no validador sem erros', function (): void {
+    $escritos = array_filter(rascunhos(), temaCompleto(...));
+
+    expect(array_keys($escritos))->toContain('rotina-casa');
+
+    foreach (array_keys($escritos) as $tema) {
+        $arquivo = __DIR__."/../../resources/data/rascunhos/{$tema}.json";
+
+        expect((new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, "{$tema}.json")->erros)->toBe([]);
+    }
 });
