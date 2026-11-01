@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 
 it('o banco tem só sessions, cache, textos e pacotes', function (): void {
@@ -27,4 +29,24 @@ it('o esqueleto de usuário saiu e a fila é síncrona', function (): void {
         ->and(file_exists(database_path('factories/UserFactory.php')))->toBeFalse()
         ->and(config('queue.default'))->toBe('sync')
         ->and(config('auth.defaults.passwords'))->toBeNull();
+});
+
+it('o .env.example traz a fila síncrona', function (): void {
+    $exemplo = (string) file_get_contents(base_path('.env.example'));
+
+    expect($exemplo)->toMatch('/^QUEUE_CONNECTION=sync$/m');
+});
+
+it('nenhuma classe do app é enfileirada', function (): void {
+    $enfileiradas = [];
+
+    foreach (File::allFiles(app_path()) as $arquivo) {
+        $classe = 'App\\'.str_replace(['/', '.php'], ['\\', ''], $arquivo->getRelativePathname());
+
+        if (class_exists($classe) && in_array(ShouldQueue::class, class_implements($classe), true)) {
+            $enfileiradas[] = $classe;
+        }
+    }
+
+    expect($enfileiradas)->toBe([]);
 });
