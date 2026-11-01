@@ -44,14 +44,7 @@ O `terraform.tfvars.example` mostra o formato. Se copiá-lo, ajuste o `project_p
 
 A tradução pelo Google é opcional. Ela atende quem não usa o Chrome e envia ao Google o texto que o visitante pede para traduzir.
 
-1. No Google Cloud Console, escolha ou crie um projeto com faturamento ativo.
-2. Ative a **Cloud Translation API**.
-3. Em **APIs e serviços > Credenciais**, crie uma chave de API.
-4. Restrinja a chave: em **Restrições de API**, só a Cloud Translation API; em **Restrições de aplicativo**, o IP do servidor.
-5. Em **Cotas** da Cloud Translation API, reduza o limite diário de caracteres para o que o app precisa.
-6. Em **Faturamento > Orçamentos e alertas**, crie um orçamento com alerta por e-mail.
-7. Confira o preço na [página oficial](https://cloud.google.com/translate/pricing) antes de ativar.
-8. Ponha a chave em `GOOGLE_TRANSLATE_KEY` e rode `config:clear`.
+O passo a passo (projeto, chave restrita à Translation API, teto diário de caracteres, alerta de orçamento, a chave no `.env`, o `traducao:testar-google` e o roteiro de validação na tela) está em [google-api.md](google-api.md).
 
 A mesma chave traduz o conteúdo para as línguas automáticas, na tela **Tradução** da gestão (`/traducoes`): ali se escolhe tema × língua, pausa ou retoma uma língua, traduz o próximo lote na hora e exporta o pacote ativo com uma língua completa. O app não limita esses lotes. O plano gratuito cobre 500 mil caracteres por mês, e o contador da tela mostra quanto o app enviou no mês, só para informar. `textos:limpar-traducoes` apaga as traduções que nenhum pacote guardado nem os Meus textos usam mais; ativar um pacote faz o mesmo.
 

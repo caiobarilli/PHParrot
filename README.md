@@ -62,6 +62,7 @@ O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](do
 
 - [Arquitetura](docs/arquitetura.md): as peças, os pacotes e temas, o fluxo da Fala e o diagrama.
 - [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google, token e pacotes.
+- [Google API](docs/google-api.md): chave restrita, teto diário, alerta de orçamento, teste da chave e validação na tela.
 - [Qualidade](docs/qualidade.md): portão, hooks, CI de containers e limites.
 - [Escala](docs/escala.md): como o app cresce sem reescrever.
 - [Processo](docs/processo.md): como o projeto é desenvolvido com IA.
