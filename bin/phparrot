@@ -1,0 +1,180 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+raiz="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$raiz"
+
+readonly PHP=phparrot-php
+readonly NODE=phparrot-node
+readonly AGENDA=phparrot-agenda
+
+passo() { printf '\n==> %s\n' "$*"; }
+info() { printf '    %s\n' "$*"; }
+aviso() { printf '    ! %s\n' "$*"; }
+falha() {
+    printf '\nErro: %s\n' "$*" >&2
+    exit 1
+}
+
+exigir() {
+    command -v "$1" >/dev/null 2>&1 || falha "$1 não encontrado. $2"
+}
+
+rodando() {
+    [ "$(docker inspect -f '{{.State.Running}}' "$1" 2>/dev/null)" = true ]
+}
+
+no_php() { docker exec "$PHP" "$@"; }
+no_node() { docker exec "$NODE" "$@"; }
+
+ajuda() {
+    cat <<'TEXTO'
+Uso: bin/phparrot <comando>
+
+  setup   Sobe tudo do zero ou confere o que já existe: .env, containers,
+          dependências, chave, banco e assets. Pode rodar de novo quando quiser.
+  dev     Vite com recarga no phparrot-node e os logs do Laravel (pail) no
+          phparrot-php. Ctrl+C para os dois.
+TEXTO
+}
+
+terraform_aplicar() {
+    local plano saida codigo resumo destruir
+    plano="$(mktemp)"
+    terraform -chdir=terraform init -input=false >/dev/null
+
+    set +e
+    saida="$(terraform -chdir=terraform plan -input=false -no-color -detailed-exitcode -out="$plano" 2>&1)"
+    codigo=$?
+    set -e
+
+    case "$codigo" in
+        0)
+            info "Nada a mudar: os containers já estão como o Terraform descreve."
+            ;;
+        2)
+            resumo="$(printf '%s\n' "$saida" | grep -E '^Plan: ' || true)"
+            destruir="$(printf '%s\n' "$resumo" | sed -nE 's/.* ([0-9]+) to destroy.*/\1/p')"
+            info "${resumo:-Plano com mudanças.}"
+            if [ "${destruir:-0}" != 0 ]; then
+                rm -f "$plano"
+                falha "o plano destrói ou recria recursos. Revise com 'terraform -chdir=terraform plan' e aplique à mão."
+            fi
+            terraform -chdir=terraform apply -input=false -no-color "$plano" | grep -E '^Apply complete' || true
+            ;;
+        *)
+            rm -f "$plano"
+            printf '%s\n' "$saida" >&2
+            falha "o terraform plan falhou."
+            ;;
+    esac
+
+    rm -f "$plano"
+}
+
+setup() {
+    exigir docker "Instale o Docker (no Windows, o Docker Desktop integrado ao WSL2)."
+    exigir terraform "Instale o Terraform 1.3 ou superior."
+    docker info >/dev/null 2>&1 || falha "o Docker não respondeu. Ele está ligado?"
+    [ "$(id -u)" = 1000 ] || aviso "Os containers rodam com o UID 1000, e o seu é $(id -u). Arquivos criados por eles podem ficar sem permissão para você."
+
+    passo ".env"
+    if [ -f .env ]; then
+        info "Já existe e não foi tocado."
+    else
+        cp .env.example .env
+        info "Criado a partir do .env.example."
+    fi
+
+    passo "Containers (Terraform)"
+    terraform_aplicar
+    for container in "$PHP" "$NODE"; do
+        rodando "$container" || falha "o container $container não está rodando."
+    done
+
+    passo "Dependências do PHP (composer install)"
+    no_php composer install --no-interaction --no-progress --quiet
+    info "Prontas."
+
+    passo "Chave do app e banco"
+    local estado chave fila
+    estado="$(no_php php artisan tinker --execute='echo (blank(config("app.key")) ? "vazia" : "ok")." ".config("queue.default");')"
+    read -r chave fila <<<"$estado"
+    if [ "$chave" = vazia ]; then
+        no_php php artisan key:generate --force --no-interaction >/dev/null
+        info "APP_KEY gerada."
+    else
+        info "APP_KEY já existe e foi mantida."
+    fi
+    [ -f database/database.sqlite ] || touch database/database.sqlite
+    no_php php artisan migrate --force --no-interaction | grep -v '^\s*$' | sed 's/^ */    /'
+
+    passo "Dependências do JavaScript e assets (phparrot-node)"
+    no_node npm ci --no-audit --no-fund --silent
+    no_node npm run build --silent >/dev/null
+    info "node_modules pelo npm ci e assets em public/build."
+
+    if ! rodando "$AGENDA"; then
+        docker start "$AGENDA" >/dev/null
+        info "Agenda ($AGENDA) iniciada."
+    fi
+
+    passo "Conferência"
+    local url status
+    url="$(terraform -chdir=terraform output -raw app_url)"
+    if command -v curl >/dev/null 2>&1; then
+        status="$(curl -s -o /dev/null -w '%{http_code}' "$url/" || true)"
+        [ "$status" = 200 ] || falha "$url/ respondeu $status."
+        info "$url respondeu 200."
+    else
+        info "Abra $url no navegador."
+    fi
+
+    if [ "$fila" != sync ]; then
+        aviso "A fila está configurada como '$fila', mas o app não usa fila. Ponha QUEUE_CONNECTION=sync no .env."
+    fi
+    info "Opcional no .env: GOOGLE_TRANSLATE_KEY (tradução pelo Google) e PHPARROT_TOKEN (gestão de textos; gere com 'openssl rand -hex 32')."
+    info "Depois de mudar o .env: docker exec $PHP php artisan config:clear"
+    printf '\nPronto: %s\n' "$url"
+}
+
+parar_dev() {
+    trap - EXIT INT TERM
+    no_node pkill -INT -f vite >/dev/null 2>&1 || true
+    no_php php -r 'foreach (glob("/proc/[0-9]*/cmdline") ?: [] as $f) { $pid = (int) basename(dirname($f)); $linha = (string) @file_get_contents($f); if ($pid !== getmypid() && (str_contains($linha, "artisan\0pail") || str_contains($linha, "/storage/pail/"))) { posix_kill($pid, 15); } }' || true
+    kill "${vite:-}" "${logs:-}" >/dev/null 2>&1 || true
+    sleep 1
+    no_node pgrep -f vite >/dev/null 2>&1 || rm -f public/hot
+}
+
+dev() {
+    exigir docker "Instale o Docker."
+    for container in "$PHP" "$NODE"; do
+        rodando "$container" || falha "o container $container não está rodando. Rode bin/phparrot setup antes."
+    done
+    if no_node pgrep -f vite >/dev/null 2>&1; then
+        falha "o Vite já está rodando no $NODE."
+    fi
+
+    local terminal=-i
+    [ -t 0 ] && [ -t 1 ] && terminal=-it
+
+    trap parar_dev EXIT
+    trap 'parar_dev; exit 130' INT TERM
+    printf 'Vite em http://localhost:%s (recarga) e logs do Laravel abaixo. Ctrl+C para parar.\n\n' "$(no_node printenv VITE_HOST_PORT || echo 5174)"
+    no_php php artisan pail --timeout=0 &
+    logs=$!
+    docker exec "$terminal" "$NODE" npm run dev <&0 &
+    vite=$!
+    wait "$vite"
+}
+
+case "${1:-}" in
+    setup) setup ;;
+    dev) dev ;;
+    -h | --help | help | '') ajuda ;;
+    *)
+        ajuda >&2
+        exit 1
+        ;;
+esac
