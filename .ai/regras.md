@@ -15,7 +15,7 @@ Teto: 80 linhas
 - Sem rodapé de coautoria de IA. Conferir com `git log -1 --format=%b`.
 - Dúvida sobre a especificação: parar e perguntar. Não inventar escopo.
 - Não parar nem remover container que não seja `phparrot-*`.
-- Uma entrega do `fila.md` por PR.
+- Entregas numa branch local, às vezes várias numa rodada. O Maintainer faz o merge na `main` pelo terminal e o push.
 
 ## Ambiente
 
