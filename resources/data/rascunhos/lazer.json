@@ -1,18 +1,734 @@
 {
-  "formato": 2,
-  "pacote": {"slug": "rascunho-lazer", "nome": "Rascunho: Lazer", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
-  "itens": [
-    {"id": "lazer-n1-f01", "tema": "lazer", "nivel": 1, "tipo": "frase", "en": "She likes music.", "pt-BR": "Ela gosta de música."},
-    {"id": "lazer-n2-t01", "tema": "lazer", "nivel": 2, "tipo": "texto", "en": "On weekends, my family usually goes to the park. My kids play soccer and I read a book under a tree.", "pt-BR": "Nos fins de semana, minha família geralmente vai ao parque. Meus filhos jogam futebol e eu leio um livro debaixo de uma árvore."},
-    {"id": "lazer-n2-f01", "tema": "lazer", "nivel": 2, "tipo": "frase", "en": "They play video games at night.", "pt-BR": "Eles jogam videogame à noite."},
-    {"id": "lazer-n3-f01", "tema": "lazer", "nivel": 3, "tipo": "frase", "en": "I saw a great movie last night.", "pt-BR": "Eu vi um filme ótimo ontem à noite."},
-    {"id": "lazer-n4-t01", "tema": "lazer", "nivel": 4, "tipo": "texto", "en": "This year, I'm going to learn something new. Maybe I will take guitar lessons, or maybe I will start running. The most important thing is to keep going.", "pt-BR": "Este ano, eu vou aprender algo novo. Talvez eu faça aulas de violão, ou talvez eu comece a correr. O mais importante é não parar."},
-    {"id": "lazer-n4-f01", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "What are you going to do this weekend?", "pt-BR": "O que você vai fazer neste fim de semana?"},
-    {"id": "lazer-n4-f02", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "She is the best player on the team.", "pt-BR": "Ela é a melhor jogadora do time."},
-    {"id": "lazer-n4-f03", "tema": "lazer", "nivel": 4, "tipo": "frase", "en": "This is the most interesting book I own.", "pt-BR": "Este é o livro mais interessante que eu tenho."},
-    {"id": "lazer-n6-t01", "tema": "lazer", "nivel": 6, "tipo": "texto", "en": "Unless it rains, we will have the party in the garden. If the weather changes, we could move everything to the living room. It shouldn't be a problem.", "pt-BR": "A menos que chova, faremos a festa no jardim. Se o tempo mudar, poderíamos levar tudo para a sala. Não deve ser um problema."},
-    {"id": "lazer-n6-f01", "tema": "lazer", "nivel": 6, "tipo": "frase", "en": "If it's sunny, we'll go to the beach.", "pt-BR": "Se fizer sol, nós vamos à praia."},
-    {"id": "lazer-n7-f01", "tema": "lazer", "nivel": 7, "tipo": "frase", "en": "This is the book that I told you about.", "pt-BR": "Este é o livro de que eu te falei."},
-    {"id": "lazer-n9-f01", "tema": "lazer", "nivel": 9, "tipo": "frase", "en": "I wish I had more time to read.", "pt-BR": "Eu queria ter mais tempo para ler."}
-  ]
+    "formato": 2,
+    "pacote": {
+        "slug": "rascunho-lazer",
+        "nome": "Rascunho: Lazer",
+        "versao": "2026.11.1",
+        "idiomas": [
+            "en",
+            "pt-BR"
+        ]
+    },
+    "itens": [
+        {
+            "id": "lazer-n1-t01",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "I like the park. There is a big lake. I read a book there. It is quiet.",
+            "pt-BR": "Eu gosto do parque. Lá tem um lago grande. Eu leio um livro lá. É tranquilo."
+        },
+        {
+            "id": "lazer-n1-t02",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "My friend plays the guitar. She can sing too. We play music on Sundays. It is fun.",
+            "pt-BR": "Minha amiga toca violão. Ela também canta. A gente toca música aos domingos. É divertido."
+        },
+        {
+            "id": "lazer-n1-t03",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "Saturday is my free day. I draw in the morning. I watch a movie at night. I am happy.",
+            "pt-BR": "Sábado é meu dia livre. De manhã eu desenho. À noite eu vejo um filme. Fico feliz."
+        },
+        {
+            "id": "lazer-n1-f01",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "She likes music.",
+            "pt-BR": "Ela gosta de música."
+        },
+        {
+            "id": "lazer-n1-f02",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Do you like movies?",
+            "pt-BR": "Você gosta de filme?"
+        },
+        {
+            "id": "lazer-n1-f03",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "The beach is very nice.",
+            "pt-BR": "A praia é muito bonita."
+        },
+        {
+            "id": "lazer-n1-f04",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "I can play the piano.",
+            "pt-BR": "Eu sei tocar piano."
+        },
+        {
+            "id": "lazer-n1-f05",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Is there a park here?",
+            "pt-BR": "Tem um parque aqui?"
+        },
+        {
+            "id": "lazer-n1-f06",
+            "tema": "lazer",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "We play games on Fridays.",
+            "pt-BR": "A gente joga às sextas."
+        },
+        {
+            "id": "lazer-n2-t01",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "On weekends we go to the park. My kids like playing soccer. I read under a big tree. My partner is taking photos now. We love our Sundays.",
+            "pt-BR": "No fim de semana, a gente vai ao parque. Meus filhos gostam de jogar bola. Eu leio embaixo de uma árvore grande. Minha companheira está tirando fotos agora. A gente adora nossos domingos."
+        },
+        {
+            "id": "lazer-n2-t02",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "It is Saturday afternoon. My sister is painting in her room. My brother is playing video games. I am baking a cake for fun. Come and eat with us at 5.",
+            "pt-BR": "É sábado à tarde. Minha irmã está pintando no quarto dela. Meu irmão está jogando videogame. Eu estou fazendo um bolo por diversão. Vem comer com a gente às cinco."
+        },
+        {
+            "id": "lazer-n2-t03",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "Do you like watching movies? The movie starts at 7:30. Meet me in front of the cinema. Bring a jacket, please. It is cold inside.",
+            "pt-BR": "Você gosta de ver filme? A sessão começa às 19h30. Me encontra na frente do cinema. Leva um casaco, por favor. Lá dentro é frio."
+        },
+        {
+            "id": "lazer-n2-f01",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "They play video games at night.",
+            "pt-BR": "Eles jogam videogame à noite."
+        },
+        {
+            "id": "lazer-n2-f02",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Do you like playing tennis?",
+            "pt-BR": "Você gosta de jogar tênis?"
+        },
+        {
+            "id": "lazer-n2-f03",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "I am reading a good book.",
+            "pt-BR": "Estou lendo um livro bom."
+        },
+        {
+            "id": "lazer-n2-f04",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Let's go to the beach.",
+            "pt-BR": "Bora pra praia!"
+        },
+        {
+            "id": "lazer-n2-f05",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "The concert starts at 8 tonight.",
+            "pt-BR": "O show começa às 20h hoje."
+        },
+        {
+            "id": "lazer-n2-f06",
+            "tema": "lazer",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Come to my house on Sunday.",
+            "pt-BR": "Vem aqui em casa no domingo."
+        },
+        {
+            "id": "lazer-n3-t01",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "We had a picnic last weekend. My friend brought sandwiches and fruit. We played cards on the grass. It was warmer than last week. Everyone had a great time. Next Saturday we're going to go again.",
+            "pt-BR": "No fim de semana passado, a gente fez um piquenique. Um amigo levou sanduíches e frutas. Jogamos baralho na grama. Estava mais quente que na semana anterior. Todo mundo se divertiu muito. No sábado que vem, a gente vai de novo."
+        },
+        {
+            "id": "lazer-n3-t02",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "I started a new hobby last month. I bought some paper and pencils. Now I draw every evening after dinner. My drawings are better than before. Next week I'm going to try colors.",
+            "pt-BR": "Comecei um hobby novo no mês passado. Comprei papel e lápis. Agora eu desenho toda noite depois do jantar. Meus desenhos estão melhores do que antes. Semana que vem, vou experimentar cores."
+        },
+        {
+            "id": "lazer-n3-t03",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Yesterday we went to an outdoor concert. The band played for two hours. It was louder than I expected. We danced and sang with everyone. I got home very late. Tonight I'm going to sleep early.",
+            "pt-BR": "Ontem a gente foi a um show ao ar livre. A banda tocou por duas horas. Foi mais alto do que eu esperava. Dançamos e cantamos com todo mundo. Cheguei em casa muito tarde. Hoje vou dormir cedo."
+        },
+        {
+            "id": "lazer-n3-f01",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I saw a great movie last night.",
+            "pt-BR": "Vi um filme ótimo ontem à noite."
+        },
+        {
+            "id": "lazer-n3-f02",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Are you going to the beach tomorrow?",
+            "pt-BR": "Você vai à praia amanhã?"
+        },
+        {
+            "id": "lazer-n3-f03",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "This game is easier than chess.",
+            "pt-BR": "Esse jogo é mais fácil que xadrez."
+        },
+        {
+            "id": "lazer-n3-f04",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "We watched three episodes on Sunday.",
+            "pt-BR": "A gente viu três episódios no domingo."
+        },
+        {
+            "id": "lazer-n3-f05",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I'm going to call my friends later.",
+            "pt-BR": "Vou ligar para o pessoal mais tarde."
+        },
+        {
+            "id": "lazer-n3-f06",
+            "tema": "lazer",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Did you enjoy the museum yesterday?",
+            "pt-BR": "Você curtiu o museu ontem?"
+        },
+        {
+            "id": "lazer-n4-t01",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "This year I'm going to learn something new. Maybe I will take guitar lessons. Or maybe I will start running in the park. I usually have free time on Tuesdays. The most important thing is to keep going.",
+            "pt-BR": "Este ano vou aprender alguma coisa nova. Talvez eu faça aula de violão. Ou talvez eu comece a correr no parque. Normalmente tenho tempo livre às terças. O mais importante é não desistir."
+        },
+        {
+            "id": "lazer-n4-t02",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "My neighbor grows vegetables in a small garden. He always waters the plants early in the morning. He has to do it before work. His tomatoes are the biggest on our street. He often gives me some extra tomatoes.",
+            "pt-BR": "Meu vizinho cultiva verduras numa hortinha. Ele sempre rega as plantas bem cedo. Ele tem que fazer isso antes do trabalho. Os tomates dele são os maiores da rua. Muitas vezes ele me dá uns tomates que sobram."
+        },
+        {
+            "id": "lazer-n4-t03",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "We are always tired on Friday nights. So we usually stay home and play board games. My sister often wins because she is very clever. She is the best player in the family. Next Friday I will try a new strategy.",
+            "pt-BR": "Na sexta à noite, o cansaço sempre bate. Então a gente normalmente fica em casa jogando jogo de tabuleiro. Minha irmã ganha quase sempre, porque ela é muito esperta. Ela é a melhor jogadora da família. Na próxima sexta, vou tentar uma estratégia nova."
+        },
+        {
+            "id": "lazer-n4-f01",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "What are you going to do this weekend?",
+            "pt-BR": "O que você vai fazer no fim de semana?"
+        },
+        {
+            "id": "lazer-n4-f02",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "She is the best player on the team.",
+            "pt-BR": "Ela é a melhor jogadora do time."
+        },
+        {
+            "id": "lazer-n4-f03",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I'll bring snacks for the movie.",
+            "pt-BR": "Eu levo os petiscos para o filme."
+        },
+        {
+            "id": "lazer-n4-f04",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "We have to buy the tickets before Friday.",
+            "pt-BR": "A gente tem que comprar os ingressos antes de sexta."
+        },
+        {
+            "id": "lazer-n4-f05",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I often go swimming on Sunday mornings.",
+            "pt-BR": "Costumo nadar no domingo de manhã."
+        },
+        {
+            "id": "lazer-n4-f06",
+            "tema": "lazer",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I can't come because I have to work.",
+            "pt-BR": "Não vou poder ir porque tenho que trabalhar."
+        },
+        {
+            "id": "lazer-n5-t01",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "I have played the piano since I was a child. Last year I joined a group that meets on Thursdays. We have played at two birthday parties so far. While we were practicing, a neighbor knocked on the door. She wasn't angry at all, though. She actually wanted to join us!",
+            "pt-BR": "Toco piano desde criança. No ano passado, entrei num grupo que se reúne às quintas. Até agora já tocamos em duas festas de aniversário. Um dia, enquanto a gente ensaiava, uma vizinha bateu na porta. Mas ela não estava nem um pouco brava. Na verdade, ela queria entrar no grupo!"
+        },
+        {
+            "id": "lazer-n5-t02",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "Have you ever had a picnic at the beach? It's one of my favorite things to do. If the weather is good on Saturday, we'll go early. I'll bring a big blanket and some fruit. My friend, who loves cooking, will make sandwiches. If it rains, we'll watch movies at home instead.",
+            "pt-BR": "Você já fez piquenique na praia? É uma das coisas que eu mais gosto de fazer. Se o tempo estiver bom no sábado, a gente vai cedo. Eu levo uma canga grande e umas frutas. Meu amigo, que adora cozinhar, vai fazer os sanduíches. Se chover, a gente fica em casa vendo filme."
+        },
+        {
+            "id": "lazer-n5-t03",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "I've been to many museums, but last Sunday was special. We visited a museum that has old toys and games. I was looking at an old wooden train. Suddenly a young boy started to explain it to me. He seemed to know everything about it! I haven't laughed so much in a long time.",
+            "pt-BR": "Já fui a muitos museus, mas domingo passado foi especial. Visitamos um museu de brinquedos e jogos antigos. Eu estava olhando um trenzinho de madeira antigo. De repente, um menino começou a me explicar tudo sobre ele. Parecia que ele sabia tudo daquele trem! Fazia tempo que eu não ria tanto."
+        },
+        {
+            "id": "lazer-n5-f01",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I have never tried painting with watercolors before.",
+            "pt-BR": "Nunca experimentei pintar com aquarela."
+        },
+        {
+            "id": "lazer-n5-f02",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "If you're free on Saturday, we can go hiking.",
+            "pt-BR": "Se você estiver livre no sábado, a gente pode fazer uma trilha."
+        },
+        {
+            "id": "lazer-n5-f03",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "This is the book that I told you about.",
+            "pt-BR": "Esse é o livro de que eu te falei."
+        },
+        {
+            "id": "lazer-n5-f04",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Have you seen the new exhibition at the museum?",
+            "pt-BR": "Você já viu a exposição nova do museu?"
+        },
+        {
+            "id": "lazer-n5-f05",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I was cooking when you called me.",
+            "pt-BR": "Eu estava cozinhando quando você me ligou."
+        },
+        {
+            "id": "lazer-n5-f06",
+            "tema": "lazer",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "If it's sunny tomorrow, we'll go to the beach.",
+            "pt-BR": "Se fizer sol amanhã, a gente vai à praia."
+        },
+        {
+            "id": "lazer-n6-t01",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "Unless it rains, we will have the party in the garden. The tables were already set up by my brother this morning. If the weather changes, we could move everything to the living room. My aunt said she would bring a big salad. If we had more chairs, we would invite the whole street. Honestly, it shouldn't be a big problem.",
+            "pt-BR": "A não ser que chova, a festa vai ser no quintal. Meu irmão já arrumou as mesas hoje de manhã. Se o tempo mudar, dá para levar tudo para a sala. Minha tia disse que vai trazer uma salada grande. Se tivéssemos mais cadeiras, chamaríamos a rua inteira. Sinceramente, não deve ser um grande problema."
+        },
+        {
+            "id": "lazer-n6-t02",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "I used to play soccer every weekend when I was younger. Now I only play once a month with some old friends. The games are organized by a friend from school. Last time, he told me that the team needed a goalkeeper. If I were faster, I would play in the middle. But honestly, I enjoy being in goal.",
+            "pt-BR": "Quando eu era mais nova, jogava futebol todo fim de semana. Hoje só jogo uma vez por mês com uns amigos antigos. Quem organiza as partidas é um amigo da escola. Da última vez, ele me disse que o time estava precisando de goleiro. Se eu tivesse mais velocidade, jogaria no meio-campo. Mas, sinceramente, eu gosto de ficar no gol."
+        },
+        {
+            "id": "lazer-n6-t03",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "My grandmother used to tell stories every night. Now I read novels before bed to relax. It's still my favorite way to end the day. Most of my books are borrowed from the local library. My friend said that I should try audiobooks. If I had a longer commute, I would probably listen every day. For now, I still prefer real paper books.",
+            "pt-BR": "Minha avó contava histórias toda noite. Hoje eu leio romances antes de dormir para relaxar. Ainda é meu jeito preferido de terminar o dia. A maioria dos meus livros vem da biblioteca do bairro. Uma amiga disse que eu deveria experimentar audiolivros. Se eu passasse mais tempo no trânsito, provavelmente ouviria todo dia. Por enquanto, ainda prefiro livro de papel."
+        },
+        {
+            "id": "lazer-n6-f01",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "If I had more free time, I would learn to dance.",
+            "pt-BR": "Se eu tivesse mais tempo livre, aprenderia a dançar."
+        },
+        {
+            "id": "lazer-n6-f02",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "I used to collect stamps when I was a kid.",
+            "pt-BR": "Eu colecionava selos quando era criança."
+        },
+        {
+            "id": "lazer-n6-f03",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "The tickets were sold out in less than an hour.",
+            "pt-BR": "Os ingressos esgotaram em menos de uma hora."
+        },
+        {
+            "id": "lazer-n6-f04",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "She said the concert would start late.",
+            "pt-BR": "Ela disse que o show ia começar atrasado."
+        },
+        {
+            "id": "lazer-n6-f05",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Would you like to come to the park with us?",
+            "pt-BR": "Topa ir ao parque com a gente?"
+        },
+        {
+            "id": "lazer-n6-f06",
+            "tema": "lazer",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "I'd love to, but I already have plans on Sunday.",
+            "pt-BR": "Eu adoraria, mas já tenho compromisso no domingo."
+        },
+        {
+            "id": "lazer-n7-t01",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "Last Saturday we planned to go camping by the river. By the time we arrived, it had already started to rain. Although we were disappointed, we didn't want to give up. We set up the tent under some trees and waited. My friend must have checked the forecast, because she had brought extra blankets. In the end, the rain stopped around five. Later we cooked dinner and stayed up talking until midnight. It turned out to be one of our best trips.",
+            "pt-BR": "No sábado passado, a gente planejou acampar na beira do rio. Quando chegamos, já tinha começado a chover. Apesar da decepção, não quisemos desistir. Montamos a barraca embaixo de umas árvores e ficamos esperando. Minha amiga devia ter olhado a previsão do tempo, porque tinha levado cobertores a mais. No fim, a chuva parou por volta das cinco. Depois fizemos o jantar e ficamos conversando até meia-noite. Acabou sendo uma das nossas melhores viagens."
+        },
+        {
+            "id": "lazer-n7-t02",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "I had never baked my own bread before last month. A coworker had brought homemade bread to work one day. She wrote down the recipe for me, so I decided to try. However, my first loaf came out flat and hard. I might have used too little yeast, or the kitchen was too cold. I didn't give up, though, and kept practicing. My third attempt turned out to be surprisingly good. Now I bake a loaf almost every weekend.",
+            "pt-BR": "Até o mês passado, eu nunca tinha feito pão em casa. Um dia, uma colega de trabalho levou um pão caseiro para o escritório. Ela anotou a receita para mim, então resolvi tentar. Só que meu primeiro pão saiu achatado e duro. Talvez eu tenha usado pouco fermento, ou a cozinha estava fria demais. Mesmo assim, não desisti e continuei praticando. A terceira tentativa ficou surpreendentemente boa. Hoje eu faço pão quase todo fim de semana."
+        },
+        {
+            "id": "lazer-n7-t03",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "Someone left a guitar in the park on Sunday afternoon. It was leaning against a bench, and nobody seemed to own it. It might have belonged to a student, because there were music sheets nearby. Although I wanted to play it, I decided to look after it instead. I sat down next to it and waited for almost an hour. Finally, a young man came running back, looking very worried. He had forgotten it after his lesson and thanked me again and again.",
+            "pt-BR": "Alguém esqueceu um violão no parque no domingo à tarde. Ele estava encostado num banco, e parecia não ter dono. Talvez fosse de algum estudante, porque havia partituras ali perto. Eu até queria tocar, mas resolvi ficar de olho nele. Sentei do lado e esperei quase uma hora. Finalmente, um rapaz voltou correndo, com cara de muito preocupado. Ele tinha esquecido o violão depois da aula e me agradeceu várias e várias vezes."
+        },
+        {
+            "id": "lazer-n7-f01",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "The movie had already started when we found our seats.",
+            "pt-BR": "O filme já tinha começado quando achamos nossos lugares."
+        },
+        {
+            "id": "lazer-n7-f02",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "You must have been really tired after the long hike.",
+            "pt-BR": "Depois daquela trilha longa, você devia estar morrendo de cansaço."
+        },
+        {
+            "id": "lazer-n7-f03",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Although I like jazz, I don't listen to it often.",
+            "pt-BR": "Apesar de gostar de jazz, não escuto com frequência."
+        },
+        {
+            "id": "lazer-n7-f04",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Why don't we put off the picnic until next weekend?",
+            "pt-BR": "Que tal a gente adiar o piquenique para o fim de semana que vem?"
+        },
+        {
+            "id": "lazer-n7-f05",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "I recently took up yoga, and I'm really enjoying it.",
+            "pt-BR": "Comecei a fazer ioga há pouco tempo e estou adorando."
+        },
+        {
+            "id": "lazer-n7-f06",
+            "tema": "lazer",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Can you pick me up at 7:30 before the concert?",
+            "pt-BR": "Você pode me buscar às 19h30, antes do show?"
+        },
+        {
+            "id": "lazer-n8-t01",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "I've been learning to paint with watercolors for about six months. At first, I could only paint simple shapes, but now I can paint small landscapes. My teacher, who has been painting for thirty years, is incredibly patient with beginners. Last week our class went outside to paint by the lake. If I had known how windy it was, I'd have brought a warmer jacket. My paper kept blowing away, and everyone around me laughed. I wish I had started this hobby years ago. Next month, some of our work can be seen in a small local gallery.",
+            "pt-BR": "Faz uns seis meses que estou aprendendo a pintar com aquarela. No começo, eu só conseguia pintar formas simples, mas agora já consigo fazer pequenas paisagens. Minha professora, que pinta há trinta anos, tem uma paciência incrível com iniciantes. Semana passada, a turma foi pintar ao ar livre, na beira do lago. Se eu soubesse que estava ventando tanto, teria levado um casaco mais quente. Meu papel voava toda hora, e todo mundo em volta caiu na risada. Queria ter começado esse hobby anos atrás. No mês que vem, alguns dos nossos trabalhos vão ficar expostos numa pequena galeria do bairro."
+        },
+        {
+            "id": "lazer-n8-t02",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "My roommate and I have been trying to plan a weekend trip for weeks. Every time we pick a date, something else comes up. First he had to work on Saturday, and then I caught a cold. If we had booked something in advance, we would have gone already. I really wish we were better at making quick decisions. Now we've agreed on a rule: the next free weekend, we just go. Our bags can be packed the night before we leave. Everything else can be decided on the way there.",
+            "pt-BR": "Faz semanas que eu e meu colega de apartamento estamos tentando planejar uma viagem de fim de semana. Toda vez que a gente escolhe uma data, aparece outra coisa. Primeiro ele teve que trabalhar no sábado, depois eu peguei um resfriado. Se a gente tivesse reservado alguma coisa com antecedência, já teria ido. Queria muito que a gente fosse melhor em tomar decisões rápidas. Agora combinamos uma regra: no próximo fim de semana livre, a gente simplesmente vai. As malas podem ficar prontas na noite anterior. O resto a gente decide no caminho."
+        },
+        {
+            "id": "lazer-n8-t03",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "Our book club has been meeting once a month for almost two years. There are eight of us, and we take turns choosing the book. This month it was my turn, and I chose a long mystery novel. Honestly, I regret it, because only three people have finished it. I wish I had read a few reviews before choosing. If I had picked something shorter, more people would have read it. Next time, I'll suggest something that can be read in a weekend. Still, the discussion was lively, and we stayed until almost eleven.",
+            "pt-BR": "Nosso clube do livro se reúne uma vez por mês há quase dois anos. Somos oito, e cada vez uma pessoa escolhe o livro. Este mês foi a minha vez, e escolhi um romance policial longo. Sinceramente, me arrependo, porque só três pessoas terminaram. Eu deveria ter lido algumas resenhas antes de escolher. Se tivesse escolhido algo mais curto, mais gente teria lido. Da próxima vez, vou sugerir alguma coisa que dê para ler num fim de semana. Mesmo assim, a conversa foi animada, e ficamos até quase onze da noite."
+        },
+        {
+            "id": "lazer-n8-f01",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I've been practicing the guitar for an hour every evening this month.",
+            "pt-BR": "Este mês, tenho praticado violão uma hora toda noite."
+        },
+        {
+            "id": "lazer-n8-f02",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "If you had told me earlier, I would have joined you.",
+            "pt-BR": "Se você tivesse me avisado antes, eu teria ido com vocês."
+        },
+        {
+            "id": "lazer-n8-f03",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I wish I could swim as well as my younger sister does.",
+            "pt-BR": "Queria nadar tão bem quanto a minha irmã mais nova."
+        },
+        {
+            "id": "lazer-n8-f04",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Tickets can be bought online or at the door on the night.",
+            "pt-BR": "Dá para comprar os ingressos pela internet ou na porta, no dia."
+        },
+        {
+            "id": "lazer-n8-f05",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "We've been waiting for this concert since the beginning of the year.",
+            "pt-BR": "A gente está esperando esse show desde o começo do ano."
+        },
+        {
+            "id": "lazer-n8-f06",
+            "tema": "lazer",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Have you been watching that new series everyone is talking about?",
+            "pt-BR": "Você está assistindo àquela série nova de que todo mundo está falando?"
+        },
+        {
+            "id": "lazer-n9-t01",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Having spent most of my twenties working weekends, I never really developed a hobby. If I had started something back then, I would probably be quite good at it by now. A few months ago, a friend talked me into a beginners' climbing class. Not only was it harder than I expected, but it was also far more social. Between attempts, people chat, share tips and cheer each other on. I'm still the slowest person in the group, and my arms are sore the next day. Even so, it has become the highlight of my week, and I wouldn't miss it.",
+            "pt-BR": "Como passei boa parte dos meus vinte e poucos anos trabalhando nos fins de semana, nunca cheguei a ter um hobby de verdade. Se eu tivesse começado alguma coisa naquela época, provavelmente hoje já teria bastante prática. Há alguns meses, um amigo me convenceu a fazer uma aula de escalada para iniciantes. Não só foi mais difícil do que eu imaginava, como também foi muito mais social. Entre uma tentativa e outra, o pessoal conversa, troca dicas e torce uns pelos outros. Ainda sou a pessoa mais lenta do grupo, e no dia seguinte meus braços ficam doloridos. Mesmo assim, virou o ponto alto da minha semana, e eu não perco por nada."
+        },
+        {
+            "id": "lazer-n9-t02",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "The notice on the community center door was written in a surprisingly formal tone. It was announcing a series of free film evenings in the courtyard. It stated that residents wishing to attend were kindly requested to register in advance. My neighbor read it aloud to me and burst out laughing. In plain English, it simply meant that anyone could come, as long as they signed up first. Organized by volunteers, the evenings take place outdoors on Fridays once the sun goes down. People bring folding chairs, blankets and homemade snacks to share. Had I known how pleasant they were, I would have gone years ago.",
+            "pt-BR": "O aviso na porta do centro comunitário estava escrito num tom surpreendentemente formal. Ele anunciava uma série de sessões de cinema gratuitas no pátio. Dizia que os moradores que desejassem comparecer estavam gentilmente convidados a fazer inscrição prévia. Minha vizinha leu o aviso em voz alta para mim e caiu na gargalhada. Em bom português, queria dizer apenas que qualquer um podia ir, desde que se inscrevesse antes. Organizadas por voluntários, as sessões acontecem ao ar livre às sextas, depois que o sol se põe. As pessoas levam cadeiras dobráveis, mantas e petiscos caseiros para dividir. Se eu soubesse como eram agradáveis, teria ido anos atrás."
+        },
+        {
+            "id": "lazer-n9-t03",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "I used to think that board games were strictly for kids, but I've since changed my tune. It all started one rainy evening at my cousins' house. Bored out of our minds, we pulled an old strategy game out of a cupboard. Three hours later, we were still arguing over the rules and laughing our heads off. If I hadn't stayed that night, I wouldn't own a shelf full of games now. These days, we meet every other Sunday, taking turns hosting. Whoever loses has to wash the dishes, which keeps things competitive. Rarely have I enjoyed quiet evenings at home quite so much.",
+            "pt-BR": "Eu achava que jogo de tabuleiro era coisa de criança, mas desde então dei o braço a torcer. Tudo começou numa noite chuvosa na casa dos meus primos. Morrendo de tédio, tiramos um jogo de estratégia antigo do armário. Três horas depois, a gente ainda estava discutindo as regras e rindo até chorar. Se eu não tivesse ficado lá naquela noite, hoje não teria uma estante cheia de jogos. Agora a gente se encontra a cada quinze dias, no domingo, e cada vez um recebe. Quem perde lava a louça, o que mantém a disputa acirrada. Raramente aproveitei tanto umas noites tranquilas em casa."
+        },
+        {
+            "id": "lazer-n9-f01",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "If I had learned an instrument as a kid, I'd be playing in a band now.",
+            "pt-BR": "Se eu tivesse aprendido um instrumento quando era criança, hoje estaria tocando numa banda."
+        },
+        {
+            "id": "lazer-n9-f02",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Not only is the park bigger than I thought, but it's also quieter.",
+            "pt-BR": "O parque não só é maior do que eu pensava, como também é mais tranquilo."
+        },
+        {
+            "id": "lazer-n9-f03",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Having finished the puzzle, we started looking for an even harder one.",
+            "pt-BR": "Depois de terminar o quebra-cabeça, fomos procurar um ainda mais difícil."
+        },
+        {
+            "id": "lazer-n9-f04",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "I'll have to take a rain check on the movie tonight, if that's all right.",
+            "pt-BR": "Vou ter que deixar o cinema de hoje para outro dia, tudo bem?"
+        },
+        {
+            "id": "lazer-n9-f05",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Would you be interested in joining us for a picnic by the lake on Sunday?",
+            "pt-BR": "Você teria interesse em fazer um piquenique com a gente na beira do lago no domingo?"
+        },
+        {
+            "id": "lazer-n9-f06",
+            "tema": "lazer",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Count me in, as long as we can be back home by six.",
+            "pt-BR": "Pode contar comigo, desde que a gente esteja de volta em casa até as seis."
+        },
+        {
+            "id": "lazer-n10-t01",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "Hardly had I spread out my towel on the sand when the sky clouded over and a light drizzle began. It was not the rain itself that bothered me, but the prospect of losing my only free afternoon. My companions, incurable optimists that they are, insisted that we stay put. Reluctantly, I agreed, huddling under a borrowed umbrella and pretending to read my novel. Within twenty minutes, the clouds had drifted inland and the sea was glittering once again. What struck me most was how swiftly my irritation gave way to something closer to gratitude. Had we packed up and left, we would have missed the loveliest sunset of the entire summer. Ever since, I have tried to greet minor setbacks with a little more equanimity.",
+            "pt-BR": "Mal eu tinha estendido a toalha na areia, o céu fechou e começou uma garoa fina. Não era a chuva em si que me incomodava, e sim a perspectiva de perder minha única tarde livre. O pessoal, otimista incurável como sempre, insistiu que a gente ficasse onde estava. A contragosto, concordei, encolhendo-me debaixo de um guarda-chuva emprestado e fingindo ler meu romance. Em vinte minutos, as nuvens tinham se deslocado para o interior, e o mar voltava a cintilar. O que mais me impressionou foi a rapidez com que minha irritação deu lugar a algo próximo da gratidão. Se tivéssemos recolhido tudo e ido embora, teríamos perdido o pôr do sol mais bonito do verão inteiro. Desde então, procuro encarar os pequenos contratempos com um pouco mais de serenidade."
+        },
+        {
+            "id": "lazer-n10-t02",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "No sooner had I signed up for evening pottery classes than I began to doubt the decision. My schedule was already crowded, and getting covered in clay after work seemed faintly absurd. What persuaded me to stay was not the craft itself but the atmosphere of the studio. There, nobody checks their phone, and conversation drifts lazily between the wheel and the kiln. The instructor insists that every student keep one failed piece on display as a reminder. Mistakes, she says, are simply part of the process rather than something to hide. My own collection of lopsided bowls and wobbly mugs has been growing steadily. Far from being embarrassed by them, I have come to regard them with genuine affection. Whether a piece survives the kiln matters far less to me than it once did.",
+            "pt-BR": "Mal tinha me inscrito nas aulas noturnas de cerâmica, comecei a duvidar da decisão. Minha agenda já estava cheia, e sair do trabalho para meter as mãos na argila parecia vagamente absurdo. O que me convenceu a ficar não foi o ofício em si, mas o clima do ateliê. Lá, ninguém olha o celular, e a conversa vai e vem sem pressa entre o torno e o forno de cerâmica. A instrutora insiste que cada aluno deixe uma peça malsucedida em exposição, como lembrete. Os erros, segundo ela, são simplesmente parte do processo, e não algo a esconder. Minha própria coleção de tigelas tortas e canecas bambas vem crescendo sem parar. Longe de ter vergonha delas, passei a olhá-las com um carinho genuíno. Se uma peça sobrevive ou não ao forno, isso importa muito menos para mim do que importava antes."
+        },
+        {
+            "id": "lazer-n10-t03",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "It is only when my calendar is completely empty that I realize how poorly I rest. Given a Saturday with no obligations, I tend to fritter it away scrolling, tidying and vaguely meaning to go out. A friend of mine, who is far more disciplined, recommends that free time be planned almost as carefully as work. At first I found the suggestion slightly joyless, as though leisure were just another task to complete. Having tried it for a couple of months, however, I must concede that he has a point. Nowadays I jot down one or two modest intentions, such as a long walk or some sketching. Seldom do I follow them to the letter, yet having a plan keeps the day from dissolving.",
+            "pt-BR": "É só quando minha agenda está completamente vazia que percebo como descanso mal. Diante de um sábado sem compromissos, costumo desperdiçá-lo à toa, rolando a tela, arrumando a casa e com a vaga intenção de sair. Um amigo meu, muito mais disciplinado, recomenda que o tempo livre seja planejado quase com o mesmo cuidado que o trabalho. De início, achei a sugestão um tanto sem graça, como se o lazer fosse só mais uma tarefa a cumprir. Depois de experimentar por uns dois meses, porém, tenho de admitir que ele tem razão. Hoje em dia, anoto uma ou duas intenções modestas, como uma longa caminhada ou alguns esboços. Raramente as sigo à risca, mas ter um plano impede que o dia se dissolva."
+        },
+        {
+            "id": "lazer-n10-f01",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Were it not for these weekly walks, I would hardly ever leave the house.",
+            "pt-BR": "Não fossem essas caminhadas semanais, eu quase nunca sairia de casa."
+        },
+        {
+            "id": "lazer-n10-f02",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "What I enjoy most about gardening is the slow, quiet satisfaction of watching things grow.",
+            "pt-BR": "O que mais me agrada na jardinagem é a satisfação lenta e silenciosa de ver as coisas crescerem."
+        },
+        {
+            "id": "lazer-n10-f03",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "I'd suggest that everyone be there by 7:15 so that we can find decent seats.",
+            "pt-BR": "Sugiro que todo mundo chegue até as 19h15, para a gente conseguir lugares razoáveis."
+        },
+        {
+            "id": "lazer-n10-f04",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Thank you so much for the invitation, but I'm afraid I'll have to sit this one out.",
+            "pt-BR": "Muito obrigada pelo convite, mas receio que desta vez vou ter que ficar de fora."
+        },
+        {
+            "id": "lazer-n10-f05",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Only after the concert had ended did I realize how late it had gotten.",
+            "pt-BR": "Só depois que o show terminou é que me dei conta de como já estava tarde."
+        },
+        {
+            "id": "lazer-n10-f06",
+            "tema": "lazer",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "It was my grandfather who taught me that a hobby needn't be useful to be worthwhile.",
+            "pt-BR": "Foi meu avô quem me ensinou que um hobby não precisa ser útil para valer a pena."
+        }
+    ]
 }
