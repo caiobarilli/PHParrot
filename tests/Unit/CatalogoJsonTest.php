@@ -38,11 +38,11 @@ it('implementa o contrato do catálogo', function (): void {
     expect(catalogoReal())->toBeInstanceOf(Catalogo::class);
 });
 
-it('lista os 15 textos e as 30 frases de cada nível, dos 5 temas', function (Nivel $nivel): void {
+it('lista os 30 textos e as 60 frases de cada nível, dos 10 temas', function (Nivel $nivel): void {
     $catalogo = catalogoReal();
 
-    expect($catalogo->listar($nivel, TipoDeItem::Texto))->toHaveCount(15)
-        ->and($catalogo->listar($nivel, TipoDeItem::Frase))->toHaveCount(30);
+    expect($catalogo->listar($nivel, TipoDeItem::Texto))->toHaveCount(30)
+        ->and($catalogo->listar($nivel, TipoDeItem::Frase))->toHaveCount(60);
 })->with(fn (): array => Nivel::todos());
 
 it('filtra por nível e por tipo', function (): void {

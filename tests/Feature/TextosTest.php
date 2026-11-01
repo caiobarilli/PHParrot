@@ -9,8 +9,11 @@ use App\Models\Texto;
 use App\Textos\Catalogo;
 use App\Textos\MeusTextos;
 use App\Textos\Nivel;
+use App\Textos\Pacote;
+use App\Textos\Pacotes;
 use App\Textos\Tema;
 use App\Textos\TipoDeItem;
+use Tests\Fixtures\PacoteDeTeste;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
@@ -37,7 +40,7 @@ it('mostra a lista com a etiqueta de origem, o nível, o tipo e o par', function
         ->assertSee('Base')
         ->assertSee('Só leitura')
         ->assertSee('EN · PT-BR')
-        ->assertSee('46 itens')
+        ->assertSee('91 itens')
         ->assertSee('Exportar meus textos')
         ->assertSee(route('textos.exportar'))
         ->assertDontSee('Você ainda não criou textos.')
@@ -61,11 +64,11 @@ it('começa filtrando pelo nível do visitante e filtra por nível e tipo', func
 
     $tela = telaLivewire(Textos::class)->assertSet('filtroNivel', '1')->assertDontSee('Level three.');
 
-    $tela->set('filtroNivel', '3')->assertSee('Level three.')->assertSee('46 itens');
-    $tela->call('filtrarTipo', 'frase')->assertDontSee('Level three.')->assertSee('30 itens')->assertSet('filtroTipo', 'frase');
-    $tela->call('filtrarTipo', 'texto')->assertSee('Level three.')->assertSee('16 itens');
+    $tela->set('filtroNivel', '3')->assertSee('Level three.')->assertSee('91 itens');
+    $tela->call('filtrarTipo', 'frase')->assertDontSee('Level three.')->assertSee('60 itens')->assertSet('filtroTipo', 'frase');
+    $tela->call('filtrarTipo', 'texto')->assertSee('Level three.')->assertSee('31 itens');
     $tela->call('filtrarTipo', 'lixo')->assertSet('filtroTipo', '');
-    $tela->set('filtroNivel', '')->assertSee('451 itens');
+    $tela->set('filtroNivel', '')->assertSee('901 itens');
 });
 
 it('mostra o estado vazio quando o filtro não acha nada', function (): void {
@@ -309,7 +312,7 @@ it('o JSON da Base continua servindo depois do Apagar banco', function (): void 
 
     app()->forgetInstance(Catalogo::class);
 
-    expect(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
+    expect(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(60);
     get('/fala')->assertOk();
 });
 
@@ -351,6 +354,8 @@ it('o Apagar banco exige a flag de novo no servidor, mesmo sem pedir o token out
 
 it('os itens criados aparecem nas telas de treino', function (): void {
     comGestao();
+    app(Pacotes::class)->importar(Pacote::doArray(PacoteDeTeste::pacote(PacoteDeTeste::temaCompleto(Tema::Comida), 'comida-1')), false);
+    app(Pacotes::class)->ativar('comida-1');
     $id = app(MeusTextos::class)->criar(new Nivel(10), TipoDeItem::Frase, ['en' => 'The only sentence I wrote.', 'pt-BR' => 'A única frase que escrevi.'], ['pt-BR', 'en'], Tema::Lazer)->id;
     app()->forgetInstance(Catalogo::class);
     $cookie = json_encode(['nativa' => 'pt-BR', 'treino' => 'en', 'nivel' => 10, 'traducao' => 'chrome', 'tema' => 'lazer'], JSON_THROW_ON_ERROR);
@@ -395,8 +400,8 @@ it('filtra por tema e por sem tema', function (): void {
     telaLivewire(Textos::class)
         ->set('filtroTema', 'comida')->assertSee('Lunch time.')->assertSee('10 itens')
         ->set('filtroTema', 'sem')->assertDontSee('Lunch time.')->assertSee('Nada por aqui.')
-        ->set('filtroTema', 'lazer')->assertSee('Nada por aqui.')
-        ->set('filtroTema', '')->assertSee('46 itens');
+        ->set('filtroTema', 'lazer')->assertDontSee('Lunch time.')->assertSee('9 itens')
+        ->set('filtroTema', '')->assertSee('91 itens');
 });
 
 it('marca como incompleto o item Meu sem um idioma ativo', function (): void {

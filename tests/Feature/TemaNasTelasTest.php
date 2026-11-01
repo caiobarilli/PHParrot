@@ -56,9 +56,9 @@ it('com um pacote ativo sem temas, a seção Tema da configuração fica desativ
         ->assertDontSee('<option value="comida">', false);
 });
 
-it('a fábrica lista Todos e os 5 primeiros temas na configuração', function (): void {
+it('a fábrica lista Todos e os 10 temas na configuração', function (): void {
     get('/configuracao')->assertOk()
-        ->assertSeeInOrder(['<option value="">Todos</option>', 'Rotina e casa', 'Comida', 'Compras', 'Transporte e viagem', 'Trabalho'], false)
+        ->assertSeeInOrder(['<option value="">Todos</option>', ...array_map(fn (Tema $tema): string => "<option value=\"{$tema->value}\"", Tema::cases())], false)
         ->assertDontSee('Os temas aparecem quando um pacote com temas estiver ativo.');
 });
 

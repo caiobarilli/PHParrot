@@ -90,7 +90,7 @@ it('apagar tudo mexe só na tabela textos, e a Base continua no catálogo', func
     app()->forgetInstance(Catalogo::class);
 
     expect(app(Catalogo::class)->buscar('rotina-casa-n1-f01'))->not->toBeNull()
-        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
+        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(60);
 });
 
 it('os itens Meus entram no catálogo do app, do mesmo nível e tipo', function (): void {
@@ -100,7 +100,7 @@ it('os itens Meus entram no catálogo do app, do mesmo nível e tipo', function 
     $item = app(Catalogo::class)->buscar($id);
 
     expect($item?->origem)->toBe(Origem::Meu)
-        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(31)
+        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(61)
         ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
 });
 

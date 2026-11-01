@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Textos\Tema;
+
 const ARQUIVO_TEXTOS = __DIR__.'/../../resources/data/textos.json';
 
 /**
@@ -28,7 +30,7 @@ it('está no formato 2, com pacote e itens', function (): void {
         ->and(fabricaBruta()['pacote'])->toBe([
             'slug' => 'fabrica',
             'nome' => 'Fábrica',
-            'versao' => '2026.11.1',
+            'versao' => '2026.11.2',
             'idiomas' => ['en', 'pt-BR'],
         ]);
 });
@@ -39,7 +41,7 @@ it('tem os campos do formato 2 em cada item, nessa ordem', function (): void {
     }
 });
 
-it('traz os 5 primeiros temas completos, com 3 textos e 6 frases por tema e nível', function (): void {
+it('traz os 10 temas completos, com 3 textos e 6 frases por tema e nível', function (): void {
     $contagem = [];
 
     foreach (itensDaFabrica() as $item) {
@@ -47,14 +49,16 @@ it('traz os 5 primeiros temas completos, com 3 textos e 6 frases por tema e nív
         $contagem[$chave] = ($contagem[$chave] ?? 0) + 1;
     }
 
-    foreach (['rotina-casa', 'comida', 'compras', 'transporte-viagem', 'trabalho'] as $tema) {
+    foreach (Tema::cases() as $caso) {
+        $tema = $caso->value;
+
         foreach (range(1, 10) as $nivel) {
             expect($contagem["{$tema}/{$nivel}/texto"] ?? 0)->toBe(3)
                 ->and($contagem["{$tema}/{$nivel}/frase"] ?? 0)->toBe(6);
         }
     }
 
-    expect(itensDaFabrica())->toHaveCount(450);
+    expect(itensDaFabrica())->toHaveCount(900);
 });
 
 it('usa ids únicos no formato {tema}-n{nível}-{t|f}{2 dígitos}, sem item legado sem tema', function (): void {
@@ -67,7 +71,7 @@ it('usa ids únicos no formato {tema}-n{nível}-{t|f}{2 dígitos}, sem item lega
             ->and($item['id'])->toMatch("/^{$item['tema']}-n{$item['nivel']}-{$letra}\\d{2}$/");
     }
 
-    expect(array_unique($ids))->toHaveCount(450);
+    expect(array_unique($ids))->toHaveCount(900);
 });
 
 it('tem en e pt-BR preenchidos em todos os itens', function (): void {

@@ -52,7 +52,7 @@ Um pacote é um JSON no formato 2:
 - **Ativo:** um pacote por vez. O catálogo é o pacote ativo somado aos Meus textos, e os `idiomas` do pacote são os idiomas ativos. O pacote lido fica em cache pelo `hash` do conteúdo.
 - **Validador:** `php artisan textos:validar {arquivo}` confere estrutura, ids, idiomas, texto proibido (`<`, `>`, controle, endereço da web) e as faixas de palavras por nível do [anexo](../.ai/adr/0011-anexo-niveis.md). O mesmo validador serve o importador.
 - **Visitante:** o tema é escolhido na Configuração, com "Todos" como padrão e só os temas do pacote ativo. A Leitura, a Fala e a Escuta mostram o tema numa etiqueta ao lado do nível.
-- **Fábrica:** traz os 450 itens dos 5 primeiros temas (`rotina-casa`, `comida`, `compras`, `transporte-viagem` e `trabalho`). Os temas ainda não aprovados ficam em `resources/data/rascunhos/`, fora do app, e entram no dev com `php artisan pacotes:importar {arquivo} --ativar`.
+- **Fábrica:** traz os 900 itens dos 10 temas, 90 por tema. Um tema novo começa como rascunho em `resources/data/rascunhos/`, fora do app, e entra no dev com `php artisan pacotes:importar {arquivo} --ativar`.
 
 ## Fluxo da Fala
 

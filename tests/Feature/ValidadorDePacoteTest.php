@@ -39,11 +39,11 @@ it('aprova um tema completo dentro das faixas, sem alertas', function (Contexto 
         ->and($relatorio->pacote?->itens)->toHaveCount(90);
 })->with([Contexto::Importacao, Contexto::Fabrica]);
 
-it('aprova a fábrica com os 5 temas no modo fábrica', function (): void {
+it('aprova a fábrica com os 10 temas no modo fábrica', function (): void {
     $relatorio = app(ValidadorDePacote::class)->validarArquivo((string) file_get_contents(resource_path('data/textos.json')), Contexto::Fabrica);
 
     expect($relatorio->erros)->toBe([])
-        ->and($relatorio->pacote?->itens)->toHaveCount(450);
+        ->and($relatorio->pacote?->itens)->toHaveCount(900);
 });
 
 it('na fábrica, item sem tema vira erro assim que existe um tema completo', function (): void {

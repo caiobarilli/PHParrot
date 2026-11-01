@@ -44,7 +44,7 @@ it('lista a fábrica ativa, sem Apagar, com Exportar', function (): void {
     get('/pacotes')->assertOk()
         ->assertSee('Pacotes de textos')
         ->assertSee('Fábrica')
-        ->assertSee('2026.11.1')
+        ->assertSee('2026.11.2')
         ->assertSee(route('pacotes.exportar', 'fabrica'))
         ->assertDontSee('pedirApagar(&#039;fabrica&#039;)', false);
 });
@@ -190,7 +190,7 @@ it('o export da fábrica volta pelo importador sem edição, com outro slug', fu
         ->assertSessionHas('relatorio', fn (array $relatorio): bool => $relatorio['erros'] === ['pacote.slug: o slug fabrica é reservado']);
 
     $fabrica['pacote']['slug'] = 'copia';
-    post('/pacotes/importar', ['arquivo' => arquivoDePacote($fabrica)])->assertSessionHas('status', 'Importado: Fábrica, com 450 itens.');
+    post('/pacotes/importar', ['arquivo' => arquivoDePacote($fabrica)])->assertSessionHas('status', 'Importado: Fábrica, com 900 itens.');
 });
 
 it('exportar um slug desconhecido responde 404', function (): void {
