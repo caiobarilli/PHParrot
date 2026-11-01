@@ -18,7 +18,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 | 10 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
 | 11 | Temas e pacotes | feito (branch `entrega-11-temas`) | Enum `Tema`, formato 2, tabela `pacotes` com o ativo, importar e exportar, `textos:validar` no portão, seletor de tema, "Aparência" no visual, escape do Apagar banco, fábrica de transição e semente em `rascunhos/` (ADR 0011) |
 | 12 | Tradução do conteúdo | pendente | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
-| 13 | Conteúdo, 5 primeiros temas | pendente | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
+| 13 | Conteúdo, 5 primeiros temas | em curso (`rotina-casa` em rascunho: `b7c7320`) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
 | 14 | Teste da Google API | pendente | Chave real, restrita, com cota e alerta no console |
 | 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
 | 16 | Deploy | pendente | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
@@ -48,7 +48,8 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 - Entrega 9: a `nginx:1.30.6-alpine` tinha `brotli-libs` (CRITICAL) e `curl` (HIGH) com correção e sem tag nova. Virou `docker/nginx/Dockerfile`: sem `curl`, `brotli-libs` atualizado e sem root (o Trivy config pediu `USER`), com o pid em `/tmp`. Telas, CSS, `/transcrever` (200) e o 413 do nginx conferidos (ADR 0009).
 - Entrega 9: `USER` numérico no php (1000) e no whisper (10001), sem GID, para o hadolint; o uid:gid em execução não mudou (999 no whisper). O `ci.yml` saiu do checkout e do setup-node v4 (aviso de Node.js 20) para v7.
 - Entrega 11: o pacote ativo é a coluna `ativo` de `pacotes`; o pacote exige `en` e `pt-BR`; `fabrica` é slug reservado; o `meus-textos` importado volta para os Meus textos, com a faixa como alerta e substituição só com confirmação; o importador aceita tema nulo, para os exports voltarem sem edição (ADR 0011, Consequência).
-- Entrega 11: a gestão de pacotes é a tela `/pacotes`, com link na gestão de textos e na configuração. Sem tema na fábrica, o select de tema fica desativado só com "Todos". A semente em `rascunhos/` não passa nas faixas do anexo (curva plana do legado), e isso fica para a entrega 13.
+- Entrega 11: a gestão de pacotes é a tela `/pacotes`, com link na gestão de textos e na configuração. Sem tema na fábrica, o select de tema fica desativado só com "Todos", com a dica. A semente em `rascunhos/` não passa nas faixas do anexo (curva plana do legado), e isso fica para a entrega 13.
+- Tema na Configuração (pedido do Maintainer, vale sobre o design e a entrega 11): o select saiu da Leitura, da Fala e da Escuta, que mostram a etiqueta "Tema: …" ligada a `/configuracao#tema`. A tela não grava mais o tema, e a combinação vazia não apaga o tema salvo. A lista usa `Catalogo::temasPresentes()`, que inclui os Meus textos completos com tema.
 
 ## Melhorias
 

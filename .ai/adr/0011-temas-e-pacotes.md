@@ -36,11 +36,10 @@ O `textos.json` (ADR 0003) tem 150 itens sem tema, e a curva de tamanho fica pla
    - O par do visitante que deixar de valer cai no padrão.
    - "Meus textos" sem um idioma ativo ficam fora do sorteio e marcados como incompletos na gestão.
 10. **Visitante:**
-    - Um select "Tema" ao lado do nível, na Leitura, na Fala e na Escuta, com "Todos" como padrão.
+    - O tema é uma preferência global, escolhida só na Configuração (seção "Tema", abaixo de Idiomas): "Todos" e os temas do pacote ativo em qualquer nível. Leitura, Fala e Escuta mostram uma etiqueta ao lado do nível, que leva para lá.
     - O tema fica no `phparrot_prefs` e no localStorage, validado no servidor: slug desconhecido vira "Todos".
     - `Catalogo::sortear` recebe `?Tema`. "Gerar novo" e "Próxima" respeitam tema e nível.
-    - O select lista só os temas que têm itens no nível atual. Uma combinação vazia cai em "Todos" com um aviso discreto.
-    - A gestão ganha o filtro por tema.
+    - Uma combinação vazia (tema sem itens no nível) sorteia em "Todos" com um aviso discreto, sem apagar o tema salvo. A gestão ganha o filtro por tema.
 11. **Aparência:** o visual passa a se chamar "Aparência" em todo texto visível. A chave `phparrot.tema` do localStorage não muda.
 12. **Produção:**
     - Um autor nativo em inglês escreve a base, e um especialista em `pt-BR` adapta o sentido, sem tradução literal.
