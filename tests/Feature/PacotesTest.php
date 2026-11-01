@@ -34,7 +34,7 @@ function catalogoAtual(): Catalogo
 }
 
 it('sem pacote ativo, o catálogo é a fábrica', function (): void {
-    expect(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10)
+    expect(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30)
         ->and(app(Pacotes::class)->ativo()->slug)->toBe(Pacote::SLUG_FABRICA);
 });
 
@@ -45,7 +45,7 @@ it('o pacote importado entra inativo e aparece na lista depois da fábrica', fun
 
     expect(array_map(fn (ResumoDePacote $resumo): array => [$resumo->slug, $resumo->ativo, $resumo->fabrica], $lista))
         ->toBe([['fabrica', true, true], ['comida-1', false, false]])
-        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10);
+        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
 });
 
 it('ativar troca o catálogo e os idiomas pelo pacote, e a fábrica volta ao ativar a fábrica', function (): void {
@@ -55,7 +55,7 @@ it('ativar troca o catálogo e os idiomas pelo pacote, e a fábrica volta ao ati
         ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(6)
         ->and(catalogoAtual()->buscar('comida-n1-f01')?->tema)->toBe(Tema::Comida)
         ->and(app(Pacotes::class)->ativar(Pacote::SLUG_FABRICA))->toBeTrue()
-        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10)
+        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30)
         ->and(app(Pacotes::class)->ativar('nao-existe'))->toBeFalse();
 });
 
@@ -72,7 +72,7 @@ it('com o ativo sumido, vale a fábrica', function (): void {
     app(Pacotes::class)->ativar('comida-1');
     PacoteImportado::query()->delete();
 
-    expect(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10);
+    expect(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
 });
 
 it('não apaga a fábrica nem o pacote ativo', function (): void {
@@ -158,12 +158,15 @@ it('sorteia só no tema pedido e lista só os temas com itens no nível', functi
         ->and($catalogo->sortear(new Nivel(1), TipoDeItem::Frase, null, Tema::Saude))->toBeNull();
 });
 
-it('a fábrica de transição não tem nenhum tema', function (): void {
+it('a fábrica traz os 5 primeiros temas em todos os níveis', function (): void {
+    $cinco = [Tema::RotinaCasa, Tema::Comida, Tema::Compras, Tema::TransporteViagem, Tema::Trabalho];
+
     foreach (Nivel::todos() as $nivel) {
-        expect(catalogoAtual()->temas($nivel, TipoDeItem::Texto))->toBe([]);
+        expect(catalogoAtual()->temas($nivel, TipoDeItem::Texto))->toBe($cinco)
+            ->and(catalogoAtual()->temas($nivel, TipoDeItem::Frase))->toBe($cinco);
     }
 
-    expect(catalogoAtual()->temasPresentes())->toBe([]);
+    expect(catalogoAtual()->temasPresentes())->toBe($cinco);
 });
 
 it('o Apagar banco apaga os pacotes importados e volta para a fábrica', function (): void {
@@ -174,5 +177,5 @@ it('o Apagar banco apaga os pacotes importados e volta para a fábrica', functio
     post('/banco/apagar', ['confirmacao' => 'apagar'])->assertRedirect(route('configuracao'));
 
     expect(PacoteImportado::query()->count())->toBe(0)
-        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10);
+        ->and(catalogoAtual()->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
 });

@@ -78,7 +78,7 @@ it('começa no nível 1 com um texto do JSON na língua para treinar', function 
     $componente = leitura();
 
     expect(inteiro($componente, 'nivel'))->toBe(1)
-        ->and(texto($componente, 'itemId'))->toStartWith('n1-t')
+        ->and(texto($componente, 'itemId'))->toContain('-n1-t')
         ->and(texto($componente, 'treino'))->toBe('en')
         ->and(texto($componente, 'nativa'))->toBe('pt-BR')
         ->and(array_keys(mapa($componente, 'textos')))->toEqualCanonicalizing(['en', 'pt-BR']);
@@ -98,7 +98,7 @@ it('usa o nível e as línguas do cookie', function (): void {
     $componente = leitura('{"nativa":"en","treino":"pt-BR","nivel":6,"traducao":"chrome"}');
 
     expect(inteiro($componente, 'nivel'))->toBe(6)
-        ->and(texto($componente, 'itemId'))->toStartWith('n6-t')
+        ->and(texto($componente, 'itemId'))->toContain('-n6-t')
         ->and(texto($componente, 'treino'))->toBe('pt-BR')
         ->and(mapa($componente, 'vozes'))->toBe(['en' => 'en-US', 'pt-BR' => 'pt-BR']);
 
@@ -113,7 +113,7 @@ it('gera outro texto do mesmo nível, nunca o atual', function (): void {
         $componente->call('gerarNovo');
 
         expect(texto($componente, 'itemId'))->not->toBe($antes)
-            ->and(texto($componente, 'itemId'))->toStartWith('n1-t')
+            ->and(texto($componente, 'itemId'))->toContain('-n1-t')
             ->and(inteiro($componente, 'nivel'))->toBe(1);
     }
 });
@@ -122,7 +122,7 @@ it('troca o nível e sorteia um texto do novo nível', function (): void {
     $componente = leitura()->call('mudarNivel', 4);
 
     expect(inteiro($componente, 'nivel'))->toBe(4)
-        ->and(texto($componente, 'itemId'))->toStartWith('n4-t');
+        ->and(texto($componente, 'itemId'))->toContain('-n4-t');
 
     $componente->assertSee('N4');
 });
@@ -145,7 +145,7 @@ it('desativa descer no nível 1 e subir no nível 10', function (): void {
 it('não deixa o navegador alterar o estado travado', function (string $propriedade, mixed $valor): void {
     leitura()->set($propriedade, $valor);
 })->with([
-    ['itemId', 'n1-t01'],
+    ['itemId', 'rotina-casa-n1-t01'],
     ['nivel', 9],
     ['textos', ['en' => 'x']],
 ])->throws(Exception::class, 'Cannot update locked property');

@@ -13,7 +13,7 @@ it('sorteia só frases do nível, na língua para treinar', function (string $cl
     $tela = telaLivewire($classe);
 
     expect(valor($tela, 'nivel'))->toBe(1)
-        ->and(valor($tela, 'itemId'))->toStartWith('n1-f')
+        ->and(valor($tela, 'itemId'))->toContain('-n1-f')
         ->and(valor($tela, 'treino'))->toBe('en');
 
     $item = app(Catalogo::class)->buscar((string) valor($tela, 'itemId'));
@@ -40,7 +40,7 @@ it('usa o nível e a língua do cookie', function (string $classe): void {
     $item = app(Catalogo::class)->buscar((string) valor($tela, 'itemId'));
 
     expect(valor($tela, 'nivel'))->toBe(7)
-        ->and(valor($tela, 'itemId'))->toStartWith('n7-f')
+        ->and(valor($tela, 'itemId'))->toContain('-n7-f')
         ->and(valor($tela, 'frase'))->toBe($item?->traducao('pt-BR'))
         ->and(valor($tela, 'fraseNativa'))->toBe($item?->traducao('en'));
 })->with([Fala::class, Escuta::class]);
@@ -53,14 +53,14 @@ it('passa para a próxima frase do mesmo nível, nunca a atual', function (strin
         $tela->call('proxima');
 
         expect(valor($tela, 'itemId'))->not->toBe($antes)
-            ->and(valor($tela, 'itemId'))->toStartWith('n1-f');
+            ->and(valor($tela, 'itemId'))->toContain('-n1-f');
     }
 })->with([Fala::class, Escuta::class]);
 
 it('troca o nível e ignora níveis fora de 1 a 10', function (string $classe): void {
     $tela = telaLivewire($classe)->call('mudarNivel', 5);
 
-    expect(valor($tela, 'nivel'))->toBe(5)->and(valor($tela, 'itemId'))->toStartWith('n5-f');
+    expect(valor($tela, 'nivel'))->toBe(5)->and(valor($tela, 'itemId'))->toContain('-n5-f');
 
     foreach ([0, 11, -3] as $invalido) {
         $tela->call('mudarNivel', $invalido);

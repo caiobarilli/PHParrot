@@ -42,7 +42,11 @@ function telaComCookie(string $classe, string $cookie): Testable
     return telaLivewire($classe, $cookie);
 }
 
-it('na fábrica de transição, a seção Tema da configuração fica desativada, com a dica', function (): void {
+it('com um pacote ativo sem temas, a seção Tema da configuração fica desativada, com a dica', function (): void {
+    app(Pacotes::class)->importar(Pacote::doArray(PacoteDeTeste::pacote([PacoteDeTeste::item(null, new Nivel(1), TipoDeItem::Frase, 1)], 'sem-temas')), false);
+    app(Pacotes::class)->ativar('sem-temas');
+    app()->forgetScopedInstances();
+
     get('/configuracao')->assertOk()
         ->assertSeeInOrder(['id="idiomas"', 'id="tema"', 'id="t-aparencia"'], false)
         ->assertSee('<select id="tema-treino"', false)
@@ -50,6 +54,12 @@ it('na fábrica de transição, a seção Tema da configuração fica desativada
         ->assertSee('aria-describedby="tema-sem-temas"', false)
         ->assertSee('Os temas aparecem quando um pacote com temas estiver ativo.')
         ->assertDontSee('<option value="comida">', false);
+});
+
+it('a fábrica lista Todos e os 5 primeiros temas na configuração', function (): void {
+    get('/configuracao')->assertOk()
+        ->assertSeeInOrder(['<option value="">Todos</option>', 'Rotina e casa', 'Comida', 'Compras', 'Transporte e viagem', 'Trabalho'], false)
+        ->assertDontSee('Os temas aparecem quando um pacote com temas estiver ativo.');
 });
 
 it('com temas no pacote ativo, a configuração lista Todos e os temas de qualquer nível', function (): void {

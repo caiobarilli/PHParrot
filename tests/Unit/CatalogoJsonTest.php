@@ -7,6 +7,7 @@ use App\Textos\CatalogoInvalido;
 use App\Textos\CatalogoJson;
 use App\Textos\ItemDeTexto;
 use App\Textos\Nivel;
+use App\Textos\Tema;
 use App\Textos\TipoDeItem;
 use Random\Engine\Xoshiro256StarStar;
 use Random\Randomizer;
@@ -37,11 +38,11 @@ it('implementa o contrato do catálogo', function (): void {
     expect(catalogoReal())->toBeInstanceOf(Catalogo::class);
 });
 
-it('lista os 5 textos e as 10 frases de cada nível', function (Nivel $nivel): void {
+it('lista os 15 textos e as 30 frases de cada nível, dos 5 temas', function (Nivel $nivel): void {
     $catalogo = catalogoReal();
 
-    expect($catalogo->listar($nivel, TipoDeItem::Texto))->toHaveCount(5)
-        ->and($catalogo->listar($nivel, TipoDeItem::Frase))->toHaveCount(10);
+    expect($catalogo->listar($nivel, TipoDeItem::Texto))->toHaveCount(15)
+        ->and($catalogo->listar($nivel, TipoDeItem::Frase))->toHaveCount(30);
 })->with(fn (): array => Nivel::todos());
 
 it('filtra por nível e por tipo', function (): void {
@@ -52,7 +53,7 @@ it('filtra por nível e por tipo', function (): void {
     foreach ($itens as $item) {
         expect($item->nivel->valor)->toBe(3)
             ->and($item->tipo)->toBe(TipoDeItem::Frase)
-            ->and($item->id)->toStartWith('n3-f');
+            ->and($item->id)->toContain('-n3-f');
     }
 });
 
@@ -61,7 +62,7 @@ it('devolve lista vazia quando o nível não existe no catálogo', function (): 
 });
 
 it('busca um item pelo id', function (): void {
-    $item = catalogoReal()->buscar('n4-t02');
+    $item = catalogoReal()->buscar('comida-n4-t02');
 
     expect($item)->toBeInstanceOf(ItemDeTexto::class)
         ->and($item?->nivel->valor)->toBe(4)
@@ -72,7 +73,7 @@ it('busca um item pelo id', function (): void {
 });
 
 it('devolve null ao buscar um id inexistente', function (): void {
-    expect(catalogoReal()->buscar('n1-t99'))->toBeNull()
+    expect(catalogoReal()->buscar('comida-n1-t99'))->toBeNull()
         ->and(catalogoReal()->buscar(''))->toBeNull();
 });
 
@@ -80,7 +81,7 @@ it('sorteia um item do nível e do tipo pedidos', function (): void {
     $item = catalogoReal()->sortear(new Nivel(5), TipoDeItem::Texto);
 
     expect($item)->toBeInstanceOf(ItemDeTexto::class)
-        ->and($item?->id)->toStartWith('n5-t');
+        ->and($item?->id)->toContain('-n5-t');
 });
 
 it('nunca sorteia o item excluído', function (): void {
@@ -90,26 +91,26 @@ it('nunca sorteia o item excluído', function (): void {
     );
 
     for ($tentativa = 0; $tentativa < 200; $tentativa++) {
-        $id = $catalogo->sortear(new Nivel(1), TipoDeItem::Frase, 'n1-f03')?->id;
+        $id = $catalogo->sortear(new Nivel(1), TipoDeItem::Frase, 'comida-n1-f03')?->id;
 
         expect($id)->toBeString();
-        expect($id)->not->toBe('n1-f03');
+        expect($id)->not->toBe('comida-n1-f03');
     }
 });
 
 it('alcança todos os itens restantes ao sortear com exclusão', function (): void {
     $catalogo = new CatalogoJson(
-        catalogoReal()->listar(new Nivel(2), TipoDeItem::Texto),
+        array_values(array_filter(catalogoReal()->listar(new Nivel(2), TipoDeItem::Texto), fn (ItemDeTexto $item): bool => $item->tema === Tema::Comida)),
         new Randomizer(new Xoshiro256StarStar(11)),
     );
 
     $vistos = [];
 
     for ($tentativa = 0; $tentativa < 200; $tentativa++) {
-        $vistos[(string) $catalogo->sortear(new Nivel(2), TipoDeItem::Texto, 'n2-t01')?->id] = true;
+        $vistos[(string) $catalogo->sortear(new Nivel(2), TipoDeItem::Texto, 'comida-n2-t01')?->id] = true;
     }
 
-    expect(array_keys($vistos))->toEqualCanonicalizing(['n2-t02', 'n2-t03', 'n2-t04', 'n2-t05']);
+    expect(array_keys($vistos))->toEqualCanonicalizing(['comida-n2-t02', 'comida-n2-t03']);
 });
 
 it('devolve null quando só resta o item excluído', function (): void {

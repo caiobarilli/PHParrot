@@ -37,7 +37,7 @@ it('mostra a lista com a etiqueta de origem, o nível, o tipo e o par', function
         ->assertSee('Base')
         ->assertSee('Só leitura')
         ->assertSee('EN · PT-BR')
-        ->assertSee('16 itens')
+        ->assertSee('46 itens')
         ->assertSee('Exportar meus textos')
         ->assertSee(route('textos.exportar'))
         ->assertDontSee('Você ainda não criou textos.')
@@ -61,11 +61,11 @@ it('começa filtrando pelo nível do visitante e filtra por nível e tipo', func
 
     $tela = telaLivewire(Textos::class)->assertSet('filtroNivel', '1')->assertDontSee('Level three.');
 
-    $tela->set('filtroNivel', '3')->assertSee('Level three.')->assertSee('16 itens');
-    $tela->call('filtrarTipo', 'frase')->assertDontSee('Level three.')->assertSee('10 itens')->assertSet('filtroTipo', 'frase');
-    $tela->call('filtrarTipo', 'texto')->assertSee('Level three.')->assertSee('6 itens');
+    $tela->set('filtroNivel', '3')->assertSee('Level three.')->assertSee('46 itens');
+    $tela->call('filtrarTipo', 'frase')->assertDontSee('Level three.')->assertSee('30 itens')->assertSet('filtroTipo', 'frase');
+    $tela->call('filtrarTipo', 'texto')->assertSee('Level three.')->assertSee('16 itens');
     $tela->call('filtrarTipo', 'lixo')->assertSet('filtroTipo', '');
-    $tela->set('filtroNivel', '')->assertSee('151 itens');
+    $tela->set('filtroNivel', '')->assertSee('451 itens');
 });
 
 it('mostra o estado vazio quando o filtro não acha nada', function (): void {
@@ -174,7 +174,7 @@ it('edita só item Meu e preenche o formulário com o item', function (): void {
 it('não abre para edição um item da Base nem um id inexistente', function (): void {
     comGestao();
 
-    telaLivewire(Textos::class)->call('editar', 'n1-f01')->assertSet('formAberto', false)
+    telaLivewire(Textos::class)->call('editar', 'rotina-casa-n1-f01')->assertSet('formAberto', false)
         ->call('editar', 'meu-inexistente')->assertSet('formAberto', false);
 });
 
@@ -197,11 +197,11 @@ it('apaga um item Meu depois da confirmação, e nunca um da Base', function ():
 
     expect(Texto::query()->count())->toBe(0);
 
-    $tela->call('pedirApagar', 'n1-f01')->assertSet('apagandoId', '')->call('apagar');
+    $tela->call('pedirApagar', 'rotina-casa-n1-f01')->assertSet('apagandoId', '')->call('apagar');
 
     app()->forgetInstance(Catalogo::class);
 
-    expect(app(Catalogo::class)->buscar('n1-f01'))->not->toBeNull();
+    expect(app(Catalogo::class)->buscar('rotina-casa-n1-f01'))->not->toBeNull();
 });
 
 it('não deixa o navegador mudar as propriedades protegidas', function (string $propriedade): void {
@@ -309,7 +309,7 @@ it('o JSON da Base continua servindo depois do Apagar banco', function (): void 
 
     app()->forgetInstance(Catalogo::class);
 
-    expect(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10);
+    expect(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
     get('/fala')->assertOk();
 });
 
@@ -399,10 +399,10 @@ it('filtra por tema e por sem tema', function (): void {
     app(MeusTextos::class)->criar(new Nivel(1), TipoDeItem::Frase, ['en' => 'Lunch time.', 'pt-BR' => 'Hora do almoço.'], ['pt-BR', 'en'], Tema::Comida);
 
     telaLivewire(Textos::class)
-        ->set('filtroTema', 'comida')->assertSee('Lunch time.')->assertSee('1 item')
-        ->set('filtroTema', 'sem')->assertDontSee('Lunch time.')->assertSee('15 itens')
+        ->set('filtroTema', 'comida')->assertSee('Lunch time.')->assertSee('10 itens')
+        ->set('filtroTema', 'sem')->assertDontSee('Lunch time.')->assertSee('Nada por aqui.')
         ->set('filtroTema', 'lazer')->assertSee('Nada por aqui.')
-        ->set('filtroTema', '')->assertSee('16 itens');
+        ->set('filtroTema', '')->assertSee('46 itens');
 });
 
 it('marca como incompleto o item Meu sem um idioma ativo', function (): void {

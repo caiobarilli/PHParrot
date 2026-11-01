@@ -65,14 +65,14 @@ it('atualiza só itens Meus e mantém os outros idiomas do item', function (): v
         ->and($item?->traducao('es'))->toBe('Buenas noches.')
         ->and($item?->nivel->valor)->toBe(5)
         ->and($item?->tipo)->toBe(TipoDeItem::Texto)
-        ->and(app(MeusTextos::class)->atualizar('n1-f01', new Nivel(1), TipoDeItem::Frase, ['en' => 'x', 'pt-BR' => 'y'], ATIVOS))->toBeNull()
+        ->and(app(MeusTextos::class)->atualizar('rotina-casa-n1-f01', new Nivel(1), TipoDeItem::Frase, ['en' => 'x', 'pt-BR' => 'y'], ATIVOS))->toBeNull()
         ->and(app(MeusTextos::class)->atualizar('meu-inexistente', new Nivel(1), TipoDeItem::Frase, ['en' => 'x', 'pt-BR' => 'y'], ATIVOS))->toBeNull();
 });
 
 it('apaga só itens Meus', function (): void {
     $id = criarMeu();
 
-    expect(app(MeusTextos::class)->apagar('n1-f01'))->toBeFalse()
+    expect(app(MeusTextos::class)->apagar('rotina-casa-n1-f01'))->toBeFalse()
         ->and(app(MeusTextos::class)->apagar('meu-inexistente'))->toBeFalse()
         ->and(app(MeusTextos::class)->apagar($id))->toBeTrue()
         ->and(Texto::query()->count())->toBe(0);
@@ -89,8 +89,8 @@ it('apagar tudo mexe só na tabela textos, e a Base continua no catálogo', func
 
     app()->forgetInstance(Catalogo::class);
 
-    expect(app(Catalogo::class)->buscar('n1-f01'))->not->toBeNull()
-        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(10);
+    expect(app(Catalogo::class)->buscar('rotina-casa-n1-f01'))->not->toBeNull()
+        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(30);
 });
 
 it('os itens Meus entram no catálogo do app, do mesmo nível e tipo', function (): void {
@@ -100,7 +100,7 @@ it('os itens Meus entram no catálogo do app, do mesmo nível e tipo', function 
     $item = app(Catalogo::class)->buscar($id);
 
     expect($item?->origem)->toBe(Origem::Meu)
-        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(11)
+        ->and(app(Catalogo::class)->listar(new Nivel(1), TipoDeItem::Frase))->toHaveCount(31)
         ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
 });
 

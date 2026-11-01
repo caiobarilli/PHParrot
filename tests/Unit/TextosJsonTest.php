@@ -28,7 +28,7 @@ it('está no formato 2, com pacote e itens', function (): void {
         ->and(fabricaBruta()['pacote'])->toBe([
             'slug' => 'fabrica',
             'nome' => 'Fábrica',
-            'versao' => '2026.10.1',
+            'versao' => '2026.11.1',
             'idiomas' => ['en', 'pt-BR'],
         ]);
 });
@@ -39,32 +39,35 @@ it('tem os campos do formato 2 em cada item, nessa ordem', function (): void {
     }
 });
 
-it('mantém os 150 itens de transição sem tema, com 5 textos e 10 frases por nível', function (): void {
+it('traz os 5 primeiros temas completos, com 3 textos e 6 frases por tema e nível', function (): void {
     $contagem = [];
 
     foreach (itensDaFabrica() as $item) {
-        expect($item['tema'])->toBeNull();
-        $contagem[$item['nivel'].'/'.$item['tipo']] = ($contagem[$item['nivel'].'/'.$item['tipo']] ?? 0) + 1;
+        $chave = "{$item['tema']}/{$item['nivel']}/{$item['tipo']}";
+        $contagem[$chave] = ($contagem[$chave] ?? 0) + 1;
     }
 
-    foreach (range(1, 10) as $nivel) {
-        expect($contagem["{$nivel}/texto"] ?? 0)->toBe(5)
-            ->and($contagem["{$nivel}/frase"] ?? 0)->toBe(10);
+    foreach (['rotina-casa', 'comida', 'compras', 'transporte-viagem', 'trabalho'] as $tema) {
+        foreach (range(1, 10) as $nivel) {
+            expect($contagem["{$tema}/{$nivel}/texto"] ?? 0)->toBe(3)
+                ->and($contagem["{$tema}/{$nivel}/frase"] ?? 0)->toBe(6);
+        }
     }
 
-    expect(itensDaFabrica())->toHaveCount(150);
+    expect(itensDaFabrica())->toHaveCount(450);
 });
 
-it('usa ids únicos no formato n{nível}-{t|f}{2 dígitos} nos itens sem tema', function (): void {
+it('usa ids únicos no formato {tema}-n{nível}-{t|f}{2 dígitos}, sem item legado sem tema', function (): void {
     $ids = array_column(itensDaFabrica(), 'id');
 
     foreach (itensDaFabrica() as $item) {
         $letra = $item['tipo'] === 'texto' ? 't' : 'f';
 
-        expect($item['id'])->toMatch("/^n{$item['nivel']}-{$letra}\\d{2}$/");
+        expect($item['tema'])->toBeString()
+            ->and($item['id'])->toMatch("/^{$item['tema']}-n{$item['nivel']}-{$letra}\\d{2}$/");
     }
 
-    expect(array_unique($ids))->toHaveCount(150);
+    expect(array_unique($ids))->toHaveCount(450);
 });
 
 it('tem en e pt-BR preenchidos em todos os itens', function (): void {

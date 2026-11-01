@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Textos\CatalogoJson;
 use App\Textos\ItemDeTexto;
+use App\Textos\Nivel;
 use App\Textos\Pacote;
 use App\Textos\Tema;
+use App\Textos\TipoDeItem;
 use App\Textos\Validacao\ConferenciaDoConjunto;
 use App\Textos\Validacao\Contexto;
 use App\Textos\Validacao\ValidadorDePacote;
@@ -31,10 +34,7 @@ function rascunhos(): array
 
 function semente(string $tema): int
 {
-    return [
-        'rotina-casa' => 10, 'comida' => 7, 'compras' => 4, 'transporte-viagem' => 11, 'trabalho' => 26,
-        'saude' => 5, 'lazer' => 12, 'familia-amigos' => 8, 'tecnologia' => 12, 'cidade-servicos' => 6,
-    ][$tema];
+    return ['saude' => 5, 'lazer' => 12, 'familia-amigos' => 8, 'tecnologia' => 12, 'cidade-servicos' => 6][$tema];
 }
 
 function temaCompleto(Pacote $pacote): bool
@@ -42,9 +42,31 @@ function temaCompleto(Pacote $pacote): bool
     return count($pacote->itens) === (ConferenciaDoConjunto::TEXTOS_POR_NIVEL + ConferenciaDoConjunto::FRASES_POR_NIVEL) * 10;
 }
 
-it('tem um rascunho por tema, com o slug, o tema e o id do formato 2', function (): void {
-    expect(array_keys(rascunhos()))->toBe(array_map(fn (Tema $tema): string => $tema->value, Tema::cases()));
+/**
+ * @return list<string>
+ */
+function temasDaFabrica(): array
+{
+    $catalogo = CatalogoJson::doArquivo(__DIR__.'/../../resources/data/textos.json');
+    $temas = [];
 
+    foreach (Nivel::todos() as $nivel) {
+        foreach (TipoDeItem::cases() as $tipo) {
+            array_push($temas, ...array_map(fn (Tema $tema): string => $tema->value, $catalogo->temas($nivel, $tipo)));
+        }
+    }
+
+    return array_values(array_unique($temas));
+}
+
+it('cada tema está na fábrica ou nos rascunhos, nunca nos dois', function (): void {
+    $todos = array_map(fn (Tema $tema): string => $tema->value, Tema::cases());
+
+    expect(array_intersect(array_keys(rascunhos()), temasDaFabrica()))->toBe([])
+        ->and([...array_keys(rascunhos()), ...temasDaFabrica()])->toEqualCanonicalizing($todos);
+});
+
+it('os rascunhos usam o slug, o tema e o id do formato 2', function (): void {
     foreach (rascunhos() as $tema => $pacote) {
         expect($pacote->slug)->toBe("rascunho-{$tema}");
 
@@ -55,38 +77,25 @@ it('tem um rascunho por tema, com o slug, o tema e o id do formato 2', function 
     }
 });
 
-it('a semente dos temas ainda não escritos reclassifica itens da fábrica, sem repetir nenhum', function (): void {
-    /** @var array{itens: list<array{en: string}>} $fabrica */
-    $fabrica = json_decode((string) file_get_contents(__DIR__.'/../../resources/data/textos.json'), true, flags: JSON_THROW_ON_ERROR);
+it('a semente dos temas ainda não escritos mantém a contagem, sem repetir nenhum item', function (): void {
     $sementes = array_filter(rascunhos(), fn (Pacote $pacote): bool => ! temaCompleto($pacote));
-    $textos = array_merge(...array_map(fn (Pacote $pacote): array => array_map(fn (ItemDeTexto $item): string => (string) $item->traducao('en'), $pacote->itens), array_values($sementes)));
+    $textos = array_merge([], ...array_map(fn (Pacote $pacote): array => array_map(fn (ItemDeTexto $item): string => (string) $item->traducao('en'), $pacote->itens), array_values($sementes)));
 
     foreach ($sementes as $tema => $pacote) {
         expect($pacote->itens)->toHaveCount(semente($tema));
     }
 
-    expect(array_unique($textos))->toHaveCount(count($textos))
-        ->and(array_diff($textos, array_column($fabrica['itens'], 'en')))->toBe([]);
+    expect(array_unique($textos))->toHaveCount(count($textos));
 });
 
 it('o rascunho de um tema escrito passa no validador sem erros', function (): void {
-    $escritos = array_filter(rascunhos(), temaCompleto(...));
+    $escritos = array_keys(array_filter(rascunhos(), temaCompleto(...)));
+    $erros = [];
 
-    expect(array_keys($escritos))->toContain('rotina-casa');
-
-    foreach (array_keys($escritos) as $tema) {
+    foreach ($escritos as $tema) {
         $arquivo = __DIR__."/../../resources/data/rascunhos/{$tema}.json";
-
-        expect((new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, "{$tema}.json")->erros)->toBe([]);
+        $erros[$tema] = (new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, "{$tema}.json")->erros;
     }
-});
 
-it('o pacote de teste dos temas escritos junta os rascunhos completos e passa no validador', function (): void {
-    $arquivo = __DIR__.'/../../resources/data/rascunhos/pacote-5-temas.json';
-    $relatorio = (new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, 'pacote-5-temas.json');
-    $escritos = array_merge(...array_map(fn (Pacote $pacote): array => $pacote->itens, array_values(array_filter(rascunhos(), temaCompleto(...)))));
-
-    expect($relatorio->erros)->toBe([])
-        ->and($relatorio->pacote?->slug)->toBe('rascunho-5-temas')
-        ->and($relatorio->pacote?->itens)->toEqual($escritos);
+    expect($erros)->toBe(array_fill_keys($escritos, []));
 });

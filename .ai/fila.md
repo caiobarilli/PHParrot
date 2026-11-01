@@ -18,7 +18,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 | 10 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
 | 11 | Temas e pacotes | feito (branch `entrega-11-temas`) | Enum `Tema`, formato 2, tabela `pacotes` com o ativo, importar e exportar, `textos:validar` no portão, seletor de tema, "Aparência" no visual, escape do Apagar banco, fábrica de transição e semente em `rascunhos/` (ADR 0011) |
 | 12 | Tradução do conteúdo | pendente | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
-| 13 | Conteúdo, 5 primeiros temas | em curso (`rotina-casa` em rascunho: `b7c7320`) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
+| 13 | Conteúdo, 5 primeiros temas | feito (fábrica `2026.11.1`, 450 itens; rodadas 13, 13b e 13c) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
 | 14 | Teste da Google API | pendente | Chave real, restrita, com cota e alerta no console |
 | 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
 | 16 | Deploy | pendente | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
