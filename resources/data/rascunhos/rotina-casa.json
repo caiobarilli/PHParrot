@@ -232,15 +232,15 @@
             "nivel": 4,
             "tipo": "texto",
             "en": "I usually get up at 6:30. I always make the bed first. I shower quickly because the bathroom gets busy. My roommate never wakes up before 8. I often read for ten minutes. Mornings are the quietest time at home.",
-            "pt-BR": "Eu costumo levantar às 6h30. Sempre arrumo a cama primeiro. Tomo um banho rápido porque o banheiro fica disputado. Meu colega de apartamento nunca acorda antes das 8h. Muitas vezes eu leio por dez minutos. As manhãs são o momento mais tranquilo da casa."
+            "pt-BR": "Eu costumo levantar às 6h30. Sempre arrumo a cama primeiro. Tomo um banho rápido porque o banheiro fica disputado. Quem divide o apartamento comigo nunca acorda antes das 8h. Muitas vezes eu leio por dez minutos. As manhãs são o momento mais tranquilo da casa."
         },
         {
             "id": "rotina-casa-n4-t02",
             "tema": "rotina-casa",
             "nivel": 4,
             "tipo": "texto",
-            "en": "Our washing machine broke yesterday. We have to call someone to fix it. The repair person will come on Friday. Until then I'll wash small things by hand. It's the worst week because we have guests. I think we will be fine.",
-            "pt-BR": "Nossa máquina de lavar quebrou ontem. Temos que chamar alguém para consertar. O técnico vem na sexta-feira. Até lá, vou lavar as coisas pequenas à mão. É a pior semana para isso, porque estamos com visitas em casa. Acho que vai dar tudo certo."
+            "en": "Our washing machine broke yesterday. We have to call someone to fix it. The technician will come on Friday. Until then I'll wash small things by hand. It's the worst week because we have guests. I think we will be fine.",
+            "pt-BR": "Nossa máquina de lavar quebrou ontem. Temos que chamar alguém para consertar. A assistência técnica vem na sexta. Até lá, vou lavar as coisas pequenas à mão. Esta é a pior semana para isso, porque estamos com visita em casa. Acho que vai dar tudo certo."
         },
         {
             "id": "rotina-casa-n4-t03",
@@ -312,7 +312,7 @@
             "nivel": 5,
             "tipo": "texto",
             "en": "It happened last night around 8. I was cooking dinner when the lights went out. My roommate was taking a shower at the time. The food on the stove was almost ready. We found candles that were in a kitchen drawer. The power came back after an hour. If it happens again, we will order food.",
-            "pt-BR": "Aconteceu ontem à noite, por volta das 8. Eu estava fazendo o jantar quando a luz acabou. Meu colega de apartamento estava tomando banho naquela hora. A comida no fogão estava quase pronta. Achamos umas velas que estavam numa gaveta da cozinha. A luz voltou depois de uma hora. Se acontecer de novo, vamos pedir comida."
+            "pt-BR": "Aconteceu ontem à noite, por volta das 8. Eu estava fazendo o jantar quando a luz acabou. Quem divide o apartamento comigo estava tomando banho naquela hora. A comida no fogão estava quase pronta. Achamos umas velas que estavam numa gaveta da cozinha. A luz voltou depois de uma hora. Se acontecer de novo, vamos pedir comida."
         },
         {
             "id": "rotina-casa-n5-t03",
@@ -360,7 +360,7 @@
             "nivel": 5,
             "tipo": "frase",
             "en": "The neighbor who lives next door is very friendly.",
-            "pt-BR": "O vizinho que mora do lado é muito simpático."
+            "pt-BR": "A vizinha que mora do lado é muito simpática."
         },
         {
             "id": "rotina-casa-n5-f06",
@@ -376,7 +376,7 @@
             "nivel": 6,
             "tipo": "texto",
             "en": "When I was young, we used to eat together every night. Our house was small, but the kitchen was always full. My mother always said that the table was for talking. Phones and toys were never allowed at the table. Now I live alone and usually eat on the sofa. If I had more time, I would cook proper meals again. Maybe I should invite friends over more often.",
-            "pt-BR": "Quando eu era pequeno, a gente jantava junto todas as noites. Nossa casa era pequena, mas a cozinha estava sempre cheia. Minha mãe sempre dizia que a mesa era lugar de conversar. Celular e brinquedo nunca eram permitidos à mesa. Hoje moro sozinho e costumo comer no sofá. Se eu tivesse mais tempo, voltaria a fazer refeições de verdade. Talvez eu devesse chamar os amigos aqui em casa com mais frequência."
+            "pt-BR": "Quando eu era criança, a gente jantava junto todas as noites. Nossa casa era pequena, mas a cozinha estava sempre cheia. Minha mãe sempre dizia que a mesa era lugar de conversar. Celular e brinquedo nunca eram permitidos à mesa. Hoje moro sozinha e costumo comer no sofá. Se eu tivesse mais tempo, voltaria a fazer refeições de verdade. Talvez eu devesse chamar os amigos aqui em casa com mais frequência."
         },
         {
             "id": "rotina-casa-n6-t02",
@@ -384,7 +384,7 @@
             "nivel": 6,
             "tipo": "texto",
             "en": "The elevator in our building was built fifty years ago. Last week it stopped working for the third time. The manager said a new one would be installed soon. Until then, we have to carry everything up the stairs. Our shopping bags feel heavier every day. I live on the sixth floor, so I'm getting lots of exercise. If I lived on the ground floor, I wouldn't mind at all.",
-            "pt-BR": "O elevador do nosso prédio foi construído há cinquenta anos. Na semana passada, ele parou de funcionar pela terceira vez. O síndico disse que um novo seria instalado em breve. Até lá, temos que carregar tudo pela escada. As sacolas de compras parecem mais pesadas a cada dia. Moro no sexto andar, então estou fazendo muito exercício. Se eu morasse no térreo, não me importaria nem um pouco."
+            "pt-BR": "O elevador do nosso prédio foi construído há cinquenta anos. Na semana passada, ele parou de funcionar pela terceira vez. A administração do prédio disse que um novo seria instalado em breve. Até lá, temos que carregar tudo pela escada. As sacolas de compras parecem mais pesadas a cada dia. Moro no sexto andar, então estou fazendo muito exercício. Se eu morasse no térreo, não me importaria nem um pouco."
         },
         {
             "id": "rotina-casa-n6-t03",
@@ -392,7 +392,7 @@
             "nivel": 6,
             "tipo": "texto",
             "en": "Sharing an apartment with three people isn't always easy. During our first week, a chore chart was put on the fridge. At first, everybody followed it without any complaints. After a month, dirty dishes were left in the sink for days. One roommate said she was too busy to clean. If we had a dishwasher, life would be much simpler. So last night we decided to buy one together.",
-            "pt-BR": "Dividir apartamento com três pessoas nem sempre é fácil. Na nossa primeira semana, uma tabela de tarefas foi colada na geladeira. No começo, todo mundo seguia a tabela sem reclamar. Depois de um mês, a louça suja ficava dias na pia. Uma das colegas disse que estava ocupada demais para limpar. Se tivéssemos uma lava-louças, a vida seria bem mais simples. Então, ontem à noite, decidimos comprar uma juntos."
+            "pt-BR": "Dividir apartamento com três pessoas nem sempre é fácil. Na nossa primeira semana, uma tabela de tarefas foi colada na geladeira. No começo, todo mundo seguia a tabela sem reclamar. Depois de um mês, a louça suja ficava dias na pia. Uma das colegas disse que estava ocupada demais para limpar. Se tivéssemos uma lava-louças, a vida seria bem mais simples. Então, ontem à noite, decidimos comprar uma em conjunto."
         },
         {
             "id": "rotina-casa-n6-f01",
@@ -448,7 +448,7 @@
             "nivel": 7,
             "tipo": "texto",
             "en": "When I got home on Friday, the kitchen light was on. I put down my bags and looked around carefully. I had turned it off, so someone must have come in. At first I was worried, although nothing seemed to be missing. Then I noticed a note from my landlord on the table. He had let himself in to check the heater. However, I still think he should have called me first. I'm going to bring it up when we talk next week.",
-            "pt-BR": "Quando cheguei em casa na sexta, a luz da cozinha estava acesa. Larguei as sacolas e olhei em volta com cuidado. Eu tinha apagado a luz, então alguém devia ter entrado. No começo fiquei preocupado, embora nada parecesse estar faltando. Então vi um bilhete do proprietário em cima da mesa. Ele tinha entrado com a chave dele para verificar o aquecedor. Mesmo assim, ainda acho que ele devia ter me ligado antes. Vou tocar no assunto quando a gente conversar semana que vem."
+            "pt-BR": "Quando cheguei em casa na sexta, a luz da cozinha estava acesa. Larguei as sacolas e olhei em volta com cuidado. Eu tinha apagado a luz, então alguém devia ter entrado. No começo me preocupei, embora nada parecesse estar faltando. Então vi um bilhete do proprietário em cima da mesa. Ele tinha entrado com a chave dele para verificar o aquecedor. Mesmo assim, ainda acho que ele devia ter me ligado antes. Vou tocar no assunto quando a gente conversar semana que vem."
         },
         {
             "id": "rotina-casa-n7-t02",
@@ -456,7 +456,7 @@
             "nivel": 7,
             "tipo": "texto",
             "en": "Last month my partner and I finally cleared out our garage. We had put it off for nearly two years. We found boxes that the previous owners must have left behind. Some of them were full of old magazines and broken lamps. We gave away whatever was still useful and threw out the rest. Although it took the whole weekend, it was worth the effort. Now we can actually park the car inside again. However, my partner wants to fill it with bikes now.",
-            "pt-BR": "No mês passado, eu e meu companheiro finalmente fizemos uma limpa na garagem. Fazia quase dois anos que estávamos adiando isso. Achamos caixas que os antigos donos devem ter deixado para trás. Algumas estavam cheias de revistas velhas e abajures quebrados. Doamos o que ainda prestava e jogamos o resto fora. Embora tenha levado o fim de semana inteiro, valeu o esforço. Agora dá até para estacionar o carro lá dentro de novo. O problema é que agora meu companheiro quer encher a garagem de bicicletas."
+            "pt-BR": "No mês passado, eu e minha companheira finalmente fizemos uma limpa na garagem. Fazia quase dois anos que estávamos adiando isso. Achamos caixas que os antigos donos devem ter deixado para trás. Algumas estavam cheias de revistas velhas e abajures quebrados. Doamos o que ainda prestava e jogamos o resto fora. Embora tenha levado o fim de semana inteiro, valeu o esforço. Agora dá até para estacionar o carro lá dentro de novo. O problema é que agora minha companheira quer encher a garagem de bicicletas."
         },
         {
             "id": "rotina-casa-n7-t03",
@@ -504,7 +504,7 @@
             "nivel": 7,
             "tipo": "frase",
             "en": "You must have been tired after moving all those boxes.",
-            "pt-BR": "Você deve ter ficado cansado depois de carregar todas aquelas caixas."
+            "pt-BR": "Você deve ter se cansado muito carregando todas aquelas caixas."
         },
         {
             "id": "rotina-casa-n7-f06",
@@ -528,7 +528,7 @@
             "nivel": 8,
             "tipo": "texto",
             "en": "The kitchen faucet has been dripping for weeks, and the sound drives me crazy. I keep saying I'll fix it, but I never find the time. Our landlord says the whole sink must be replaced, not just the faucet. Apparently, it should have been changed years before we moved in. If someone had checked it earlier, the cabinet underneath wouldn't have been damaged. Now the wood has to be dried out before anything can be done. Meanwhile, a bucket under the sink catches the water every night. I just wish landlords would take these small repairs more seriously.",
-            "pt-BR": "A torneira da cozinha está pingando há semanas, e o barulho me deixa louco. Vivo dizendo que vou consertar, mas nunca acho tempo. Segundo o proprietário, a pia inteira precisa ser trocada, não só a torneira. Pelo visto, ela já devia ter sido trocada anos antes de nos mudarmos. Se alguém tivesse verificado antes, o armário embaixo da pia não teria estragado. Agora a madeira tem que secar antes que se possa fazer qualquer coisa. Enquanto isso, um balde embaixo da pia recolhe a água toda noite. Eu só queria que os proprietários levassem esses pequenos consertos mais a sério."
+            "pt-BR": "A torneira da cozinha está pingando há semanas, e o barulho me tira do sério. Vivo dizendo que vou consertar, mas nunca acho tempo. Segundo a proprietária, a pia inteira precisa ser trocada, não só a torneira. Pelo visto, ela já devia ter sido trocada anos antes de nos mudarmos. Se alguém tivesse verificado antes, o armário embaixo da pia não teria estragado. Agora a madeira tem que secar antes que se possa fazer qualquer coisa. Enquanto isso, um balde embaixo da pia recolhe a água toda noite. Eu só queria que os proprietários levassem esses pequenos consertos mais a sério."
         },
         {
             "id": "rotina-casa-n8-t03",
@@ -536,7 +536,7 @@
             "nivel": 8,
             "tipo": "texto",
             "en": "My grandmother has been living with us since spring. The house feels busier, but also warmer and calmer. At first, we worried that everyone would get on each other's nerves. Before she arrived, the guest room had to be completely repainted. If we hadn't bought a bigger house, it would never have worked. She has been teaching my kids how to cook simple meals. Honestly, the kids have never eaten so many vegetables in their lives. Sometimes I wish we had more privacy in the evenings. Still, the dinners we've been having together are worth every small sacrifice.",
-            "pt-BR": "Minha avó está morando com a gente desde a primavera. A casa ficou mais movimentada, mas também mais acolhedora e tranquila. No começo, ficamos com medo de que um acabasse irritando o outro. Antes de ela chegar, o quarto de hóspedes teve que ser todo repintado. Se não tivéssemos comprado uma casa maior, isso nunca teria dado certo. Ela tem ensinado meus filhos a fazer pratos simples. Sinceramente, as crianças nunca comeram tanto legume na vida. Às vezes eu queria que tivéssemos mais privacidade à noite. Mesmo assim, os jantares que temos feito juntos compensam cada pequeno sacrifício."
+            "pt-BR": "Minha avó está morando com a gente desde a primavera. A casa ficou mais movimentada, mas também mais acolhedora e tranquila. No começo, ficamos com medo de que todo mundo acabasse se irritando. Antes de ela chegar, o quarto de hóspedes teve que ser todo repintado. Se não tivéssemos comprado uma casa maior, isso nunca teria dado certo. Ela tem ensinado meus filhos a fazer pratos simples. Sinceramente, as crianças nunca comeram tanto legume na vida. Às vezes eu queria que tivéssemos mais privacidade à noite. Mesmo assim, os jantares que temos feito juntos compensam cada pequeno sacrifício."
         },
         {
             "id": "rotina-casa-n8-f01",
@@ -591,8 +591,8 @@
             "tema": "rotina-casa",
             "nivel": 9,
             "tipo": "texto",
-            "en": "A notice taped to the elevator this morning was written in classic management language. It informed residents that the water supply would be suspended on Thursday for essential maintenance. Should anyone need water during the work, a tank would be available downstairs. In plain English, that means no showers, no laundry, and no coffee until lunchtime. Most of my neighbors, needless to say, were less than thrilled. Had they warned us earlier, I wouldn't be scrambling to fill bottles tonight. Rumor has it the work will actually take two full days. Compared to last winter's flood, one dry morning is hardly the end of the world. I'll stock up on water tonight and hope the plumbers keep their word.",
-            "pt-BR": "Um aviso colado no elevador hoje de manhã estava escrito no mais puro burocratês. Ele informava aos moradores que o abastecimento de água seria suspenso na quinta-feira para uma manutenção essencial. Caso alguém precisasse de água durante a obra, haveria um reservatório disponível no térreo. Em bom português, isso quer dizer nada de banho, nada de roupa lavada e nada de café até a hora do almoço. A maioria dos meus vizinhos, nem preciso dizer, não ficou nada empolgada. Se tivessem avisado antes, eu não estaria correndo para encher garrafas hoje à noite. Dizem por aí que a obra vai levar, na verdade, dois dias inteiros. Comparada à enchente do inverno passado, uma manhã sem água está longe de ser o fim do mundo. Vou fazer um estoque de água hoje à noite e torcer para os encanadores cumprirem a palavra."
+            "en": "A notice taped to the elevator this morning was written in classic management language. It informed residents that the water supply would be suspended on Thursday for essential maintenance. Anyone needing water during the work could use a tank downstairs. In plain English, that means no showers, no laundry, and no coffee until lunchtime. Most of my neighbors, needless to say, were less than thrilled. Had they warned us earlier, I wouldn't be scrambling to fill bottles tonight. Rumor has it the work will actually take two full days. Compared to last winter's flood, one dry morning is hardly the end of the world. I'll stock up on water tonight and hope the plumbers keep their word.",
+            "pt-BR": "Um aviso colado no elevador hoje de manhã estava escrito naquele linguajar burocrático típico da administração. Informava aos moradores que o fornecimento de água seria suspenso na quinta-feira para uma manutenção essencial. Quem precisasse de água durante a obra poderia usar um reservatório no térreo. Em bom português, isso quer dizer: nada de banho, nada de roupa lavada e nada de café até a hora do almoço. Nem preciso dizer que a maior parte da vizinhança não ficou nada empolgada. Se tivessem avisado antes, eu não estaria correndo para encher garrafas hoje à noite. Dizem por aí que a obra vai levar, na verdade, dois dias inteiros. Comparada à enchente do inverno passado, uma manhã sem água não é nenhum fim do mundo. Vou fazer um estoque de água hoje à noite e torcer para que a equipe da obra cumpra o que prometeu."
         },
         {
             "id": "rotina-casa-n9-t02",
@@ -600,7 +600,7 @@
             "nivel": 9,
             "tipo": "texto",
             "en": "Having lived alone for a decade, I assumed sharing a home would be easy. If I had asked more questions before signing, I wouldn't be so tired now. My housemate, it turns out, is a real night owl who cooks elaborate meals at midnight. Woken by frying garlic at one in the morning, I nearly lost my temper. Rather than make a scene, I decided to bring it up over breakfast. To my surprise, he was mortified and offered to cook dinner for both of us instead. We have since agreed that the kitchen closes at eleven, give or take a few minutes. Truth be told, his cooking is far better than mine. Not every arrangement works out this smoothly, but so far we get along famously.",
-            "pt-BR": "Depois de morar sozinho por uma década, achei que dividir a casa seria fácil. Se eu tivesse feito mais perguntas antes de assinar, não estaria tão cansado agora. Meu colega de casa, pelo visto, é um notívago de carteirinha, que prepara pratos elaborados à meia-noite. Quando acordei com o cheiro de alho fritando à uma da manhã, quase perdi a cabeça. Em vez de fazer um escândalo, resolvi tocar no assunto no café da manhã. Para minha surpresa, ele ficou morrendo de vergonha e, para compensar, se ofereceu para fazer o jantar para nós dois. Desde então, combinamos que a cozinha fecha às onze, com uns minutinhos de tolerância. Verdade seja dita, ele cozinha muito melhor do que eu. Nem todo acordo dá certo com tanta facilidade, mas até agora a gente se dá às mil maravilhas."
+            "pt-BR": "Depois de morar só por uma década, achei que dividir a casa seria fácil. Se eu tivesse feito mais perguntas antes de assinar, não estaria morrendo de sono agora. Meu colega de casa, pelo visto, é um notívago de carteirinha, que prepara pratos elaborados à meia-noite. Quando acordei com o cheiro de alho fritando à uma da manhã, quase perdi a cabeça. Em vez de fazer um escândalo, resolvi tocar no assunto no café da manhã. Para minha surpresa, ele ficou morrendo de vergonha e, para compensar, se ofereceu para fazer o jantar para nós dois. Desde então, combinamos que a cozinha fecha às onze, com uns minutinhos de tolerância. Verdade seja dita, ele cozinha muito melhor do que eu. Nem todo acordo dá certo com tanta facilidade, mas até agora a gente se dá às mil maravilhas."
         },
         {
             "id": "rotina-casa-n9-t03",
@@ -679,8 +679,8 @@
             "tema": "rotina-casa",
             "nivel": 10,
             "tipo": "texto",
-            "en": "Few experiences reveal how much we accumulate quite like packing up an entire house. Only when the last box was sealed did I realize how little I actually used. It was the kitchen, of all places, that held the most embarrassing surprises. Behind the pans lay three identical graters and a fondue set nobody remembered buying. My sister, ever practical, suggested that every item be justified before it was allowed onto the truck. The rule sounded harsh at first, yet it proved remarkably liberating in practice. By the time the movers arrived, we had donated or sold nearly half of our belongings. Scarcely a week into the new place, I could hardly remember what most of them had been. Whether that speaks to wisdom or to sheer forgetfulness, I have yet to decide.",
-            "pt-BR": "Poucas experiências revelam tão bem o quanto acumulamos quanto encaixotar uma casa inteira. Só quando a última caixa foi fechada percebi o quão pouco eu de fato usava. Foi justamente a cozinha, quem diria, que guardava as surpresas mais constrangedoras. Atrás das panelas estavam três raladores idênticos e um kit de fondue que ninguém se lembrava de ter comprado. Minha irmã, prática como sempre, sugeriu que cada objeto fosse justificado antes de poder subir no caminhão. A regra pareceu dura no começo, mas se mostrou extremamente libertadora na prática. Quando o pessoal da mudança chegou, já tínhamos doado ou vendido quase metade das nossas coisas. Com apenas uma semana na casa nova, eu mal conseguia lembrar o que era a maior parte daquilo. Se isso é sinal de sabedoria ou de puro esquecimento, ainda não decidi."
+            "en": "Few experiences reveal how much we accumulate quite like packing up an entire house. Only when the last box was sealed did I realize how little I actually used. It was the kitchen, of all places, that held the most embarrassing surprises. Behind the pans lay three identical graters and a cumbersome bread maker nobody remembered buying. My sister, ever practical, suggested that every item be justified before it was allowed onto the truck. The rule sounded harsh at first, yet it proved remarkably liberating in practice. By the time the movers arrived, we had donated or sold nearly half of our belongings. Scarcely a week into the new place, I could hardly remember what most of them had been. Whether that speaks to wisdom or to sheer forgetfulness, I have yet to decide.",
+            "pt-BR": "Poucas experiências revelam o quanto acumulamos como encaixotar uma casa inteira. Só quando a última caixa foi lacrada é que percebi o pouco que eu realmente usava. Foi justamente a cozinha, quem diria, que guardava as surpresas mais constrangedoras. Atrás das panelas havia três raladores idênticos e um trambolho de máquina de pão que ninguém lembrava de ter comprado. Minha irmã, prática como sempre, sugeriu que cada objeto fosse justificado antes de ter permissão para subir no caminhão. A regra pareceu dura a princípio, mas se mostrou extraordinariamente libertadora na prática. Quando o pessoal da mudança chegou, já tínhamos doado ou vendido quase metade das nossas coisas. Mal fazia uma semana que estávamos na casa nova e eu já quase não lembrava o que era a maior parte delas. Se isso diz mais sobre sabedoria ou sobre puro esquecimento, ainda estou para decidir."
         },
         {
             "id": "rotina-casa-n10-f01",
@@ -704,7 +704,7 @@
             "nivel": 10,
             "tipo": "frase",
             "en": "I'd suggest that whoever cooks tonight be excused from doing the dishes afterward.",
-            "pt-BR": "Eu sugeriria que quem cozinhar hoje à noite fique dispensado de lavar a louça depois."
+            "pt-BR": "Eu sugeriria que quem cozinhar hoje à noite não precise lavar a louça depois."
         },
         {
             "id": "rotina-casa-n10-f04",
