@@ -59,13 +59,15 @@ it('traduz pelo Google e devolve só o texto', function (): void {
         && $pedido['format'] === 'text');
 });
 
-it('manda a chave ao Google e nunca a devolve ao navegador', function (): void {
+it('manda a chave ao Google no cabeçalho, fora da URL, e nunca a devolve ao navegador', function (): void {
     Http::fake([TradutorGoogle::URL.'*' => respostaDoGoogle('Olá')]);
 
     $resposta = postJson('/traduzir', corpo())->assertOk();
 
     expect((string) $resposta->getContent())->not->toContain(CHAVE_DE_TESTE);
-    Http::assertSent(fn (PedidoHttp $pedido): bool => str_contains($pedido->url(), 'key='.CHAVE_DE_TESTE));
+    Http::assertSent(fn (PedidoHttp $pedido): bool => $pedido->header(TradutorGoogle::CABECALHO_DA_CHAVE) === [CHAVE_DE_TESTE]
+        && ! str_contains($pedido->url(), CHAVE_DE_TESTE)
+        && $pedido->url() === TradutorGoogle::URL);
 });
 
 it('responde 503 sem chave e sem chamar o Google', function (): void {

@@ -35,4 +35,15 @@ return [
     'automatico' => ':idioma (automatic)',
     'etiqueta' => 'Automatic translation',
     'testar_desligado' => 'Testing is off in this language until transcription is measured in it.',
+    'testar' => [
+        'ok' => 'Ok: Google translated ":palavra" to ":traducao" (en → pt-BR). :caracteres characters were added to this month\'s counter.',
+        'sem_chave' => 'Missing key: put the key in GOOGLE_TRANSLATE_KEY in .env and run php artisan config:clear.',
+        'chave_invalida' => 'Invalid key: Google did not recognize the key. Check that it was copied in full and was not deleted in the console.',
+        'chave_bloqueada' => 'Key blocked by its restrictions: check that the Cloud Translation API is among the key\'s APIs and, with an IP restriction, that the server IP is on the list.',
+        'api_desativada' => 'API disabled: enable the Cloud Translation API in the key\'s project and try again in a few minutes.',
+        'faturamento_desativado' => 'Billing disabled: Cloud Translation requires an active billing account on the project.',
+        'cota_estourada' => 'Quota exceeded: Google refused because of the daily or per-minute limit. The daily quota resets at midnight Pacific Time.',
+        'desconhecida' => 'Google refused the request for another reason. The HTTP status was logged, without the key.',
+        'sem_resposta' => 'No answer from Google: check the server network and try again.',
+    ],
 ];

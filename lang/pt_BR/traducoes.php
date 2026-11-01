@@ -35,4 +35,15 @@ return [
     'automatico' => ':idioma (automático)',
     'etiqueta' => 'Tradução automática',
     'testar_desligado' => 'O Testar fica desligado nesta língua até a transcrição ser medida nela.',
+    'testar' => [
+        'ok' => 'Ok: o Google traduziu ":palavra" para ":traducao" (en → pt-BR). :caracteres caracteres entraram no contador do mês.',
+        'sem_chave' => 'Chave ausente: ponha a chave em GOOGLE_TRANSLATE_KEY no .env e rode php artisan config:clear.',
+        'chave_invalida' => 'Chave inválida: o Google não reconheceu a chave. Confira se ela foi copiada inteira e se não foi apagada no console.',
+        'chave_bloqueada' => 'Chave bloqueada pelas restrições: confira se a Cloud Translation API está entre as APIs da chave e, com restrição por IP, se o IP do servidor está na lista.',
+        'api_desativada' => 'API desativada: ative a Cloud Translation API no projeto da chave e tente de novo em alguns minutos.',
+        'faturamento_desativado' => 'Faturamento desativado: a Cloud Translation exige uma conta de faturamento ativa no projeto.',
+        'cota_estourada' => 'Cota estourada: o Google recusou pelo limite diário ou por minuto. A cota diária volta à meia-noite do horário do Pacífico.',
+        'desconhecida' => 'O Google recusou o pedido por outro motivo. O status HTTP ficou no log, sem a chave.',
+        'sem_resposta' => 'Sem resposta do Google: confira a rede do servidor e tente de novo.',
+    ],
 ];
