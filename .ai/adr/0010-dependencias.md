@@ -23,6 +23,7 @@ As versões estão travadas (bases por tag e digest, actions por SHA, `composer.
    - O Dependabot só lê `FROM` com a imagem escrita por extenso, e não resolve `ARG`.
    - O `ARG DEBIAN` virou `FROM` literal nos três estágios, com a mesma imagem.
 6. **Sem auto-merge:** depende da proteção da `main`, que fica para o deploy. Cada PR do bot roda o CI e, quando mexe em `docker/` ou `terraform/`, o `containers.yml` (Hadolint, build e Trivy). É isso que valida a atualização antes do merge, feito à mão.
+7. **nginx:** a imagem fica na linha estável (minor par). O `ignore` do ecossistema docker descarta as atualizações de minor do `nginx` (`version-update:semver-minor`), que trariam a mainline (minor ímpar, como a 1.31.7 do PR #2). No `dependabot-core` (`ignore_condition.rb` e `version.rb`), isso vira a faixa `>= 1.31.a, < 2` a partir da 1.30.6, então patch (1.30.x) e digest novo na mesma tag continuam chegando. A próxima estável (1.32) também fica de fora e sobe à mão, junto com o `FROM`.
 
 ## Consequência
 
