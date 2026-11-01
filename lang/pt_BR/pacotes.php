@@ -42,6 +42,12 @@ return [
         'alertas' => '{1} 1 alerta|[2,*] :count alertas',
         'mais' => 'e mais :n.',
     ],
+    'comando' => [
+        'nada_importado' => 'Nada foi importado.',
+        'slug_existe' => 'Já existe :slug. Use --substituir para trocar.',
+        'meus_nao_ativa' => 'Os Meus textos não são um pacote para ativar. Importe sem --ativar.',
+        'ativo' => 'Ativo: :nome.',
+    ],
     'validar' => [
         'modo' => 'Modo: :modo',
         'fabrica' => 'fábrica',

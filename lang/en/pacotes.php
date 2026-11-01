@@ -42,6 +42,12 @@ return [
         'alertas' => '{1} 1 warning|[2,*] :count warnings',
         'mais' => 'and :n more.',
     ],
+    'comando' => [
+        'nada_importado' => 'Nothing was imported.',
+        'slug_existe' => ':slug already exists. Use --substituir to replace it.',
+        'meus_nao_ativa' => 'My texts are not a package to activate. Import without --ativar.',
+        'ativo' => 'Active: :nome.',
+    ],
     'validar' => [
         'modo' => 'Mode: :modo',
         'fabrica' => 'factory',
