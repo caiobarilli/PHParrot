@@ -38,7 +38,21 @@ it('mostra a lista com a etiqueta de origem, o nível, o tipo e o par', function
         ->assertSee('Só leitura')
         ->assertSee('EN · PT-BR')
         ->assertSee('16 itens')
-        ->assertSee('Exportar meus textos');
+        ->assertSee('Exportar meus textos')
+        ->assertSee(route('textos.exportar'))
+        ->assertDontSee('Você ainda não criou textos.')
+        ->assertSee(route('pacotes'))
+        ->assertSee('Exportar ou importar pacotes');
+});
+
+it('sem Meus textos, o Exportar meus textos fica desativado, com a dica', function (): void {
+    comGestao();
+
+    telaLivewire(Textos::class)
+        ->assertSee('Exportar meus textos')
+        ->assertDontSee(route('textos.exportar'))
+        ->assertSee('aria-describedby="exportar-dica"', false)
+        ->assertSee('Você ainda não criou textos.');
 });
 
 it('começa filtrando pelo nível do visitante e filtra por nível e tipo', function (): void {

@@ -52,6 +52,8 @@ return [
         'apagar' => 'Delete',
         'apagar_confirmar' => 'Delete this item? This cannot be undone.',
         'exportar' => 'Export my texts',
+        'sem_meus_textos' => 'You have not created any texts yet.',
+        'pacotes' => 'Export or import packages',
         'validacao' => [
             'treino' => 'Write the text in the language to practice, up to :max characters.',
             'nativa' => 'Write the text in the native language, up to :max characters.',

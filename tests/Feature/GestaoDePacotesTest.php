@@ -234,11 +234,18 @@ it('apagar pede confirmação e não vale para o ativo nem para a fábrica', fun
     expect(PacoteImportado::query()->pluck('slug')->all())->toBe(['comida-1']);
 });
 
-it('a etapa 1 do Apagar banco oferece os dois exports', function (): void {
+it('a etapa 1 do Apagar banco oferece os dois exports, e o dos Meus textos só com textos criados', function (): void {
     comGestao();
 
     get('/configuracao')->assertOk()
         ->assertSee(route('pacotes.exportar', 'fabrica'))
-        ->assertSee(route('textos.exportar'))
+        ->assertDontSee(route('textos.exportar'))
+        ->assertSee('Você ainda não criou textos.')
         ->assertSee('Exportar o pacote ativo');
+
+    Texto::query()->create(['id' => 'meu-01abc', 'nivel' => 2, 'tipo' => 'frase', 'tema' => null, 'traducoes' => ['en' => 'Hi.', 'pt-BR' => 'Oi.']]);
+
+    get('/configuracao')->assertOk()
+        ->assertSee(route('textos.exportar'))
+        ->assertDontSee('Você ainda não criou textos.');
 });

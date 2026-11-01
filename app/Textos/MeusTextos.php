@@ -48,6 +48,11 @@ final class MeusTextos
         );
     }
 
+    public function existem(): bool
+    {
+        return Texto::query()->exists();
+    }
+
     /**
      * @return list<ItemDeTexto>
      */

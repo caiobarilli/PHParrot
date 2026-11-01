@@ -5,6 +5,7 @@
     $gestaoLigada = $gestao->ligada();
     $gestaoAtiva = $gestao->ativa();
     $pacoteAtivo = $gestaoAtiva ? app(\App\Textos\Pacotes::class)->ativo()->slug : '';
+    $temMeusTextos = $gestaoAtiva && app(\App\Textos\MeusTextos::class)->existem();
 @endphp
 <x-layouts::app :title="__('config.titulo')" tela="configuracao">
 <main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="configuracao" data-palavra="{{ mb_strtolower(__('gestao.palavra')) }}" data-etapa="{{ __('config.perigo.etapa') }}">
@@ -152,7 +153,7 @@
       <p class="text-[13px] text-mut">{{ __('config.perigo.exportar_antes') }}</p>
       <div class="flex flex-wrap gap-2">
         <a href="{{ route('pacotes.exportar', $pacoteAtivo) }}" class="btn btn-sm btn-ghost" download><x-icone nome="baixar" />{{ __('pacotes.exportar_ativo') }}</a>
-        <a href="{{ route('textos.exportar') }}" class="btn btn-sm btn-ghost" download><x-icone nome="baixar" />{{ __('gestao.textos.exportar') }}</a>
+        <x-exportar-meus-textos :existem="$temMeusTextos" dica="m-exportar-dica" />
       </div>
     </div>
     <div class="flex flex-col gap-1.5" x-show="apagar === 2" x-cloak>

@@ -52,6 +52,8 @@ return [
         'apagar' => 'Apagar',
         'apagar_confirmar' => 'Apagar este item? Não dá para desfazer.',
         'exportar' => 'Exportar meus textos',
+        'sem_meus_textos' => 'Você ainda não criou textos.',
+        'pacotes' => 'Exportar ou importar pacotes',
         'validacao' => [
             'treino' => 'Escreva o texto na língua para treinar, com até :max caracteres.',
             'nativa' => 'Escreva o texto na língua nativa, com até :max caracteres.',

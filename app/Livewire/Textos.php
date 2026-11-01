@@ -166,12 +166,13 @@ final class Textos extends Component
         $this->filtroTipo = TipoDeItem::tryFrom($tipo) instanceof TipoDeItem ? $tipo : '';
     }
 
-    public function render(Catalogo $catalogo): View
+    public function render(Catalogo $catalogo, MeusTextos $meus): View
     {
         $this->autorizar();
 
         return view('livewire.textos', [
             'itens' => $this->itens($catalogo),
+            'temMeusTextos' => $meus->existem(),
             'catalogo' => $catalogo,
             'temas' => Tema::cases(),
             'treinoIdioma' => Idioma::from($this->codigoTreino),
