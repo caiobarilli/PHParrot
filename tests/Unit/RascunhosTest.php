@@ -16,13 +16,25 @@ function rascunhos(): array
 {
     $pacotes = [];
 
-    foreach (glob(__DIR__.'/../../resources/data/rascunhos/*.json') ?: [] as $arquivo) {
-        /** @var array<mixed> $dados */
-        $dados = json_decode((string) file_get_contents($arquivo), true, flags: JSON_THROW_ON_ERROR);
-        $pacotes[basename($arquivo, '.json')] = Pacote::doArray($dados);
+    foreach (Tema::cases() as $tema) {
+        $arquivo = __DIR__."/../../resources/data/rascunhos/{$tema->value}.json";
+
+        if (is_file($arquivo)) {
+            /** @var array<mixed> $dados */
+            $dados = json_decode((string) file_get_contents($arquivo), true, flags: JSON_THROW_ON_ERROR);
+            $pacotes[$tema->value] = Pacote::doArray($dados);
+        }
     }
 
     return $pacotes;
+}
+
+function semente(string $tema): int
+{
+    return [
+        'rotina-casa' => 10, 'comida' => 7, 'compras' => 4, 'transporte-viagem' => 11, 'trabalho' => 26,
+        'saude' => 5, 'lazer' => 12, 'familia-amigos' => 8, 'tecnologia' => 12, 'cidade-servicos' => 6,
+    ][$tema];
 }
 
 function temaCompleto(Pacote $pacote): bool
@@ -31,9 +43,10 @@ function temaCompleto(Pacote $pacote): bool
 }
 
 it('tem um rascunho por tema, com o slug, o tema e o id do formato 2', function (): void {
+    expect(array_keys(rascunhos()))->toBe(array_map(fn (Tema $tema): string => $tema->value, Tema::cases()));
+
     foreach (rascunhos() as $tema => $pacote) {
-        expect(Tema::tryFrom($tema))->not->toBeNull()
-            ->and($pacote->slug)->toBe("rascunho-{$tema}");
+        expect($pacote->slug)->toBe("rascunho-{$tema}");
 
         foreach ($pacote->itens as $item) {
             expect($item->tema?->value)->toBe($tema)
@@ -48,8 +61,11 @@ it('a semente dos temas ainda não escritos reclassifica itens da fábrica, sem 
     $sementes = array_filter(rascunhos(), fn (Pacote $pacote): bool => ! temaCompleto($pacote));
     $textos = array_merge(...array_map(fn (Pacote $pacote): array => array_map(fn (ItemDeTexto $item): string => (string) $item->traducao('en'), $pacote->itens), array_values($sementes)));
 
-    expect($textos)->toHaveCount(91)
-        ->and(array_unique($textos))->toHaveCount(91)
+    foreach ($sementes as $tema => $pacote) {
+        expect($pacote->itens)->toHaveCount(semente($tema));
+    }
+
+    expect(array_unique($textos))->toHaveCount(count($textos))
         ->and(array_diff($textos, array_column($fabrica['itens'], 'en')))->toBe([]);
 });
 
