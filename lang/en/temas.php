@@ -16,5 +16,6 @@ return [
     'titulo' => 'Topic',
     'todos' => 'All',
     'sem_tema' => 'No topic',
+    'sem_temas' => 'Topics show up when a package with topics is active.',
     'vazio' => 'This topic has no items at this level. Showing all.',
 ];

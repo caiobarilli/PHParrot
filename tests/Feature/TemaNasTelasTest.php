@@ -42,13 +42,21 @@ function telaComCookie(string $classe, string $cookie): Testable
     return telaLivewire($classe, $cookie);
 }
 
-it('na fábrica de transição, o select só tem Todos e fica desativado', function (string $rota): void {
+it('na fábrica de transição, o select só tem Todos e fica desativado, com a dica', function (string $rota): void {
     get($rota)->assertOk()
         ->assertSee('<select id="tema"', false)
         ->assertSee('Todos')
         ->assertSee('disabled', false)
+        ->assertSee('aria-describedby="tema-sem-temas"', false)
+        ->assertSee('Os temas aparecem quando um pacote com temas estiver ativo.')
         ->assertDontSee('Comida');
 })->with(['/leitura', '/fala', '/escuta']);
+
+it('com temas no nível, o select não mostra a dica de pacote sem temas', function (): void {
+    ativarComidaComLazer();
+
+    telaLivewire(Leitura::class)->assertDontSee('Os temas aparecem quando um pacote com temas estiver ativo.');
+});
 
 it('lista só os temas com itens no nível e sorteia no tema escolhido', function (string $classe, string $campo): void {
     ativarComidaComLazer();

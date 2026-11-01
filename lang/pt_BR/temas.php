@@ -16,5 +16,6 @@ return [
     'titulo' => 'Tema',
     'todos' => 'Todos',
     'sem_tema' => 'Sem tema',
+    'sem_temas' => 'Os temas aparecem quando um pacote com temas estiver ativo.',
     'vazio' => 'Esse tema não tem itens neste nível. Mostrando todos.',
 ];
