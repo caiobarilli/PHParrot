@@ -80,3 +80,13 @@ it('o rascunho de um tema escrito passa no validador sem erros', function (): vo
         expect((new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, "{$tema}.json")->erros)->toBe([]);
     }
 });
+
+it('o pacote de teste dos temas escritos junta os rascunhos completos e passa no validador', function (): void {
+    $arquivo = __DIR__.'/../../resources/data/rascunhos/pacote-5-temas.json';
+    $relatorio = (new ValidadorDePacote)->validarArquivo((string) file_get_contents($arquivo), Contexto::Importacao, 'pacote-5-temas.json');
+    $escritos = array_merge(...array_map(fn (Pacote $pacote): array => $pacote->itens, array_values(array_filter(rascunhos(), temaCompleto(...)))));
+
+    expect($relatorio->erros)->toBe([])
+        ->and($relatorio->pacote?->slug)->toBe('rascunho-5-temas')
+        ->and($relatorio->pacote?->itens)->toEqual($escritos);
+});
