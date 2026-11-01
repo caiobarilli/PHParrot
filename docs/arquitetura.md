@@ -8,6 +8,7 @@ flowchart LR
     nginx["phparrot-nginx<br/>nginx 1.30, sem root"]
     php["phparrot-php<br/>Laravel 13 em PHP-FPM 8.5"]
     whisper["phparrot-whisper<br/>whisper-server, modelo base"]
+    agenda["phparrot-agenda<br/>schedule:work, sem porta"]
     db[("SQLite<br/>Meus textos, pacotes,<br/>sessões, cache")]
     json["textos.json<br/>(fábrica)"]
     google["Google Cloud Translation v2<br/>(opcional)"]
@@ -18,6 +19,8 @@ flowchart LR
     php --> db
     php --> json
     php -. "POST /traduzir, com chave" .-> google
+    agenda -- "textos:traduzir a cada 10 min" --> db
+    agenda -. "lotes do conteúdo, com chave" .-> google
 ```
 
 ## Peças
@@ -27,10 +30,11 @@ flowchart LR
 | Navegador | Monta as telas com Livewire e Alpine. Lê em voz alta com `speechSynthesis`, grava com `MediaRecorder` e compara a transcrição com a frase (`resources/js/comparacao.js`). No modo "Apenas Chrome", traduz com a `Translator` do navegador. |
 | `phparrot-nginx` | Única porta publicada (8090). Serve `public/` e repassa o resto ao PHP-FPM. O `/transcrever` aceita até 3 MB de corpo. |
 | `phparrot-php` | Laravel 13 com Livewire 4. Rotas `POST /transcrever` e `POST /traduzir` com limite por IP e teto diário, a gestão atrás do token e o catálogo de textos. |
+| `phparrot-agenda` | A mesma imagem do PHP rodando `schedule:work`, sem porta publicada. A cada 10 minutos, `textos:traduzir` traduz o próximo lote do conteúdo (ADR 0012). |
 | `phparrot-whisper` | `whisper-server` do whisper.cpp v1.9.5, compilado do fonte com commit conferido e um patch revisado. Sem porta no host, `/tmp` em memória e sem log. |
 | SQLite | Meus textos, pacotes importados (e qual está ativo), sessões e cache (inclusive a trava da transcrição e os pacotes já lidos). |
 | `textos.json` | A fábrica: o pacote que vem com o app, só leitura. Vale quando nenhum pacote importado está ativo. |
-| Google Cloud Translation | Opcional, só com `GOOGLE_TRANSLATE_KEY`. Usada quando o visitante escolhe "Google API". |
+| Google Cloud Translation | Opcional, só com `GOOGLE_TRANSLATE_KEY`. Usada quando o visitante escolhe "Google API" e nos lotes que traduzem o conteúdo do `en` para es, fr, de, it e ru, guardados em `traducoes_de_conteudo` (ADR 0012). |
 
 Os textos chegam ao app pelo contrato `Catalogo`, que soma o pacote ativo e os Meus textos. A transcrição passa pelo contrato `Transcritor`, e a tradução pelo `Tradutor`. Trocar o motor é escrever outra implementação.
 

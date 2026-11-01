@@ -53,7 +53,9 @@ A tradução pelo Google é opcional. Ela atende quem não usa o Chrome e envia 
 7. Confira o preço na [página oficial](https://cloud.google.com/translate/pricing) antes de ativar.
 8. Ponha a chave em `GOOGLE_TRANSLATE_KEY` e rode `config:clear`.
 
-Os limites do `.env` protegem a cota do lado do app. Atrás de um proxy (Cloudflare, por exemplo), o limite por IP só funciona com o IP real do visitante configurado (ADR 0006).
+A mesma chave traduz o conteúdo para as línguas automáticas, na tela **Tradução** da gestão (`/traducoes`): ali se escolhe tema × língua, pausa ou retoma uma língua, traduz o próximo lote na hora e exporta o pacote ativo com uma língua completa. O app não limita esses lotes. O plano gratuito cobre 500 mil caracteres por mês, e o contador da tela mostra quanto o app enviou no mês, só para informar. `textos:limpar-traducoes` apaga as traduções que nenhum pacote guardado nem os Meus textos usam mais; ativar um pacote faz o mesmo.
+
+Os limites do `.env` protegem a cota do lado do app na rota `/traduzir`. Atrás de um proxy (Cloudflare, por exemplo), o limite por IP só funciona com o IP real do visitante configurado (ADR 0006).
 
 ## Token da gestão
 

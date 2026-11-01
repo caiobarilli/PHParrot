@@ -10,7 +10,7 @@ Próximos passos, em ordem aproximada. Nada aqui está implementado.
   - IP real do visitante atrás do proxy, para os limites por IP.
   - Cookie de sessão só em HTTPS.
   - Backup agendado do SQLite fora do container.
-  - Política de privacidade com o envio ao Google e o áudio.
+  - Política de privacidade com o envio ao Google, o áudio e o conteúdo fixo (pacote e Meus textos) traduzido pelo Google.
 
 ## Produto
 

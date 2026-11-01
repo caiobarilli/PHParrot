@@ -45,10 +45,11 @@ O pacote (ADR 0011) traz pt-BR e en revisados. As línguas es, fr, de, it e ru d
 14. **Apagar banco:** não apaga `traducoes_de_conteudo` nem a tabela de uso, e o texto da etapa 1 explica isso.
 15. **Inverter:** no texto original, alterna o cache da língua de treino e a nativa revisada, sem tradução nova. Em texto editado, segue o ADR 0006.
 16. **Privacidade:** o texto do catálogo não é dado de visitante e não pede aviso na tela. A política de privacidade diz que o conteúdo fixo é traduzido pelo Google.
+17. **Depois do ADR (Maintainer, rodada 14):** (a) o app não limita o Google: os tetos do item 4 saíram, e o painel avisa que o plano gratuito cobre 500 mil caracteres por mês, num crédito mensal de US$ 10 somado entre Basic e Advanced (página de preços abaixo, conferida em 01/11/2026). (b) A gestão mostra um contador mensal dos caracteres enviados ao Google, da Leitura e dos lotes (`uso_de_traducao`), só informativo. Na implementação, o pedido tema × língua e a pausa ficam em `alvos_de_traducao`, o Testar fica desligado na língua automática e órfã é a tradução que nenhum pacote guardado nem os Meus textos usam.
 
 ## Consequência
 
-Novos: o container `phparrot-agenda`, duas tabelas e três comandos. Pré-requisitos do deploy, além dos do ADR 0006: conferir os preços oficiais e configurar a cota diária do console do Google logo acima da soma dos tetos da rota `/traduzir` e do catálogo, com o alerta de orçamento.
+Novos: o container `phparrot-agenda`, três tabelas e dois comandos (`textos:traduzir` e `textos:limpar-traducoes`). Pré-requisitos do deploy, além dos do ADR 0006: conferir os preços oficiais e configurar no console do Google a cota de caracteres e o alerta de orçamento, já que o app não limita os lotes (item 17).
 
 Fontes:
 - https://cloud.google.com/products/translate/pricing

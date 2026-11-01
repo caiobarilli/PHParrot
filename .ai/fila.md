@@ -17,7 +17,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 | 9 | CI de containers e caminho de escala | feito (branch `entrega-9-ci`: `75f7215`, `4652f8d`, `2f9b679`, `97bb0db`, `9e49bad`) | `containers.yml` com Hadolint, build com cache, Trivy nas imagens e em config, SARIF por alvo, SBOM e varredura semanal; actions pinadas por SHA nos dois workflows; ADR 0009 e `docs/escala.md` (plano, nada implementado) |
 | 10 | Atualização de dependências | feito (branch `dependabot`) | Dependabot semanal para docker, actions, composer, npm e terraform, em grupos major e resto, sem auto-merge; `FROM` literal no whisper para o bot ler; ADR 0010 |
 | 11 | Temas e pacotes | feito (branch `entrega-11-temas`) | Enum `Tema`, formato 2, tabela `pacotes` com o ativo, importar e exportar, `textos:validar` no portão, seletor de tema, "Aparência" no visual, escape do Apagar banco, fábrica de transição e semente em `rascunhos/` (ADR 0011) |
-| 12 | Tradução do conteúdo | pendente | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
+| 12 | Tradução do conteúdo | feito (rodada 14) | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
 | 13 | Conteúdo dos 10 temas | feito (fábrica `2026.11.2`, 900 itens; rodadas 13 a 13c e 14) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
 | 14 | Teste da Google API | pendente | Chave real, restrita, com cota e alerta no console |
 | 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
