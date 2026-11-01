@@ -54,7 +54,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 
 ## Melhorias
 
-- Entrega 1: setup em um comando. Hoje o `terraform apply`, o `composer setup` e o `npm install` e `npm run build` rodam à mão, em dois containers.
+- Entrega 1: setup em um comando: feito (rodada 16). `bin/phparrot setup` sobe e confere tudo, sem tocar no `.env` existente, e `bin/phparrot dev` roda o Vite no `phparrot-node` e o `pail` no `phparrot-php`. A fila fica `sync`, sem migration de `jobs`.
 - Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config).
 - Entrega 9: o `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI). Fixar `ubuntu-24.04` se algo quebrar.
 - Dependabot: Renovate para o whisper.cpp (tag, commit e hash do modelo), se a atualização manual pesar. Auto-merge de patch e digest depois da proteção da `main`.

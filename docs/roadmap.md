@@ -21,7 +21,6 @@ Próximos passos, em ordem aproximada. Nada aqui está implementado.
 
 ## Operação
 
-- Ambiente em um comando: hoje o `terraform apply`, o `composer setup` e o build do front rodam em passos separados.
 - `HEALTHCHECK` nas imagens, para o orquestrador de containers saber quando cada serviço está pronto.
 - Runner do CI fixo numa versão do Ubuntu, se a troca do `ubuntu-latest` causar diferença.
 - Auto-merge dos PRs de patch e de digest do Dependabot, depois da proteção da `main`.

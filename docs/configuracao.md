@@ -1,6 +1,6 @@
 # Configuração
 
-O `composer setup` cria o `.env` a partir do `.env.example`. Os padrões servem para rodar localmente, e nada abaixo é obrigatório.
+O `bin/phparrot setup` cria o `.env` a partir do `.env.example` quando ele não existe, e nunca muda um `.env` que já existe. Os padrões servem para rodar localmente, e nada abaixo é obrigatório. No fim, o comando lembra as variáveis opcionais e avisa se a fila não estiver como `sync`.
 
 Depois de mudar o `.env`, rode `docker exec phparrot-php php artisan config:clear` (em produção, `config:cache`).
 
@@ -24,7 +24,7 @@ Depois de mudar o `.env`, rode `docker exec phparrot-php php artisan config:clea
 | `PHPARROT_ENTRAR_POR_MINUTO` | Tentativas no `entrar` por minuto, por IP. | `5` |
 | `PHPARROT_ENTRAR_POR_HORA` | Tentativas no `entrar` por hora, no total. | `20` |
 
-Os demais valores são os padrões do Laravel. O app não envia e-mail e não usa fila (`QUEUE_CONNECTION=sync`).
+Os demais valores são os padrões do Laravel. O app não envia e-mail e não usa fila (`QUEUE_CONNECTION=sync`): não há tabela `jobs`, e um `.env` antigo com `database` faz o `queue:listen` falhar com `no such table: jobs`.
 
 ## Variáveis do Terraform
 

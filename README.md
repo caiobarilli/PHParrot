@@ -33,14 +33,14 @@ Requisitos: Docker (no Windows, com o Docker Desktop integrado ao WSL2), Terrafo
 ```sh
 git clone https://github.com/caiobarilli/PHParrot.git
 cd PHParrot
-terraform -chdir=terraform init
-terraform -chdir=terraform apply
-docker exec phparrot-php composer setup
-docker exec phparrot-node npm install
-docker exec phparrot-node npm run build
+bin/phparrot setup
 ```
 
-O primeiro `apply` compila o whisper.cpp e baixa o modelo, e leva alguns minutos. O `composer setup` cria o `.env`, gera a chave e o banco SQLite. Depois, o app abre em http://localhost:8090.
+O `setup` cria o `.env` a partir do `.env.example` (só se ele não existir), sobe os containers pelo Terraform, instala as dependências do PHP e do JavaScript, gera a chave do app, migra o banco SQLite, gera os assets e confere se o app responde. No primeiro uso, o Terraform compila o whisper.cpp e baixa o modelo, e isso leva alguns minutos. Depois, o app abre em http://localhost:8090.
+
+O comando pode rodar de novo a qualquer momento: ele não mexe no `.env` que já existe, mantém a chave e o banco e só aplica o Terraform quando há algo a criar ou mudar. Se o plano destruir ou recriar algum container, ele para e pede para aplicar à mão.
+
+Para desenvolver, `bin/phparrot dev` sobe o Vite com recarga no `phparrot-node` e mostra os logs do Laravel do `phparrot-php`. O Ctrl+C para os dois. O app continua servido pelo nginx, e a agenda roda no `phparrot-agenda`.
 
 Sem nenhuma chave configurada, o app funciona por inteiro: a tradução usa o Chrome e a gestão de textos fica desligada.
 
