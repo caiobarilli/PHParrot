@@ -27,6 +27,14 @@ it('mostra as abas, o par ativo e a engrenagem nas outras telas', function (stri
         ->assertSee('aria-label="Configuração"', false);
 })->with(['/leitura', '/fala', '/escuta', '/configuracao']);
 
+it('a barra segue a ordem par de idiomas, Leitura, Fala, Escuta e engrenagem', function (string $rota): void {
+    $html = (string) get($rota)->assertOk()->getContent();
+    $inicio = (int) strpos($html, '<header');
+    $barra = substr($html, $inicio, (int) strpos($html, '</header>') - $inicio);
+
+    expect($barra)->toMatch('/PT → EN.*'.preg_quote(route('leitura'), '/').'.*'.preg_quote(route('fala'), '/').'.*'.preg_quote(route('escuta'), '/').'.*aria-label="Configuração"/s');
+})->with(['/leitura', '/fala', '/escuta', '/configuracao']);
+
 it('marca a aba da tela atual', function (): void {
     $html = get('/fala')->assertOk()->getContent();
 

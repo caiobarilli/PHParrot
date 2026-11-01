@@ -28,10 +28,12 @@ it('a Escuta não tem mais a voz do app lendo a transcrição nem o Gravar fora 
         ->and(substr_count($html, 'Transcrever'))->toBe(1);
 });
 
-it('a Escuta esconde a frase por padrão, com uma barra por palavra, no mesmo componente da Fala', function (): void {
+it('a Escuta abre com a frase escondida, com uma barra por palavra, no mesmo componente da Fala', function (): void {
     $html = telaLivewire(Escuta::class)->html();
 
     expect($html)->toContain('x-show="! visivel"')
+        ->and($html)->toMatch('/x-show="visivel"[^>]*x-cloak/')
+        ->and($html)->not->toMatch('/x-show="! visivel"[^>]*x-cloak/')
         ->and($html)->toContain('esconde')
         ->and($html)->toContain('x-data="escuta"');
 });

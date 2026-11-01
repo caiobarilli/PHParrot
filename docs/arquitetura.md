@@ -60,7 +60,7 @@ Um pacote é um JSON no formato 2:
 
 ## Fluxo da Fala
 
-1. **Ouvir:** o navegador lê a frase com a voz do idioma treinado. A frase começa escondida, e o olho a revela.
+1. **Ouvir:** o navegador lê a frase com a voz do idioma treinado. A frase abre revelada, e o olho a esconde.
 2. **Gravar:** o `MediaRecorder` grava até 30 s, e o áudio fica só no navegador até o visitante pedir a transcrição.
 3. **Transcrever:**
    - O áudio vai a `POST /transcrever`, com o idioma treinado.
@@ -72,7 +72,7 @@ Um pacote é um JSON no formato 2:
    - O navegador normaliza os dois textos: caixa, pontuação, apóstrofos e números de 0 a 100 por extenso.
    - Depois alinha as palavras por distância de edição e marca cada uma como certa, trocada, faltando ou extra.
 
-A Escuta usa o mesmo bloco de gravação, com o texto escondido até a transcrição.
+A Escuta usa o mesmo componente da frase e o mesmo bloco de gravação, mas abre com o texto escondido até a transcrição. É o que a diferencia da Fala.
 
 ## Decisões
 

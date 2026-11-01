@@ -1,5 +1,8 @@
 const LARGURA_POR_LETRA = 0.55;
 
+export const REVELADA = true;
+export const ESCONDIDA = false;
+
 export const comFraseEscondivel = (padrao) => ({
     visivel: padrao,
     get larguras() {

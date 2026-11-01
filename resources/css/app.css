@@ -101,6 +101,8 @@
   .trilha { height: 4px; border-radius: 999px; background: var(--line); overflow: hidden; }
   .trilha > span { display: block; height: 100%; background: var(--ink); border-radius: inherit; }
   @media (max-width: 639px) { .btn-adapta.btn { padding: 13px; gap: 0; } .btn-adapta.btn svg { width: 21px; height: 21px; } }
+  @media (max-width: 639px) { .btn-aba.btn-sm { min-width: 0; padding: 8px 4px; gap: 5px; } }
+  @media (max-width: 419px) { .btn-aba.btn-sm svg { display: none; } }
   .btn-perigo { background: var(--bg); color: var(--bad); border-color: var(--bad); }
   .btn-perigo:hover { background: var(--bad-bg); border-color: var(--bad); }
   .btn-perigo-cheio, .btn-perigo-cheio:hover { background: var(--bad); color: var(--btn-fg); border-color: var(--bad); }

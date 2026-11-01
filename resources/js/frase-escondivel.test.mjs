@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { comFraseEscondivel } from './frase-escondivel.js';
+import { escuta } from './escuta.js';
+import { fala } from './fala.js';
+import { ESCONDIDA, REVELADA, comFraseEscondivel } from './frase-escondivel.js';
 
 const tela = (padrao, frase) => Object.assign(comFraseEscondivel(padrao), { frase });
 
@@ -41,4 +43,14 @@ test('revela a frase ao transcrever', () => {
     escondivel.aoTranscrito();
 
     assert.equal(escondivel.visivel, true);
+});
+
+test('a Fala abre com a frase revelada e a Escuta com a frase escondida', () => {
+    globalThis.window = {};
+
+    assert.equal(fala().visivel, REVELADA);
+    assert.equal(escuta().visivel, ESCONDIDA);
+    assert.notEqual(REVELADA, ESCONDIDA);
+
+    delete globalThis.window;
 });

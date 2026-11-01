@@ -1,12 +1,12 @@
 import { comDica } from './dica-da-tela.js';
-import { comFraseEscondivel } from './frase-escondivel.js';
+import { REVELADA, comFraseEscondivel } from './frase-escondivel.js';
 import { comGravacao } from './gravacao-da-tela.js';
 import { mesclar } from './mesclar.js';
 import { preferencias } from './preferencias.js';
 import { comVoz } from './voz-da-tela.js';
 
 export const fala = () =>
-    mesclar(comVoz(), comGravacao(), comDica(), comFraseEscondivel(false), {
+    mesclar(comVoz(), comGravacao(), comDica(), comFraseEscondivel(REVELADA), {
         frase: '',
         init() {
             this.iniciarVoz();

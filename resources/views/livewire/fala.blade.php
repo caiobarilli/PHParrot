@@ -9,7 +9,7 @@
       <x-nivel :nivel="$nivel" />
     </div>
   </div>
-  <x-frase-escondivel :escondida="true">
+  <x-frase-escondivel :escondida="false">
     <div wire:ignore>
       <input id="frase" type="text" class="campo pr-14 text-[17px] sm:text-[19px]" aria-labelledby="t-exemplo" placeholder="{{ __('fala.placeholder', ['idioma' => $nomeNaFrase]) }}" spellcheck="false" x-model="frase">
     </div>
