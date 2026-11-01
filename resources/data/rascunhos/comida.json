@@ -1,13 +1,734 @@
 {
-  "formato": 2,
-  "pacote": {"slug": "rascunho-comida", "nome": "Rascunho: Comida", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
-  "itens": [
-    {"id": "comida-n1-t01", "tema": "comida", "nivel": 1, "tipo": "texto", "en": "I like coffee. I drink coffee in the morning. It is hot and good.", "pt-BR": "Eu gosto de café. Eu bebo café de manhã. Ele é quente e gostoso."},
-    {"id": "comida-n1-f01", "tema": "comida", "nivel": 1, "tipo": "frase", "en": "I am hungry.", "pt-BR": "Eu estou com fome."},
-    {"id": "comida-n2-f01", "tema": "comida", "nivel": 2, "tipo": "frase", "en": "I usually drink tea in the afternoon.", "pt-BR": "Eu geralmente tomo chá à tarde."},
-    {"id": "comida-n2-f02", "tema": "comida", "nivel": 2, "tipo": "frase", "en": "He doesn't eat meat.", "pt-BR": "Ele não come carne."},
-    {"id": "comida-n3-f01", "tema": "comida", "nivel": 3, "tipo": "frase", "en": "We didn't have time for lunch.", "pt-BR": "Nós não tivemos tempo para almoçar."},
-    {"id": "comida-n5-t01", "tema": "comida", "nivel": 5, "tipo": "texto", "en": "Have you ever tried Japanese food? I tried it for the first time last year, and since then I have eaten sushi almost every week.", "pt-BR": "Você já experimentou comida japonesa? Eu experimentei pela primeira vez no ano passado e, desde então, como sushi quase toda semana."},
-    {"id": "comida-n6-t01", "tema": "comida", "nivel": 6, "tipo": "texto", "en": "If I had more free time, I would learn to cook properly. I would invite my friends for dinner every Friday and try a new recipe each week.", "pt-BR": "Se eu tivesse mais tempo livre, aprenderia a cozinhar direito. Eu convidaria os meus amigos para jantar toda sexta-feira e testaria uma receita nova a cada semana."}
-  ]
+    "formato": 2,
+    "pacote": {
+        "slug": "rascunho-comida",
+        "nome": "Rascunho: Comida",
+        "versao": "2026.11.1",
+        "idiomas": [
+            "en",
+            "pt-BR"
+        ]
+    },
+    "itens": [
+        {
+            "id": "comida-n1-t01",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "I like coffee. I drink coffee in the morning. It is hot and good. I eat bread with it.",
+            "pt-BR": "Eu gosto de café. Tomo café de manhã. Ele é quente e gostoso. Como pão com ele."
+        },
+        {
+            "id": "comida-n1-t02",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "There is rice on the table. There is also chicken and salad. We eat lunch at 12. The food is very good.",
+            "pt-BR": "Tem arroz na mesa. Também tem frango e salada. A gente almoça ao meio-dia. A comida é muito boa."
+        },
+        {
+            "id": "comida-n1-t03",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "My kitchen is small. There are eggs in the fridge. I can make a cake. It is for my friend.",
+            "pt-BR": "Minha cozinha é pequena. Tem ovos na geladeira. Eu sei fazer bolo. É para a minha amiga."
+        },
+        {
+            "id": "comida-n1-f01",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "I am hungry.",
+            "pt-BR": "Estou com fome."
+        },
+        {
+            "id": "comida-n1-f02",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Can I have water, please?",
+            "pt-BR": "Me vê uma água, por favor?"
+        },
+        {
+            "id": "comida-n1-f03",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "The soup is very hot.",
+            "pt-BR": "A sopa está muito quente."
+        },
+        {
+            "id": "comida-n1-f04",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Is there milk in the fridge?",
+            "pt-BR": "Tem leite na geladeira?"
+        },
+        {
+            "id": "comida-n1-f05",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "I don't eat meat.",
+            "pt-BR": "Eu não como carne."
+        },
+        {
+            "id": "comida-n1-f06",
+            "tema": "comida",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Dinner is at 8.",
+            "pt-BR": "O jantar é às oito."
+        },
+        {
+            "id": "comida-n2-t01",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "It is Sunday morning. My roommate is cooking eggs now. I am making coffee for us. We like eating breakfast late on Sundays. The bread is on the table.",
+            "pt-BR": "É domingo de manhã. Meu colega de apartamento está fazendo ovos agora. Eu estou passando um café para nós dois. A gente gosta de tomar café da manhã tarde no domingo. O pão está na mesa."
+        },
+        {
+            "id": "comida-n2-t02",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "Wash the vegetables in the sink. Cut the onions into small pieces. Put the pot on the stove. Add water and a little salt. Cook the soup for 20 minutes.",
+            "pt-BR": "Lave os legumes na pia. Corte as cebolas em pedaços pequenos. Ponha a panela no fogão. Coloque água e um pouco de sal. Cozinhe a sopa por 20 minutos."
+        },
+        {
+            "id": "comida-n2-t03",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "We are sitting in a small café. The server is bringing our drinks. I am drinking orange juice. My friend likes trying new teas. The cakes behind the counter look great.",
+            "pt-BR": "Estamos numa cafeteria pequena. O garçom está trazendo nossas bebidas. Eu estou tomando suco de laranja. Minha amiga gosta de experimentar chás novos. Os bolos atrás do balcão estão com uma cara ótima."
+        },
+        {
+            "id": "comida-n2-f01",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "I'm looking for the bread.",
+            "pt-BR": "Estou procurando o pão."
+        },
+        {
+            "id": "comida-n2-f02",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Please pass me the salt.",
+            "pt-BR": "Me passa o sal, por favor."
+        },
+        {
+            "id": "comida-n2-f03",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Do you like cooking at home?",
+            "pt-BR": "Você gosta de cozinhar em casa?"
+        },
+        {
+            "id": "comida-n2-f04",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "The plates are next to the sink.",
+            "pt-BR": "Os pratos estão do lado da pia."
+        },
+        {
+            "id": "comida-n2-f05",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Lunch is at 1 on Fridays.",
+            "pt-BR": "Na sexta, o almoço é à uma."
+        },
+        {
+            "id": "comida-n2-f06",
+            "tema": "comida",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "He doesn't eat meat.",
+            "pt-BR": "Ele não come carne."
+        },
+        {
+            "id": "comida-n3-t01",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Last night we went to a new restaurant. The food was better than I expected. I ordered fish with rice. My friend had a big salad. We didn't have room for dessert. Next time I'm going to try the pasta.",
+            "pt-BR": "Ontem à noite a gente foi num restaurante novo. A comida foi melhor do que eu esperava. Pedi peixe com arroz. Meu amigo pediu uma salada grande. Não sobrou espaço para a sobremesa. Da próxima vez, vou experimentar a massa."
+        },
+        {
+            "id": "comida-n3-t02",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Yesterday I made soup for the first time. I bought carrots and potatoes at the market. It took almost an hour. The soup was too salty. My roommate ate it anyway! Tomorrow I'm going to use less salt.",
+            "pt-BR": "Ontem eu fiz sopa pela primeira vez. Comprei cenoura e batata na feira. Levou quase uma hora. A sopa ficou salgada demais. Minha colega de apartamento comeu mesmo assim! Amanhã vou pôr menos sal."
+        },
+        {
+            "id": "comida-n3-t03",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "This morning I woke up late. I didn't have time for breakfast. I bought a sandwich on the way. It was cheaper than a meal. But it was dry and cold. Tonight I'm going to cook a real dinner.",
+            "pt-BR": "Hoje de manhã eu acordei tarde. Não deu tempo de tomar café. Comprei um sanduíche no caminho. Saiu mais barato que uma refeição. Mas estava seco e frio. Hoje à noite vou fazer um jantar de verdade."
+        },
+        {
+            "id": "comida-n3-f01",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "We didn't have time for lunch today.",
+            "pt-BR": "Hoje não deu tempo de almoçar."
+        },
+        {
+            "id": "comida-n3-f02",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "What did you have for dinner?",
+            "pt-BR": "O que você jantou?"
+        },
+        {
+            "id": "comida-n3-f03",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I'm going to make pasta for dinner tonight.",
+            "pt-BR": "Hoje à noite vou fazer macarrão para o jantar."
+        },
+        {
+            "id": "comida-n3-f04",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "This tea is stronger than yesterday's.",
+            "pt-BR": "Esse chá está mais forte que o de ontem."
+        },
+        {
+            "id": "comida-n3-f05",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "She cooked rice and beans yesterday.",
+            "pt-BR": "Ela fez arroz e feijão ontem."
+        },
+        {
+            "id": "comida-n3-f06",
+            "tema": "comida",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Are you going to finish that bread?",
+            "pt-BR": "Você vai terminar esse pão?"
+        },
+        {
+            "id": "comida-n4-t01",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "I usually cook at home because it is cheaper. On weekdays I often make simple meals. On Saturdays I always go to the market early. The fruit is freshest in the morning. My bags are heavy, so I take the bus. Next week I will try a new recipe.",
+            "pt-BR": "Eu costumo cozinhar em casa porque sai mais barato. Durante a semana, faço muitas vezes refeições simples. Aos sábados, sempre vou cedo à feira. As frutas estão mais frescas de manhã. Minhas sacolas ficam pesadas, então pego o ônibus. Semana que vem vou testar uma receita nova."
+        },
+        {
+            "id": "comida-n4-t02",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "Our family always eats dinner together on Sundays. Everyone has to help in the kitchen. My brother never cooks, so he washes the dishes. I usually make the salad. My parents prepare the chicken and the rice. It is the best meal of the week.",
+            "pt-BR": "Aos domingos, a nossa família sempre janta junta. Todo mundo tem que ajudar na cozinha. Meu irmão nunca cozinha, então ele lava a louça. Eu normalmente faço a salada. Meus pais preparam o frango e o arroz. É a melhor refeição da semana."
+        },
+        {
+            "id": "comida-n4-t03",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "The café near my work is busy at noon. I sometimes wait for twenty minutes. Their coffee is the best in town. It is also the most expensive. Tomorrow I will bring lunch from home. I have to save money this month.",
+            "pt-BR": "A cafeteria perto do meu trabalho fica cheia ao meio-dia. Às vezes eu espero vinte minutos. O café de lá é o melhor da cidade. Também é o mais caro. Amanhã vou levar almoço de casa. Este mês eu preciso economizar."
+        },
+        {
+            "id": "comida-n4-f01",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I have to buy milk and eggs today.",
+            "pt-BR": "Hoje eu preciso comprar leite e ovos."
+        },
+        {
+            "id": "comida-n4-f02",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "How often do you eat out with friends?",
+            "pt-BR": "Com que frequência você sai para comer com amigos?"
+        },
+        {
+            "id": "comida-n4-f03",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I'll have the chicken soup, please.",
+            "pt-BR": "Vou querer a canja, por favor."
+        },
+        {
+            "id": "comida-n4-f04",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "This is the best bread in the shop.",
+            "pt-BR": "Esse é o melhor pão da padaria."
+        },
+        {
+            "id": "comida-n4-f05",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I'm tired, so let's order food tonight.",
+            "pt-BR": "Estou cansado, então vamos pedir comida hoje à noite."
+        },
+        {
+            "id": "comida-n4-f06",
+            "tema": "comida",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "Would you like tea or coffee with dessert?",
+            "pt-BR": "Você quer chá ou café com a sobremesa?"
+        },
+        {
+            "id": "comida-n5-t01",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "Have you ever tried cooking fish at home? I tried it for the first time last month. I was cooking when my phone rang. While I was talking, the kitchen filled with smoke. Since then, I have only ordered fish at restaurants. But if you help me, I will try again.",
+            "pt-BR": "Você já tentou fazer peixe em casa? Eu tentei pela primeira vez no mês passado. Estava cozinhando quando meu celular tocou. Enquanto eu falava, a cozinha se encheu de fumaça. Desde então, só peço peixe em restaurante. Mas, se você me ajudar, eu tento de novo."
+        },
+        {
+            "id": "comida-n5-t02",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "The bakery near my home opens at six. The baker who works there knows every customer. I have bought bread there for five years. Last week it was raining while I was waiting outside. The baker invited everyone inside for a free coffee. If it rains tomorrow, I will bring an umbrella.",
+            "pt-BR": "A padaria perto de casa abre às seis. O padeiro que trabalha lá conhece cada cliente. Compro pão lá há cinco anos. Semana passada estava chovendo enquanto eu esperava do lado de fora. O padeiro chamou todo mundo para dentro para tomar um café de graça. Se chover amanhã, vou levar um guarda-chuva."
+        },
+        {
+            "id": "comida-n5-t03",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "We have a simple rule in our kitchen. The person who cooks doesn't wash the dishes. My roommate and I have used it for months. Last night she was setting the table while I cooked. We have never argued about dirty plates. If you come for dinner, you can try our system.",
+            "pt-BR": "A gente tem uma regra simples na cozinha: quem cozinha não lava a louça. Eu e minha colega de apartamento seguimos isso há meses. Ontem à noite, ela estava pondo a mesa enquanto eu cozinhava. A gente nunca brigou por causa de prato sujo. Se você vier jantar, pode conhecer o nosso sistema."
+        },
+        {
+            "id": "comida-n5-f01",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Have you ever made fresh bread at home?",
+            "pt-BR": "Você já fez pão caseiro?"
+        },
+        {
+            "id": "comida-n5-f02",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I've already eaten, but thank you for asking.",
+            "pt-BR": "Eu já comi, mas obrigada por perguntar."
+        },
+        {
+            "id": "comida-n5-f03",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "If you're hungry, I'll make you a cheese sandwich.",
+            "pt-BR": "Se você estiver com fome, eu faço um sanduíche de queijo para você."
+        },
+        {
+            "id": "comida-n5-f04",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Is this the dish that has mushrooms in it?",
+            "pt-BR": "Esse é o prato que leva cogumelo?"
+        },
+        {
+            "id": "comida-n5-f05",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "What were you cooking when I called you?",
+            "pt-BR": "O que você estava cozinhando quando eu te liguei?"
+        },
+        {
+            "id": "comida-n5-f06",
+            "tema": "comida",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Can you tell me what's in this salad, please?",
+            "pt-BR": "Pode me dizer o que tem nessa salada, por favor?"
+        },
+        {
+            "id": "comida-n6-t01",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "As a student, I used to live on bread and cheese. My kitchen was tiny, and I was never taught to cook. Now my meals are a little better, but not much. If I had more free time, I would learn to cook properly. I would invite my friends over for dinner every Friday. My sister said she would teach me a few easy recipes. Maybe this weekend is the right time to start.",
+            "pt-BR": "Na época da faculdade, eu vivia de pão com queijo. Minha cozinha era minúscula, e ninguém nunca me ensinou a cozinhar. Hoje minhas refeições estão um pouco melhores, mas não muito. Se eu tivesse mais tempo livre, aprenderia a cozinhar direito. Chamaria o pessoal para jantar toda sexta. Minha irmã disse que me ensinaria umas receitas fáceis. Talvez este fim de semana seja a hora certa de começar."
+        },
+        {
+            "id": "comida-n6-t02",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "The vegetables at our market are grown on nearby farms. Everything is picked early in the morning and sold the same day. The tomatoes used to be my favorite thing there. Last month the farmer told me that the season was almost over. If tomatoes were sold all year, I would buy them every week. Now I buy squash and green beans instead. They are cheaper, and they taste great in soup.",
+            "pt-BR": "Os legumes da nossa feira vêm de sítios da região. Tudo é colhido de manhã cedo e vendido no mesmo dia. O tomate era o que eu mais gostava de comprar lá. No mês passado, a agricultora me disse que a safra estava quase no fim. Se vendessem tomate o ano inteiro, eu compraria toda semana. Agora compro abobrinha e vagem no lugar. São mais baratas e ficam ótimas na sopa."
+        },
+        {
+            "id": "comida-n6-t03",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "Last Saturday we celebrated my friend's birthday at a small restaurant. The table was booked a week in advance. When we arrived, the server said that there was a problem. Our table was given to another group by mistake. The manager apologized and said we would get free dessert. The cake was delicious, and the evening was saved. If that happened to me again, I wouldn't be angry at all.",
+            "pt-BR": "No sábado passado, comemoramos o aniversário de um amigo num restaurante pequeno. A mesa tinha sido reservada com uma semana de antecedência. Quando chegamos, a garçonete disse que havia um problema: nossa mesa tinha sido dada para outro grupo por engano. O gerente pediu desculpas e disse que a sobremesa seria por conta da casa. O bolo estava uma delícia, e a noite foi salva. Se isso acontecesse comigo de novo, não me irritaria nem um pouco."
+        },
+        {
+            "id": "comida-n6-f01",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "If I were you, I'd order the grilled fish.",
+            "pt-BR": "Se eu fosse você, pediria o peixe grelhado."
+        },
+        {
+            "id": "comida-n6-f02",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "I used to drink coffee with three spoons of sugar.",
+            "pt-BR": "Eu tomava café com três colheres de açúcar."
+        },
+        {
+            "id": "comida-n6-f03",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Is the bread baked here, or is it delivered every morning?",
+            "pt-BR": "O pão é feito aqui ou chega toda manhã?"
+        },
+        {
+            "id": "comida-n6-f04",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "The cook said the soup would be ready in ten minutes.",
+            "pt-BR": "A cozinheira disse que a sopa fica pronta em dez minutos."
+        },
+        {
+            "id": "comida-n6-f05",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Could we have the check whenever you have a moment, please?",
+            "pt-BR": "Quando puder, traz a conta pra gente, por favor?"
+        },
+        {
+            "id": "comida-n6-f06",
+            "tema": "comida",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Would you like more rice, or are you full?",
+            "pt-BR": "Quer mais arroz ou já está bom?"
+        },
+        {
+            "id": "comida-n7-t01",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "When I opened the fridge this morning, the leftover pasta was gone. I had saved it for lunch, so I was a little annoyed. My roommate must have eaten it late last night. However, she swore that she hadn't touched anything in the fridge. Then I noticed an empty plate that someone had left in the sink. Her brother had stayed over after a party, although nobody had told me. He might have thought the pasta belonged to everyone in the house. In the end, he picked up lunch for all of us.",
+            "pt-BR": "Quando abri a geladeira hoje de manhã, o macarrão que tinha sobrado não estava mais lá. Eu tinha guardado para o almoço, então aquilo me irritou um pouco. Minha colega de apartamento devia ter comido tarde da noite. Só que ela jurou que não tinha mexido em nada na geladeira. Aí reparei num prato vazio que alguém tinha deixado na pia. O irmão dela tinha dormido em casa depois de uma festa, e ninguém tinha me avisado. Ele deve ter achado que o macarrão era de todo mundo. No fim, ele trouxe almoço para todos nós."
+        },
+        {
+            "id": "comida-n7-t02",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "Last weekend I offered to cook dinner for six coworkers. I had never cooked for that many people before. I looked up a simple recipe and worked out the amounts. However, the oven took much longer to heat up than I expected. By the time the chicken was ready, everyone had already eaten the bread. Although dinner was an hour late, nobody seemed to mind. One of my guests asked me to write down the recipe. Maybe I'm a better cook than I thought.",
+            "pt-BR": "No fim de semana passado, eu me ofereci para fazer o jantar para seis colegas de trabalho. Nunca tinha cozinhado para tanta gente. Procurei uma receita simples e calculei as quantidades. Só que o forno demorou muito mais para esquentar do que eu imaginava. Quando o frango ficou pronto, o pão já tinha acabado. Apesar de o jantar ter atrasado uma hora, ninguém pareceu se importar. Uma das pessoas até me pediu para anotar a receita. Vai ver eu cozinho melhor do que pensava."
+        },
+        {
+            "id": "comida-n7-t03",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "There used to be a quiet café on the corner of my street. Last month it closed, and a juice bar opened instead. At first I was disappointed, although the new place looked bright and clean. However, I soon found out that they also served good coffee. The owner had worked as a barista for years before opening it. She must have learned a lot, because her coffee is excellent. Now I drop by most mornings on my way to work.",
+            "pt-BR": "Tinha um café tranquilo na esquina da minha rua. No mês passado ele fechou, e no lugar abriu uma casa de sucos. No começo bateu uma decepção, apesar de o lugar novo ser claro e limpinho. Mas logo descobri que lá também servem um café bom. A dona trabalhou anos como barista antes de abrir o negócio. Ela deve ter aprendido muito, porque o café dela é excelente. Agora passo lá quase toda manhã, a caminho do trabalho."
+        },
+        {
+            "id": "comida-n7-f01",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "I think I might have left the rice on the stove.",
+            "pt-BR": "Acho que deixei o arroz no fogo."
+        },
+        {
+            "id": "comida-n7-f02",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Could you pick up some bread and cheese on your way home?",
+            "pt-BR": "Você pode passar e comprar pão e queijo na volta para casa?"
+        },
+        {
+            "id": "comida-n7-f03",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Although the place looks simple, the food there is amazing.",
+            "pt-BR": "O lugar é simples, mas a comida de lá é incrível."
+        },
+        {
+            "id": "comida-n7-f04",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "By the time we got to the restaurant, the kitchen had closed.",
+            "pt-BR": "Quando a gente chegou no restaurante, a cozinha já tinha fechado."
+        },
+        {
+            "id": "comida-n7-f05",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "You must have been starving after working all day without lunch.",
+            "pt-BR": "Você devia estar morrendo de fome depois de trabalhar o dia todo sem almoçar."
+        },
+        {
+            "id": "comida-n7-f06",
+            "tema": "comida",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Can I take the leftovers home in a box, please?",
+            "pt-BR": "Dá para embrulhar o que sobrou para eu levar, por favor?"
+        },
+        {
+            "id": "comida-n8-t01",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "I've been trying to cook more at home for the past two months. It started because I had been spending far too much on takeout. Every Sunday afternoon has been spent planning meals and chopping vegetables. Some dishes can be prepared in advance and kept in the fridge for days. Others should be eaten fresh, or they lose most of their flavor. If I had started this earlier, I would have saved a lot of money. I only wish I enjoyed washing the pots as much as cooking. Still, my lunches have never been this good, and my coworkers have noticed.",
+            "pt-BR": "Faz dois meses que eu venho tentando cozinhar mais em casa. Começou porque eu estava gastando demais com delivery. Todo domingo à tarde tem sido dedicado a planejar as refeições e picar legumes. Alguns pratos dá para preparar com antecedência e guardar na geladeira por dias. Outros precisam ser comidos na hora, senão perdem quase todo o sabor. Se eu tivesse começado antes, teria economizado bastante dinheiro. Só queria gostar de lavar panela tanto quanto gosto de cozinhar. Mesmo assim, meus almoços nunca foram tão bons, e o pessoal do trabalho já reparou."
+        },
+        {
+            "id": "comida-n8-t02",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "We had been waiting for nearly an hour when our server came over. She explained that our order must have been lost in the kitchen. Everyone at the table was hungry, and my friend was clearly losing patience. If we had ordered something simpler, we would have eaten much sooner. To make up for it, the manager brought us free drinks and soup. The main dishes arrived ten minutes later, and they were worth waiting for. I just wish restaurants would tell customers about delays right away. Small problems like this can be forgiven if people are honest about them.",
+            "pt-BR": "Fazia quase uma hora que a gente estava esperando quando a garçonete veio até a mesa. Ela explicou que o nosso pedido devia ter se perdido na cozinha. Todo mundo estava com fome, e meu amigo já estava claramente perdendo a paciência. Se a gente tivesse pedido algo mais simples, teria comido bem antes. Para compensar, a gerente trouxe bebidas e uma sopa por conta da casa. Os pratos principais chegaram dez minutos depois e valeram a espera. Eu só queria que os restaurantes avisassem logo quando vai atrasar. Problemas pequenos assim dá para perdoar quando as pessoas são honestas."
+        },
+        {
+            "id": "comida-n8-t03",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "My grandfather has been baking the same bread every weekend for decades. He has never written the recipe down, so it only exists in his head. Last month I asked him to teach me, and we spent an afternoon together. The dough has to be left for hours, and it can't be rushed. If I hadn't watched him closely, I would have missed several small steps. My first loaf was flat and heavy, but he ate it anyway. I wish I had started learning from him years ago. Now we've been baking together every Saturday, and the bread keeps getting better.",
+            "pt-BR": "Há décadas meu avô faz o mesmo pão todo fim de semana. Ele nunca escreveu a receita, então ela só existe na cabeça dele. No mês passado pedi para ele me ensinar, e passamos uma tarde juntos. A massa tem que descansar por horas, e não dá para apressar. Se eu não tivesse prestado muita atenção, teria perdido vários detalhes. Meu primeiro pão saiu achatado e pesado, mas ele comeu mesmo assim. Queria ter começado a aprender com ele anos atrás. Agora a gente faz pão junto todo sábado, e ele fica cada vez melhor."
+        },
+        {
+            "id": "comida-n8-f01",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "How long have you been waiting for a table for four?",
+            "pt-BR": "Faz quanto tempo que vocês estão esperando mesa para quatro?"
+        },
+        {
+            "id": "comida-n8-f02",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "If I had known you were coming, I would have cooked more.",
+            "pt-BR": "Se eu soubesse que você vinha, teria feito mais comida."
+        },
+        {
+            "id": "comida-n8-f03",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I wish this café served something other than sweet pastries in the morning.",
+            "pt-BR": "Queria que essa cafeteria servisse alguma coisa além de doce de manhã."
+        },
+        {
+            "id": "comida-n8-f04",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Should the chicken be cooked a bit longer, or is it done?",
+            "pt-BR": "O frango precisa de mais um tempinho ou já está pronto?"
+        },
+        {
+            "id": "comida-n8-f05",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I've been cutting onions for twenty minutes, and my eyes hurt.",
+            "pt-BR": "Faz vinte minutos que estou cortando cebola, e meus olhos estão ardendo."
+        },
+        {
+            "id": "comida-n8-f06",
+            "tema": "comida",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Could the sauce be served on the side, please, without any cheese?",
+            "pt-BR": "Pode servir o molho à parte, por favor, e sem queijo nenhum?"
+        },
+        {
+            "id": "comida-n9-t01",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "A notice appeared on the office fridge this week, written in unmistakably formal language. It stated that all food items must be clearly labeled and removed by Friday afternoon. Any unlabeled containers, it warned, would be disposed of without further notice. In plain English, that means whatever is left will end up in the trash. Had people cleaned up after themselves, we wouldn't be reading notices like this now. To be fair, the fridge had become a bit of a science experiment. Rumor has it that one yogurt had been sitting there since the spring. Not wanting to lose my lunch, I bought a marker and labeled everything twice. Better safe than sorry, as my coworkers like to say.",
+            "pt-BR": "Esta semana apareceu um aviso na geladeira do escritório, escrito numa linguagem formal inconfundível. Dizia que todos os alimentos deveriam estar devidamente identificados e ser retirados até sexta à tarde. Qualquer recipiente sem identificação, alertava, seria descartado sem aviso prévio. Traduzindo: o que sobrar vai parar no lixo. Se cada um tivesse limpado a própria bagunça, ninguém estaria lendo avisos assim agora. Verdade seja dita, a geladeira tinha virado um experimento científico. Dizem as más línguas que um iogurte estava lá desde a primavera. Sem a menor vontade de perder meu almoço, comprei uma caneta e etiquetei tudo duas vezes. Melhor prevenir do que remediar, como o pessoal do trabalho gosta de dizer."
+        },
+        {
+            "id": "comida-n9-t02",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Hosting dinner for friends with very different tastes is easier said than done. One guest doesn't eat meat, another hates anything spicy, and a third avoids sugar. Having juggled these preferences before, I've learned to keep the menu flexible. Rather than cook one complicated dish, I now serve several simple ones side by side. Guests help themselves to rice, roasted vegetables, grilled chicken, and a big green salad. If I hadn't changed my approach, I would still be stressing over menus every month. Not only does this save time, but it also takes the pressure off everyone. Last time, the conversation flowed so well that nobody noticed the food running out. That, to my mind, is the sign of a successful evening.",
+            "pt-BR": "Receber para jantar amigos com gostos muito diferentes é mais fácil falar do que fazer. Uma pessoa não come carne, outra detesta qualquer coisa apimentada, e uma terceira evita açúcar. Como já tive que conciliar essas preferências antes, aprendi a deixar o cardápio flexível. Em vez de fazer um prato complicado, agora sirvo vários pratos simples lado a lado. Todo mundo se serve de arroz, legumes assados, frango grelhado e uma salada verde caprichada. Se eu não tivesse mudado o jeito de fazer, ainda estaria me estressando com o cardápio todo mês. Além de economizar tempo, isso tira a pressão de todo mundo. Da última vez, a conversa estava tão boa que ninguém percebeu a comida acabando. Isso, para mim, é sinal de uma noite que deu certo."
+        },
+        {
+            "id": "comida-n9-t03",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Eating out used to feel like a treat, but lately it has become a habit. Tired after long days, my partner and I often end up at the same café. The food is decent, the staff know our order, and nobody has to wash up. On the other hand, the bills add up faster than we would like to admit. Had we planned our meals better, we'd have more money saved by now. So we've struck a deal: café dinners are reserved for Fridays, no exceptions. Cooking at home the rest of the week, we've rediscovered a few old favorites. It turns out that a simple bowl of soup, eaten slowly at home, beats most menus.",
+            "pt-BR": "Comer fora antes era um mimo, mas ultimamente virou hábito. Depois de dias longos e cansativos, eu e minha companheira muitas vezes acabamos no mesmo restaurantezinho do bairro. A comida é razoável, o pessoal já sabe o nosso pedido, e ninguém precisa lavar louça. Por outro lado, a conta vai pesando mais rápido do que a gente gostaria de admitir. Se tivéssemos planejado melhor as refeições, já teríamos mais dinheiro guardado. Então fizemos um trato: jantar fora só às sextas, sem exceção. Cozinhando em casa no resto da semana, redescobrimos alguns pratos antigos de que gostávamos. No fim das contas, um prato de sopa simples, tomado com calma em casa, ganha da maioria dos cardápios."
+        },
+        {
+            "id": "comida-n9-f01",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "If I'd ordered the soup earlier, I wouldn't be this hungry an hour later.",
+            "pt-BR": "Se eu tivesse pedido a sopa antes, não estaria com tanta fome uma hora depois."
+        },
+        {
+            "id": "comida-n9-f02",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Should you need anything else, just let me know and I'll bring it over.",
+            "pt-BR": "Se precisar de mais alguma coisa, é só me avisar que eu trago."
+        },
+        {
+            "id": "comida-n9-f03",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Having eaten far too much already, I'll have to pass on dessert, thanks.",
+            "pt-BR": "Já comi demais, então vou dispensar a sobremesa, obrigado."
+        },
+        {
+            "id": "comida-n9-f04",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Would you mind if I took the rest of this home for tomorrow's lunch?",
+            "pt-BR": "Você se importa se eu levar o resto para o almoço de amanhã?"
+        },
+        {
+            "id": "comida-n9-f05",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Let's split the bill down the middle, since we all shared the dishes anyway.",
+            "pt-BR": "Vamos rachar a conta igualmente, já que todo mundo dividiu os pratos."
+        },
+        {
+            "id": "comida-n9-f06",
+            "tema": "comida",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Not being much of a cook, I tend to stick to simple pasta dishes.",
+            "pt-BR": "Como não sou muito de cozinhar, costumo ficar no macarrão simples."
+        },
+        {
+            "id": "comida-n10-t01",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "No sooner had we sat down at the restaurant than the power went out across the entire block. Hardly a minute passed before the staff began placing candles on every table with remarkable calm. What impressed me most was not the speed of their reaction but the absence of any fuss. The kitchen, which relied on gas stoves, carried on cooking as though nothing had happened. It was the head cook who suggested that the menu be reduced to three simple dishes. Seldom have I eaten a meal so modest yet so thoroughly memorable. Strangers at neighboring tables began chatting, sharing bread and swapping stories in the flickering light. When the lights finally returned, there was an audible groan of disappointment from the diners. Were the restaurant to offer candlelit evenings on purpose, I suspect it would be fully booked.",
+            "pt-BR": "Mal tínhamos nos sentado no restaurante quando a luz acabou no quarteirão inteiro. Nem um minuto se passou e a equipe já começou a pôr velas em todas as mesas, com uma calma impressionante. O que mais me impressionou não foi a rapidez da reação, mas a total ausência de alvoroço. A cozinha, que usava fogão a gás, continuou cozinhando como se nada tivesse acontecido. Foi o chef quem sugeriu que o cardápio fosse reduzido a três pratos simples. Raras vezes comi uma refeição tão modesta e, ao mesmo tempo, tão inesquecível. Pessoas desconhecidas em mesas vizinhas começaram a conversar, dividindo o pão e trocando histórias à luz trêmula das velas. Quando a luz finalmente voltou, ouviu-se no salão um suspiro coletivo de decepção. Se o restaurante passasse a oferecer noites à luz de velas de propósito, desconfio que viveria lotado."
+        },
+        {
+            "id": "comida-n10-t02",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "There is a long-standing quarrel in my family about whether recipes should be followed to the letter. My father insists that every ingredient be weighed, measured and timed with scientific precision. My aunt, by contrast, has never consulted a cookbook in her life and regards measuring cups with open disdain. What she relies on instead is an almost uncanny sense of taste, smell and texture. Only after years of watching them both did I realize that each approach has its merits. Precision is indispensable when baking, where a small miscalculation can ruin an entire batch. Intuition, however, comes into its own when one is improvising with whatever happens to be in the pantry. Rarely does a dinner at our house pass without the debate resurfacing over dessert. Whether either of them will ever concede is, frankly, beside the point.",
+            "pt-BR": "Existe uma briga antiga na minha família sobre seguir ou não as receitas ao pé da letra. Meu pai faz questão de que cada ingrediente seja pesado, medido e cronometrado com precisão científica. Minha tia, por outro lado, nunca consultou um livro de receitas na vida e olha para os copos medidores com franco desprezo. Ela conta, em vez disso, com uma noção quase sobrenatural de sabor, cheiro e textura. Só depois de anos observando os dois é que percebi que cada abordagem tem seus méritos. A precisão é indispensável na confeitaria, em que um pequeno erro de cálculo pode estragar uma fornada inteira. A intuição, por sua vez, mostra todo o seu valor quando se improvisa com o que estiver na despensa. Dificilmente um jantar lá em casa termina sem que a discussão volte à tona na hora da sobremesa. Se algum dos dois vai dar o braço a torcer um dia é, sinceramente, o que menos importa."
+        },
+        {
+            "id": "comida-n10-t03",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "Only when I started tracking what I threw away did the scale of my food waste become apparent. Half a loaf of stale bread, forgotten herbs and wilted lettuce were the usual culprits. It was not carelessness so much as overambitious shopping that lay at the root of the problem. Every weekend I would buy ingredients for meals that I never quite got around to cooking. Hardly had I put the groceries away before the week's plans began to unravel. I now insist that the fridge be emptied before anything new is bought. Leftovers are reinvented rather than reheated: rice becomes fried rice, and stale bread becomes soup. Not once in the past three months have I had to throw out a full bag of vegetables. The savings are modest, but the satisfaction, oddly enough, is out of all proportion.",
+            "pt-BR": "Só quando comecei a anotar o que jogava fora é que percebi o tamanho do meu desperdício de comida. Meio pão amanhecido, ervas esquecidas e alface murcha eram os culpados de sempre. A raiz do problema não era tanto o descuido, mas sim as compras ambiciosas demais. Todo fim de semana eu comprava ingredientes para refeições que nunca chegava a fazer. Mal tinha guardado as compras e os planos da semana já começavam a desandar. Hoje faço questão de esvaziar a geladeira antes de comprar qualquer coisa nova. As sobras são reinventadas, não só requentadas: o arroz vira arroz frito, e o pão amanhecido vira sopa. Nem uma vez nos últimos três meses precisei jogar fora um saco cheio de legumes. A economia é modesta, mas a satisfação, curiosamente, é desproporcional."
+        },
+        {
+            "id": "comida-n10-f01",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "No sooner had I sat down to eat than someone knocked on the front door.",
+            "pt-BR": "Mal me sentei para comer, alguém bateu à porta."
+        },
+        {
+            "id": "comida-n10-f02",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "I'd suggest that the sauce be added only at the very last minute, or it'll split.",
+            "pt-BR": "Eu sugiro que o molho só seja acrescentado no último minuto, senão ele talha."
+        },
+        {
+            "id": "comida-n10-f03",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "It was the soup, not the main course, that everyone kept talking about afterward.",
+            "pt-BR": "Foi a sopa, e não o prato principal, que deu o que falar depois."
+        },
+        {
+            "id": "comida-n10-f04",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Were I to cook for twelve people again, I would start the day before.",
+            "pt-BR": "Se um dia eu fosse cozinhar para doze pessoas de novo, começaria na véspera."
+        },
+        {
+            "id": "comida-n10-f05",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "What I appreciate most about this little place is that nobody ever rushes you out the door.",
+            "pt-BR": "O que eu mais gosto neste lugarzinho é que ninguém nunca apressa a gente para ir embora."
+        },
+        {
+            "id": "comida-n10-f06",
+            "tema": "comida",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Hardly had the dessert been served when the first guests started reaching for their coats.",
+            "pt-BR": "Mal tinham servido a sobremesa e as primeiras pessoas já estavam pegando os casacos."
+        }
+    ]
 }
