@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Livewire\GestaoDePacotes;
 use App\Models\PacoteImportado;
 use App\Models\Texto;
+use App\Textos\Catalogo;
 use App\Textos\Pacote;
 use App\Textos\Pacotes;
 use App\Textos\Tema;
@@ -15,6 +16,7 @@ use Tests\Fixtures\PacoteDeTeste;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 use function Pest\Laravel\travelTo;
+use function Pest\Laravel\withUnencryptedCookie;
 
 /**
  * @param  array<mixed>  $dados
@@ -107,7 +109,53 @@ it('slug repetido pede Substituir, e com Substituir troca o pacote', function ()
     post('/pacotes/importar', ['arquivo' => arquivoDePacote(comidaBruta()), 'substituir' => '1'])
         ->assertSessionHas('status', 'Substituído: Teste, com 90 itens.');
 
-    expect(PacoteImportado::query()->count())->toBe(1);
+    expect(PacoteImportado::query()->sole()->only(['slug', 'ativo']))->toBe(['slug' => 'comida-1', 'ativo' => false]);
+});
+
+it('substituir o ativo mostra os idiomas que entram e saem e, confirmado, mantém o substituto ativo', function (): void {
+    comGestao();
+    app(Pacotes::class)->importar(Pacote::doArray(comidaBruta()), false);
+    app(Pacotes::class)->ativar('comida-1');
+    $prefs = (string) json_encode(['nativa' => 'pt-BR', 'treino' => 'es']);
+    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT → ES');
+
+    $novo = PacoteDeTeste::pacote(PacoteDeTeste::temaCompleto(Tema::Comida), 'comida-1');
+    $novo['pacote']['nome'] = 'Comida nova';
+    $novo['itens'][0]['pt-BR'] = 'Texto substituto.';
+
+    post('/pacotes/importar', ['arquivo' => arquivoDePacote($novo), 'substituir' => '1'])
+        ->assertRedirect(route('pacotes'))
+        ->assertSessionHas('substituir_ativo', ['nome' => 'Comida nova', 'entram' => '', 'saem' => 'Español']);
+    get('/pacotes')->assertSee('Comida nova substitui o pacote ativo e continua ativo. Confirmar?')->assertSee('Saem: Español.');
+
+    expect(PacoteImportado::query()->sole()->nome)->toBe('Teste');
+
+    post('/pacotes/importar/confirmar', ['confirmar' => '1'])
+        ->assertRedirect(route('pacotes'))
+        ->assertSessionHas('status', 'Substituído: Comida nova, com 90 itens. Continua ativo.');
+    app()->forgetInstance(Catalogo::class);
+
+    expect(PacoteImportado::query()->sole()->only(['nome', 'ativo']))->toBe(['nome' => 'Comida nova', 'ativo' => true])
+        ->and(app(Catalogo::class)->buscar('comida-n1-t01')?->traducao('pt-BR'))->toBe('Texto substituto.')
+        ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
+
+    app()->forgetScopedInstances();
+    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT → EN')->assertDontSee('PT → ES');
+});
+
+it('cancelar a substituição do ativo não troca nada, e confirmar sem pendência avisa que expirou', function (): void {
+    comGestao();
+    app(Pacotes::class)->importar(Pacote::doArray(comidaBruta()), false);
+    app(Pacotes::class)->ativar('comida-1');
+
+    $outro = comidaBruta();
+    $outro['pacote']['nome'] = 'Outro';
+
+    post('/pacotes/importar', ['arquivo' => arquivoDePacote($outro), 'substituir' => '1'])->assertSessionHas('substituir_ativo');
+    post('/pacotes/importar/confirmar', ['confirmar' => '0'])->assertRedirect(route('pacotes'))->assertSessionMissing('status');
+    post('/pacotes/importar/confirmar', ['confirmar' => '1'])->assertSessionHas('erro_importar', 'A substituição expirou. Importe o arquivo de novo.');
+
+    expect(PacoteImportado::query()->sole()->only(['nome', 'ativo']))->toBe(['nome' => 'Teste', 'ativo' => true]);
 });
 
 it('o export do pacote ativo e o dos Meus textos voltam pelo importador sem edição', function (): void {

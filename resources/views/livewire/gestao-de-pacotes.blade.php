@@ -98,6 +98,25 @@
 
 <section class="painel flex flex-col gap-3" aria-labelledby="t-importar">
   <h2 id="t-importar" class="rotulo">{{ __('pacotes.importar.titulo') }}</h2>
+  @php($substituirAtivo = session('substituir_ativo'))
+  @if (is_array($substituirAtivo))
+  <form class="flex flex-col gap-2 rounded-md border border-line bg-bg px-3 py-2" role="alert" action="{{ route('pacotes.importar.confirmar') }}" method="post">
+    @csrf
+    <p class="text-[13px] font-medium">{{ __('pacotes.importar.substituir_ativo', ['nome' => $substituirAtivo['nome']]) }}</p>
+    <p class="text-[12px] text-mut">
+      @if ($substituirAtivo['entram'] === '' && $substituirAtivo['saem'] === '')
+      {{ __('pacotes.idiomas_iguais') }}
+      @else
+      @if ($substituirAtivo['entram'] !== ''){{ __('pacotes.entram', ['idiomas' => $substituirAtivo['entram']]) }} @endif
+      @if ($substituirAtivo['saem'] !== ''){{ __('pacotes.saem', ['idiomas' => $substituirAtivo['saem']]) }}@endif
+      @endif
+    </p>
+    <div class="flex flex-wrap justify-end gap-2">
+      <button type="submit" name="confirmar" value="0" class="btn btn-sm btn-ghost">{{ __('pacotes.cancelar') }}</button>
+      <button type="submit" name="confirmar" value="1" class="btn btn-sm">{{ __('pacotes.importar.substituir_botao') }}</button>
+    </div>
+  </form>
+  @endif
   <form class="flex flex-col gap-3" action="{{ route('pacotes.importar') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="flex flex-col gap-1.5">

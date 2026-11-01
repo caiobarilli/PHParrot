@@ -22,6 +22,14 @@ enum Idioma: string
         return array_values(array_filter(array_map(self::tryFrom(...), $codigos)));
     }
 
+    /**
+     * @param  array<string>  $codigos
+     */
+    public static function nomesDe(array $codigos): string
+    {
+        return implode(', ', array_map(fn (self $idioma): string => $idioma->nome(), self::deCodigos(array_values($codigos))));
+    }
+
     public function sigla(): string
     {
         return strtoupper(explode('-', $this->value)[0]);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApagarBancoController;
+use App\Http\Controllers\ConfirmarSubstituicaoController;
 use App\Http\Controllers\EntrarController;
 use App\Http\Controllers\ExportarPacoteController;
 use App\Http\Controllers\ExportarTextosController;
@@ -32,6 +33,7 @@ Route::middleware(ExigirGestao::class)->group(function (): void {
     Route::get('textos/exportar', ExportarTextosController::class)->name('textos.exportar');
     Route::livewire('pacotes', GestaoDePacotes::class)->name('pacotes');
     Route::post('pacotes/importar', ImportarPacoteController::class)->name('pacotes.importar');
+    Route::post('pacotes/importar/confirmar', ConfirmarSubstituicaoController::class)->name('pacotes.importar.confirmar');
     Route::get('pacotes/{slug}/exportar', ExportarPacoteController::class)->where('slug', '[a-z0-9-]+')->name('pacotes.exportar');
     Route::post('banco/apagar', ApagarBancoController::class)->name('banco.apagar');
 });

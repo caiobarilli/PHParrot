@@ -102,11 +102,16 @@ final readonly class Pacotes
             'idiomas' => $pacote->idiomas,
             'conteudo' => $conteudo,
             'hash' => hash('sha256', $conteudo),
-            'ativo' => false,
+            'ativo' => $existente instanceof PacoteImportado && $existente->ativo,
             'importado_em' => now(),
         ]));
 
         return $existente instanceof PacoteImportado ? ResultadoDaImportacao::Substituido : ResultadoDaImportacao::Importado;
+    }
+
+    public function ehAtivo(string $slug): bool
+    {
+        return PacoteImportado::query()->where('slug', $slug)->where('ativo', true)->exists();
     }
 
     public function ativar(string $slug): bool

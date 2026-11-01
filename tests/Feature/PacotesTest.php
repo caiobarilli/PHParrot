@@ -86,14 +86,17 @@ it('não apaga a fábrica nem o pacote ativo', function (): void {
         ->and(PacoteImportado::query()->pluck('slug')->all())->toBe(['comida-1']);
 });
 
-it('slug repetido só substitui com confirmação, e o substituto entra inativo', function (): void {
+it('slug repetido só substitui com confirmação, e o substituto mantém o estado do substituído', function (): void {
     app(Pacotes::class)->importar(pacoteDeComida(), false);
+    app(Pacotes::class)->importar(pacoteDeComida('comida-2'), false);
     app(Pacotes::class)->ativar('comida-1');
 
     expect(app(Pacotes::class)->importar(pacoteDeComida(), false))->toBe(ResultadoDaImportacao::SlugExiste)
-        ->and(PacoteImportado::query()->sole()->ativo)->toBeTrue()
+        ->and(app(Pacotes::class)->ehAtivo('comida-1'))->toBeTrue()
         ->and(app(Pacotes::class)->importar(pacoteDeComida(), true))->toBe(ResultadoDaImportacao::Substituido)
-        ->and(PacoteImportado::query()->sole()->ativo)->toBeFalse();
+        ->and(app(Pacotes::class)->ehAtivo('comida-1'))->toBeTrue()
+        ->and(app(Pacotes::class)->importar(pacoteDeComida('comida-2'), true))->toBe(ResultadoDaImportacao::Substituido)
+        ->and(app(Pacotes::class)->ehAtivo('comida-2'))->toBeFalse();
 });
 
 it('o pacote meus-textos volta para os Meus textos, substituindo só com confirmação', function (): void {

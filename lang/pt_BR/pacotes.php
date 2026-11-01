@@ -25,13 +25,17 @@ return [
     'importar' => [
         'titulo' => 'Importar',
         'arquivo' => 'Arquivo .json',
-        'ajuda' => 'Formato 2 (ou o formato 1 antigo), até 2 MB. O pacote entra inativo. Um export dos Meus textos volta para os Meus textos.',
+        'ajuda' => 'Formato 2 (ou o formato 1 antigo), até 2 MB. O pacote novo entra inativo, e o que substitui o ativo continua ativo. Um export dos Meus textos volta para os Meus textos.',
         'substituir' => 'Substituir se já existir um pacote com o mesmo slug (ou os Meus textos atuais)',
         'botao' => 'Importar',
         'sem_arquivo' => 'Escolha um arquivo .json.',
         'slug_existe' => 'Já existe :slug. Marque Substituir para trocar.',
         'importado' => 'Importado: :nome, com :itens itens.',
         'substituido' => 'Substituído: :nome, com :itens itens.',
+        'substituir_ativo' => ':nome substitui o pacote ativo e continua ativo. Confirmar?',
+        'substituir_botao' => 'Substituir',
+        'substituido_ativo' => 'Substituído: :nome, com :itens itens. Continua ativo.',
+        'expirou' => 'A substituição expirou. Importe o arquivo de novo.',
     ],
     'relatorio' => [
         'erros' => '{1} :arquivo tem 1 erro. Nada foi importado.|[2,*] :arquivo tem :count erros. Nada foi importado.',

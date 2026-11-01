@@ -24,14 +24,6 @@ final class GestaoDePacotes extends Component
     #[Locked]
     public string $apagandoSlug = '';
 
-    /**
-     * @param  array<string>  $codigos
-     */
-    private static function nomes(array $codigos): string
-    {
-        return implode(', ', array_map(fn (Idioma $idioma): string => $idioma->nome(), Idioma::deCodigos(array_values($codigos))));
-    }
-
     public function mount(): void
     {
         $this->autorizar();
@@ -92,8 +84,8 @@ final class GestaoDePacotes extends Component
         return view('livewire.gestao-de-pacotes', [
             'pacotes' => $lista,
             'slugFabrica' => Pacote::SLUG_FABRICA,
-            'entram' => self::nomes(array_diff($alvo->idiomas ?? [], $ativo->idiomas ?? [])),
-            'saem' => self::nomes(array_diff($ativo->idiomas ?? [], $alvo->idiomas ?? [])),
+            'entram' => Idioma::nomesDe(array_diff($alvo->idiomas ?? [], $ativo->idiomas ?? [])),
+            'saem' => Idioma::nomesDe(array_diff($ativo->idiomas ?? [], $alvo->idiomas ?? [])),
         ])->title(__('pacotes.titulo'));
     }
 

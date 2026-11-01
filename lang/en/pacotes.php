@@ -25,13 +25,17 @@ return [
     'importar' => [
         'titulo' => 'Import',
         'arquivo' => '.json file',
-        'ajuda' => 'Format 2 (or the old format 1), up to 2 MB. The package comes in inactive. An export of My texts goes back to My texts.',
+        'ajuda' => 'Format 2 (or the old format 1), up to 2 MB. A new package comes in inactive, and one that replaces the active package stays active. An export of My texts goes back to My texts.',
         'substituir' => 'Replace if a package with the same slug already exists (or the current My texts)',
         'botao' => 'Import',
         'sem_arquivo' => 'Choose a .json file.',
         'slug_existe' => ':slug already exists. Check Replace to swap it.',
         'importado' => 'Imported: :nome, with :itens items.',
         'substituido' => 'Replaced: :nome, with :itens items.',
+        'substituir_ativo' => ':nome replaces the active package and stays active. Confirm?',
+        'substituir_botao' => 'Replace',
+        'substituido_ativo' => 'Replaced: :nome, with :itens items. Still active.',
+        'expirou' => 'The replacement expired. Import the file again.',
     ],
     'relatorio' => [
         'erros' => '{1} :arquivo has 1 error. Nothing was imported.|[2,*] :arquivo has :count errors. Nothing was imported.',
