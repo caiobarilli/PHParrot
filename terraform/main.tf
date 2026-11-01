@@ -45,6 +45,27 @@ resource "docker_container" "php" {
   ]
 }
 
+resource "docker_container" "agenda" {
+  name    = "phparrot-agenda"
+  image   = docker_image.php.image_id
+  user    = "1000:1000"
+  command = ["php", "artisan", "schedule:work"]
+  restart = "unless-stopped"
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  volumes {
+    host_path      = local.project_path
+    container_path = "/var/www/html"
+  }
+
+  depends_on = [
+    docker_container.php
+  ]
+}
+
 resource "docker_image" "nginx" {
   name = "phparrot-nginx"
 
