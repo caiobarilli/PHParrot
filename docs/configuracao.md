@@ -52,11 +52,12 @@ O `terraform.tfvars.example` mostra o formato. Se copiá-lo, ajuste o `project_p
 | `phparrot-node` e a porta do Vite | sim | não |
 | nginx publicado em | todas as interfaces | só `127.0.0.1`, para o túnel ou o proxy |
 | `composer install` | com as dependências de dev | `--no-dev --optimize-autoloader` |
-| Assets | `npm ci` e `npm run build` no `phparrot-node` | não roda npm: `public/build` precisa chegar pronto, e o setup para sem ele |
+| Assets | `npm ci` e `npm run build` no `phparrot-node` | `bin/phparrot assets`: um `docker run --rm` com a imagem `node` do Terraform, como o UID do host, que grava só `public/build` |
 | Caches do Laravel | limpos | `config:cache`, `route:cache` e `view:cache` |
 
 - **O que vem do `.env`:** `APP_ENV=production` e `APP_DEBUG=false` ficam no `.env` da produção, nunca no Terraform. O `setup prod` confere os dois pelo `artisan about` e para se não estiverem assim. Vale também pôr `LOG_LEVEL=warning`.
 - **Logs:** todos os containers gravam em `json-file`, com rotação de 10 MB e 3 arquivos, no máximo 30 MB cada. O Whisper continua sem log (`log_driver = "none"`, ADR 0007).
+- **Build de prod:** o projeto entra só para leitura, e o `node_modules` fica num tmpfs que some com o container. O hash de `resources/`, `package.json`, `package-lock.json`, `vite.config.js` e `composer.lock` fica em `public/build/fonte.sha256`, e o build só roda de novo quando ele muda.
 - **Proteção:** o setup nunca aplica um plano que destrói ou recria containers. Por isso, `setup prod` numa máquina de dev para no Terraform, antes de mexer no `vendor`.
 
 ## Backup e restauração

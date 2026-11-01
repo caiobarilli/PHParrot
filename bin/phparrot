@@ -35,6 +35,9 @@ Uso: bin/phparrot <comando> [dev|prod]
           dependências, chave, banco e assets. Pode rodar de novo quando quiser.
           O ambiente padrão é dev. Em prod: sem o phparrot-node, nginx só em
           127.0.0.1, composer sem dev, caches do Laravel e assets já construídos.
+  assets  Só o build do front para prod: um docker run --rm com a imagem node
+          do Terraform grava public/build e não deixa container ligado. Pula o
+          build se resources/, os lockfiles e o vite.config.js não mudaram.
   dev     Vite com recarga no phparrot-node e os logs do Laravel (pail) no
           phparrot-php. Ctrl+C para os dois.
 TEXTO
@@ -72,6 +75,52 @@ terraform_aplicar() {
     esac
 
     rm -f "$plano"
+}
+
+imagem_node() {
+    sed -nE 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"(node:[^"]+)".*/\1/p' terraform/main.tf | head -n 1
+}
+
+hash_do_front() {
+    {
+        find resources -type f -print0 | sort -z | xargs -0 sha256sum
+        sha256sum package.json package-lock.json vite.config.js composer.lock
+    } | sha256sum | cut -d' ' -f1
+}
+
+construir_assets() {
+    local imagem atual guardado
+    imagem="$(imagem_node)"
+    [ -n "$imagem" ] || falha "não achei a imagem node em terraform/main.tf."
+    atual="$(hash_do_front)"
+    guardado="$(cat public/build/fonte.sha256 2>/dev/null || true)"
+
+    if [ -f public/build/manifest.json ] && [ "$atual" = "$guardado" ]; then
+        info "Assets em dia: o front não mudou desde o último build."
+        return
+    fi
+
+    mkdir -p public/build node_modules
+    docker run --rm \
+        --user "$(id -u):$(id -g)" \
+        -e HOME=/tmp -e npm_config_cache=/tmp/npm -e npm_config_update_notifier=false \
+        -v "$raiz:/app:ro" \
+        -v "$raiz/public/build:/app/public/build" \
+        --tmpfs "/app/node_modules:rw,exec,uid=$(id -u),gid=$(id -g),size=1g" \
+        -w /app \
+        "$imagem" \
+        sh -c 'npm ci --no-audit --no-fund --loglevel=error && npm run build --silent' >/dev/null \
+        || falha "o build dos assets falhou."
+    [ -f public/build/manifest.json ] || falha "o build terminou sem public/build/manifest.json."
+    printf '%s\n' "$atual" >public/build/fonte.sha256
+    info "Assets construídos com $imagem, num container que já foi removido."
+}
+
+assets() {
+    fora_do_container
+    exigir docker "Instale o Docker."
+    passo "Assets do front (build isolado)"
+    construir_assets
 }
 
 exigir_producao() {
@@ -139,13 +188,12 @@ setup() {
     no_php php artisan migrate --force --no-interaction | grep -v '^\s*$' | sed 's/^ */    /'
 
     if [ "$ambiente" = prod ]; then
-        passo "Assets e caches do Laravel"
-        [ -f public/build/manifest.json ] || falha "faltam os assets em public/build. Em prod o setup não roda npm: o build precisa chegar pronto."
-        info "Assets em public/build, vindos do build."
+        passo "Caches do Laravel e assets"
         for cache in config route view; do
             no_php php artisan "${cache}:cache" --no-interaction >/dev/null
         done
         info "config:cache, route:cache e view:cache prontos."
+        construir_assets
     else
         passo "Dependências do JavaScript e assets (phparrot-node)"
         for cache in config route view; do
@@ -214,6 +262,7 @@ dev() {
 
 case "${1:-}" in
     setup) setup "${2:-dev}" ;;
+    assets) assets ;;
     dev) dev ;;
     -h | --help | help | '') ajuda ;;
     *)
