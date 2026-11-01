@@ -2,6 +2,11 @@ locals {
   project_path = coalesce(var.project_path, abspath("${path.module}/.."))
   prod         = var.ambiente == "prod"
 
+  log_rotativo = {
+    "max-size" = "10m"
+    "max-file" = "3"
+  }
+
   whisper_sha1 = {
     base  = "465707469ff3a37a2b9b8d8f89f2f99de7299dac"
     small = "55356645c2b361a969dfd0ef2c5a50d530afd8d5"
@@ -31,6 +36,9 @@ resource "docker_container" "php" {
   image = docker_image.php.image_id
   user  = "1000:1000"
 
+  log_driver = "json-file"
+  log_opts   = local.log_rotativo
+
   networks_advanced {
     name = docker_network.phparrot_network.name
   }
@@ -52,6 +60,9 @@ resource "docker_container" "agenda" {
   user    = "1000:1000"
   command = ["php", "artisan", "schedule:work"]
   restart = "unless-stopped"
+
+  log_driver = "json-file"
+  log_opts   = local.log_rotativo
 
   networks_advanced {
     name = docker_network.phparrot_network.name
@@ -83,6 +94,9 @@ resource "docker_image" "nginx" {
 resource "docker_container" "nginx" {
   name  = "phparrot-nginx"
   image = docker_image.nginx.image_id
+
+  log_driver = "json-file"
+  log_opts   = local.log_rotativo
 
   networks_advanced {
     name = docker_network.phparrot_network.name
@@ -125,6 +139,9 @@ resource "docker_container" "node" {
   image       = docker_image.node[0].image_id
   user        = "1000:1000"
   working_dir = "/var/www/html"
+
+  log_driver = "json-file"
+  log_opts   = local.log_rotativo
 
   networks_advanced {
     name = docker_network.phparrot_network.name
