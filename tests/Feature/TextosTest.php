@@ -351,17 +351,11 @@ it('o Apagar banco exige a flag de novo no servidor, mesmo sem pedir o token out
 
 it('os itens criados aparecem nas telas de treino', function (): void {
     comGestao();
-    $id = criarItemMeu('The only sentence I wrote.', 'A única frase que escrevi.', 10);
-    $cookie = json_encode(['nativa' => 'pt-BR', 'treino' => 'en', 'nivel' => 10, 'traducao' => 'chrome'], JSON_THROW_ON_ERROR);
+    $id = app(MeusTextos::class)->criar(new Nivel(10), TipoDeItem::Frase, ['en' => 'The only sentence I wrote.', 'pt-BR' => 'A única frase que escrevi.'], ['pt-BR', 'en'], Tema::Lazer)->id;
+    app()->forgetInstance(Catalogo::class);
+    $cookie = json_encode(['nativa' => 'pt-BR', 'treino' => 'en', 'nivel' => 10, 'traducao' => 'chrome', 'tema' => 'lazer'], JSON_THROW_ON_ERROR);
 
-    $sorteou = false;
-
-    for ($vez = 0; $vez < 80 && ! $sorteou; $vez++) {
-        $tela = telaLivewire(Fala::class, $cookie);
-        $sorteou = $tela->get('itemId') === $id;
-    }
-
-    expect($sorteou)->toBeTrue();
+    expect(telaLivewire(Fala::class, $cookie)->get('itemId'))->toBe($id);
 });
 
 it('cria e edita um item com tema, e o tema aparece na lista', function (): void {
