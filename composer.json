@@ -45,14 +45,12 @@
     },
     "scripts": {
         "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate",
-            "@php artisan migrate --force"
+            "Composer\\Config::disableProcessTimeout",
+            "bin/phparrot setup"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "@php artisan dev"
+            "bin/phparrot dev"
         ],
         "lint": "vendor/bin/duster lint",
         "stan": "vendor/bin/phpstan analyse --memory-limit=2G",
