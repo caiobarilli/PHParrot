@@ -13,20 +13,32 @@ final readonly class TradutorGoogle implements Tradutor
 {
     public const URL = 'https://translation.googleapis.com/language/translate/v2';
 
-    public function __construct(private ?string $chave) {}
+    public const MOTOR = 'google';
+
+    public function __construct(private ?string $chave, private ContadorDeCaracteres $contador = new ContadorDeCaracteres) {}
+
+    public function motor(): string
+    {
+        return self::MOTOR;
+    }
 
     public function traduzir(string $texto, Idioma $de, Idioma $para): string
+    {
+        return $this->traduzirVarios([$texto], $de, $para)[0];
+    }
+
+    public function traduzirVarios(array $textos, Idioma $de, Idioma $para): array
     {
         if ($this->chave === null || $this->chave === '') {
             throw TraducaoIndisponivel::semChave();
         }
 
         try {
-            $resposta = Http::timeout(10)
+            $resposta = Http::timeout(20)
                 ->withQueryParameters(['key' => $this->chave])
                 ->asJson()
                 ->post(self::URL, [
-                    'q' => $texto,
+                    'q' => count($textos) === 1 ? $textos[0] : $textos,
                     'source' => $de->value,
                     'target' => $para->value,
                     'format' => 'text',
@@ -37,14 +49,18 @@ final readonly class TradutorGoogle implements Tradutor
             throw TraducaoIndisponivel::falhou();
         }
 
-        $traduzido = $resposta->json('data.translations.0.translatedText');
+        $traducoes = $resposta->json('data.translations');
+        $traduzidos = is_array($traducoes) ? array_map(fn (mixed $traducao): mixed => is_array($traducao) ? ($traducao['translatedText'] ?? null) : null, array_values($traducoes)) : [];
 
-        if ($resposta->failed() || ! is_string($traduzido)) {
+        if ($resposta->failed() || count($traduzidos) !== count($textos) || in_array(false, array_map(is_string(...), $traduzidos), true)) {
             Log::warning('O serviço de tradução recusou o pedido.', ['status' => $resposta->status()]);
 
             throw TraducaoIndisponivel::falhou();
         }
 
-        return $traduzido;
+        $this->contador->somar($textos);
+
+        /** @var non-empty-list<string> $traduzidos */
+        return $traduzidos;
     }
 }

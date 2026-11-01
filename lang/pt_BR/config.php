@@ -47,7 +47,7 @@ return [
         'apagar_botao' => 'Apagar banco…',
         'etapa' => 'Etapa :n de 2',
         'modal_titulo' => 'Apagar banco?',
-        'etapa1_texto' => 'Os textos e frases que você criou e os pacotes importados serão apagados. O catálogo volta para a fábrica. Não dá para desfazer.',
+        'etapa1_texto' => 'Os textos e frases que você criou e os pacotes importados serão apagados. O catálogo volta para a fábrica. Não dá para desfazer. As traduções automáticas guardadas e o contador de caracteres do Google ficam, para não pagar de novo pelo mesmo texto.',
         'exportar_antes' => 'Guarde uma cópia antes:',
         'continuar' => 'Continuar',
         'confirme' => 'Para confirmar, digite :palavra:',

@@ -3,7 +3,7 @@
 
 <section class="painel flex flex-col gap-4" aria-labelledby="t-exemplo">
   <div class="flex flex-wrap items-center justify-between gap-3">
-    <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
+    <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span>@if ($automatica)<span class="tag !bg-transparent border border-line !text-mut !font-medium">{{ __('traducoes.etiqueta') }}</span>@endif</div>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
       <x-tema :tema="$tema" :vazio="$temaVazio" />
       <x-nivel :nivel="$nivel" />
@@ -24,5 +24,5 @@
   <div class="aviso" x-show="semVozDoIdioma" x-cloak><x-icone nome="alerta" /><p x-text="avisoSemVoz"></p></div>
 </section>
 
-<x-testar />
+<x-testar :desligado="$automatica" />
 </main>

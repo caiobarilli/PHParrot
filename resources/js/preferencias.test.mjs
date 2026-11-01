@@ -4,7 +4,8 @@ import { beforeEach, test } from 'node:test';
 const cfg = {
     padrao: { nativa: 'pt-BR', treino: 'en', nivel: 1, traducao: 'chrome', tema: null },
     servidor: { nativa: 'pt-BR', treino: 'en', nivel: 1, traducao: 'chrome', tema: null },
-    ativos: ['pt-BR', 'en'],
+    nativas: ['pt-BR', 'en'],
+    treinos: ['pt-BR', 'en', 'fr'],
     temas: ['comida', 'lazer'],
     vozes: {},
     cookie: 'phparrot_prefs',
@@ -75,6 +76,20 @@ test('restaurar fábrica apaga o cookie com max-age=0 e limpa o localStorage', (
     assert.equal(ambiente.armazenado.has('phparrot.preferencias'), false);
     assert.equal(ambiente.armazenado.has('phparrot.tema'), false);
     assert.equal(ambiente.armazenado.has('phparrot.vozes'), false);
+});
+
+test('a língua automática vale só para treinar, e a nativa fica entre as revisadas com interface', () => {
+    const api = preferencias();
+
+    api.definir({ nativa: 'pt-BR', treino: 'fr' });
+    assert.equal(api.atual.treino, 'fr');
+
+    api.definir({ nativa: 'fr', treino: 'en' });
+    assert.equal(api.atual.nativa, 'pt-BR');
+    assert.equal(api.atual.treino, 'en');
+
+    api.definir({ nativa: 'pt-BR', treino: 'ru' });
+    assert.equal(api.atual.treino, 'en');
 });
 
 test('a tradução Google só vale quando o servidor tem chave', () => {

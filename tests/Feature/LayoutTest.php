@@ -42,5 +42,6 @@ it('mostra o par ativo do cookie na barra', function (): void {
 it('entrega a configuração para o JavaScript', function (): void {
     get('/')->assertOk()
         ->assertSee('phparrot-config', false)
-        ->assertSee('"ativos":["en","pt-BR"]', false);
+        ->assertSee('"nativas":["en","pt-BR"]', false)
+        ->assertSee('"treinos":["en","pt-BR"]', false);
 });

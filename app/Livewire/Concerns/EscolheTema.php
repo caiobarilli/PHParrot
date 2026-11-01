@@ -18,10 +18,14 @@ trait EscolheTema
     #[Locked]
     public bool $temaVazio = false;
 
+    #[Locked]
+    public bool $automatica = false;
+
     private function temaDoSorteio(Catalogo $catalogo, TipoDeItem $tipo): ?Tema
     {
         $escolhido = Tema::tentar($this->tema);
-        $this->temaVazio = $escolhido instanceof Tema && ! in_array($escolhido, $catalogo->temas(new Nivel($this->nivel), $tipo), true);
+        $this->automatica = $catalogo->automatico($this->treino);
+        $this->temaVazio = $escolhido instanceof Tema && ! in_array($escolhido, $catalogo->temas(new Nivel($this->nivel), $tipo, $this->treino), true);
 
         return $this->temaVazio ? null : $escolhido;
     }

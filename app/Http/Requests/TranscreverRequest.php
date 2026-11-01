@@ -38,7 +38,7 @@ final class TranscreverRequest extends FormRequest
      */
     public function rules(): array
     {
-        $ativos = app(Catalogo::class)->idiomas();
+        $ativos = app(Catalogo::class)->idiomasDeTreino();
 
         return [
             'audio' => [

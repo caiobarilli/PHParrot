@@ -6,6 +6,9 @@
     <div class="flex flex-wrap items-center gap-2">
       <h2 id="t-texto" class="rotulo">{{ __('leitura.texto') }}</h2>
       <span class="tag" x-text="idioma.toUpperCase()">{{ strtoupper($treino) }}</span>
+      @if ($automatica)
+      <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="! invertido">{{ __('traducoes.etiqueta') }}</span>
+      @endif
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="editado && ! vazio" x-cloak>{{ __('leitura.editado') }}</span>
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="traduzidoAuto" x-cloak>{{ __('leitura.traduzido_auto') }}</span>
     </div>

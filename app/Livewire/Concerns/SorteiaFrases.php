@@ -73,7 +73,7 @@ trait SorteiaFrases
     private function sortear(Catalogo $catalogo, ?string $excluirId): void
     {
         $tema = $this->temaDoSorteio($catalogo, TipoDeItem::Frase);
-        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Frase, $excluirId, $tema);
+        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Frase, $excluirId, $tema, $this->treino);
 
         $this->itemId = $item instanceof ItemDeTexto ? $item->id : '';
         $this->frase = $item instanceof ItemDeTexto ? $item->traducao($this->treino) ?? '' : '';

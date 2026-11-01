@@ -8,6 +8,8 @@ use App\Preferencias\Preferencias;
 use App\Textos\Catalogo;
 use App\Textos\Idioma;
 use App\Textos\Pacotes;
+use App\Traducao\ContadorDeCaracteres;
+use App\Traducao\Conteudo\CacheDeTraducoes;
 use App\Traducao\Tradutor;
 use App\Traducao\TradutorGoogle;
 use App\Transcricao\Transcritor;
@@ -25,14 +27,20 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->scoped(CacheDeTraducoes::class);
         $this->app->scoped(Catalogo::class, fn (Application $app): Catalogo => $app->make(Pacotes::class)->catalogo());
 
         $this->app->scoped(
             Preferencias::class,
-            fn (Application $app): Preferencias => Preferencias::doCookie(
-                $app->make(Request::class)->cookie(Preferencias::COOKIE),
-                Idioma::deCodigos($app->make(Catalogo::class)->idiomas()),
-            ),
+            function (Application $app): Preferencias {
+                $catalogo = $app->make(Catalogo::class);
+
+                return Preferencias::doCookie(
+                    $app->make(Request::class)->cookie(Preferencias::COOKIE),
+                    Idioma::deCodigos($catalogo->idiomas()),
+                    Idioma::deCodigos(array_values(array_diff($catalogo->idiomasDeTreino(), $catalogo->idiomas()))),
+                );
+            },
         );
 
         $this->app->bind(Transcritor::class, fn (): Transcritor => new TranscritorWhisperServer(
@@ -40,8 +48,9 @@ class AppServiceProvider extends ServiceProvider
             config()->integer('phparrot.transcricao.duracao_ms'),
         ));
 
-        $this->app->bind(Tradutor::class, fn (): Tradutor => new TradutorGoogle(
+        $this->app->bind(Tradutor::class, fn (Application $app): Tradutor => new TradutorGoogle(
             is_string(config('services.google_translate.key')) ? config('services.google_translate.key') : null,
+            $app->make(ContadorDeCaracteres::class),
         ));
     }
 

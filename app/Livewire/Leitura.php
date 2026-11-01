@@ -91,7 +91,7 @@ final class Leitura extends Component
     private function sortear(Catalogo $catalogo, ?string $excluirId): void
     {
         $tema = $this->temaDoSorteio($catalogo, TipoDeItem::Texto);
-        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Texto, $excluirId, $tema);
+        $item = $catalogo->sortear(new Nivel($this->nivel), TipoDeItem::Texto, $excluirId, $tema, $this->treino);
 
         $this->itemId = $item instanceof ItemDeTexto ? $item->id : '';
         $this->textos = $item instanceof ItemDeTexto

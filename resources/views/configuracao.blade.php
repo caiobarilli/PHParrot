@@ -1,7 +1,12 @@
 @php
-    $ativos = \App\Textos\Idioma::deCodigos(app(\App\Textos\Catalogo::class)->idiomas());
+    $catalogo = app(\App\Textos\Catalogo::class);
+    $treinoAtual = app(\App\Preferencias\Preferencias::class)->treino->value;
+    $opcoes = [
+        'nativa' => array_values(array_filter(\App\Textos\Idioma::deCodigos($catalogo->idiomas()), fn (\App\Textos\Idioma $idioma): bool => $idioma->interfaceDisponivel())),
+        'treino' => \App\Textos\Idioma::deCodigos($catalogo->idiomasDeTreino()),
+    ];
     $googleDisponivel = filled(config('services.google_translate.key'));
-    $temasPresentes = app(\App\Textos\Catalogo::class)->temasPresentes();
+    $temasPresentes = $catalogo->automatico($treinoAtual) ? $catalogo->temasCompletos($treinoAtual) : $catalogo->temasPresentes();
     $gestao = app(\App\Gestao\Gestao::class);
     $gestaoLigada = $gestao->ligada();
     $gestaoAtiva = $gestao->ativa();
@@ -20,8 +25,8 @@
       <label for="lingua-{{ $campo }}" class="text-[13px] font-medium">{{ __('config.idiomas.'.$campo) }}</label>
       <select id="lingua-{{ $campo }}" class="campo campo-sm" aria-describedby="idiomas-erro" x-model="{{ $campo }}" x-on:change="salvarIdiomas()" x-bind:aria-invalid="mesma && '{{ $campo }}' === 'treino' ? 'true' : 'false'">
         @foreach (\App\Textos\Idioma::cases() as $idioma)
-        @php($ativo = in_array($idioma, $ativos, true))
-        <option value="{{ $idioma->value }}" @disabled(! $ativo)>{{ $idioma->nome() }}@unless ($ativo) — {{ __('idiomas.em_breve') }}@endunless</option>
+        @php($ativo = in_array($idioma, $opcoes[$campo], true))
+        <option value="{{ $idioma->value }}" @disabled(! $ativo)>{{ $ativo && $catalogo->automatico($idioma->value) ? __('traducoes.automatico', ['idioma' => $idioma->nome()]) : $idioma->nome() }}@unless ($ativo) — {{ __('idiomas.em_breve') }}@endunless</option>
         @endforeach
       </select>
       <p class="text-[12px] text-mut">{{ __('config.idiomas.'.$campo.'_ajuda') }}</p>
@@ -29,7 +34,7 @@
     @endforeach
   </div>
   <div class="grid gap-3 sm:grid-cols-2">
-    @foreach ($ativos as $idioma)
+    @foreach ($opcoes['treino'] as $idioma)
     <div class="flex flex-col gap-1.5">
       <label for="voz-{{ $idioma->value }}" class="text-[13px] font-medium">{{ __('voz.titulo', ['idioma' => $idioma->nome()]) }}</label>
       <select id="voz-{{ $idioma->value }}" class="campo campo-sm" x-model="vozSalva['{{ $idioma->value }}']" x-on:change="salvarVoz('{{ $idioma->value }}')">
@@ -110,6 +115,7 @@
   <div class="flex flex-wrap items-center gap-3">
     <a href="{{ route('textos') }}" class="btn btn-sm"><x-icone nome="textos" />{{ __('config.textos.gerenciar') }}</a>
     <a href="{{ route('pacotes') }}" class="btn btn-sm btn-ghost"><x-icone nome="pacote" />{{ __('pacotes.lista') }}</a>
+    <a href="{{ route('traducoes') }}" class="btn btn-sm btn-ghost"><x-icone nome="traduzir" />{{ __('traducoes.link') }}</a>
     <p class="text-[12px] text-mut flex-1 min-w-[200px]">{{ __('config.textos.ajuda') }}</p>
   </div>
   @elseif ($gestaoLigada)

@@ -13,12 +13,24 @@ interface Catalogo
 
     public function buscar(string $id): ?ItemDeTexto;
 
-    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null, ?Tema $tema = null): ?ItemDeTexto;
+    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null, ?Tema $tema = null, ?string $idioma = null): ?ItemDeTexto;
 
     /**
      * @return list<Tema>
      */
-    public function temas(Nivel $nivel, TipoDeItem $tipo): array;
+    public function temas(Nivel $nivel, TipoDeItem $tipo, ?string $idioma = null): array;
+
+    /**
+     * @return list<Tema>
+     */
+    public function temasCompletos(string $idioma): array;
+
+    /**
+     * @return list<string>
+     */
+    public function idiomasDeTreino(): array;
+
+    public function automatico(string $idioma): bool;
 
     /**
      * @return list<Tema>

@@ -18,6 +18,14 @@ final readonly class ItemDeTexto
         public ?Tema $tema = null,
     ) {}
 
+    /**
+     * @param  array<string, string>  $extras
+     */
+    public function comTraducoes(array $extras): self
+    {
+        return new self($this->id, $this->nivel, $this->tipo, [...$extras, ...$this->traducoes], $this->origem, $this->tema);
+    }
+
     public function traducao(string $idioma): ?string
     {
         return $this->traducoes[$idioma] ?? null;

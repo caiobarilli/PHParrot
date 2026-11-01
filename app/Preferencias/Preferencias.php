@@ -27,8 +27,9 @@ final readonly class Preferencias
 
     /**
      * @param  list<Idioma>  $ativos
+     * @param  list<Idioma>  $automaticos
      */
-    public static function doCookie(mixed $bruto, array $ativos): self
+    public static function doCookie(mixed $bruto, array $ativos, array $automaticos = []): self
     {
         $padrao = self::padrao();
         $dados = is_string($bruto) ? json_decode($bruto, true) : null;
@@ -37,8 +38,8 @@ final readonly class Preferencias
             return $padrao;
         }
 
-        $nativa = self::idioma($dados['nativa'] ?? null, $ativos);
-        $treino = self::idioma($dados['treino'] ?? null, $ativos);
+        $nativa = self::idioma($dados['nativa'] ?? null, array_values(array_filter($ativos, fn (Idioma $idioma): bool => $idioma->interfaceDisponivel())));
+        $treino = self::idioma($dados['treino'] ?? null, [...$ativos, ...$automaticos]);
 
         if ($nativa === null || $treino === null || $nativa === $treino) {
             $nativa = $padrao->nativa;

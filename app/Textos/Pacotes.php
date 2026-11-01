@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Textos;
 
 use App\Models\PacoteImportado;
+use App\Traducao\Conteudo\CacheDeTraducoes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Random\Randomizer;
 
 final readonly class Pacotes
 {
-    public function __construct(private MeusTextos $meus, private ?string $arquivoDaFabrica = null) {}
+    public function __construct(private MeusTextos $meus, private CacheDeTraducoes $traducoes, private ?string $arquivoDaFabrica = null) {}
 
     /**
      * @return array<mixed>
@@ -52,7 +54,14 @@ final readonly class Pacotes
 
     public function catalogo(): Catalogo
     {
-        return new CatalogoComBanco(CatalogoJson::doPacote($this->ativo()), $this->meus->todos());
+        $pacote = $this->ativo();
+        $idiomas = $pacote->idiomas;
+        sort($idiomas);
+
+        return new CatalogoComBanco(
+            new CatalogoJson($this->traducoes->completar($pacote->itens, $idiomas), new Randomizer, $idiomas),
+            $this->traducoes->completar($this->meus->todos(), $idiomas),
+        );
     }
 
     public function buscar(string $slug): ?Pacote
@@ -125,7 +134,30 @@ final readonly class Pacotes
             PacoteImportado::query()->where('slug', $slug)->update(['ativo' => true]);
         });
 
+        $this->limparTraducoesOrfas();
+
         return true;
+    }
+
+    public function limparTraducoesOrfas(): int
+    {
+        $itens = [...$this->fabrica()->itens, ...$this->meus->todos()];
+
+        foreach (PacoteImportado::query()->get() as $registro) {
+            array_push($itens, ...self::doRegistro($registro)->itens);
+        }
+
+        $hashes = [];
+
+        foreach ($itens as $item) {
+            $origem = $item->traducao(CacheDeTraducoes::ORIGEM);
+
+            if ($origem !== null) {
+                $hashes[CacheDeTraducoes::hash($origem)] = true;
+            }
+        }
+
+        return $this->traducoes->limparOrfas(array_keys($hashes));
     }
 
     public function apagar(string $slug): bool

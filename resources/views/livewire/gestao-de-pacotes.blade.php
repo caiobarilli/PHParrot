@@ -1,7 +1,10 @@
 <main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4">
 <div class="flex flex-wrap items-center justify-between gap-3">
   <h1 class="text-[17px] font-semibold">{{ __('pacotes.titulo') }}</h1>
-  <a href="{{ route('textos') }}" class="btn btn-sm btn-ghost"><x-icone nome="textos" />{{ __('gestao.textos.titulo') }}</a>
+  <div class="flex flex-wrap gap-2">
+    <a href="{{ route('textos') }}" class="btn btn-sm btn-ghost"><x-icone nome="textos" />{{ __('gestao.textos.titulo') }}</a>
+    <a href="{{ route('traducoes') }}" class="btn btn-sm btn-ghost"><x-icone nome="traduzir" />{{ __('traducoes.link') }}</a>
+  </div>
 </div>
 <p class="text-[13px] text-mut">{{ __('pacotes.ajuda') }}</p>
 

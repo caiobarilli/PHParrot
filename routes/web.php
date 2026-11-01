@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApagarBancoController;
 use App\Http\Controllers\ConfirmarSubstituicaoController;
 use App\Http\Controllers\EntrarController;
+use App\Http\Controllers\ExportarComTraducaoController;
 use App\Http\Controllers\ExportarPacoteController;
 use App\Http\Controllers\ExportarTextosController;
 use App\Http\Controllers\ImportarPacoteController;
@@ -15,6 +16,7 @@ use App\Livewire\Fala;
 use App\Livewire\GestaoDePacotes;
 use App\Livewire\Leitura;
 use App\Livewire\Textos;
+use App\Livewire\TraducaoDeConteudo;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'inicio')->name('inicio');
@@ -35,5 +37,7 @@ Route::middleware(ExigirGestao::class)->group(function (): void {
     Route::post('pacotes/importar', ImportarPacoteController::class)->name('pacotes.importar');
     Route::post('pacotes/importar/confirmar', ConfirmarSubstituicaoController::class)->name('pacotes.importar.confirmar');
     Route::get('pacotes/{slug}/exportar', ExportarPacoteController::class)->where('slug', '[a-z0-9-]+')->name('pacotes.exportar');
+    Route::livewire('traducoes', TraducaoDeConteudo::class)->name('traducoes');
+    Route::get('traducoes/exportar/{idioma}', ExportarComTraducaoController::class)->where('idioma', '[a-zA-Z-]+')->name('traducoes.exportar');
     Route::post('banco/apagar', ApagarBancoController::class)->name('banco.apagar');
 });

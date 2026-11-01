@@ -1,15 +1,18 @@
 @props(['title' => null, 'tela' => null, 'cabecalho' => true])
 @php
     $prefs = app(\App\Preferencias\Preferencias::class);
-    $ativos = \App\Textos\Idioma::deCodigos(app(\App\Textos\Catalogo::class)->idiomas());
+    $catalogo = app(\App\Textos\Catalogo::class);
+    $nativas = array_values(array_filter(\App\Textos\Idioma::deCodigos($catalogo->idiomas()), fn (\App\Textos\Idioma $idioma): bool => $idioma->interfaceDisponivel()));
+    $treinos = \App\Textos\Idioma::deCodigos($catalogo->idiomasDeTreino());
     $telas = ['leitura' => 'leitura', 'fala' => 'fala', 'escuta' => 'escuta'];
     $configuracaoJs = [
         'padrao' => \App\Preferencias\Preferencias::padrao()->paraJs(),
         'servidor' => $prefs->paraJs(),
-        'ativos' => array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $ativos),
+        'nativas' => array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $nativas),
+        'treinos' => array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $treinos),
         'vozes' => array_combine(
-            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $ativos),
-            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->voz(), $ativos),
+            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->value, $treinos),
+            array_map(fn (\App\Textos\Idioma $idioma): string => $idioma->voz(), $treinos),
         ),
         'temas' => \App\Textos\Tema::slugs(),
         'cookie' => \App\Preferencias\Preferencias::COOKIE,

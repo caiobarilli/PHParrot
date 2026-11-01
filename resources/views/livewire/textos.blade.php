@@ -3,6 +3,7 @@
   <h1 class="text-[17px] font-semibold">{{ __('gestao.textos.titulo') }}</h1>
   <div class="flex flex-wrap gap-2">
     <a href="{{ route('pacotes') }}" class="btn btn-sm btn-ghost"><x-icone nome="pacote" />{{ __('gestao.textos.pacotes') }}</a>
+    <a href="{{ route('traducoes') }}" class="btn btn-sm btn-ghost"><x-icone nome="traduzir" />{{ __('traducoes.link') }}</a>
     <x-exportar-meus-textos :existem="$temMeusTextos" dica="exportar-dica" />
     @unless ($formAberto)
     <button type="button" class="btn btn-sm" wire:click="novo"><x-icone nome="novo" />{{ __('gestao.textos.novo') }}</button>

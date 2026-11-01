@@ -33,14 +33,29 @@ final readonly class CatalogoComBanco implements Catalogo
         return $this->todos->buscar($id);
     }
 
-    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null, ?Tema $tema = null): ?ItemDeTexto
+    public function sortear(Nivel $nivel, TipoDeItem $tipo, ?string $excluirId = null, ?Tema $tema = null, ?string $idioma = null): ?ItemDeTexto
     {
-        return $this->sorteaveis->sortear($nivel, $tipo, $excluirId, $tema);
+        return $this->sorteaveis->sortear($nivel, $tipo, $excluirId, $tema, $idioma);
     }
 
-    public function temas(Nivel $nivel, TipoDeItem $tipo): array
+    public function temas(Nivel $nivel, TipoDeItem $tipo, ?string $idioma = null): array
     {
-        return $this->sorteaveis->temas($nivel, $tipo);
+        return $this->sorteaveis->temas($nivel, $tipo, $idioma);
+    }
+
+    public function temasCompletos(string $idioma): array
+    {
+        return $this->base->temasCompletos($idioma);
+    }
+
+    public function idiomasDeTreino(): array
+    {
+        return $this->base->idiomasDeTreino();
+    }
+
+    public function automatico(string $idioma): bool
+    {
+        return $this->base->automatico($idioma);
     }
 
     public function temasPresentes(): array

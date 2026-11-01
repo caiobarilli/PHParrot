@@ -25,7 +25,7 @@ const lerArmazenado = () => {
 const validar = (bruto, cfg) => {
     const padrao = cfg.padrao;
     const dados = bruto ?? {};
-    const par = cfg.ativos.includes(dados.nativa) && cfg.ativos.includes(dados.treino) && dados.nativa !== dados.treino;
+    const par = cfg.nativas.includes(dados.nativa) && cfg.treinos.includes(dados.treino) && dados.nativa !== dados.treino;
     const nivel = Number.isInteger(dados.nivel) && dados.nivel >= 1 && dados.nivel <= 10 ? dados.nivel : padrao.nivel;
     const traducao = dados.traducao === 'google' && cfg.google ? 'google' : 'chrome';
     const tema = (cfg.temas ?? []).includes(dados.tema) ? dados.tema : null;

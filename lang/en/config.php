@@ -47,7 +47,7 @@ return [
         'apagar_botao' => 'Delete database…',
         'etapa' => 'Step :n of 2',
         'modal_titulo' => 'Delete database?',
-        'etapa1_texto' => 'The texts and sentences you created and the imported packages will be deleted. The catalog goes back to the factory package. This cannot be undone.',
+        'etapa1_texto' => 'The texts and sentences you created and the imported packages will be deleted. The catalog goes back to the factory package. This cannot be undone. Stored automatic translations and the Google character counter stay, so the same text is not paid for twice.',
         'exportar_antes' => 'Keep a copy first:',
         'continuar' => 'Continue',
         'confirme' => 'To confirm, type :palavra:',

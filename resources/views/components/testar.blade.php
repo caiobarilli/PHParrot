@@ -1,5 +1,9 @@
+@props(['desligado' => false])
 <section class="painel flex flex-col gap-4" aria-labelledby="t-testar" x-ref="testar" data-erro="{{ __('treino.erro_transcricao') }}" data-nao-ouvi="{{ __('treino.nao_ouvi') }}" data-placar="{{ __('treino.placar') }}" data-certa="{{ __('treino.palavra_certa') }}" data-trocada="{{ __('treino.palavra_trocada') }}" data-faltando="{{ __('treino.palavra_faltando') }}" data-extra="{{ __('treino.palavra_extra') }}">
   <h2 id="t-testar" class="rotulo">{{ __('treino.testar') }}</h2>
+  @if ($desligado)
+  <div class="aviso"><x-icone nome="alerta" /><p>{{ __('traducoes.testar_desligado') }}</p></div>
+  @else
   <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-[10px]">
     <button type="button" class="btn col-span-2 sm:col-auto" x-show="! gravando" x-on:click="gravar()" x-bind:disabled="transcrevendo || semGravacao"><x-icone nome="gravar" />{{ __('treino.gravar') }}</button>
     <button type="button" class="btn btn-gravando col-span-2 sm:col-auto" x-show="gravando" x-cloak x-on:click="pararGravacao()"><x-icone nome="parar" />{{ __('treino.parar') }}</button>
@@ -29,4 +33,5 @@
     </div>
     <p class="nota" x-show="resultado === null">{{ __('treino.sem_resultado') }}</p>
   </div>
+  @endif
 </section>
