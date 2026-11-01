@@ -55,10 +55,13 @@ Um pacote é um JSON no formato 2:
 - **Temas:** dez slugs fixos (`rotina-casa`, `comida`, `compras`, `transporte-viagem`, `trabalho`, `saude`, `lazer`, `familia-amigos`, `tecnologia`, `cidade-servicos`), com o nome no `lang/`.
 - **Ativo:** um pacote por vez. O catálogo é o pacote ativo somado aos Meus textos, e os `idiomas` do pacote são os idiomas ativos. O pacote lido fica em cache pelo `hash` do conteúdo.
 - **Validador:** `php artisan textos:validar {arquivo}` confere estrutura, ids, idiomas, texto proibido (`<`, `>`, controle, endereço da web) e as faixas de palavras por nível do [anexo](../.ai/adr/0011-anexo-niveis.md). O mesmo validador serve o importador.
+- **Barra superior:** o par de idiomas com o código completo do enum `Idioma` ("PT-BR → EN"), depois Leitura, Fala, Escuta e a engrenagem. Abaixo de 768 px, o par fica na primeira linha e as abas com a engrenagem na segunda; abaixo de 420 px, as abas perdem o ícone.
 - **Visitante:** o tema é escolhido na Configuração, com "Todos" como padrão e só os temas do pacote ativo. A Leitura, a Fala e a Escuta mostram o tema numa etiqueta ao lado do nível.
 - **Fábrica:** traz os 900 itens dos 10 temas, 90 por tema. Um tema novo começa como rascunho em `resources/data/rascunhos/`, fora do app, e entra no dev com `php artisan pacotes:importar {arquivo} --ativar`.
 
 ## Fluxo da Fala
+
+Na tela, o bloco **Falar** (gravar, ouvir, transcrever e o resultado) vem em cima, e o **Exemplo** com a frase fica embaixo dele. O bloco é o mesmo componente `x-testar` da Escuta, que recebe o título: "Falar" na Fala e "Testar" na Escuta, onde ele continua embaixo do Áudio.
 
 1. **Ouvir:** o navegador lê a frase com a voz do idioma treinado. A frase abre revelada, e o olho a esconde.
 2. **Gravar:** o `MediaRecorder` grava até 30 s, e o áudio fica só no navegador até o visitante pedir a transcrição.
