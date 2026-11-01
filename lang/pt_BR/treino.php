@@ -14,6 +14,7 @@ return [
     'nao_ouvi' => 'Não consegui ouvir nada. Grave de novo, mais perto do microfone.',
     'erro_transcricao' => 'Não foi possível transcrever agora. Tente de novo.',
     'testar' => 'Testar',
+    'falar' => 'Falar',
     'ouvir' => 'Ouvir minha gravação',
     'pausar_audicao' => 'Pausar gravação',
     'transcrever' => 'Transcrever',

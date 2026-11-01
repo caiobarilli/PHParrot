@@ -19,6 +19,17 @@ it('mostra os elementos principais da Escuta', function (): void {
         ->assertSee('N1');
 });
 
+it('a Escuta não muda: o Áudio em cima e o Testar embaixo, sem o Falar da Fala', function (): void {
+    $html = (string) get('/escuta')->assertOk()->getContent();
+    $audio = strpos($html, '<h2 id="t-escuta"');
+    $testar = strpos($html, '<h2 id="t-testar" class="rotulo">Testar</h2>');
+
+    expect($audio)->toBeInt()
+        ->and($testar)->toBeInt()
+        ->and($audio)->toBeLessThan((int) $testar)
+        ->and($html)->not->toContain('>Falar</h2>');
+});
+
 it('a Escuta não tem mais a voz do app lendo a transcrição nem o Gravar fora do Testar', function (): void {
     $html = (string) get('/escuta')->assertOk()->getContent();
 
@@ -44,7 +55,8 @@ it('mostra a Escuta em inglês quando a nativa é inglês', function (): void {
     withUnencryptedCookie('phparrot_prefs', $cookie)->get('/escuta')->assertOk()
         ->assertSee('Show text')
         ->assertSee('Show translation')
-        ->assertSee('Listen to my recording');
+        ->assertSee('Listen to my recording')
+        ->assertSee('>Try it</h2>', false);
 });
 
 it('a Escuta já não mostra a tela em construção', function (): void {

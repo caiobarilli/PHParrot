@@ -22,5 +22,5 @@
   <div class="aviso" x-show="semVozDoIdioma" x-cloak><x-icone nome="alerta" /><p x-text="avisoSemVoz"></p></div>
 </section>
 
-<x-testar :desligado="$automatica" />
+<x-testar :desligado="$automatica" titulo="treino.testar" />
 </main>

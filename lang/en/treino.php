@@ -14,6 +14,7 @@ return [
     'nao_ouvi' => 'Could not hear anything. Record again, closer to the microphone.',
     'erro_transcricao' => 'Could not transcribe right now. Try again.',
     'testar' => 'Try it',
+    'falar' => 'Speak',
     'ouvir' => 'Listen to my recording',
     'pausar_audicao' => 'Pause recording',
     'transcrever' => 'Transcribe',

@@ -80,11 +80,11 @@ it('não deixa o navegador mudar as propriedades da tela', function (string $cla
     [Escuta::class, 'nativa'],
 ])->throws(Exception::class, 'Cannot update locked property');
 
-it('mostra o mesmo bloco Testar, com gravar, ouvir, transcrever e repetir, nas duas telas', function (string $rota): void {
+it('mostra o mesmo bloco de gravar, ouvir, transcrever e repetir nas duas telas, com o título de cada uma', function (string $rota, string $titulo): void {
     $html = (string) get($rota)->assertOk()->getContent();
 
     expect($html)->toContain('x-ref="testar"')
-        ->and($html)->toContain('Testar')
+        ->and($html)->toContain('<h2 id="t-testar" class="rotulo">'.$titulo.'</h2>')
         ->and($html)->toContain('Gravar')
         ->and($html)->toContain('Parar')
         ->and($html)->toContain('Ouvir minha gravação')
@@ -96,16 +96,16 @@ it('mostra o mesmo bloco Testar, com gravar, ouvir, transcrever e repetir, nas d
         ->and($html)->toContain('O áudio é transcrito neste servidor e apagado em seguida. Nada é gravado.')
         ->and($html)->toContain('Grave, ouça e transcreva para comparar com a frase, palavra por palavra.')
         ->and($html)->toContain('data-placar=":certas de :total palavras"');
-})->with(['/fala', '/escuta']);
+})->with(['Fala' => ['/fala', 'Falar'], 'Escuta' => ['/escuta', 'Testar']]);
 
-it('o Testar nas duas telas vem do mesmo componente e fala inglês com a nativa em inglês', function (string $rota): void {
+it('o bloco nas duas telas vem do mesmo componente e fala inglês com a nativa em inglês', function (string $rota, string $titulo): void {
     $cookie = json_encode(['nativa' => 'en', 'treino' => 'pt-BR', 'nivel' => 1, 'traducao' => 'chrome'], JSON_THROW_ON_ERROR);
 
     withUnencryptedCookie('phparrot_prefs', $cookie)->get($rota)->assertOk()
-        ->assertSee('Try it')
+        ->assertSee('<h2 id="t-testar" class="rotulo">'.$titulo.'</h2>', false)
         ->assertSee('Record')
         ->assertSee('Transcribe')
         ->assertSee('Try again')
         ->assertSee('data-placar=":certas of :total words"', false)
         ->assertSee('Raw transcription');
-})->with(['/fala', '/escuta']);
+})->with(['Fala' => ['/fala', 'Speak'], 'Escuta' => ['/escuta', 'Try it']]);

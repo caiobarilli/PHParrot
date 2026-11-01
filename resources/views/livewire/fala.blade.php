@@ -1,6 +1,8 @@
 <main class="mx-auto max-w-[760px] px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4" x-data="fala" data-sem-voz-idioma="{{ __('voz.sem_voz_idioma') }}">
 <h1 class="sr-only">{{ __('nav.fala') }}</h1>
 
+<x-testar :desligado="$automatica" titulo="treino.falar" />
+
 <section class="painel flex flex-col gap-4" aria-labelledby="t-exemplo">
   <div class="flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-2"><h2 id="t-exemplo" class="rotulo">{{ __('fala.exemplo') }}</h2><span class="tag">{{ $treinoSigla }}</span>@if ($automatica)<span class="tag !bg-transparent border border-line !text-mut !font-medium">{{ __('traducoes.etiqueta') }}</span>@endif</div>
@@ -23,6 +25,4 @@
   <div class="aviso" x-show="semVoz" x-cloak><x-icone nome="alerta" /><p>{{ __('voz.indisponivel') }}</p></div>
   <div class="aviso" x-show="semVozDoIdioma" x-cloak><x-icone nome="alerta" /><p x-text="avisoSemVoz"></p></div>
 </section>
-
-<x-testar :desligado="$automatica" />
 </main>

@@ -1,6 +1,6 @@
-@props(['desligado' => false])
+@props(['desligado' => false, 'titulo'])
 <section class="painel flex flex-col gap-4" aria-labelledby="t-testar" x-ref="testar" data-erro="{{ __('treino.erro_transcricao') }}" data-nao-ouvi="{{ __('treino.nao_ouvi') }}" data-placar="{{ __('treino.placar') }}" data-certa="{{ __('treino.palavra_certa') }}" data-trocada="{{ __('treino.palavra_trocada') }}" data-faltando="{{ __('treino.palavra_faltando') }}" data-extra="{{ __('treino.palavra_extra') }}">
-  <h2 id="t-testar" class="rotulo">{{ __('treino.testar') }}</h2>
+  <h2 id="t-testar" class="rotulo">{{ __($titulo) }}</h2>
   @if ($desligado)
   <div class="aviso"><x-icone nome="alerta" /><p>{{ __('traducoes.testar_desligado') }}</p></div>
   @else

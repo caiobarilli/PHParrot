@@ -23,7 +23,20 @@ it('mostra os elementos principais da Fala', function (): void {
         ->assertSee('Subir nível');
 });
 
-it('a Fala não transcreve o exemplo: o Transcrever só existe no Testar', function (): void {
+it('na Fala, o bloco Falar vem em cima e o Exemplo desce para baixo dele', function (): void {
+    $html = (string) get('/fala')->assertOk()->getContent();
+    $falar = strpos($html, '<h2 id="t-testar" class="rotulo">Falar</h2>');
+    $exemplo = strpos($html, '<h2 id="t-exemplo"');
+
+    expect($falar)->toBeInt()
+        ->and($exemplo)->toBeInt()
+        ->and($falar)->toBeLessThan((int) $exemplo)
+        ->and($html)->toContain('aria-labelledby="t-testar"')
+        ->and($html)->toContain('aria-labelledby="t-exemplo"')
+        ->and($html)->not->toContain('>Testar</h2>');
+});
+
+it('a Fala não transcreve o exemplo: o Transcrever só existe no Falar', function (): void {
     $html = get('/fala')->assertOk()->getContent();
 
     expect(substr_count((string) $html, 'Transcrever'))->toBe(1)
@@ -51,6 +64,7 @@ it('mostra a Fala em inglês quando a nativa é inglês', function (): void {
         ->assertSee('Show translation')
         ->assertSee('Hide text')
         ->assertSee('Write a sentence in Portuguese (Brazil).', false)
+        ->assertSee('>Speak</h2>', false)
         ->assertSee('Your audio is transcribed on this server and deleted right after. Nothing is stored.');
 });
 
