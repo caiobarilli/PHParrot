@@ -26,8 +26,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 ## Diferenças do design (validação no Chromium do WSL)
 
 - Entrega 3: a fonte `Segoe UI`/`system-ui` não existe no WSL. O Chromium cai em `Liberation Mono`, então os prints saem em monoespaçada. Medidas, cores e posições batem com os prints do design.
-- Entrega 3: a seção "Textos" e o "Apagar banco" da configuração só entram na entrega 8, como diz o PLANO.
-- Entrega 3: as telas Fala e Escuta mostram "em construção" até as entregas 6 e 7.
+- Entrega 3: a seção "Textos" e o "Apagar banco" da configuração só entram na entrega 8, como diz o PLANO, e as telas Fala e Escuta mostram "em construção" até as entregas 6 e 7.
 - Entrega 4: o botão Pausa cancela a fala (`speechSynthesis.cancel`), porque o design desativa o Play enquanto lê. O Chrome não retoma a fala de forma confiável. O ADR 0006 manda 429 no limite de uso e `max:2000` no texto. A rota responde 429 ao estourar o limite e 422 ao passar de 2000 caracteres, os dois com mensagem do `lang/`. O Inverter também volta ao `gerado` quando o texto é igual à `fonte` do par (e não só o contrário), para não gastar tradução à toa. Só vale no idioma em que o par foi feito. No Chrome 138+ do WSL a `Translator` real existe; a validação usou uma `Translator` falsa (progresso 45%, par indisponível e ausência da API). A Google API só foi validada pelo Pest e pelo teste de JS, porque o `.env` do dev não tem chave. Sem `TrustProxies`, o IP do limite é o do proxy. Fica para o deploy, como diz o ADR 0006. A voz do TTS vive em `resources/js/voz.js`, para Fala e Escuta reusarem. O `lang` do `SpeechSynthesisUtterance` é o da voz escolhida, que sempre é do idioma do texto (por exemplo `en-GB` quando só existe essa para `en-US`). O projeto já tinha runner de JS (`node --test`, usado nos `.mjs` do Husky). A lógica de voz tem `resources/js/voz.test.mjs`, ligada ao `lint-staged`, ao `npm run test:js` e a um passo novo do CI. O `composer gate` não roda esse teste.
 - Entrega 3: as preferências ficam no `localStorage` e são espelhadas no cookie `phparrot_prefs`, sem criptografia, só para o servidor montar a interface no idioma certo.
 - Entrega 5: o `sha1sum` do `base` e do `small` bate com o models/README (SHA-1, 40 caracteres), e o build confere o commit `d1be6fde` da tag v1.9.5. `duration` e `language` por requisição existem no `server.cpp` (linhas 490 e 558). O build do whisper usa `-DGGML_NATIVE=OFF` com AVX2, FMA e F16C ligados, para a imagem rodar em outra CPU. Uma CPU sem AVX2 não roda a imagem.
@@ -55,6 +54,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 ## Melhorias
 
 - Entrega 1: setup em um comando: feito (rodada 16). `bin/phparrot setup` sobe e confere tudo, sem tocar no `.env` existente, e `bin/phparrot dev` roda o Vite no `phparrot-node` e o `pail` no `phparrot-php`. A fila fica `sync`, sem migration de `jobs`.
-- Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config).
-- Entrega 9: o `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI). Fixar `ubuntu-24.04` se algo quebrar.
+- Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config). O `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI); fixar `ubuntu-24.04` se algo quebrar.
+- Entrega 15: rascunho do grilling em `.ai/rascunho-ia.md` (rodada 19), com o contrato do Ollama, três provedores pagos, o custo de um tema e 8 perguntas abertas.
+- Entrega 16: rascunho do grilling em `.ai/rascunho-deploy.md` (rodada 19), com Tunnel, deploy puxado pela VM, ruleset, backup por `VACUUM INTO` e 9 perguntas abertas.
 - Dependabot: Renovate para o whisper.cpp (tag, commit e hash do modelo), se a atualização manual pesar. Auto-merge de patch e digest depois da proteção da `main`.
