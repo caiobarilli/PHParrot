@@ -21,7 +21,7 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 | 13 | Conteúdo dos 10 temas | feito (fábrica `2026.11.2`, 900 itens; rodadas 13 a 13c e 14) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
 | 14 | Teste da Google API | pendente (guia `docs/google-api.md` e `traducao:testar-google` prontos na rodada 17) | Chave real, restrita, com cota e alerta no console |
 | 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
-| 16 | Deploy | pendente | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
+| 16 | Deploy | pendente (rodada 20: `ambiente` dev/prod, log com rotação, `banco:backup` e `banco:restaurar`) | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
 
 ## Diferenças do design (validação no Chromium do WSL)
 

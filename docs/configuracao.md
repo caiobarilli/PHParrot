@@ -23,6 +23,8 @@ Depois de mudar o `.env`, rode `docker exec phparrot-php php artisan config:clea
 | `PHPARROT_TOKEN` | Token da gestão de textos. Vazio ou com menos de 32 caracteres, a gestão fica desligada. | vazio |
 | `PHPARROT_ENTRAR_POR_MINUTO` | Tentativas no `entrar` por minuto, por IP. | `5` |
 | `PHPARROT_ENTRAR_POR_HORA` | Tentativas no `entrar` por hora, no total. | `20` |
+| `LOG_STACK` e `LOG_DAILY_DAYS` | Log do Laravel num arquivo por dia em `storage/logs`, apagado depois de N dias. | `daily` e `14` |
+| `PHPARROT_BACKUP_PASTA` | Pasta dos backups do SQLite. Não pode ficar dentro de `public/`. | `storage/backups` |
 
 Os demais valores são os padrões do Laravel. O app não envia e-mail e não usa fila (`QUEUE_CONNECTION=sync`): não há tabela `jobs`, e um `.env` antigo com `database` faz o `queue:listen` falhar com `no such table: jobs`.
 
@@ -32,6 +34,7 @@ Passe com `-var`, por exemplo `terraform -chdir=terraform apply -var app_port=80
 
 | Variável | Para que serve | Padrão |
 |---|---|---|
+| `ambiente` | `dev` ou `prod`; qualquer outro valor é recusado. Veja "Dev e produção". | `dev` |
 | `app_port` | Porta do app no host. | `8090` |
 | `vite_port` | Porta do servidor de desenvolvimento do Vite. | `5174` |
 | `whisper_modelo` | Modelo do Whisper embutido na imagem: `base` ou `small`. O `small` acerta mais em português, mas é cerca de 3,7 vezes mais lento. | `base` |
@@ -39,6 +42,36 @@ Passe com `-var`, por exemplo `terraform -chdir=terraform apply -var app_port=80
 | `project_path` | Pasta do projeto montada nos containers. Vazia, usa a pasta do próprio repositório. | vazio |
 
 O `terraform.tfvars.example` mostra o formato. Se copiá-lo, ajuste o `project_path` ou apague a linha.
+
+## Dev e produção
+
+`bin/phparrot setup` sobe o dev, e `bin/phparrot setup prod` sobe a produção, pela variável `ambiente` do Terraform.
+
+| | `dev` | `prod` |
+|---|---|---|
+| `phparrot-node` e a porta do Vite | sim | não |
+| nginx publicado em | todas as interfaces | só `127.0.0.1`, para o túnel ou o proxy |
+| `composer install` | com as dependências de dev | `--no-dev --optimize-autoloader` |
+| Assets | `npm ci` e `npm run build` no `phparrot-node` | não roda npm: `public/build` precisa chegar pronto, e o setup para sem ele |
+| Caches do Laravel | limpos | `config:cache`, `route:cache` e `view:cache` |
+
+- **O que vem do `.env`:** `APP_ENV=production` e `APP_DEBUG=false` ficam no `.env` da produção, nunca no Terraform. O `setup prod` confere os dois pelo `artisan about` e para se não estiverem assim. Vale também pôr `LOG_LEVEL=warning`.
+- **Logs:** todos os containers gravam em `json-file`, com rotação de 10 MB e 3 arquivos, no máximo 30 MB cada. O Whisper continua sem log (`log_driver = "none"`, ADR 0007).
+- **Proteção:** o setup nunca aplica um plano que destrói ou recria containers. Por isso, `setup prod` numa máquina de dev para no Terraform, antes de mexer no `vendor`.
+
+## Backup e restauração
+
+- **Backup:** `docker exec phparrot-php php artisan banco:backup`.
+  - Copia o SQLite com `VACUUM INTO`, que é transacional e pode rodar com o app no ar.
+  - Grava primeiro um `.parcial`, confere com `PRAGMA integrity_check` e só então dá o nome `phparrot-AAAAMMDD-HHMMSS.sqlite`.
+  - Nunca sobrescreve um backup nem o banco.
+- **Retenção:** cada backup mantém a cópia mais nova de cada um dos 7 últimos dias e de cada uma das 4 últimas semanas, e apaga as outras. Só mexe nos arquivos `phparrot-*.sqlite`.
+- **Restauração:** `docker exec -it phparrot-php php artisan banco:restaurar storage/backups/phparrot-....sqlite`.
+  - Antes de qualquer troca, confere se o arquivo é SQLite, passa no `integrity_check` e tem a tabela `migrations`. Se não passar, o banco não muda.
+  - Pede confirmação; `--force` pula a pergunta.
+  - Guarda o banco atual como `antes-da-restauracao-....sqlite`, que a retenção não apaga.
+  - Põe o app em manutenção durante a troca e troca o arquivo de uma vez.
+- **O que fica para o deploy:** o agendamento e a cópia para fora da máquina. O comando já pode entrar na agenda (`Schedule::command('banco:backup')->daily()`).
 
 ## Chave do Google
 

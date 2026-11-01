@@ -4,6 +4,13 @@ Teto: 120 linhas
 
 Prepara o grilling da entrega 16. Nada daqui está implementado. O crescimento além de uma VM (GPU, réplicas, PostgreSQL e Redis, k3s) está em `docs/escala.md` e não se repete aqui. As fontes foram lidas em 01/11/2026 e estão no fim.
 
+**Feito na rodada 20** (vale para qualquer resposta do grilling):
+- a variável `ambiente` (`dev`/`prod`) e o `setup prod`;
+- o log com rotação;
+- `banco:backup` e `banco:restaurar` (pontos 3, 7 e 9).
+
+**Falta:** o agendamento e a cópia externa do backup.
+
 ## Plano atual
 
 Uma VM Linux no Hyper-V, com domínio próprio atrás da Cloudflare, deploy automático pelo GitHub Actions e a `main` protegida, exigindo o CI verde.
