@@ -74,7 +74,7 @@ final readonly class Preferencias
 
     public function par(): string
     {
-        return $this->nativa->sigla().' → '.$this->treino->sigla();
+        return $this->nativa->codigo().' → '.$this->treino->codigo();
     }
 
     /**

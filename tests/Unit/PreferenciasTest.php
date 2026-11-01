@@ -45,7 +45,7 @@ it('cai no padrão quando o cookie é lixo', function (mixed $bruto): void {
 it('recusa a mesma língua nos dois campos', function (): void {
     $prefs = Preferencias::doCookie('{"nativa":"en","treino":"en"}', ativos());
 
-    expect($prefs->par())->toBe('PT → EN');
+    expect($prefs->par())->toBe('PT-BR → EN');
 });
 
 it('recusa idioma que não está ativo', function (): void {
@@ -66,7 +66,7 @@ it('recusa nível e tradução inválidos', function (array $dados): void {
 ]);
 
 it('mostra o par ativo', function (): void {
-    expect(Preferencias::padrao()->par())->toBe('PT → EN');
+    expect(Preferencias::padrao()->par())->toBe('PT-BR → EN');
 });
 
 it('lê o tema do cookie e troca slug desconhecido por Todos', function (mixed $tema, ?Tema $esperado): void {

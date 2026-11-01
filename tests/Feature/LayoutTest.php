@@ -15,7 +15,7 @@ it('mostra a home com o título e as quatro entradas', function (): void {
 });
 
 it('não mostra a barra superior na home', function (): void {
-    get('/')->assertOk()->assertDontSee('PT → EN');
+    get('/')->assertOk()->assertDontSee('PT-BR → EN');
 });
 
 it('mostra as abas, o par ativo e a engrenagem nas outras telas', function (string $rota): void {
@@ -23,7 +23,7 @@ it('mostra as abas, o par ativo e a engrenagem nas outras telas', function (stri
         ->assertSee('Leitura')
         ->assertSee('Fala')
         ->assertSee('Escuta')
-        ->assertSee('PT → EN')
+        ->assertSee('PT-BR → EN')
         ->assertSee('aria-label="Configuração"', false);
 })->with(['/leitura', '/fala', '/escuta', '/configuracao']);
 
@@ -32,7 +32,7 @@ it('a barra segue a ordem par de idiomas, Leitura, Fala, Escuta e engrenagem', f
     $inicio = (int) strpos($html, '<header');
     $barra = substr($html, $inicio, (int) strpos($html, '</header>') - $inicio);
 
-    expect($barra)->toMatch('/PT → EN.*'.preg_quote(route('leitura'), '/').'.*'.preg_quote(route('fala'), '/').'.*'.preg_quote(route('escuta'), '/').'.*aria-label="Configuração"/s');
+    expect($barra)->toMatch('/PT-BR → EN.*'.preg_quote(route('leitura'), '/').'.*'.preg_quote(route('fala'), '/').'.*'.preg_quote(route('escuta'), '/').'.*aria-label="Configuração"/s');
 })->with(['/leitura', '/fala', '/escuta', '/configuracao']);
 
 it('marca a aba da tela atual', function (): void {
@@ -44,7 +44,7 @@ it('marca a aba da tela atual', function (): void {
 it('mostra o par ativo do cookie na barra', function (): void {
     withUnencryptedCookie('phparrot_prefs', '{"nativa":"en","treino":"pt-BR"}');
 
-    get('/fala')->assertOk()->assertSee('EN → PT');
+    get('/fala')->assertOk()->assertSee('EN → PT-BR');
 });
 
 it('entrega a configuração para o JavaScript', function (): void {

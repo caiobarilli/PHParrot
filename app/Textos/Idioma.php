@@ -31,6 +31,11 @@ enum Idioma: string
         return implode(', ', array_map(fn (self $idioma): string => $idioma->nome(), self::deCodigos(array_values($codigos))));
     }
 
+    public function codigo(): string
+    {
+        return strtoupper($this->value);
+    }
+
     public function sigla(): string
     {
         return strtoupper(explode('-', $this->value)[0]);

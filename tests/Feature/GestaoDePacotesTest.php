@@ -117,7 +117,7 @@ it('substituir o ativo mostra os idiomas que entram e saem e, confirmado, manté
     app(Pacotes::class)->importar(Pacote::doArray(comidaBruta()), false);
     app(Pacotes::class)->ativar('comida-1');
     $prefs = (string) json_encode(['nativa' => 'pt-BR', 'treino' => 'es']);
-    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT → ES');
+    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT-BR → ES');
 
     $novo = PacoteDeTeste::pacote(PacoteDeTeste::temaCompleto(Tema::Comida), 'comida-1');
     $novo['pacote']['nome'] = 'Comida nova';
@@ -140,7 +140,7 @@ it('substituir o ativo mostra os idiomas que entram e saem e, confirmado, manté
         ->and(app(Catalogo::class)->idiomas())->toBe(['en', 'pt-BR']);
 
     app()->forgetScopedInstances();
-    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT → EN')->assertDontSee('PT → ES');
+    withUnencryptedCookie('phparrot_prefs', $prefs)->get('/fala')->assertSee('PT-BR → EN')->assertDontSee('PT-BR → ES');
 });
 
 it('cancelar a substituição do ativo não troca nada, e confirmar sem pendência avisa que expirou', function (): void {

@@ -53,10 +53,10 @@
 <header class="mx-auto max-w-[760px] px-4 sm:px-6 pt-5 sm:pt-8 flex flex-wrap items-center gap-3">
   <a href="{{ route('inicio') }}" class="text-[17px] font-semibold tracking-tight mr-auto rounded-sm">{{ config('app.name') }}</a>
   <a href="{{ route('configuracao') }}#idiomas" class="tag hover:underline" title="{{ __('nav.par_ativo') }}"><span class="sr-only">{{ __('nav.idiomas') }}</span>{{ $prefs->par() }}</a>
-  <div class="order-last w-full sm:order-none sm:w-auto flex items-center gap-1.5 sm:gap-2">
-    <nav aria-label="{{ __('nav.telas') }}" class="flex flex-1 min-w-0 gap-1.5 sm:gap-2">
+  <div class="order-last w-full md:order-none md:w-auto flex items-center gap-1.5 sm:gap-2">
+    <nav aria-label="{{ __('nav.telas') }}" class="flex flex-1 md:flex-none min-w-0 gap-1.5 sm:gap-2">
       @foreach ($telas as $rota => $icone)
-      <a href="{{ route($rota) }}" class="btn btn-sm btn-ghost btn-aba flex-1 sm:flex-none" @if ($tela === $rota) aria-current="page" @endif><x-icone :nome="$icone" />{{ __('nav.'.$rota) }}</a>
+      <a href="{{ route($rota) }}" class="btn btn-sm btn-ghost btn-aba flex-1 md:flex-none" @if ($tela === $rota) aria-current="page" @endif><x-icone :nome="$icone" />{{ __('nav.'.$rota) }}</a>
       @endforeach
     </nav>
     <a href="{{ route('configuracao') }}" class="btn btn-sm btn-ghost btn-icone" aria-label="{{ __('nav.configuracao') }}" title="{{ __('nav.configuracao') }}" @if ($tela === 'configuracao') aria-current="page" @endif><x-icone nome="engrenagem" /></a>

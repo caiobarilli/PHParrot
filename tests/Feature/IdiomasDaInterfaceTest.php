@@ -57,7 +57,7 @@ it('mostra a interface em português por padrão', function (): void {
 it('troca a interface pela língua nativa do cookie', function (): void {
     withUnencryptedCookie('phparrot_prefs', '{"nativa":"en","treino":"pt-BR","nivel":1,"traducao":"chrome"}');
 
-    get('/configuracao')->assertOk()->assertSee('Native language')->assertSee('lang="en"', false)->assertSee('EN → PT');
+    get('/configuracao')->assertOk()->assertSee('Native language')->assertSee('lang="en"', false)->assertSee('EN → PT-BR');
 });
 
 it('ignora cookie com idioma inativo', function (): void {

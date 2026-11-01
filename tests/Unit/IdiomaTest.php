@@ -13,6 +13,12 @@ it('monta a sigla a partir do código', function (Idioma $idioma, string $sigla)
     [Idioma::Ru, 'RU'],
 ]);
 
+it('o código completo vai em maiúsculas, sem cortar a região', function (): void {
+    expect(Idioma::PtBr->codigo())->toBe('PT-BR')
+        ->and(Idioma::En->codigo())->toBe('EN')
+        ->and(Idioma::Ru->codigo())->toBe('RU');
+});
+
 it('usa a voz regional de cada idioma', function (): void {
     expect(Idioma::En->voz())->toBe('en-US')
         ->and(Idioma::PtBr->voz())->toBe('pt-BR')
