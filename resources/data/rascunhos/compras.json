@@ -1,10 +1,734 @@
 {
-  "formato": 2,
-  "pacote": {"slug": "rascunho-compras", "nome": "Rascunho: Compras", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
-  "itens": [
-    {"id": "compras-n2-t01", "tema": "compras", "nivel": 2, "tipo": "texto", "en": "The supermarket is near my house. I go there twice a week. I usually buy fruit, bread and milk.", "pt-BR": "O supermercado fica perto da minha casa. Eu vou lá duas vezes por semana. Eu geralmente compro frutas, pão e leite."},
-    {"id": "compras-n2-f01", "tema": "compras", "nivel": 2, "tipo": "frase", "en": "How much is this shirt?", "pt-BR": "Quanto custa esta camisa?"},
-    {"id": "compras-n3-f01", "tema": "compras", "nivel": 3, "tipo": "frase", "en": "Where did you buy that jacket?", "pt-BR": "Onde você comprou essa jaqueta?"},
-    {"id": "compras-n7-f01", "tema": "compras", "nivel": 7, "tipo": "frase", "en": "The package was delivered this morning.", "pt-BR": "O pacote foi entregue hoje de manhã."}
-  ]
+    "formato": 2,
+    "pacote": {
+        "slug": "rascunho-compras",
+        "nome": "Rascunho: Compras",
+        "versao": "2026.11.1",
+        "idiomas": [
+            "en",
+            "pt-BR"
+        ]
+    },
+    "itens": [
+        {
+            "id": "compras-n1-t01",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "The market is near my house. It opens at 8. I buy fruit and bread there. The apples are very good.",
+            "pt-BR": "O mercado fica perto da minha casa. Ele abre às 8h. Lá eu compro fruta e pão. As maçãs são muito boas."
+        },
+        {
+            "id": "compras-n1-t02",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "I need new shoes. My old shoes are small. The black shoes are nice. But they are expensive.",
+            "pt-BR": "Preciso de sapatos novos. Meus sapatos velhos estão pequenos. Os sapatos pretos são bonitos. Mas são caros."
+        },
+        {
+            "id": "compras-n1-t03",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "There is a new shop here. It sells clothes and bags. I like the red bag. It is 20.",
+            "pt-BR": "Tem uma loja nova aqui. Ela vende roupas e bolsas. Eu gosto da bolsa vermelha. Ela custa 20."
+        },
+        {
+            "id": "compras-n1-f01",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "How much is this?",
+            "pt-BR": "Quanto custa isso?"
+        },
+        {
+            "id": "compras-n1-f02",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Can I pay by card?",
+            "pt-BR": "Posso pagar no cartão?"
+        },
+        {
+            "id": "compras-n1-f03",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "It is too expensive.",
+            "pt-BR": "Está muito caro."
+        },
+        {
+            "id": "compras-n1-f04",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "I'm just looking, thanks.",
+            "pt-BR": "Só estou olhando, obrigado."
+        },
+        {
+            "id": "compras-n1-f05",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Is there a bigger size?",
+            "pt-BR": "Tem num tamanho maior?"
+        },
+        {
+            "id": "compras-n1-f06",
+            "tema": "compras",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "The shop closes at 9.",
+            "pt-BR": "A loja fecha às 9h."
+        },
+        {
+            "id": "compras-n2-t01",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "The supermarket is near my house. I go there twice a week. I usually buy fruit, bread and milk. Today I am buying eggs too. I like shopping in the morning.",
+            "pt-BR": "O supermercado fica perto da minha casa. Vou lá duas vezes por semana. Normalmente compro fruta, pão e leite. Hoje também estou comprando ovos. Gosto de fazer compras de manhã."
+        },
+        {
+            "id": "compras-n2-t02",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "My sister and I are shopping. She is trying on a blue dress. I am waiting next to the mirror. The dress is on sale today. She likes it very much.",
+            "pt-BR": "Minha irmã e eu estamos fazendo compras. Ela está provando um vestido azul. Eu estou esperando do lado do espelho. O vestido está em promoção hoje. Ela gostou muito dele."
+        },
+        {
+            "id": "compras-n2-t03",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "Take a cart at the door. The milk is behind the bread. Pay at the checkout on the left. Don't forget your bags. The store closes at 10.",
+            "pt-BR": "Pegue um carrinho na entrada. O leite fica atrás do pão. Pague no caixa da esquerda. Não esqueça suas sacolas. A loja fecha às 10h."
+        },
+        {
+            "id": "compras-n2-f01",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "How much is this shirt?",
+            "pt-BR": "Quanto custa essa camisa?"
+        },
+        {
+            "id": "compras-n2-f02",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "I am looking for a jacket.",
+            "pt-BR": "Estou procurando uma jaqueta."
+        },
+        {
+            "id": "compras-n2-f03",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Pay at the next counter, please.",
+            "pt-BR": "Pode pagar no próximo balcão, por favor."
+        },
+        {
+            "id": "compras-n2-f04",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Do you like shopping online?",
+            "pt-BR": "Você gosta de comprar pela internet?"
+        },
+        {
+            "id": "compras-n2-f05",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "The shoes are on the second floor.",
+            "pt-BR": "Os sapatos ficam no segundo andar."
+        },
+        {
+            "id": "compras-n2-f06",
+            "tema": "compras",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "I'm waiting for the cashier.",
+            "pt-BR": "Estou esperando o caixa."
+        },
+        {
+            "id": "compras-n3-t01",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Last weekend I bought a new jacket. It was cheaper than my old one. The shop assistant was very helpful. She found my size in the back. I wore the jacket on Monday. Tomorrow I'm going to buy matching shoes.",
+            "pt-BR": "No fim de semana passado, comprei uma jaqueta nova. Ela foi mais barata que a antiga. A vendedora foi muito prestativa. Ela achou o meu tamanho no estoque. Usei a jaqueta na segunda. Amanhã vou comprar sapatos que combinem com ela."
+        },
+        {
+            "id": "compras-n3-t02",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "I ordered a lamp online last week. It was cheaper than in the shops. The package arrived late yesterday afternoon. The lamp inside was broken. I called the store this morning. They're going to send a new one.",
+            "pt-BR": "Semana passada, comprei uma luminária pela internet. Saiu mais barata do que nas lojas. O pacote chegou ontem no fim da tarde. A luminária veio quebrada. Liguei para a loja hoje de manhã. Eles vão mandar outra."
+        },
+        {
+            "id": "compras-n3-t03",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "We went to the market on Saturday. The tomatoes were cheaper than last week. We bought a lot of fruit. Then we stopped for a coffee. The bags were heavier than we thought. Next week we're going to take the car.",
+            "pt-BR": "Fomos à feira no sábado. Os tomates estavam mais baratos que na semana passada. Compramos muita fruta. Depois paramos para tomar um café. As sacolas estavam mais pesadas do que a gente imaginava. Semana que vem, vamos de carro."
+        },
+        {
+            "id": "compras-n3-f01",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Where did you buy that jacket?",
+            "pt-BR": "Onde você comprou essa jaqueta?"
+        },
+        {
+            "id": "compras-n3-f02",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Do you have a bigger size?",
+            "pt-BR": "Vocês têm esse num tamanho maior?"
+        },
+        {
+            "id": "compras-n3-f03",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I'm going to pay in cash today.",
+            "pt-BR": "Hoje vou pagar em dinheiro."
+        },
+        {
+            "id": "compras-n3-f04",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "This one is cheaper than that one.",
+            "pt-BR": "Esse aqui é mais barato que aquele."
+        },
+        {
+            "id": "compras-n3-f05",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I bought these shoes here last week.",
+            "pt-BR": "Comprei esses sapatos aqui na semana passada."
+        },
+        {
+            "id": "compras-n3-f06",
+            "tema": "compras",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Did you keep the receipt from yesterday?",
+            "pt-BR": "Você guardou a nota de ontem?"
+        },
+        {
+            "id": "compras-n4-t01",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "I always make a list before I go shopping. It saves time, and I never buy too much. This week I have to buy rice and soap. The big supermarket is the cheapest in town. But it's always very busy on Saturdays. So I will go on Friday evening.",
+            "pt-BR": "Sempre faço uma lista antes de ir às compras. Assim economizo tempo e nunca compro demais. Esta semana preciso comprar arroz e sabonete. O supermercado grande é o mais barato da cidade. Mas aos sábados ele está sempre muito cheio. Então vou na sexta à noite."
+        },
+        {
+            "id": "compras-n4-t02",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "Online shopping is the easiest way to buy shoes. I usually order two sizes because I'm never sure. Then I send the wrong pair back. Returns are free, so it's not a problem. This time the delivery driver will come on Tuesday.",
+            "pt-BR": "Comprar sapatos pela internet é o jeito mais fácil. Normalmente peço dois tamanhos, porque nunca tenho certeza. Depois devolvo o par errado. A devolução é grátis, então não tem problema. Desta vez, a entregadora vai vir na terça."
+        },
+        {
+            "id": "compras-n4-t03",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "My local shop has the friendliest cashier. He always says hello and asks about my day. Sometimes the line is long because of that. I don't mind, so I usually wait. I think I'll bring him some cookies tomorrow.",
+            "pt-BR": "A loja do meu bairro tem o caixa mais simpático que existe. Ele sempre dá oi e pergunta como foi o meu dia. Às vezes a fila fica grande por causa disso. Eu não me importo, então costumo esperar. Acho que amanhã vou levar uns biscoitos para ele."
+        },
+        {
+            "id": "compras-n4-f01",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "Will you deliver it to my house on Saturday?",
+            "pt-BR": "Vocês entregam lá em casa no sábado?"
+        },
+        {
+            "id": "compras-n4-f02",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I have to return these pants today.",
+            "pt-BR": "Tenho que devolver essa calça hoje."
+        },
+        {
+            "id": "compras-n4-f03",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "This is the cheapest phone in the store.",
+            "pt-BR": "Esse é o celular mais barato da loja."
+        },
+        {
+            "id": "compras-n4-f04",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I usually pay by card because it's faster.",
+            "pt-BR": "Normalmente pago no cartão, porque é mais rápido."
+        },
+        {
+            "id": "compras-n4-f05",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "It's on sale, so I'll take two.",
+            "pt-BR": "Está em promoção, então vou levar dois."
+        },
+        {
+            "id": "compras-n4-f06",
+            "tema": "compras",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "Do I have to keep the receipt?",
+            "pt-BR": "Preciso guardar a nota?"
+        },
+        {
+            "id": "compras-n5-t01",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "I have just bought a coat that was half price. I was walking home when I saw the sale sign. The assistant who helped me was very patient. I tried on five coats before I found this one. If it gets cold this weekend, I will wear it.",
+            "pt-BR": "Acabei de comprar um casaco pela metade do preço. Eu estava voltando para casa quando vi a placa de liquidação. Quem me atendeu foi muito paciente. Provei cinco casacos até achar este. Se esfriar neste fim de semana, vou usá-lo."
+        },
+        {
+            "id": "compras-n5-t02",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "Have you ever returned something without a receipt? Last week I found a shirt that I never wore. The tags were still on it. I took it back, but I had no receipt. Luckily, the store gave me a gift card instead. If you keep your receipts, returns will be much easier.",
+            "pt-BR": "Você já devolveu alguma coisa sem a nota? Semana passada, achei uma camisa que eu nunca tinha usado. Ela ainda estava com as etiquetas. Levei de volta à loja, mas estava sem a nota. Por sorte, a loja me deu um vale-compras no lugar. Se você guardar as notas, trocar as coisas fica muito mais fácil."
+        },
+        {
+            "id": "compras-n5-t03",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "Our neighborhood has a small market which opens every Sunday. I've been there almost every week this year. The farmers who sell there are very friendly. Last Sunday it was raining, but people were still shopping. If you arrive early, you will get the best vegetables. If you arrive late, things are often cheaper.",
+            "pt-BR": "O nosso bairro tem uma feirinha que acontece todo domingo. Fui lá quase toda semana este ano. O pessoal que vende lá é muito simpático. Domingo passado estava chovendo, mas as pessoas continuavam fazendo compras. Se você chegar cedo, pega as melhores verduras. Se chegar tarde, muitas vezes as coisas estão mais baratas."
+        },
+        {
+            "id": "compras-n5-f01",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Have you seen the jacket that was in the window?",
+            "pt-BR": "Você viu a jaqueta que estava na vitrine?"
+        },
+        {
+            "id": "compras-n5-f02",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "If you buy two, you'll get one free.",
+            "pt-BR": "Se você comprar dois, ganha mais um de graça."
+        },
+        {
+            "id": "compras-n5-f03",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I was paying when my card stopped working.",
+            "pt-BR": "Eu estava pagando quando meu cartão parou de funcionar."
+        },
+        {
+            "id": "compras-n5-f04",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "The cashier who helped me forgot my receipt.",
+            "pt-BR": "A moça do caixa que me atendeu esqueceu de me dar a nota."
+        },
+        {
+            "id": "compras-n5-f05",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I've never bought clothes online before, have you?",
+            "pt-BR": "Eu nunca comprei roupa pela internet. E você?"
+        },
+        {
+            "id": "compras-n5-f06",
+            "tema": "compras",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Is this the line for people who are returning items?",
+            "pt-BR": "Essa é a fila para quem vai fazer devolução?"
+        },
+        {
+            "id": "compras-n6-t01",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "I used to buy all my clothes in big shopping malls. Now most of them are ordered online and delivered to my door. It's convenient, but I miss trying things on in the store. Last month a pair of jeans was sent in the wrong size. The website said the exchange would take two weeks. If I had more free time, I would shop in person again.",
+            "pt-BR": "Antes eu comprava todas as minhas roupas em shoppings grandes. Hoje, a maioria é comprada pela internet e entregue na minha porta. É prático, mas sinto falta de provar as coisas na loja. No mês passado, uma calça jeans veio no tamanho errado. O site disse que a troca levaria duas semanas. Se eu tivesse mais tempo livre, voltaria a comprar nas lojas."
+        },
+        {
+            "id": "compras-n6-t02",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "My roommate and I have a weekly budget for groceries. Everything we buy is written down in a notebook on the fridge. Last week she said we were spending too much on snacks. She was right, so we made a new rule together. Snacks are only bought when they're on sale. If we didn't have a budget, we would spend twice as much.",
+            "pt-BR": "Minha colega de apartamento e eu temos um orçamento semanal para o mercado. Tudo o que compramos é anotado num caderno na geladeira. Semana passada, ela disse que a gente estava gastando demais com petiscos. Ela tinha razão, então fizemos uma regra nova em conjunto. Petiscos só são comprados quando estão em promoção. Se não tivéssemos um orçamento, gastaríamos o dobro."
+        },
+        {
+            "id": "compras-n6-t03",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "The small shoe store on my corner was opened forty years ago. The owner used to make shoes by hand in the back room. These days he mostly sells shoes and repairs old pairs. He told me that people rarely fix their shoes anymore. If more people repaired their shoes, they would save a lot. I would go there even if it were more expensive.",
+            "pt-BR": "A pequena sapataria da minha esquina foi aberta há quarenta anos. O dono fazia sapatos à mão no quartinho dos fundos. Hoje em dia, ele basicamente vende sapatos e conserta pares antigos. Ele me contou que quase ninguém manda consertar sapato hoje em dia. Se mais gente consertasse os sapatos, economizaria bastante. Eu iria lá mesmo se fosse mais caro."
+        },
+        {
+            "id": "compras-n6-f01",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Could I pay half in cash and half by card?",
+            "pt-BR": "Posso pagar metade em dinheiro e metade no cartão?"
+        },
+        {
+            "id": "compras-n6-f02",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "If it were a little cheaper, I would buy it right now.",
+            "pt-BR": "Se estivesse um pouco mais barato, eu levaria agora mesmo."
+        },
+        {
+            "id": "compras-n6-f03",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "The assistant said the shoes would arrive on Thursday.",
+            "pt-BR": "O vendedor disse que os sapatos chegariam na quinta."
+        },
+        {
+            "id": "compras-n6-f04",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Was this item marked down, or is it the normal price?",
+            "pt-BR": "Isso aqui teve desconto ou é o preço normal mesmo?"
+        },
+        {
+            "id": "compras-n6-f05",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "We used to come here every Saturday.",
+            "pt-BR": "A gente vinha aqui todo sábado."
+        },
+        {
+            "id": "compras-n6-f06",
+            "tema": "compras",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "My order was shipped yesterday, but it hasn't arrived yet.",
+            "pt-BR": "Meu pedido foi enviado ontem, mas ainda não chegou."
+        },
+        {
+            "id": "compras-n7-t01",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "When the package finally arrived, I opened it right away. However, the sweater inside wasn't the one I had ordered. I had chosen dark green, but this one was bright orange. Someone at the warehouse must have mixed up two orders. I filled out the return form and sent it back the same day. Although the refund took almost two weeks, the process was easy. In the end, I found the green sweater at a local shop.",
+            "pt-BR": "Quando o pacote finalmente chegou, abri na mesma hora. Só que o suéter que veio não era o que eu tinha pedido. Eu tinha escolhido verde-escuro, mas aquele era laranja berrante. Alguém no depósito deve ter trocado dois pedidos. Preenchi o formulário de devolução e mandei de volta no mesmo dia. Embora o reembolso tenha levado quase duas semanas, o processo foi fácil. No fim, achei o suéter verde numa loja do bairro."
+        },
+        {
+            "id": "compras-n7-t02",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "My coworker spent weeks comparing laptops before she finally picked one. She had read dozens of reviews and checked prices every day. Although the model she wanted was expensive, she refused to settle for less. Then, two days after she paid, the price dropped by 15 percent. She might have waited longer, but there was no way to know. However, she called the store and they gave her the difference back. I had never heard of that, so now I always ask.",
+            "pt-BR": "Minha colega de trabalho passou semanas comparando notebooks até finalmente escolher um. Ela tinha lido dezenas de avaliações e conferia os preços todo dia. Embora o modelo que ela queria fosse caro, ela se recusou a se contentar com menos. Aí, dois dias depois de ela pagar, o preço caiu 15%. Ela poderia ter esperado mais, mas não tinha como saber. Mesmo assim, ela ligou para a loja, e eles devolveram a diferença. Eu nunca tinha ouvido falar disso, então agora sempre pergunto."
+        },
+        {
+            "id": "compras-n7-t03",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "Last Saturday I went to a big sale with my brother. We had planned to get there early, but the bus was late. By the time we got there, the best deals had already gone. People must have lined up before the doors opened at 8. My brother tried on some boots, although they were too small. He bought them anyway, which he might have regretted later. However, I left with nothing but a coffee and sore feet.",
+            "pt-BR": "No sábado passado, fui a uma grande liquidação com meu irmão. A gente tinha planejado chegar cedo, mas o ônibus atrasou. Quando chegamos, as melhores ofertas já tinham acabado. O pessoal deve ter feito fila antes de as portas abrirem, às 8h. Meu irmão provou umas botas, embora estivessem pequenas. Ele levou mesmo assim, e talvez tenha se arrependido depois. Já eu saí de lá só com um café e os pés doendo."
+        },
+        {
+            "id": "compras-n7-f01",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "The package was delivered this morning while I was out.",
+            "pt-BR": "O pacote foi entregue hoje de manhã, enquanto eu não estava em casa."
+        },
+        {
+            "id": "compras-n7-f02",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "I think I might have left my card at the register.",
+            "pt-BR": "Acho que posso ter esquecido meu cartão no caixa."
+        },
+        {
+            "id": "compras-n7-f03",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Could you help me find this in a smaller size, please?",
+            "pt-BR": "Você pode me ajudar a achar isso num tamanho menor, por favor?"
+        },
+        {
+            "id": "compras-n7-f04",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Although it's on sale, I don't think I really need it.",
+            "pt-BR": "Mesmo estando em promoção, acho que não preciso disso de verdade."
+        },
+        {
+            "id": "compras-n7-f05",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Someone must have taken my cart while I wasn't looking.",
+            "pt-BR": "Alguém deve ter pegado meu carrinho enquanto eu estava de costas."
+        },
+        {
+            "id": "compras-n7-f06",
+            "tema": "compras",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "I'd already paid by the time I noticed the discount.",
+            "pt-BR": "Quando reparei no desconto, eu já tinha pago."
+        },
+        {
+            "id": "compras-n8-t01",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "I've been looking for a decent winter coat for almost a month. Every store I've visited has either the right color or the right size, never both. Last week I finally found the perfect one, but I hesitated. If I had bought it on the spot, I wouldn't still be searching. When I went back the next day, it had already been sold. The shop assistant said another one could be ordered from the warehouse. However, it might take three weeks, and winter will be over by then. I really wish I trusted my instincts more when I'm shopping.",
+            "pt-BR": "Faz quase um mês que estou procurando um casaco de inverno decente. Toda loja que visitei tem a cor certa ou o tamanho certo, nunca os dois. Semana passada, finalmente achei o casaco perfeito, mas hesitei. Se eu tivesse comprado na hora, não estaria procurando até agora. Quando voltei no dia seguinte, ele já tinha sido vendido. A vendedora disse que dava para encomendar outro do depósito. Só que isso poderia levar três semanas, e até lá o inverno já vai ter acabado. Bem que eu podia confiar mais na minha intuição na hora de comprar."
+        },
+        {
+            "id": "compras-n8-t02",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "Our family has been trying to spend less on food lately. We've been planning meals for the week and shopping only once. A list is written on Sunday, and nothing else should be added. At first, the kids complained that there were never any snacks. If we hadn't started tracking our receipts, we wouldn't have noticed the waste. We'd been throwing away almost a third of what we bought. I wish we had started this years ago, honestly. The money we've saved will be used for a short trip next summer.",
+            "pt-BR": "A nossa família tem tentado gastar menos com comida ultimamente. Temos planejado as refeições da semana e feito compras uma vez só. A lista é escrita no domingo, e nada mais deve ser acrescentado. No começo, as crianças reclamavam que nunca tinha nada para beliscar. Se não tivéssemos começado a controlar as notas, não teríamos percebido o desperdício. A gente vinha jogando fora quase um terço do que comprava. Sinceramente, bem que a gente podia ter começado isso anos atrás. O dinheiro que economizamos vai ser usado numa viagem curta no próximo verão."
+        },
+        {
+            "id": "compras-n8-t03",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "The delivery driver who brings our packages has been working this route for years. He knows every dog on the street and which neighbors are never home. For years we've been leaving him a cold drink on hot afternoons. Last week a box was left at the wrong house by a new driver. It should have been delivered to us, but it ended up next door. If our neighbor hadn't been home, we would have lost it. Packages that can't be delivered must be taken back to the depot. I wish every driver were as careful as ours.",
+            "pt-BR": "O entregador que traz nossos pacotes faz essa rota há anos. Ele conhece cada cachorro da rua e sabe em quais casas nunca tem ninguém. Há anos deixamos uma bebida gelada para ele nas tardes de calor. Semana passada, uma caixa foi deixada na casa errada por uma entregadora nova. Era para ter sido entregue para nós, mas foi parar na casa do lado. Se não tivesse ninguém em casa lá do lado, teríamos perdido a caixa. Pacotes que não podem ser entregues precisam ser levados de volta ao depósito. Queria que todo entregador fosse tão cuidadoso quanto o nosso."
+        },
+        {
+            "id": "compras-n8-f01",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I've been waiting in this line for almost twenty minutes now.",
+            "pt-BR": "Já faz quase vinte minutos que estou nessa fila."
+        },
+        {
+            "id": "compras-n8-f02",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "If I'd known it was on sale, I would have waited a week.",
+            "pt-BR": "Se eu soubesse que ia entrar em promoção, teria esperado uma semana."
+        },
+        {
+            "id": "compras-n8-f03",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Can this be exchanged for a different color if it doesn't fit?",
+            "pt-BR": "Dá para trocar por outra cor se não servir?"
+        },
+        {
+            "id": "compras-n8-f04",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I wish I hadn't spent so much money on shoes this month.",
+            "pt-BR": "Queria não ter gastado tanto dinheiro com sapato este mês."
+        },
+        {
+            "id": "compras-n8-f05",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Should the receipt be kept for the warranty, or is the box enough?",
+            "pt-BR": "Preciso guardar a nota para a garantia ou a caixa já basta?"
+        },
+        {
+            "id": "compras-n8-f06",
+            "tema": "compras",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "How long has the store been offering free delivery on weekends?",
+            "pt-BR": "Desde quando a loja oferece entrega grátis nos fins de semana?"
+        },
+        {
+            "id": "compras-n9-t01",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Shopping for a new mattress turned out to be far more complicated than I had expected. Every salesperson I spoke to swore that their model was the best on the market. Faced with a dozen options and confusing labels, I ended up leaving empty-handed. If I had done some research beforehand, I wouldn't be sleeping on this old one now. A friend told me to stop shopping around and simply go with my gut. Had I listened to her sooner, I would have saved myself several weekends. In the end, I ordered one online with a hundred-night trial period. Should it not live up to expectations, it can be returned free of charge. So far, I have to admit, it has been money well spent.",
+            "pt-BR": "Comprar um colchão novo acabou sendo bem mais complicado do que eu esperava. Todo mundo que me atendeu jurava que o seu modelo era o melhor do mercado. Diante de uma dúzia de opções e rótulos confusos, acabei saindo de mãos abanando. Se eu tivesse pesquisado antes, não estaria dormindo neste colchão velho agora. Uma amiga me disse para parar de rodar as lojas e simplesmente seguir a minha intuição. Se eu tivesse escutado o conselho dela antes, teria poupado vários fins de semana. No fim, comprei um pela internet, com cem noites de teste. Caso ele não corresponda às expectativas, pode ser devolvido sem custo. Até agora, tenho que admitir, foi dinheiro bem gasto."
+        },
+        {
+            "id": "compras-n9-t02",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "The email from the online store was written in perfect customer-service language. It regretted to inform me that my order had been delayed due to unforeseen circumstances. In plain terms, the item was out of stock and nobody knew when it would arrive. Customers wishing to cancel were invited to contact the support team within seven days. Having waited three weeks already, I was not exactly in a forgiving mood. Had they told me the truth from the start, I would have bought it elsewhere. If I weren't so stubborn, I would have canceled it on the spot. Instead, I'm still waiting, and frankly, the ball is in their court.",
+            "pt-BR": "O e-mail da loja virtual estava escrito no mais perfeito tom de atendimento ao cliente. Lamentava informar que meu pedido tinha sido adiado devido a circunstâncias imprevistas. Traduzindo: o produto estava em falta e ninguém sabia quando ia chegar. Quem desejasse cancelar podia entrar em contato com a equipe de suporte em até sete dias. Depois de já ter esperado três semanas, eu não estava exatamente num clima de perdão. Se tivessem me dito a verdade desde o início, eu teria comprado em outro lugar. Se não fosse a minha teimosia, eu teria cancelado na hora. Em vez disso, continuo esperando e, francamente, agora a bola está com eles."
+        },
+        {
+            "id": "compras-n9-t03",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "My brother has a habit of comparing prices that borders on the obsessive. Before buying anything, even a cheap kettle, he checks at least five websites. Asked why he bothers, he says that small savings add up over time. I used to tease him about it, but I've since changed my tune. If I'd been as careful as he is, I wouldn't be short of money every month. Last year, admittedly, I bought a phone on impulse and regretted it within days. Not only was it overpriced, but a better model came out the following week. These days, I sleep on any big purchase before reaching for my wallet.",
+            "pt-BR": "Meu irmão tem uma mania de comparar preços que beira a obsessão. Antes de comprar qualquer coisa, até uma chaleira barata, ele confere pelo menos cinco sites. Quando perguntam por que ele se dá a esse trabalho, ele diz que pequenas economias fazem diferença com o tempo. Eu costumava tirar sarro dele por isso, mas desde então mudei o discurso. Se eu fosse tão cuidadoso quanto ele, não ficaria sem dinheiro todo mês. Ano passado, admito, comprei um celular por impulso e me arrependi em poucos dias. Não só estava caro demais, como um modelo melhor saiu na semana seguinte. Hoje em dia, antes de qualquer compra grande, deixo passar uma noite antes de pôr a mão na carteira."
+        },
+        {
+            "id": "compras-n9-f01",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "If I hadn't lost the receipt, I'd be getting my money back right now.",
+            "pt-BR": "Se eu não tivesse perdido a nota, estaria recebendo meu dinheiro de volta agora mesmo."
+        },
+        {
+            "id": "compras-n9-f02",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Should you need a different size, just let one of our assistants know.",
+            "pt-BR": "Caso precise de outro tamanho, é só falar com alguém da nossa equipe."
+        },
+        {
+            "id": "compras-n9-f03",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Having compared both models, I'd go for the cheaper one, to be honest.",
+            "pt-BR": "Depois de comparar os dois modelos, sinceramente, eu ficaria com o mais barato."
+        },
+        {
+            "id": "compras-n9-f04",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Would you be able to hold this jacket for me until tomorrow afternoon?",
+            "pt-BR": "Daria para separar essa jaqueta para mim até amanhã à tarde?"
+        },
+        {
+            "id": "compras-n9-f05",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "That price is a bit steep, so I think I'll shop around first.",
+            "pt-BR": "Esse preço está meio salgado, então acho que vou pesquisar em outras lojas primeiro."
+        },
+        {
+            "id": "compras-n9-f06",
+            "tema": "compras",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Bought on sale, these boots cost less than half of what I expected.",
+            "pt-BR": "Compradas na promoção, essas botas saíram por menos da metade do que eu esperava."
+        },
+        {
+            "id": "compras-n10-t01",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "No sooner had I placed the order than I began to regret it. The coat was beautifully made, yet it cost more than I usually spend on clothes in a year. What troubled me was not the price itself but the speed with which I had decided. Rarely do I buy anything expensive without sleeping on it for at least a few nights. It was a glowing review, written by a stranger, that had nudged me over the edge. My partner, ever pragmatic, suggested that I cancel the order before it was shipped. Hardly had I opened the cancellation page when a message announced that the package was on its way. In the end, I kept the coat, and I confess it has been worn almost daily since. Whether that vindicates the impulse or merely excuses it remains an open question.",
+            "pt-BR": "Mal eu tinha feito o pedido e já comecei a me arrepender. O casaco era muito bem-feito, mas custava mais do que costumo gastar com roupa em um ano inteiro. O que me incomodava não era o preço em si, mas a rapidez com que eu tinha decidido. Raramente compro algo caro sem pensar no assunto por pelo menos algumas noites. Foi uma resenha entusiasmada, escrita por alguém que eu nem conhecia, que me deu o empurrão final. Minha companheira, pragmática como sempre, sugeriu que eu cancelasse o pedido antes do envio. Mal eu tinha aberto a página de cancelamento, chegou uma mensagem avisando que o pacote já estava a caminho. No fim, fiquei com o casaco e confesso que, desde então, ele tem sido usado quase todo dia. Se isso justifica o impulso ou apenas o desculpa, continua sendo uma questão em aberto."
+        },
+        {
+            "id": "compras-n10-t02",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "There is a quiet art to returning something without causing a scene. Store policy usually demands that the item be unused and accompanied by the original receipt. What it rarely mentions is the discretion granted to the person behind the counter. Seldom have I seen a refund refused to a customer who was courteous and patient. Conversely, those who arrive indignant tend to find the rules applied to the letter. Not once in years of retail work did my cousin bend a policy for someone who shouted. He insists that a little humility goes further than any written guarantee. It is this unwritten rule, rather than the printed one, that determines most outcomes. Were customers aware of this, the lines at the returns desk would move far more quickly.",
+            "pt-BR": "Existe uma arte discreta em devolver algo sem fazer escândalo. A política das lojas normalmente exige que o produto esteja sem uso e acompanhado da nota original. O que ela raramente menciona é a margem de decisão dada a quem está atrás do balcão. Raras vezes vi um reembolso ser negado a quem chegou com educação e paciência. Por outro lado, quem chega de cabeça quente costuma ver as regras aplicadas ao pé da letra. Nem uma única vez, em anos trabalhando no varejo, meu primo abriu exceção para alguém que gritasse. Ele insiste que um pouco de humildade vale mais do que qualquer garantia por escrito. É essa regra não escrita, e não a impressa, que decide a maior parte dos casos. Se todo mundo soubesse disso, as filas no balcão de trocas andariam muito mais rápido."
+        },
+        {
+            "id": "compras-n10-t03",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "Few things expose the gap between need and desire quite like a well-stocked supermarket. Its layout, far from accidental, is designed to keep shoppers wandering past tempting displays. Essentials such as bread and milk are invariably placed at the very back of the store. Only after reading about this did I notice how often I left with things I never intended to buy. It is the end-of-aisle promotions, I suspect, that do the most damage to my budget. Nowadays I insist that every trip be preceded by a list, however short it may be. Scarcely a week passes without some ingenious offer testing that resolve to its limits. Still, the savings, modest as they are, have proved reassuringly consistent over the past few months.",
+            "pt-BR": "Poucas coisas expõem tão bem a distância entre necessidade e desejo quanto um supermercado bem abastecido. A sua disposição, longe de ser acidental, é pensada para fazer quem está comprando circular diante de expositores tentadores. Itens básicos, como pão e leite, ficam invariavelmente bem no fundo da loja. Só depois de ler sobre isso percebi quantas vezes eu saía de lá com coisas que nunca tinha pensado em comprar. São as promoções de ponta de gôndola, desconfio, que mais estragam o meu orçamento. Hoje em dia, faço questão de que toda ida ao mercado seja precedida de uma lista, por menor que seja. Mal passa uma semana sem que alguma oferta engenhosa ponha essa determinação à prova. Ainda assim, a economia, por mais modesta que seja, tem se mostrado constante nos últimos meses, o que é reconfortante."
+        },
+        {
+            "id": "compras-n10-f01",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Hardly had we reached the checkout when I realized I'd left my wallet at home.",
+            "pt-BR": "Mal chegamos ao caixa, percebi que tinha esquecido a carteira em casa."
+        },
+        {
+            "id": "compras-n10-f02",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "I'd insist that the faulty item be replaced rather than simply repaired, if I were you.",
+            "pt-BR": "Se eu fosse você, faria questão de que o produto com defeito fosse trocado, e não só consertado."
+        },
+        {
+            "id": "compras-n10-f03",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "What I really need is a pair of shoes I can walk in all day.",
+            "pt-BR": "O que eu preciso mesmo é de um sapato que aguente o dia inteiro andando."
+        },
+        {
+            "id": "compras-n10-f04",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Not until the package arrives will I be charged for the order, is that right?",
+            "pt-BR": "Só quando o pacote chegar é que o pedido vai ser cobrado, certo?"
+        },
+        {
+            "id": "compras-n10-f05",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "It's the delivery fee, not the price of the item itself, that puts me off.",
+            "pt-BR": "É a taxa de entrega, e não o preço do produto em si, que me desanima."
+        },
+        {
+            "id": "compras-n10-f06",
+            "tema": "compras",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Were the store to offer free returns, I'd happily order online far more often.",
+            "pt-BR": "Se a loja oferecesse devolução grátis, eu compraria pela internet com muito mais frequência, e com todo o prazer."
+        }
+    ]
 }
