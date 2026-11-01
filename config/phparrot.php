@@ -20,6 +20,11 @@ return [
         'url' => env('PHPARROT_WHISPER_URL', 'http://phparrot-whisper:8080'),
     ],
 
+    'backup' => [
+        'pasta' => env('PHPARROT_BACKUP_PASTA', storage_path('backups')),
+        'conexao' => null,
+    ],
+
     'gestao' => [
         'token' => env('PHPARROT_TOKEN'),
         'token_minimo' => 32,
