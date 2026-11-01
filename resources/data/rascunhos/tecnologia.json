@@ -1,18 +1,734 @@
 {
-  "formato": 2,
-  "pacote": {"slug": "rascunho-tecnologia", "nome": "Rascunho: Tecnologia", "versao": "2026.10.1", "idiomas": ["en", "pt-BR"]},
-  "itens": [
-    {"id": "tecnologia-n1-t01", "tema": "tecnologia", "nivel": 1, "tipo": "texto", "en": "This is my computer. It is new. I use it every day.", "pt-BR": "Este é o meu computador. Ele é novo. Eu uso ele todos os dias."},
-    {"id": "tecnologia-n1-f01", "tema": "tecnologia", "nivel": 1, "tipo": "frase", "en": "This is my phone.", "pt-BR": "Este é o meu celular."},
-    {"id": "tecnologia-n4-t01", "tema": "tecnologia", "nivel": 4, "tipo": "texto", "en": "My new laptop is faster and lighter than my old one. The battery lasts longer, too. However, it was much more expensive.", "pt-BR": "O meu notebook novo é mais rápido e mais leve do que o antigo. A bateria também dura mais. Porém, ele foi muito mais caro."},
-    {"id": "tecnologia-n5-t01", "tema": "tecnologia", "nivel": 5, "tipo": "texto", "en": "Our team has just released a new version of the app. We have fixed several bugs and have improved the performance. Users haven't reported any problems yet.", "pt-BR": "O nosso time acabou de lançar uma nova versão do app. Nós corrigimos vários bugs e melhoramos o desempenho. Os usuários ainda não relataram nenhum problema."},
-    {"id": "tecnologia-n6-t01", "tema": "tecnologia", "nivel": 6, "tipo": "texto", "en": "If the server goes down, the system sends an alert to the team. Someone has to check the logs immediately, because customers might not be able to log in.", "pt-BR": "Se o servidor cair, o sistema envia um alerta para o time. Alguém tem que verificar os logs imediatamente, porque os clientes podem não conseguir entrar."},
-    {"id": "tecnologia-n7-t01", "tema": "tecnologia", "nivel": 7, "tipo": "texto", "en": "All the data is encrypted before it is stored. Passwords are never saved in plain text, and every access is recorded in a log that is reviewed weekly.", "pt-BR": "Todos os dados são criptografados antes de serem armazenados. As senhas nunca são salvas em texto puro, e todo acesso é registrado em um log que é revisado semanalmente."},
-    {"id": "tecnologia-n8-t01", "tema": "tecnologia", "nivel": 8, "tipo": "texto", "en": "We ran into a problem during the deployment, so we had to roll back to the previous version. After looking into the logs, we figured out that a configuration file was missing.", "pt-BR": "Nós encontramos um problema durante o deploy, então tivemos que voltar para a versão anterior. Depois de investigar os logs, descobrimos que faltava um arquivo de configuração."},
-    {"id": "tecnologia-n8-f01", "tema": "tecnologia", "nivel": 8, "tipo": "frase", "en": "We need to figure out what went wrong.", "pt-BR": "Precisamos descobrir o que deu errado."},
-    {"id": "tecnologia-n8-f02", "tema": "tecnologia", "nivel": 8, "tipo": "frase", "en": "The build keeps failing on the server.", "pt-BR": "O build continua falhando no servidor."},
-    {"id": "tecnologia-n9-t01", "tema": "tecnologia", "nivel": 9, "tipo": "texto", "en": "Some people argue that artificial intelligence will replace programmers. In my view, it is more likely to change the way we work: routine tasks get automated, while judgment and design become even more valuable.", "pt-BR": "Algumas pessoas defendem que a inteligência artificial vai substituir os programadores. Na minha visão, é mais provável que ela mude a forma como trabalhamos: as tarefas repetitivas são automatizadas, enquanto o julgamento e o design ficam ainda mais valiosos."},
-    {"id": "tecnologia-n10-t01", "tema": "tecnologia", "nivel": 10, "tipo": "texto", "en": "Despite the remarkable progress in automation, the most resilient systems are still those designed with human oversight in mind. Engineers who anticipate failure, document their decisions and build in safeguards tend to deliver software that not only works, but keeps working when circumstances change.", "pt-BR": "Apesar do progresso notável da automação, os sistemas mais resilientes ainda são aqueles projetados levando em conta a supervisão humana. Engenheiros que antecipam falhas, documentam suas decisões e incorporam salvaguardas tendem a entregar software que não apenas funciona, mas continua funcionando quando as circunstâncias mudam."},
-    {"id": "tecnologia-n10-f01", "tema": "tecnologia", "nivel": 10, "tipo": "frase", "en": "Under no circumstances should you share your password.", "pt-BR": "Em hipótese alguma você deve compartilhar a sua senha."}
-  ]
+    "formato": 2,
+    "pacote": {
+        "slug": "rascunho-tecnologia",
+        "nome": "Rascunho: Tecnologia",
+        "versao": "2026.11.1",
+        "idiomas": [
+            "en",
+            "pt-BR"
+        ]
+    },
+    "itens": [
+        {
+            "id": "tecnologia-n1-t01",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "This is my phone. It is new. I use it every day. It has a big screen.",
+            "pt-BR": "Este é o meu celular. Ele é novo. Eu uso todo dia. Ele tem uma tela grande."
+        },
+        {
+            "id": "tecnologia-n1-t02",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "My laptop is old. It is very slow. My sister has a new laptop. Her laptop is fast.",
+            "pt-BR": "Meu notebook é velho. Ele é muito lento. Minha irmã tem um notebook novo. O notebook dela é rápido."
+        },
+        {
+            "id": "tecnologia-n1-t03",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "texto",
+            "en": "The Wi-Fi is slow today. I can't send messages. The router is in the kitchen. Can you check it?",
+            "pt-BR": "O Wi-Fi está lento hoje. Não consigo mandar mensagens. O roteador fica na cozinha. Você pode dar uma olhada?"
+        },
+        {
+            "id": "tecnologia-n1-f01",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "My battery is low.",
+            "pt-BR": "Meu celular tá quase sem bateria."
+        },
+        {
+            "id": "tecnologia-n1-f02",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Where is the charger?",
+            "pt-BR": "Cadê o carregador?"
+        },
+        {
+            "id": "tecnologia-n1-f03",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "Can you hear me?",
+            "pt-BR": "Tá me ouvindo?"
+        },
+        {
+            "id": "tecnologia-n1-f04",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "What is the Wi-Fi password?",
+            "pt-BR": "Qual é a senha do Wi-Fi?"
+        },
+        {
+            "id": "tecnologia-n1-f05",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "I can't see you.",
+            "pt-BR": "Não tô te vendo."
+        },
+        {
+            "id": "tecnologia-n1-f06",
+            "tema": "tecnologia",
+            "nivel": 1,
+            "tipo": "frase",
+            "en": "This is my new phone.",
+            "pt-BR": "Esse é o meu celular novo."
+        },
+        {
+            "id": "tecnologia-n2-t01",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "My phone is charging on the desk. The cable is under the bed. I am sending messages to my sister. My brother is in the kitchen. My phone is my clock, too.",
+            "pt-BR": "Meu celular está carregando na escrivaninha. O cabo está embaixo da cama. Estou mandando mensagens para a minha irmã. Meu irmão está na cozinha. Meu celular também é o meu relógio."
+        },
+        {
+            "id": "tecnologia-n2-t02",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "Please turn off your phones now. The class is starting at 9. Don't take photos of the board. Put your phone in your bag, please.",
+            "pt-BR": "Desliguem o celular agora, por favor. A aula começa às 9h. Não tirem foto do quadro. Guardem o celular na mochila, por favor."
+        },
+        {
+            "id": "tecnologia-n2-t03",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "texto",
+            "en": "Grandma is learning to use a tablet. She likes making video calls on Sundays. Her tablet has a big screen. I am sitting next to her. Press the green button, Grandma.",
+            "pt-BR": "A vovó está aprendendo a usar um tablet. Ela gosta de fazer videochamada aos domingos. O tablet dela tem uma tela grande. Estou do lado dela. Aperta o botão verde, vó."
+        },
+        {
+            "id": "tecnologia-n2-f01",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "My phone is charging now.",
+            "pt-BR": "Meu celular tá carregando agora."
+        },
+        {
+            "id": "tecnologia-n2-f02",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Turn off your camera, please.",
+            "pt-BR": "Desliga a câmera, por favor."
+        },
+        {
+            "id": "tecnologia-n2-f03",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "I'm sending you the photo now.",
+            "pt-BR": "Tô te mandando a foto agora."
+        },
+        {
+            "id": "tecnologia-n2-f04",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Do you like using your new laptop?",
+            "pt-BR": "Você tá gostando do notebook novo?"
+        },
+        {
+            "id": "tecnologia-n2-f05",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "The charger is next to the bed.",
+            "pt-BR": "O carregador tá do lado da cama."
+        },
+        {
+            "id": "tecnologia-n2-f06",
+            "tema": "tecnologia",
+            "nivel": 2,
+            "tipo": "frase",
+            "en": "Call me at 6, please.",
+            "pt-BR": "Me liga às 6, por favor."
+        },
+        {
+            "id": "tecnologia-n3-t01",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Yesterday my phone fell in the water. I put it in a bag of rice. It didn't work the next morning. I bought a new one that afternoon. The new one is bigger and faster. I'm going to buy a case for it.",
+            "pt-BR": "Ontem meu celular caiu na água. Coloquei ele num saco de arroz. Na manhã seguinte, ele não funcionou. Comprei um novo naquela tarde. O novo é maior e mais rápido. Vou comprar uma capinha para ele."
+        },
+        {
+            "id": "tecnologia-n3-t02",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "Last week our office printer broke. We called a technician on Monday. She came the next day and fixed it. Now it prints faster than before. We're going to buy a new one soon.",
+            "pt-BR": "Semana passada, a impressora do escritório quebrou. Chamamos uma técnica na segunda-feira. Ela veio no dia seguinte e consertou. Agora ela imprime mais rápido que antes. Vamos comprar uma nova em breve."
+        },
+        {
+            "id": "tecnologia-n3-t03",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "texto",
+            "en": "I changed all my passwords last night. My old passwords were too short. The new ones are longer and safer. I didn't use my birthday this time. Tomorrow I'm going to update my laptop too.",
+            "pt-BR": "Ontem à noite troquei todas as minhas senhas. As senhas antigas eram curtas demais. As novas são mais longas e mais seguras. Desta vez, não usei a data do meu aniversário. Amanhã também vou atualizar o meu notebook."
+        },
+        {
+            "id": "tecnologia-n3-f01",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I forgot my charger at home.",
+            "pt-BR": "Esqueci o carregador em casa."
+        },
+        {
+            "id": "tecnologia-n3-f02",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Did you get my message this morning?",
+            "pt-BR": "Você recebeu a minha mensagem hoje de manhã?"
+        },
+        {
+            "id": "tecnologia-n3-f03",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "This laptop is lighter than mine.",
+            "pt-BR": "Esse notebook é mais leve que o meu."
+        },
+        {
+            "id": "tecnologia-n3-f04",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "I'm going to restart the computer.",
+            "pt-BR": "Vou reiniciar o computador."
+        },
+        {
+            "id": "tecnologia-n3-f05",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "The video call started at 3:30.",
+            "pt-BR": "A videochamada começou às três e meia."
+        },
+        {
+            "id": "tecnologia-n3-f06",
+            "tema": "tecnologia",
+            "nivel": 3,
+            "tipo": "frase",
+            "en": "Can you speak a little louder, please?",
+            "pt-BR": "Você pode falar um pouco mais alto, por favor?"
+        },
+        {
+            "id": "tecnologia-n4-t01",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "I bought a new laptop last week. It's lighter and faster than my old one. The battery always lasts all day. It was the most expensive one in the store. I have to be careful with it. I'll buy a good bag tomorrow.",
+            "pt-BR": "Comprei um notebook novo semana passada. Ele é mais leve e mais rápido que o antigo. A bateria sempre dura o dia todo. Era o mais caro da loja. Preciso tomar cuidado com ele. Amanhã vou comprar uma boa capa."
+        },
+        {
+            "id": "tecnologia-n4-t02",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "My phone usually updates at night. Last night the update didn't finish. So my phone was very slow this morning. I had to restart it three times. The update takes about 20 minutes. Tonight I will leave it on the charger.",
+            "pt-BR": "Meu celular costuma atualizar à noite. Ontem à noite, a atualização não terminou. Por isso, hoje de manhã o celular estava muito lento. Tive que reiniciar três vezes. A atualização leva uns 20 minutos. Hoje à noite vou deixar ele no carregador."
+        },
+        {
+            "id": "tecnologia-n4-t03",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "texto",
+            "en": "My dad rarely answers my video calls. He never finds the right button. So I usually call him on the phone. This weekend I will visit him at home. I'll show him the easiest way to answer.",
+            "pt-BR": "Meu pai quase nunca atende as minhas videochamadas. Ele nunca acha o botão certo. Então eu costumo ligar para ele pelo telefone. Neste fim de semana, vou visitar ele em casa. Vou mostrar para ele o jeito mais fácil de atender."
+        },
+        {
+            "id": "tecnologia-n4-f01",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I have to charge my phone before we leave.",
+            "pt-BR": "Tenho que carregar o celular antes de a gente sair."
+        },
+        {
+            "id": "tecnologia-n4-f02",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I'll send you the file after lunch.",
+            "pt-BR": "Te mando o arquivo depois do almoço."
+        },
+        {
+            "id": "tecnologia-n4-f03",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "How often do you back up your photos?",
+            "pt-BR": "Com que frequência você faz backup das suas fotos?"
+        },
+        {
+            "id": "tecnologia-n4-f04",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "This is the fastest computer in the office.",
+            "pt-BR": "Esse é o computador mais rápido do escritório."
+        },
+        {
+            "id": "tecnologia-n4-f05",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "The update takes 20 minutes, so let's wait.",
+            "pt-BR": "A atualização leva 20 minutos, então vamos esperar."
+        },
+        {
+            "id": "tecnologia-n4-f06",
+            "tema": "tecnologia",
+            "nivel": 4,
+            "tipo": "frase",
+            "en": "I never use the same password twice.",
+            "pt-BR": "Eu nunca uso a mesma senha duas vezes."
+        },
+        {
+            "id": "tecnologia-n5-t01",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "I've just installed the new version of the messaging app. It has a few changes that I don't like yet. The button that sends photos has moved to the top. I haven't found the old settings menu either. My brother, who uses it every day, likes it. If I still hate it, I'll ask him for help.",
+            "pt-BR": "Acabei de instalar a versão nova do aplicativo de mensagens. Ela tem algumas mudanças de que eu ainda não gosto. O botão de enviar fotos foi para o alto da tela. Também não achei o menu de configurações antigo. Meu irmão, que usa o aplicativo todo dia, gostou. Se eu continuar odiando, vou pedir ajuda para ele."
+        },
+        {
+            "id": "tecnologia-n5-t02",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "I was writing a report when my laptop turned off. The battery was dead, and my charger was at work. I lost an hour of work that night. Now I save my files every few minutes. I've also bought a charger that stays in my bag. If my battery dies again, I won't lose anything.",
+            "pt-BR": "Eu estava escrevendo um relatório quando o notebook desligou. A bateria tinha acabado, e o carregador estava no trabalho. Perdi uma hora de trabalho naquela noite. Agora salvo os arquivos a cada poucos minutos. Também comprei um carregador que fica sempre na mochila. Se a bateria acabar de novo, não vou perder nada."
+        },
+        {
+            "id": "tecnologia-n5-t03",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "texto",
+            "en": "My uncle has never used a computer before. He has bought a laptop that is easy to use. Every Saturday, we practice together at his house. So far, he has learned to send emails. He hasn't tried the camera yet. If he keeps practicing, he'll make video calls soon.",
+            "pt-BR": "Meu tio nunca usou um computador. Ele comprou um notebook fácil de usar. Todo sábado, a gente pratica junto na casa dele. Até agora, ele aprendeu a mandar e-mails. Ele ainda não testou a câmera. Se continuar praticando, logo vai fazer videochamadas."
+        },
+        {
+            "id": "tecnologia-n5-f01",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Have you tried turning it off and on again?",
+            "pt-BR": "Você já tentou desligar e ligar de novo?"
+        },
+        {
+            "id": "tecnologia-n5-f02",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I've already sent you the link to the meeting.",
+            "pt-BR": "Já te mandei o link da reunião."
+        },
+        {
+            "id": "tecnologia-n5-f03",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "If the Wi-Fi doesn't work, I'll use my phone.",
+            "pt-BR": "Se o Wi-Fi não funcionar, eu uso o meu celular."
+        },
+        {
+            "id": "tecnologia-n5-f04",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I was taking a shower when you called.",
+            "pt-BR": "Eu tava no banho quando você ligou."
+        },
+        {
+            "id": "tecnologia-n5-f05",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "Is this the cable that goes with the printer?",
+            "pt-BR": "Esse é o cabo da impressora?"
+        },
+        {
+            "id": "tecnologia-n5-f06",
+            "tema": "tecnologia",
+            "nivel": 5,
+            "tipo": "frase",
+            "en": "I haven't charged my phone since this morning.",
+            "pt-BR": "Não carrego o celular desde hoje de manhã."
+        },
+        {
+            "id": "tecnologia-n6-t01",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "When I was young, we used to share one computer. It was kept in the living room, and we took turns. My sister used to spend hours on it after school. Now everyone in my family has their own laptop and phone. If we still had one computer, we would argue every day. But sometimes I miss those evenings in the same room. My mother said the house felt too quiet now.",
+            "pt-BR": "Quando eu era criança, a gente dividia um computador só. Ele ficava na sala, e cada um usava na sua vez. Minha irmã passava horas nele depois da escola. Hoje todo mundo na minha família tem o próprio notebook e o próprio celular. Se a gente ainda tivesse um computador só, ia brigar todo dia. Mas às vezes sinto falta daquelas noites todos juntos na mesma sala. Minha mãe disse que agora a casa parece silenciosa demais."
+        },
+        {
+            "id": "tecnologia-n6-t02",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "The Wi-Fi in our office was replaced last month. The old router was installed about ten years ago. Our video calls used to freeze almost every morning. The technician said the new system was twice as fast. So far, she has been right about that. Calls are clearer now, and files are sent in seconds. If it ever stopped working, we would be completely lost.",
+            "pt-BR": "O Wi-Fi do nosso escritório foi trocado no mês passado. O roteador antigo tinha sido instalado uns dez anos atrás. Nossas videochamadas travavam quase toda manhã. A técnica disse que o sistema novo era duas vezes mais rápido. Até agora, ela tem razão. As chamadas estão mais nítidas, e os arquivos são enviados em segundos. Se um dia ele parasse de funcionar, a gente ia ficar sem saber o que fazer."
+        },
+        {
+            "id": "tecnologia-n6-t03",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "texto",
+            "en": "My phone shows how many hours I use it each day. Last week, the number was almost five hours a day. I was shocked, because I used to read in the evenings. If I spent less time on my phone, I would sleep better. Now my phone is left in the kitchen at 10 every night. A friend told me that he does the same thing. The first few nights were hard, but it's easier now.",
+            "pt-BR": "Meu celular mostra quantas horas eu uso ele por dia. Semana passada, o número foi quase cinco horas por dia. Levei um susto, porque eu costumava ler à noite. Se eu passasse menos tempo no celular, ia dormir melhor. Agora o celular fica na cozinha todo dia a partir das 10 da noite. Um amigo me contou que faz a mesma coisa. As primeiras noites foram difíceis, mas agora está mais fácil."
+        },
+        {
+            "id": "tecnologia-n6-f01",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Could you restart the router if you have a minute?",
+            "pt-BR": "Você pode reiniciar o roteador, se tiver um minutinho?"
+        },
+        {
+            "id": "tecnologia-n6-f02",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "If I had a better phone, I would take more photos.",
+            "pt-BR": "Se eu tivesse um celular melhor, tiraria mais fotos."
+        },
+        {
+            "id": "tecnologia-n6-f03",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "I used to know all my friends' phone numbers by heart.",
+            "pt-BR": "Eu sabia de cor o número de todos os meus amigos."
+        },
+        {
+            "id": "tecnologia-n6-f04",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "The printer on the second floor was fixed this morning.",
+            "pt-BR": "A impressora do segundo andar foi consertada hoje de manhã."
+        },
+        {
+            "id": "tecnologia-n6-f05",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "She said the Wi-Fi password was on the fridge.",
+            "pt-BR": "Ela disse que a senha do Wi-Fi estava na geladeira."
+        },
+        {
+            "id": "tecnologia-n6-f06",
+            "tema": "tecnologia",
+            "nivel": 6,
+            "tipo": "frase",
+            "en": "Don't worry, your photos are saved automatically every night.",
+            "pt-BR": "Não se preocupe, suas fotos são salvas automaticamente toda noite."
+        },
+        {
+            "id": "tecnologia-n7-t01",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "When I got to the meeting room, the video call had already started. I tried to log in, but my laptop wouldn't connect. I must have typed the Wi-Fi password wrong at first. By the time I joined, however, my manager had finished her slides. Although nobody said anything, I felt really embarrassed. After the call, I set up my laptop to connect automatically. Next time, I'm going to log in ten minutes early.",
+            "pt-BR": "Quando cheguei à sala de reunião, a videochamada já tinha começado. Tentei entrar, mas o notebook não conectava. Devo ter digitado a senha do Wi-Fi errado no começo. Quando finalmente entrei, porém, minha gerente já tinha terminado a apresentação. Embora ninguém tenha dito nada, fiquei com muita vergonha. Depois da chamada, configurei o notebook para conectar automaticamente. Da próxima vez, vou entrar dez minutos antes."
+        },
+        {
+            "id": "tecnologia-n7-t02",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "Last month my laptop got so slow that I nearly gave up. It took five minutes to start, and programs kept freezing. I thought it might have caught a virus, although I'd been careful. A coworker offered to take a look at it during lunch. He found out that the hard drive was almost full. I had never deleted anything, so old videos had piled up. We backed up the important files and cleared out the rest. Now it runs almost as fast as it did when it was new.",
+            "pt-BR": "No mês passado, meu notebook ficou tão lento que quase desisti dele. Levava cinco minutos para ligar, e os programas viviam travando. Achei que podia ter pegado um vírus, embora eu tivesse tomado cuidado. Um colega de trabalho se ofereceu para dar uma olhada na hora do almoço. Ele descobriu que o disco rígido estava quase cheio. Eu nunca tinha apagado nada, então os vídeos antigos foram se acumulando. Fizemos backup dos arquivos importantes e apagamos o resto. Agora ele está quase tão rápido quanto era quando novo."
+        },
+        {
+            "id": "tecnologia-n7-t03",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "texto",
+            "en": "My company recently switched to a new tool for planning projects. At first, I couldn't stand it, although I didn't say so. I had used the old system for six years and knew every shortcut. However, the trainer pointed out a few features I hadn't noticed. One of them sets up reminders for every deadline automatically. My team must have saved hours since we started using it. I still miss a few old buttons, but I'm getting used to it.",
+            "pt-BR": "Minha empresa trocou recentemente a ferramenta de planejamento de projetos. No começo, eu não suportava a nova, embora não tenha falado nada. Eu tinha usado o sistema antigo por seis anos e sabia todos os atalhos. Mas a instrutora mostrou alguns recursos que eu não tinha percebido. Um deles cria lembretes automaticamente para todos os prazos. Minha equipe deve ter economizado horas desde que começou a usar. Ainda sinto falta de alguns botões antigos, mas estou me acostumando."
+        },
+        {
+            "id": "tecnologia-n7-f01",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "I think I must have left my charger at the office.",
+            "pt-BR": "Acho que devo ter esquecido o carregador no escritório."
+        },
+        {
+            "id": "tecnologia-n7-f02",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Could you help me set up the new printer after lunch?",
+            "pt-BR": "Você pode me ajudar a configurar a impressora nova depois do almoço?"
+        },
+        {
+            "id": "tecnologia-n7-f03",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Although the screen is small, the camera is really good.",
+            "pt-BR": "A tela é pequena, mas a câmera é muito boa."
+        },
+        {
+            "id": "tecnologia-n7-f04",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "By the time I found my phone, the call had ended.",
+            "pt-BR": "Quando achei o celular, a ligação já tinha caído."
+        },
+        {
+            "id": "tecnologia-n7-f05",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "You might have turned off the sound on your phone by accident.",
+            "pt-BR": "Talvez você tenha tirado o som do celular sem querer."
+        },
+        {
+            "id": "tecnologia-n7-f06",
+            "tema": "tecnologia",
+            "nivel": 7,
+            "tipo": "frase",
+            "en": "Can you hear me now, or should I log out and back in?",
+            "pt-BR": "Tá me ouvindo agora, ou é melhor eu sair e entrar de novo?"
+        },
+        {
+            "id": "tecnologia-n8-t01",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "I had been planning to back up my photos for months. Then last week my phone slipped out of my pocket and cracked. The screen went black, and nothing could be done to fix it. If I had set up automatic backups, I wouldn't have lost anything. Instead, two years of trips and birthdays disappeared in a second. I really wish I had listened to my brother's advice. Since then, I've been saving everything to the cloud every night. Important files should be kept in at least two places, and now I understand why.",
+            "pt-BR": "Fazia meses que eu estava pensando em fazer backup das minhas fotos. Aí, semana passada, o celular escorregou do meu bolso e a tela rachou. A tela ficou preta, e não tinha mais conserto. Se eu tivesse ativado o backup automático, não teria perdido nada. Em vez disso, dois anos de viagens e aniversários sumiram num segundo. Queria muito ter ouvido o conselho do meu irmão. Desde então, salvo tudo na nuvem toda noite. Arquivos importantes devem ficar guardados em pelo menos dois lugares, e agora eu entendo por quê."
+        },
+        {
+            "id": "tecnologia-n8-t02",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "My mother has been calling me every evening about her new phone. Yesterday she couldn't find the photos that her neighbor had sent. They had been saved in a folder she had never opened. If I had shown her the gallery properly, she wouldn't have panicked. Honestly, I wish phones were designed with older people in mind. The text could be made bigger, and the menus could be much simpler. For now, I've been writing short instructions for her on paper. She keeps them next to the phone and reads them every time.",
+            "pt-BR": "Minha mãe tem me ligado toda noite por causa do celular novo. Ontem ela não conseguiu achar as fotos que o vizinho tinha mandado. Elas tinham sido salvas numa pasta que ela nunca tinha aberto. Se eu tivesse mostrado a galeria direito, ela não teria entrado em pânico. Sinceramente, queria que os celulares fossem pensados também para as pessoas mais velhas. A letra podia ser maior, e os menus podiam ser bem mais simples. Por enquanto, tenho escrito instruções curtas para ela no papel. Ela deixa as instruções do lado do celular e lê toda vez."
+        },
+        {
+            "id": "tecnologia-n8-t03",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "texto",
+            "en": "My laptop has been asking me to install an update for two weeks. Every time the message appears, I click the button that says remind me later. The problem is that the update can't be installed while I'm working. It takes about forty minutes, and the laptop has to restart twice. Yesterday, however, an important program stopped opening on my laptop. If I had installed the update earlier, it probably would have worked fine. I spent the whole morning on the phone with a support technician instead. Now I wish I had just let it run on Sunday night.",
+            "pt-BR": "Faz duas semanas que meu notebook pede para eu instalar uma atualização. Toda vez que a mensagem aparece, clico no botão que diz \"lembrar mais tarde\". O problema é que a atualização não pode ser instalada enquanto estou trabalhando. Ela leva uns quarenta minutos, e o notebook precisa reiniciar duas vezes. Ontem, porém, um programa importante parou de abrir no notebook. Se eu tivesse instalado a atualização antes, provavelmente estaria tudo funcionando. Em vez disso, passei a manhã inteira no telefone com o suporte técnico. Agora queria ter simplesmente deixado ela rodar no domingo à noite."
+        },
+        {
+            "id": "tecnologia-n8-f01",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I've been trying to connect to the Wi-Fi for twenty minutes.",
+            "pt-BR": "Faz vinte minutos que estou tentando conectar no Wi-Fi."
+        },
+        {
+            "id": "tecnologia-n8-f02",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "If you had saved the file, we wouldn't have lost the whole report.",
+            "pt-BR": "Se você tivesse salvado o arquivo, a gente não teria perdido o relatório inteiro."
+        },
+        {
+            "id": "tecnologia-n8-f03",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "I wish my phone battery lasted a little longer during the day.",
+            "pt-BR": "Queria que a bateria do meu celular durasse um pouco mais durante o dia."
+        },
+        {
+            "id": "tecnologia-n8-f04",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Your password should be changed at least once or twice a year.",
+            "pt-BR": "É bom trocar a senha pelo menos uma ou duas vezes por ano."
+        },
+        {
+            "id": "tecnologia-n8-f05",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "Could you share your screen so everyone can see the same thing?",
+            "pt-BR": "Você pode compartilhar a tela para todo mundo ver a mesma coisa?"
+        },
+        {
+            "id": "tecnologia-n8-f06",
+            "tema": "tecnologia",
+            "nivel": 8,
+            "tipo": "frase",
+            "en": "How long have you been waiting for that update to finish downloading?",
+            "pt-BR": "Faz quanto tempo que você está esperando essa atualização terminar de baixar?"
+        },
+        {
+            "id": "tecnologia-n9-t01",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Having spent a week on a camping trip without my phone, I returned with mixed feelings. The first two days were, to put it mildly, rather uncomfortable. I kept reaching for my pocket whenever there was a quiet moment. By the third day, though, I had stopped noticing its absence altogether. Had I known how calm I would feel, I would have tried it years ago. If I hadn't gone on that trip, I'd probably still be checking messages at midnight. Back home, the old habits crept back in faster than I'd care to admit. Still, my phone now stays in another room during dinner, and nobody has complained.",
+            "pt-BR": "Depois de passar uma semana acampando sem o celular, voltei com sentimentos contraditórios. Os dois primeiros dias foram, para dizer o mínimo, bem desconfortáveis. Eu levava a mão ao bolso toda vez que havia um momento de silêncio. No terceiro dia, porém, eu já nem percebia mais a falta dele. Se eu soubesse a paz que ia sentir, teria tentado anos antes. Se não tivesse feito aquela viagem, provavelmente ainda estaria olhando mensagens à meia-noite. De volta em casa, os velhos hábitos voltaram mais rápido do que eu gostaria de admitir. Mesmo assim, agora o celular fica em outro cômodo durante o jantar, e ninguém reclamou."
+        },
+        {
+            "id": "tecnologia-n9-t02",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "An email from the office technology team arrived this morning, written in its usual formal style. It stated that all staff were required to turn on two-step verification by Friday. Failure to comply, it added, would result in a temporary suspension of access. In plain English, that means typing a code from your phone whenever you log in. Most of my coworkers, needless to say, rolled their eyes at the extra step. Seen from the security team's side, however, the request makes perfect sense. Were someone to steal my password, that code would stop them in their tracks. I grumbled for a minute, then set it up in under five minutes. If I were in charge, I would have sent the same message months ago.",
+            "pt-BR": "Hoje de manhã chegou um e-mail da equipe de tecnologia do escritório, no estilo formal de sempre. Dizia que todos os funcionários deveriam ativar a verificação em duas etapas até sexta-feira. O não cumprimento, acrescentava, resultaria na suspensão temporária do acesso. Traduzindo: digitar um código do celular toda vez que você entra no sistema. A maior parte do pessoal do trabalho, nem preciso dizer, revirou os olhos para a etapa a mais. Do lado da equipe de segurança, porém, o pedido faz todo o sentido. Se alguém roubasse a minha senha, esse código barraria a pessoa na hora. Resmunguei por um minuto e depois configurei tudo em menos de cinco minutos. Se dependesse de mim, eu teria mandado a mesma mensagem meses atrás."
+        },
+        {
+            "id": "tecnologia-n9-t03",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "texto",
+            "en": "Some people argue that artificial intelligence will soon do most of our everyday thinking for us. In my view, it will change how we work rather than replace us entirely. Routine tasks, such as sorting emails or summarizing documents, are already being handed over to software. Judgment, on the other hand, remains stubbornly human, at least for now. Had my parents heard about these tools thirty years ago, they would have laughed it off. Yet here we are, asking a program to plan a trip or fix a spreadsheet. Used wisely, these tools can save us several hours every week. Used carelessly, they can produce confident nonsense that nobody bothers to check. The trick, as with any new technology, is knowing when to trust it.",
+            "pt-BR": "Há quem diga que a inteligência artificial logo vai pensar por nós na maior parte do dia a dia. Na minha opinião, ela vai mudar a forma como trabalhamos, em vez de nos substituir por completo. Tarefas rotineiras, como organizar e-mails ou resumir documentos, já estão sendo passadas para programas. O discernimento, por outro lado, continua teimosamente humano, pelo menos por enquanto. Se meus pais tivessem ouvido falar dessas ferramentas trinta anos atrás, teriam dado risada. E aqui estamos nós, pedindo a um programa que planeje uma viagem ou conserte uma planilha. Usadas com sabedoria, essas ferramentas podem nos poupar várias horas por semana. Usadas sem cuidado, podem produzir bobagens ditas com toda a confiança, que ninguém se dá ao trabalho de conferir. O segredo, como em qualquer tecnologia nova, é saber quando confiar nela."
+        },
+        {
+            "id": "tecnologia-n9-f01",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "If I'd charged my phone last night, I wouldn't be stuck without a map now.",
+            "pt-BR": "Se eu tivesse carregado o celular ontem à noite, não estaria agora sem mapa."
+        },
+        {
+            "id": "tecnologia-n9-f02",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Should the video call drop again, just send me a message and I'll call back.",
+            "pt-BR": "Se a videochamada cair de novo, é só me mandar uma mensagem que eu ligo de volta."
+        },
+        {
+            "id": "tecnologia-n9-f03",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Having restarted the router twice, I'm starting to think the problem is on their end.",
+            "pt-BR": "Já reiniciei o roteador duas vezes; tô começando a achar que o problema é do lado deles."
+        },
+        {
+            "id": "tecnologia-n9-f04",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Would you mind muting your microphone while you're not speaking, to cut the noise?",
+            "pt-BR": "Você se importa de deixar o microfone no mudo enquanto não estiver falando, para diminuir o barulho?"
+        },
+        {
+            "id": "tecnologia-n9-f05",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "I'm not very good with computers, so bear with me for a second.",
+            "pt-BR": "Eu não me dou muito bem com computador, então tenha um pouquinho de paciência comigo."
+        },
+        {
+            "id": "tecnologia-n9-f06",
+            "tema": "tecnologia",
+            "nivel": 9,
+            "tipo": "frase",
+            "en": "Let's call it a day and pick this up after the update finishes.",
+            "pt-BR": "Vamos parar por hoje e retomar depois que a atualização terminar."
+        },
+        {
+            "id": "tecnologia-n10-t01",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "No sooner had I walked into my parents' house than my father pointed gravely at the printer. It had refused to print anything for a week, and he was convinced it was beyond repair. What he had failed to notice was a tiny message blinking on its screen. The paper tray, it turned out, had simply been pushed in the wrong way. Hardly had I fixed it when he asked whether I could also look at the television. My mother, ever diplomatic, suggested that I be given a cup of coffee before anything else. It is during these visits that I realize how intimidating everyday devices can be. For my parents, every unexpected beep feels like a warning of some costly disaster. Patience, rather than technical skill, is what they need most from me on such afternoons.",
+            "pt-BR": "Mal entrei na casa dos meus pais, meu pai apontou, com ar grave, para a impressora. Fazia uma semana que ela se recusava a imprimir qualquer coisa, e ele estava convencido de que não tinha mais conserto. O que ele não tinha notado era uma mensagem minúscula piscando na tela. A bandeja de papel, como se descobriu, só tinha sido encaixada do jeito errado. Assim que resolvi o problema, ele perguntou se eu podia dar uma olhada na televisão também. Minha mãe, diplomática como sempre, sugeriu que me servissem um café antes de qualquer outra coisa. É nessas visitas que percebo como os aparelhos do dia a dia podem ser intimidantes. Para os meus pais, cada bipe inesperado soa como o aviso de algum desastre caro. Paciência, mais do que conhecimento técnico, é o que eles mais precisam de mim nessas tardes."
+        },
+        {
+            "id": "tecnologia-n10-t02",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "Despite the remarkable convenience of automatic updates, I have always been somewhat wary of them. Seldom does a month pass without my phone rearranging some menu I had finally memorized. What irritates me is not change itself but the way it arrives unannounced, usually at the least convenient moment. Were I to postpone every update indefinitely, however, I would be leaving my devices needlessly exposed. The technicians I have spoken to insist that updates be installed promptly, since most of them fix security flaws. It was this argument, rather than any newfound enthusiasm, that eventually persuaded me. I have therefore reached an uneasy truce with my devices and their relentless notifications. Updates are now scheduled for the small hours, when I am asleep and blissfully unaware. Whether this counts as wisdom or mere resignation is a question I prefer not to examine too closely.",
+            "pt-BR": "Apesar da notável comodidade das atualizações automáticas, sempre desconfiei um pouco delas. Raramente passa um mês sem que meu celular reorganize algum menu que eu finalmente tinha decorado. O que me irrita não é a mudança em si, mas o fato de ela chegar sem aviso, geralmente no momento menos oportuno. Se eu adiasse todas as atualizações indefinidamente, porém, deixaria meus aparelhos expostos sem necessidade. O pessoal da área técnica com quem conversei insiste que as atualizações sejam instaladas logo, já que a maioria corrige falhas de segurança. Foi esse argumento, e não algum entusiasmo recém-descoberto, que acabou me convencendo. Cheguei, portanto, a uma trégua precária com meus aparelhos e suas notificações implacáveis. Agora as atualizações ficam programadas para a madrugada, enquanto durmo, sem tomar conhecimento de nada. Se isso é sabedoria ou mera resignação, é uma pergunta que prefiro não examinar muito de perto."
+        },
+        {
+            "id": "tecnologia-n10-t03",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "texto",
+            "en": "There is a particular kind of dread that accompanies a family group chat with forty unread messages. Rarely do any of them contain information that could not have waited until the weekend. Buried among the photos of sunsets and forwarded jokes, however, there is occasionally something genuinely important. Last month, I missed my cousin's change of plans entirely and turned up at an empty restaurant. Not until I scrolled back through two days of conversation did I find the message. My cousin, to her credit, apologized and proposed that urgent news be sent individually from now on. It is a modest rule, yet it has noticeably reduced the background noise in my life. What I have come to appreciate is that silence, in a group chat, is not necessarily rude.",
+            "pt-BR": "Existe um tipo particular de pavor que acompanha um grupo da família com quarenta mensagens não lidas. Raramente alguma delas traz uma informação que não pudesse esperar até o fim de semana. Escondida entre fotos de pôr do sol e piadas encaminhadas, porém, de vez em quando há algo realmente importante. No mês passado, perdi por completo a mudança de planos da minha prima e fui parar num restaurante vazio. Só quando voltei dois dias inteiros de conversa foi que encontrei a mensagem. Minha prima, justiça seja feita, pediu desculpas e propôs que, dali em diante, notícias urgentes fossem mandadas individualmente. É uma regra modesta, mas reduziu visivelmente o ruído de fundo na minha vida. O que passei a valorizar é que o silêncio, num grupo, não é necessariamente falta de educação."
+        },
+        {
+            "id": "tecnologia-n10-f01",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Under no circumstances should you share your password, not even with someone from the support team.",
+            "pt-BR": "Em hipótese alguma passe a sua senha para alguém, nem mesmo para alguém da equipe de suporte."
+        },
+        {
+            "id": "tecnologia-n10-f02",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "It was the router, not my laptop, that kept dropping the connection all yesterday afternoon.",
+            "pt-BR": "Foi o roteador, e não o meu notebook, que ficou derrubando a conexão a tarde inteira ontem."
+        },
+        {
+            "id": "tecnologia-n10-f03",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "I'd suggest that everyone turn off their cameras for a moment until the connection improves.",
+            "pt-BR": "Eu sugeriria que todo mundo desligasse a câmera por um instante até a conexão melhorar."
+        },
+        {
+            "id": "tecnologia-n10-f04",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Hardly had I opened the laptop when the battery warning started flashing on the screen.",
+            "pt-BR": "Mal abri o notebook, o aviso de bateria fraca começou a piscar na tela."
+        },
+        {
+            "id": "tecnologia-n10-f05",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "What I'd really appreciate is a phone that lasts a full day without needing a charge.",
+            "pt-BR": "O que eu gostaria mesmo é de um celular que aguentasse um dia inteiro sem precisar carregar."
+        },
+        {
+            "id": "tecnologia-n10-f06",
+            "tema": "tecnologia",
+            "nivel": 10,
+            "tipo": "frase",
+            "en": "Were the update to take longer than 20 minutes, could we postpone the call until tomorrow morning?",
+            "pt-BR": "Caso a atualização leve mais de 20 minutos, podemos adiar a chamada para amanhã de manhã?"
+        }
+    ]
 }
