@@ -21,6 +21,11 @@ interface Catalogo
     public function temas(Nivel $nivel, TipoDeItem $tipo): array;
 
     /**
+     * @return list<Tema>
+     */
+    public function temasPresentes(): array;
+
+    /**
      * @return list<string>
      */
     public function idiomas(): array;

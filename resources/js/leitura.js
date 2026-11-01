@@ -34,7 +34,6 @@ export const leitura = () =>
                 preferencias().definir({ nivel });
                 this.limparTraducao();
             });
-            this.$wire.$watch('tema', (tema) => preferencias().definir({ tema: tema || null }));
         },
         get idioma() {
             return this.invertido ? this.$wire.nativa : this.$wire.treino;

@@ -1,6 +1,7 @@
 @php
     $ativos = \App\Textos\Idioma::deCodigos(app(\App\Textos\Catalogo::class)->idiomas());
     $googleDisponivel = filled(config('services.google_translate.key'));
+    $temasPresentes = app(\App\Textos\Catalogo::class)->temasPresentes();
     $gestao = app(\App\Gestao\Gestao::class);
     $gestaoLigada = $gestao->ligada();
     $gestaoAtiva = $gestao->ativa();
@@ -44,6 +45,24 @@
   </div>
   <div id="idiomas-erro" aria-live="polite">
     <div class="alerta-erro" x-show="mesma" x-cloak><x-icone nome="alerta" /><p class="text-[13px]">{{ __('config.idiomas.erro_mesma') }}</p></div>
+  </div>
+</section>
+
+<section id="tema" class="painel flex flex-col gap-3 scroll-mt-4" aria-labelledby="t-tema">
+  <h2 id="t-tema" class="rotulo">{{ __('temas.titulo') }}</h2>
+  <div class="flex flex-col gap-1.5 max-w-[320px]">
+    <label for="tema-treino" class="text-[13px] font-medium">{{ __('temas.titulo') }}</label>
+    <select id="tema-treino" class="campo campo-sm" x-ref="temaTreino" x-model="temaTreino" x-on:change="salvarTemaTreino()" @disabled($temasPresentes === []) aria-describedby="{{ $temasPresentes === [] ? 'tema-sem-temas' : 'tema-ajuda' }}">
+      <option value="">{{ __('temas.todos') }}</option>
+      @foreach ($temasPresentes as $opcao)
+      <option value="{{ $opcao->value }}">{{ $opcao->nome() }}</option>
+      @endforeach
+    </select>
+    @if ($temasPresentes === [])
+    <p id="tema-sem-temas" class="text-[12px] text-mut">{{ __('temas.sem_temas') }}</p>
+    @else
+    <p id="tema-ajuda" class="text-[12px] text-mut">{{ __('temas.ajuda') }}</p>
+    @endif
   </div>
 </section>
 

@@ -45,6 +45,8 @@ const gravar = (prefs, cfg) => {
     document.cookie = `${cfg.cookie}=${encodeURIComponent(JSON.stringify(prefs))}; path=/; max-age=31536000; SameSite=Lax${seguro()}`;
 };
 
+export const temaDaLista = (tema, opcoes) => (tema && opcoes.includes(tema) ? tema : '');
+
 export const preferencias = () => {
     const cfg = config();
     const api = {

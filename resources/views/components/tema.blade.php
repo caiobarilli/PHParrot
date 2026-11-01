@@ -1,19 +1,8 @@
-@props(['tema', 'temas', 'vazio' => false])
-@php($descricao = trim(($vazio ? 'tema-vazio ' : '').($temas === [] ? 'tema-sem-temas' : '')))
+@props(['tema', 'vazio' => false])
+@php($escolhido = \App\Textos\Tema::tentar($tema))
 <div class="flex flex-col gap-1">
-  <div class="flex items-center gap-2">
-    <label for="tema" class="text-[13px] text-mut">{{ __('temas.titulo') }}</label>
-    <select id="tema" class="campo campo-sm !w-auto max-w-[200px]" wire:key="tema-{{ $tema }}-{{ implode('.', array_keys($temas)) }}" wire:change="mudarTema($event.target.value)" @disabled($temas === []) @if ($descricao !== '') aria-describedby="{{ $descricao }}" @endif>
-      <option value="" @selected($tema === '')>{{ __('temas.todos') }}</option>
-      @foreach ($temas as $slug => $nome)
-      <option value="{{ $slug }}" @selected($tema === $slug)>{{ $nome }}</option>
-      @endforeach
-    </select>
-  </div>
+  <a href="{{ route('configuracao') }}#tema" class="tag hover:underline" title="{{ __('temas.mudar') }}" @if ($vazio) aria-describedby="tema-vazio" @endif>{{ $escolhido ? __('temas.etiqueta', ['tema' => $escolhido->nome()]) : __('temas.todos_os_temas') }}</a>
   @if ($vazio)
   <p id="tema-vazio" class="text-[12px] text-mut" role="status">{{ __('temas.vazio') }}</p>
-  @endif
-  @if ($temas === [])
-  <p id="tema-sem-temas" class="text-[12px] text-mut">{{ __('temas.sem_temas') }}</p>
   @endif
 </div>

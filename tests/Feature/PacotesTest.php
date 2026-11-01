@@ -154,6 +154,7 @@ it('sorteia só no tema pedido e lista só os temas com itens no nível', functi
 
     expect($catalogo->temas(new Nivel(1), TipoDeItem::Frase))->toBe([Tema::Comida, Tema::Lazer])
         ->and($catalogo->temas(new Nivel(2), TipoDeItem::Frase))->toBe([Tema::Comida])
+        ->and($catalogo->temasPresentes())->toBe([Tema::Comida, Tema::Lazer])
         ->and($catalogo->sortear(new Nivel(1), TipoDeItem::Frase, null, Tema::Saude))->toBeNull();
 });
 
@@ -161,6 +162,8 @@ it('a fábrica de transição não tem nenhum tema', function (): void {
     foreach (Nivel::todos() as $nivel) {
         expect(catalogoAtual()->temas($nivel, TipoDeItem::Texto))->toBe([]);
     }
+
+    expect(catalogoAtual()->temasPresentes())->toBe([]);
 });
 
 it('o Apagar banco apaga os pacotes importados e volta para a fábrica', function (): void {

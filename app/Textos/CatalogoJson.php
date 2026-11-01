@@ -196,6 +196,19 @@ final readonly class CatalogoJson implements Catalogo
         return array_values(array_filter(Tema::cases(), fn (Tema $tema): bool => in_array($tema, $presentes, true)));
     }
 
+    public function temasPresentes(): array
+    {
+        $presentes = [];
+
+        foreach (Nivel::todos() as $nivel) {
+            foreach (TipoDeItem::cases() as $tipo) {
+                array_push($presentes, ...$this->temas($nivel, $tipo));
+            }
+        }
+
+        return array_values(array_filter(Tema::cases(), fn (Tema $tema): bool => in_array($tema, $presentes, true)));
+    }
+
     public function idiomas(): array
     {
         return $this->idiomas;

@@ -17,5 +17,9 @@ return [
     'todos' => 'Todos',
     'sem_tema' => 'Sem tema',
     'sem_temas' => 'Os temas aparecem quando um pacote com temas estiver ativo.',
+    'etiqueta' => 'Tema: :tema',
+    'todos_os_temas' => 'Todos os temas',
+    'mudar' => 'Mudar o tema na Configuração',
+    'ajuda' => 'Vale para a Leitura, a Fala e a Escuta. Com Todos, o sorteio usa o pacote inteiro.',
     'vazio' => 'Esse tema não tem itens neste nível. Mostrando todos.',
 ];

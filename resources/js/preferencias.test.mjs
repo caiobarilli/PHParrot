@@ -34,7 +34,7 @@ const instalar = (protocolo) => {
     return { armazenado, escritas };
 };
 
-const { preferencias } = await import('./preferencias.js');
+const { preferencias, temaDaLista } = await import('./preferencias.js');
 
 let ambiente;
 
@@ -105,5 +105,19 @@ test('restaurar fábrica também limpa o tema', () => {
     api.restaurar();
 
     assert.equal(ambiente.armazenado.has('phparrot.preferencias'), false);
+    assert.match(ambiente.escritas.at(-1), /^phparrot_prefs=; path=\/; max-age=0/);
     assert.equal(preferencias().atual.tema, null);
+});
+
+test('o tema escolhido na configuração vale para as próximas telas', () => {
+    preferencias().definir({ tema: 'comida', nivel: 3 });
+
+    assert.equal(preferencias().atual.tema, 'comida');
+    assert.equal(preferencias().atual.nivel, 3);
+});
+
+test('a configuração só mostra o tema salvo quando ele está entre as opções', () => {
+    assert.equal(temaDaLista('comida', ['', 'comida', 'lazer']), 'comida');
+    assert.equal(temaDaLista('lazer', ['', 'comida']), '');
+    assert.equal(temaDaLista(null, ['', 'comida']), '');
 });

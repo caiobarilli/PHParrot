@@ -10,7 +10,7 @@
       <span class="tag !bg-transparent border border-line !text-mut !font-medium" x-show="traduzidoAuto" x-cloak>{{ __('leitura.traduzido_auto') }}</span>
     </div>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <x-tema :tema="$tema" :temas="$temas" :vazio="$temaVazio" />
+      <x-tema :tema="$tema" :vazio="$temaVazio" />
       <x-nivel :nivel="$nivel" />
     </div>
   </div>

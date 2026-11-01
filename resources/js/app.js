@@ -1,7 +1,7 @@
 import { escuta } from './escuta.js';
 import { fala } from './fala.js';
 import { leitura } from './leitura.js';
-import { preferencias, sincronizar } from './preferencias.js';
+import { preferencias, sincronizar, temaDaLista } from './preferencias.js';
 import { textosGestao } from './textos.js';
 import { carregarVozes, gravarVozSalva, lerVozesSalvas, vozesDoIdioma } from './voz.js';
 
@@ -20,6 +20,7 @@ document.addEventListener('alpine:init', () => {
             nativa: api.atual.nativa,
             treino: api.atual.treino,
             traducao: api.atual.traducao,
+            temaTreino: '',
             tema: document.documentElement.dataset.preferencia ?? 'sistema',
             confirmando: false,
             apagar: 0,
@@ -39,6 +40,9 @@ document.addEventListener('alpine:init', () => {
             vozSalva: { ...lerVozesSalvas() },
             carregouVozes: false,
             init() {
+                const opcoes = this.$refs.temaTreino ? [...this.$refs.temaTreino.options].map((opcao) => opcao.value) : [];
+                this.temaTreino = temaDaLista(api.atual.tema, opcoes);
+
                 if (!('speechSynthesis' in window)) {
                     this.carregouVozes = true;
 
@@ -70,6 +74,9 @@ document.addEventListener('alpine:init', () => {
 
                 api.definir({ nativa: this.nativa, treino: this.treino });
                 window.location.reload();
+            },
+            salvarTemaTreino() {
+                api.definir({ tema: this.temaTreino || null });
             },
             salvarTraducao() {
                 api.definir({ traducao: this.traducao });

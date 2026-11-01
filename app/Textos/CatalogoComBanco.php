@@ -43,6 +43,11 @@ final readonly class CatalogoComBanco implements Catalogo
         return $this->sorteaveis->temas($nivel, $tipo);
     }
 
+    public function temasPresentes(): array
+    {
+        return $this->sorteaveis->temasPresentes();
+    }
+
     public function idiomas(): array
     {
         return $this->base->idiomas();

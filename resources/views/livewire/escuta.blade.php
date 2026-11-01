@@ -5,7 +5,7 @@
   <div class="flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-2"><h2 id="t-escuta" class="rotulo">{{ __('escuta.audio') }}</h2><span class="tag">{{ $treinoSigla }}</span></div>
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <x-tema :tema="$tema" :temas="$temas" :vazio="$temaVazio" />
+      <x-tema :tema="$tema" :vazio="$temaVazio" />
       <x-nivel :nivel="$nivel" />
     </div>
   </div>

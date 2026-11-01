@@ -21,7 +21,6 @@ export const fala = () =>
                 this.frase = this.$wire.frase;
             });
             this.$wire.$watch('nivel', (nivel) => preferencias().definir({ nivel }));
-            this.$wire.$watch('tema', (tema) => preferencias().definir({ tema: tema || null }));
         },
         get idioma() {
             return this.$wire.treino;
