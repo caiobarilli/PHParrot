@@ -57,3 +57,21 @@ Evidência: `tests/Feature/MigracoesTest.php` (só `auth.defaults.passwords` fic
 O job `sarif` do `containers.yml` falhou nas quatro categorias com "ref 'refs/heads/entrega-9-ci' not found": a branch foi apagada no GitHub enquanto o run rodava, e o `upload-sarif` precisa do ref. Esperar o run terminar antes de apagar a branch. O run da `main` com o mesmo commit passou inteiro.
 
 Evidência: `.github/workflows/containers.yml` (job `sarif`, `github/codeql-action/upload-sarif`).
+
+## Lista de `-e` numa variável sem aspas não vira palavras no zsh
+
+`E="-e DB_DATABASE=... -e ..."` e depois `docker exec $E` mandam um argumento só, e o Docker cria uma variável com espaço no nome. Na rodada 20, isso fez a prova do backup rodar no banco real do dev. Use um array (`E=(-e "A=1" -e "B=2")` e `"${E[@]}"`) num script bash, e uma trava que confira o banco ativo pelo `artisan` e aborte se não for o de teste.
+
+Evidência: `bin/phparrot` (`containers=(...)` e `"${containers[@]}"`).
+
+## O `.env` não se lê, nem para contar
+
+Nada de `cat`, `grep`, `grep -c` ou contagem de linhas no `.env`. Para saber uma configuração, pergunte ao app: `php artisan config:show <chave>` ou `php artisan about --only=environment --json`, que mostram só o necessário.
+
+Evidência: `bin/phparrot` (`exigir_producao` usa `artisan about --json`).
+
+## O gate roda na árvore inteira, não no commit
+
+Com outras mudanças na árvore, o gate verde não prova o commit. Isolado: `git add` só os arquivos do commit, `git stash push --keep-index --include-untracked`, gate, commit e `git stash pop`. Com gate vermelho, antes do `pop`, só descarte um arquivo da árvore depois de conferir com `git show stash@{0}:<arquivo> | cmp - <arquivo>`.
+
+Evidência: o `composer gate` em `composer.json` (`scripts.gate`) roda lint, Larastan e Pest no projeto todo.
