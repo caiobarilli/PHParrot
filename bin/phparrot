@@ -29,10 +29,12 @@ no_node() { docker exec "$NODE" "$@"; }
 
 ajuda() {
     cat <<'TEXTO'
-Uso: bin/phparrot <comando>
+Uso: bin/phparrot <comando> [dev|prod]
 
   setup   Sobe tudo do zero ou confere o que já existe: .env, containers,
           dependências, chave, banco e assets. Pode rodar de novo quando quiser.
+          O ambiente padrão é dev. Em prod: sem o phparrot-node, nginx só em
+          127.0.0.1, composer sem dev, caches do Laravel e assets já construídos.
   dev     Vite com recarga no phparrot-node e os logs do Laravel (pail) no
           phparrot-php. Ctrl+C para os dois.
 TEXTO
@@ -72,11 +74,25 @@ terraform_aplicar() {
     rm -f "$plano"
 }
 
+exigir_producao() {
+    local sobre
+    sobre="$(no_php php artisan about --only=environment --json)"
+    printf '%s' "$sobre" | grep -q '"environment":"production"' || falha "em prod, o .env precisa de APP_ENV=production."
+    printf '%s' "$sobre" | grep -q '"debug_mode":false' || falha "em prod, o .env precisa de APP_DEBUG=false."
+    info "APP_ENV=production e APP_DEBUG=false, lidos do .env."
+}
+
 fora_do_container() {
     [ ! -f /.dockerenv ] || falha "rode bin/phparrot no host (no WSL), não dentro de um container: ele usa o Docker e o Terraform da máquina."
 }
 
 setup() {
+    local ambiente="${1:-dev}"
+    case "$ambiente" in
+        dev | prod) ;;
+        *) falha "ambiente '$ambiente' desconhecido. Use dev ou prod." ;;
+    esac
+    export TF_VAR_ambiente="$ambiente"
     fora_do_container
     exigir docker "Instale o Docker (no Windows, o Docker Desktop integrado ao WSL2)."
     exigir terraform "Instale o Terraform 1.3 ou superior."
@@ -91,14 +107,22 @@ setup() {
         info "Criado a partir do .env.example."
     fi
 
-    passo "Containers (Terraform)"
+    passo "Containers (Terraform, ambiente $ambiente)"
     terraform_aplicar
-    for container in "$PHP" "$NODE"; do
+    local containers=("$PHP")
+    [ "$ambiente" = dev ] && containers+=("$NODE")
+    for container in "${containers[@]}"; do
         rodando "$container" || falha "o container $container não está rodando."
     done
 
-    passo "Dependências do PHP (composer install)"
-    no_php composer install --no-interaction --no-progress --quiet
+    if [ "$ambiente" = prod ]; then
+        passo "Dependências do PHP (composer install --no-dev)"
+        no_php composer install --no-interaction --no-progress --quiet --no-dev --optimize-autoloader
+        exigir_producao
+    else
+        passo "Dependências do PHP (composer install)"
+        no_php composer install --no-interaction --no-progress --quiet
+    fi
     info "Prontas."
 
     passo "Chave do app e banco"
@@ -114,10 +138,23 @@ setup() {
     [ -f database/database.sqlite ] || touch database/database.sqlite
     no_php php artisan migrate --force --no-interaction | grep -v '^\s*$' | sed 's/^ */    /'
 
-    passo "Dependências do JavaScript e assets (phparrot-node)"
-    no_node npm ci --no-audit --no-fund --silent
-    no_node npm run build --silent >/dev/null
-    info "node_modules pelo npm ci e assets em public/build."
+    if [ "$ambiente" = prod ]; then
+        passo "Assets e caches do Laravel"
+        [ -f public/build/manifest.json ] || falha "faltam os assets em public/build. Em prod o setup não roda npm: o build precisa chegar pronto."
+        info "Assets em public/build, vindos do build."
+        for cache in config route view; do
+            no_php php artisan "${cache}:cache" --no-interaction >/dev/null
+        done
+        info "config:cache, route:cache e view:cache prontos."
+    else
+        passo "Dependências do JavaScript e assets (phparrot-node)"
+        for cache in config route view; do
+            no_php php artisan "${cache}:clear" --no-interaction >/dev/null
+        done
+        no_node npm ci --no-audit --no-fund --silent
+        no_node npm run build --silent >/dev/null
+        info "node_modules pelo npm ci e assets em public/build."
+    fi
 
     if ! rodando "$AGENDA"; then
         docker start "$AGENDA" >/dev/null
@@ -176,7 +213,7 @@ dev() {
 }
 
 case "${1:-}" in
-    setup) setup ;;
+    setup) setup "${2:-dev}" ;;
     dev) dev ;;
     -h | --help | help | '') ajuda ;;
     *)

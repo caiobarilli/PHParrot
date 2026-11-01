@@ -1,5 +1,6 @@
 locals {
   project_path = coalesce(var.project_path, abspath("${path.module}/.."))
+  prod         = var.ambiente == "prod"
 
   whisper_sha1 = {
     base  = "465707469ff3a37a2b9b8d8f89f2f99de7299dac"
@@ -100,6 +101,7 @@ resource "docker_container" "nginx" {
   ports {
     internal = 80
     external = var.app_port
+    ip       = local.prod ? "127.0.0.1" : "0.0.0.0"
   }
 
   depends_on = [
@@ -108,12 +110,19 @@ resource "docker_container" "nginx" {
 }
 
 resource "docker_image" "node" {
-  name = "node:24.22.2"
+  count = local.prod ? 0 : 1
+  name  = "node:24.22.2"
+}
+
+moved {
+  from = docker_image.node
+  to   = docker_image.node[0]
 }
 
 resource "docker_container" "node" {
+  count       = local.prod ? 0 : 1
   name        = "phparrot-node"
-  image       = docker_image.node.image_id
+  image       = docker_image.node[0].image_id
   user        = "1000:1000"
   working_dir = "/var/www/html"
 
@@ -136,6 +145,11 @@ resource "docker_container" "node" {
   ]
 
   tty = true
+}
+
+moved {
+  from = docker_container.node
+  to   = docker_container.node[0]
 }
 
 resource "docker_image" "whisper" {
