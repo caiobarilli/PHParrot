@@ -12,6 +12,7 @@ enum Idioma: string
     case Fr = 'fr';
     case De = 'de';
     case It = 'it';
+    case Ru = 'ru';
 
     /**
      * @param  list<string>  $codigos
@@ -44,6 +45,7 @@ enum Idioma: string
             self::Fr => 'fr-FR',
             self::De => 'de-DE',
             self::It => 'it-IT',
+            self::Ru => 'ru-RU',
         };
     }
 

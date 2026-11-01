@@ -26,11 +26,68 @@ test('números de 0 a 100 por extenso em português', () => {
     assert.equal(porExtenso(100, 'pt-BR'), 'cem');
 });
 
+test('números de 0 a 100 por extenso em espanhol', () => {
+    assert.equal(porExtenso(0, 'es'), 'cero');
+    assert.equal(porExtenso(16, 'es'), 'dieciséis');
+    assert.equal(porExtenso(21, 'es'), 'veintiuno');
+    assert.equal(porExtenso(22, 'es'), 'veintidós');
+    assert.equal(porExtenso(31, 'es'), 'treinta y uno');
+    assert.equal(porExtenso(99, 'es'), 'noventa y nueve');
+    assert.equal(porExtenso(100, 'es'), 'cien');
+});
+
+test('números de 0 a 100 por extenso em francês, com o hífen como espaço', () => {
+    assert.equal(porExtenso(0, 'fr'), 'zéro');
+    assert.equal(porExtenso(17, 'fr'), 'dix sept');
+    assert.equal(porExtenso(21, 'fr'), 'vingt et un');
+    assert.equal(porExtenso(22, 'fr'), 'vingt deux');
+    assert.equal(porExtenso(70, 'fr'), 'soixante dix');
+    assert.equal(porExtenso(71, 'fr'), 'soixante et onze');
+    assert.equal(porExtenso(77, 'fr'), 'soixante dix sept');
+    assert.equal(porExtenso(80, 'fr'), 'quatre vingts');
+    assert.equal(porExtenso(81, 'fr'), 'quatre vingt un');
+    assert.equal(porExtenso(91, 'fr'), 'quatre vingt onze');
+    assert.equal(porExtenso(99, 'fr'), 'quatre vingt dix neuf');
+    assert.equal(porExtenso(100, 'fr'), 'cent');
+});
+
+test('números de 0 a 100 por extenso em alemão', () => {
+    assert.equal(porExtenso(0, 'de'), 'null');
+    assert.equal(porExtenso(1, 'de'), 'eins');
+    assert.equal(porExtenso(21, 'de'), 'einundzwanzig');
+    assert.equal(porExtenso(30, 'de'), 'dreißig');
+    assert.equal(porExtenso(77, 'de'), 'siebenundsiebzig');
+    assert.equal(porExtenso(100, 'de'), 'hundert');
+});
+
+test('números de 0 a 100 por extenso em italiano, com a vogal que cai', () => {
+    assert.equal(porExtenso(0, 'it'), 'zero');
+    assert.equal(porExtenso(21, 'it'), 'ventuno');
+    assert.equal(porExtenso(23, 'it'), 'ventitré');
+    assert.equal(porExtenso(28, 'it'), 'ventotto');
+    assert.equal(porExtenso(42, 'it'), 'quarantadue');
+    assert.equal(porExtenso(100, 'it'), 'cento');
+});
+
+test('números de 0 a 100 por extenso em russo, no nominativo', () => {
+    assert.equal(porExtenso(0, 'ru'), 'ноль');
+    assert.equal(porExtenso(2, 'ru'), 'два');
+    assert.equal(porExtenso(21, 'ru'), 'двадцать один');
+    assert.equal(porExtenso(40, 'ru'), 'сорок');
+    assert.equal(porExtenso(99, 'ru'), 'девяносто девять');
+    assert.equal(porExtenso(100, 'ru'), 'сто');
+});
+
+test('o russo trata ё e е como a mesma letra', () => {
+    assert.equal(normalizar('Ещё всё', 'ru'), 'еще все');
+    assert.equal(normalizar('Мне 21 год', 'ru'), 'мне двадцать один год');
+});
+
 test('números fora de 0 a 100 e idiomas sem tabela ficam como estão', () => {
     assert.equal(porExtenso(101, 'en'), null);
     assert.equal(porExtenso(-1, 'en'), null);
     assert.equal(porExtenso(1.5, 'en'), null);
-    assert.equal(porExtenso(5, 'fr'), null);
+    assert.equal(porExtenso(5, 'ja'), null);
 });
 
 test('a normalização tira caixa, pontuação e espaços repetidos', () => {

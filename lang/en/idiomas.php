@@ -9,5 +9,6 @@ return [
     'fr' => 'French',
     'de' => 'German',
     'it' => 'Italian',
+    'ru' => 'Russian',
     'em_breve' => 'coming soon',
 ];

@@ -10,11 +10,13 @@ it('monta a sigla a partir do código', function (Idioma $idioma, string $sigla)
     [Idioma::PtBr, 'PT'],
     [Idioma::En, 'EN'],
     [Idioma::Es, 'ES'],
+    [Idioma::Ru, 'RU'],
 ]);
 
 it('usa a voz regional de cada idioma', function (): void {
     expect(Idioma::En->voz())->toBe('en-US')
-        ->and(Idioma::PtBr->voz())->toBe('pt-BR');
+        ->and(Idioma::PtBr->voz())->toBe('pt-BR')
+        ->and(Idioma::Ru->voz())->toBe('ru-RU');
 });
 
 it('usa o locale do Laravel de cada idioma', function (): void {

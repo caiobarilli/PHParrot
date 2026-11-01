@@ -3,11 +3,13 @@ import { porExtenso } from './numeros.js';
 const APOSTROFOS = /[’‘ʼ`´]/g;
 const NUMERO = /^(?:0|[1-9]\d{0,2})$/;
 
+const chaveDe = (palavra) => palavra.toLowerCase().replaceAll('ё', 'е');
+
 const expandir = (palavra, idioma) => {
     const extenso = NUMERO.test(palavra) ? porExtenso(Number(palavra), idioma) : null;
 
     if (extenso === null) {
-        return [{ mostrar: palavra, chave: palavra.toLowerCase() }];
+        return [{ mostrar: palavra, chave: chaveDe(palavra) }];
     }
 
     return extenso.split(' ').map((parte) => ({ mostrar: parte, chave: parte }));
