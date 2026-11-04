@@ -12,8 +12,8 @@ O app é público e sem login. A gestão (criar, editar e apagar textos, exporta
    - `PHPARROT_TOKEN` com 64 hexadecimais (`openssl rand -hex 32`). Com menos de 32 caracteres, conta como não configurado.
    - Comparação: `hash_equals(hash('sha256', $token), hash('sha256', $digitado))`.
 2. **Sessão:**
-   - A flag da gestão vence após 30 min sem uso, pelo carimbo `gestao_em`, renovado a cada requisição da gestão. A sessão do Laravel segue com 120 min.
-   - O `entrar` faz `$request->session()->regenerate()`.
+   - A flag vence após 30 min sem uso, pelo carimbo `gestao_em`, renovado a cada requisição da gestão, ou no teto absoluto, pelo `gestao_desde`, gravado no `entrar` e nunca renovado (`PHPARROT_GESTAO_TETO_HORAS`, padrão 8). A sessão do Laravel segue com 120 min.
+   - O `entrar` faz `$request->session()->regenerate()`. O botão Sair (`POST /sair`, com CSRF, atrás do `ExigirGestao`) limpa a flag, faz `invalidate()` e `regenerateToken()` e volta à configuração. O vencimento automático só limpa a flag.
 3. **Sem token:** `entrar`, `textos` e as ações respondem 404. Na configuração, o botão fica desativado com "Gestão desligada neste servidor.".
 4. **Apagar banco:**
    - Duas etapas, palavra "apagar" e flag conferida de novo no servidor, sem pedir o token outra vez. A exportação é oferecida na etapa 1.
@@ -29,7 +29,7 @@ O app é público e sem login. A gestão (criar, editar e apagar textos, exporta
 9. **Exportar meus textos:**
    - JSON no formato do `textos.json`, só com os itens "Meu" (ids `meu-…`), no arquivo `phparrot-meus-textos-AAAA-MM-DD-HHMM.json`.
    - Fica na tela de gestão e na etapa 1 do Apagar banco, e exige a flag. Importar fica fora.
-10. **Rotação:** a sessão guarda `gestao_token = hash('sha256', $token)`. O middleware compara com o token atual, com `hash_equals`, a cada requisição, e se não bater limpa a flag e manda para o `entrar`.
+10. **Rotação:** a sessão guarda `gestao_token = hash('sha256', $token)`. O middleware compara com o token atual, com `hash_equals`, a cada requisição, e se não bater limpa a flag e manda para o `entrar`. Um middleware global manda `X-Frame-Options: DENY` e `Content-Security-Policy: frame-ancestors 'none'` em toda resposta. A CSP completa espera o mapeamento do Livewire e do Vite.
 
 **Livewire:**
 - O `ExigirGestao` vai na rota `textos` e é registrado com `Livewire::addPersistentMiddleware()`, sem argumentos.
@@ -39,7 +39,7 @@ O app é público e sem login. A gestão (criar, editar e apagar textos, exporta
 - Ação chamada direto sem sessão é recusada. 404 sem token, e token curto conta como desligado.
 - A gestão vence após 30 min, e a rotação derruba a sessão. Limites por IP e total.
 - O JSON continua servindo depois do Apagar banco. O token nunca aparece em log.
-- Fixação de sessão: o id muda depois do `entrar`.
+- Fixação de sessão: o id muda depois do `entrar` e do `sair`, e o sair limpa a flag. O teto vence mesmo com uso contínuo. Toda resposta traz os headers anti-iframe.
 - CSRF: `POST /entrar` e as ações sem token são recusados. O `PreventRequestForgery` se desliga em teste de unidade (`runningUnitTests`), então o teste precisa religá-lo.
 
 ## Consequência
@@ -49,7 +49,7 @@ Procedimentos do Maintainer:
 - **Rotacionar o token:** gerar um novo com `openssl rand -hex 32`, trocar no `.env` e rodar `php artisan config:clear` (`config:cache` em produção). As sessões de gestão caem na requisição seguinte, e a tabela `sessions` não é tocada.
 
 Pré-requisitos do deploy:
-- `SESSION_SECURE_COOKIE=true`. Hoje o `secure` vem nulo, e o `http_only` (`true`) e o `same_site` (`lax`) já estão certos.
+- `SESSION_SECURE_COOKIE=true`, que continua obrigatório depois do Sair e do teto. Hoje o `secure` vem nulo, e o `http_only` (`true`) e o `same_site` (`lax`) já estão certos.
 - Backup agendado do SQLite fora do container, com `VACUUM INTO` ou a API de backup.
 - O IP real atrás do Cloudflare (ADR 0006). Até lá, o limite por IP age como global.
 
