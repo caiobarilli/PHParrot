@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\BloquearIframe;
 use App\Http\Middleware\DefinirIdiomaDaInterface;
 use App\Preferencias\Preferencias;
 use Illuminate\Foundation\Application;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(BloquearIframe::class);
         $middleware->encryptCookies(except: [Preferencias::COOKIE]);
         $middleware->web(append: [DefinirIdiomaDaInterface::class]);
         $middleware->prependToPriorityList(before: ThrottleRequests::class, prepend: DefinirIdiomaDaInterface::class);

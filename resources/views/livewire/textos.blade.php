@@ -8,6 +8,7 @@
     @unless ($formAberto)
     <button type="button" class="btn btn-sm" wire:click="novo"><x-icone nome="novo" />{{ __('gestao.textos.novo') }}</button>
     @endunless
+    <form method="POST" action="{{ route('sair') }}">@csrf<button type="submit" class="btn btn-sm btn-ghost">{{ __('gestao.sair') }}</button></form>
   </div>
 </div>
 

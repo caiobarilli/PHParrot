@@ -27,6 +27,7 @@ function comGestao(?string $token = TOKEN_DE_TESTE): Illuminate\Foundation\Testi
     return withSession([
         Gestao::FLAG => hash('sha256', (string) $token),
         Gestao::CARIMBO => now()->getTimestamp(),
+        Gestao::DESDE => now()->getTimestamp(),
     ]);
 }
 

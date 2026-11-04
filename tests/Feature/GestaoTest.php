@@ -104,3 +104,33 @@ it('sem token configurado ninguém está autorizado, nem com a flag na sessão',
 
     expect(app(Gestao::class)->ativa())->toBeFalse()->and(app(Gestao::class)->autorizada())->toBeFalse();
 });
+
+it('a gestão vence no teto absoluto, mesmo com uso contínuo', function (): void {
+    configurarToken();
+    app(Gestao::class)->entrar();
+    $desde = app(Session::class)->get(Gestao::DESDE);
+
+    for ($i = 0; $i < 16; $i++) {
+        travel(29)->minutes();
+        expect(app(Gestao::class)->autorizada())->toBeTrue();
+    }
+
+    expect(app(Session::class)->get(Gestao::DESDE))->toBe($desde);
+
+    travel(29)->minutes();
+    expect(app(Gestao::class)->autorizada())->toBeFalse()
+        ->and(app(Session::class)->has(Gestao::DESDE))->toBeFalse();
+});
+
+it('o teto absoluto vem do config', function (): void {
+    configurarToken();
+    config(['phparrot.gestao.teto_horas' => 1]);
+    app(Gestao::class)->entrar();
+
+    travel(29)->minutes();
+    expect(app(Gestao::class)->autorizada())->toBeTrue();
+    travel(29)->minutes();
+    expect(app(Gestao::class)->autorizada())->toBeTrue();
+    travel(3)->minutes();
+    expect(app(Gestao::class)->autorizada())->toBeFalse();
+});

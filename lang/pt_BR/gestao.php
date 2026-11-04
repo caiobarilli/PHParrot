@@ -11,6 +11,8 @@ return [
     'token_invalido' => 'Token inválido. Confira e cole de novo.',
     'limite' => 'Muitas tentativas de entrar. Tente de novo daqui a pouco.',
     'destravado' => 'Limite da tela entrar liberado.',
+    'sair' => 'Sair da gestão',
+    'saiu' => 'Você saiu da gestão.',
     'palavra' => 'apagar',
     'apagar_palavra' => 'Digite a palavra certa para confirmar.',
     'banco_apagado' => 'Banco apagado. O catálogo voltou para a fábrica.',
