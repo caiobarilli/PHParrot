@@ -7,6 +7,7 @@ use App\Http\Controllers\ExportarComTraducaoController;
 use App\Http\Controllers\ExportarPacoteController;
 use App\Http\Controllers\ExportarTextosController;
 use App\Http\Controllers\ImportarPacoteController;
+use App\Http\Controllers\SairController;
 use App\Http\Controllers\TraduzirController;
 use App\Http\Controllers\TranscreverController;
 use App\Http\Middleware\ExigirGestao;
@@ -40,4 +41,5 @@ Route::middleware(ExigirGestao::class)->group(function (): void {
     Route::livewire('traducoes', TraducaoDeConteudo::class)->name('traducoes');
     Route::get('traducoes/exportar/{idioma}', ExportarComTraducaoController::class)->where('idioma', '[a-zA-Z-]+')->name('traducoes.exportar');
     Route::post('banco/apagar', ApagarBancoController::class)->name('banco.apagar');
+    Route::post('sair', SairController::class)->name('sair');
 });

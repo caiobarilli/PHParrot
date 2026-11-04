@@ -29,6 +29,7 @@ return [
         'token' => env('PHPARROT_TOKEN'),
         'token_minimo' => 32,
         'validade_minutos' => 30,
+        'teto_horas' => (int) env('PHPARROT_GESTAO_TETO_HORAS', 8),
         'entrar_por_minuto' => (int) env('PHPARROT_ENTRAR_POR_MINUTO', 5),
         'entrar_por_hora' => (int) env('PHPARROT_ENTRAR_POR_HORA', 20),
     ],

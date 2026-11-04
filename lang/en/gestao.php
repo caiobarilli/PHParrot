@@ -11,6 +11,8 @@ return [
     'token_invalido' => 'Invalid token. Check it and paste it again.',
     'limite' => 'Too many sign-in attempts. Try again in a little while.',
     'destravado' => 'Sign-in limit released.',
+    'sair' => 'Leave management',
+    'saiu' => 'You left management.',
     'palavra' => 'delete',
     'apagar_palavra' => 'Type the right word to confirm.',
     'banco_apagado' => 'Database deleted. The catalog is back to the factory package.',

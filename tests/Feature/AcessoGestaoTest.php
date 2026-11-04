@@ -236,3 +236,39 @@ it('o Livewire reaplica o ExigirGestao: ação chamada direto sem a sessão de g
 
     expect(app(MeusTextos::class)->todos())->toHaveCount(0);
 });
+
+it('com o CSRF ligado, o POST do sair sem o token da página é recusado', function (): void {
+    app()->bind(PreventRequestForgery::class, CsrfAtivo::class);
+    comGestao();
+
+    post('/sair')->assertStatus(419);
+
+    expect(session()->has(Gestao::FLAG))->toBeTrue();
+});
+
+it('o sair troca o id da sessão, limpa a flag e a gestão volta a ser recusada', function (): void {
+    app()->bind(PreventRequestForgery::class, CsrfAtivo::class);
+    criarParaApagar();
+    comGestao()->withSession(['_token' => 'csrf-de-teste'])->get('/textos')->assertOk()->assertSee('Sair da gestão');
+    $antes = session()->getId();
+
+    post('/sair', ['_token' => 'csrf-de-teste'])
+        ->assertRedirect(route('configuracao'))
+        ->assertSessionHas('status', 'Você saiu da gestão.');
+
+    expect(session()->getId())->not->toBe($antes)
+        ->and(session()->has(Gestao::FLAG))->toBeFalse()
+        ->and(session()->has(Gestao::DESDE))->toBeFalse()
+        ->and(session()->token())->not->toBe('csrf-de-teste');
+
+    get('/textos')->assertRedirect(route('entrar'));
+    get('/textos/exportar')->assertRedirect(route('entrar'));
+    post('/banco/apagar', ['_token' => session()->token(), 'confirmacao' => 'apagar'])->assertRedirect(route('entrar'));
+    expect(app(MeusTextos::class)->todos())->toHaveCount(1);
+});
+
+it('toda resposta, pública e da gestão, proíbe ser aberta em iframe', function (string $rota): void {
+    comGestao();
+
+    get($rota)->assertHeader('X-Frame-Options', 'DENY')->assertHeader('Content-Security-Policy', "frame-ancestors 'none'");
+})->with(['/', '/leitura', '/configuracao', '/entrar', '/textos', '/pacotes', '/up']);
