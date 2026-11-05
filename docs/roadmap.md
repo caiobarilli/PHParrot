@@ -14,7 +14,15 @@ Próximos passos, em ordem aproximada. Nada aqui está implementado.
 
 ## Produto
 
-- **Ollama** como motor local de tradução, de geração de textos novos e de comentários sobre a pronúncia a partir da transcrição.
+- **IA, além do que já existe:** a entrega 15 gera um item por vez pelo Ollama local, com aprovação do Maintainer ([ADR 0013](../.ai/adr/0013-gateway-de-ia.md), [configuração](configuracao.md#ia-local-opcional)). Ficaram de fora:
+  - um provedor pago por chave, e qual provedor e modelo usar;
+  - um teto de gasto por mês no app para a IA;
+  - temas novos sob pedido, que exigem tirar o enum `Tema` do código;
+  - o Ollama como motor de tradução;
+  - comentários sobre a pronúncia, que mandariam a transcrição do visitante a um modelo;
+  - o túnel automático (`autossh`) e a IA em produção, hoje só no dev.
+
+  As perguntas abertas estão no `.ai/rascunho-ia.md` (2, 6 e 7).
 - **Piper** como voz local, no lugar da voz do navegador, para ter a mesma voz em qualquer navegador.
 - **Conteúdo por tema:** 3 textos e 6 frases por tema e nível, escritos por um autor em inglês e adaptados por um especialista em pt-BR, partindo da semente em `resources/data/rascunhos/`. Os 10 temas já estão na fábrica.
 - **Tradução do conteúdo:** espanhol, francês, alemão, italiano e russo como línguas para treinar, traduzidas do inglês em lotes com cache, sem o visitante disparar tradução ([ADR 0012](../.ai/adr/0012-traducao-de-conteudo.md)).

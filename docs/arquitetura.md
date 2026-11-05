@@ -1,6 +1,6 @@
 # Arquitetura
 
-Um app Laravel servido por nginx e PHP-FPM, com a transcrição num container à parte. Tudo sobe pelo Terraform, com o provider Docker, numa rede interna (`phparrot-network`).
+Um app Laravel servido por nginx e PHP-FPM, com a transcrição num container à parte e, opcionalmente, um gateway de IA para um Ollama local. Tudo sobe pelo Terraform, com o provider Docker, numa rede interna (`phparrot-network`).
 
 ```mermaid
 flowchart LR
@@ -12,6 +12,8 @@ flowchart LR
     db[("SQLite<br/>Meus textos, pacotes,<br/>sessões, cache")]
     json["textos.json<br/>(fábrica)"]
     google["Google Cloud Translation v2<br/>(opcional)"]
+    gateway["phparrot-gateway<br/>FastAPI, sem porta (opcional)"]
+    ollama["Ollama com llama3.2:3b<br/>fora do Docker (opcional)"]
 
     nav -- "HTTP :8090" --> nginx
     nginx -- "FastCGI :9000" --> php
@@ -21,6 +23,9 @@ flowchart LR
     php -. "POST /traduzir, com chave" .-> google
     agenda -- "textos:traduzir a cada 10 min" --> db
     agenda -. "lotes do conteúdo, com chave" .-> google
+    agenda -- "ia:processar a cada minuto" --> db
+    agenda -. "POST /v1/chat/completions<br/>Bearer, rede interna" .-> gateway
+    gateway -. "POST /api/chat<br/>host.docker.internal" .-> ollama
 ```
 
 ## Peças
@@ -30,13 +35,15 @@ flowchart LR
 | Navegador | Monta as telas com Livewire e Alpine. Lê em voz alta com `speechSynthesis`, grava com `MediaRecorder` e compara a transcrição com a frase (`resources/js/comparacao.js`). No modo "Apenas Chrome", traduz com a `Translator` do navegador. |
 | `phparrot-nginx` | Única porta publicada (8090). Serve `public/` e repassa o resto ao PHP-FPM. O `/transcrever` aceita até 3 MB de corpo. |
 | `phparrot-php` | Laravel 13 com Livewire 4. Rotas `POST /transcrever` e `POST /traduzir` com limite por IP e teto diário, a gestão atrás do token e o catálogo de textos. |
-| `phparrot-agenda` | A mesma imagem do PHP rodando `schedule:work`, sem porta publicada. A cada 10 minutos, `textos:traduzir` traduz o próximo lote do conteúdo (ADR 0012). |
+| `phparrot-agenda` | A mesma imagem do PHP rodando `schedule:work`, sem porta publicada. A cada 10 minutos, `textos:traduzir` traduz o próximo lote do conteúdo (ADR 0012). Com a IA ligada, `ia:processar` gera um rascunho por minuto (ADR 0013). |
 | `phparrot-whisper` | `whisper-server` do whisper.cpp v1.9.5, compilado do fonte com commit conferido e um patch revisado. Sem porta no host, `/tmp` em memória e sem log. |
-| SQLite | Meus textos, pacotes importados (e qual está ativo), sessões e cache (inclusive a trava da transcrição e os pacotes já lidos). |
+| `phparrot-gateway` | Opcional. FastAPI em Python 3.13, sem porta no host, rootfs só leitura e usuário 10002. Fala o formato da OpenAI para dentro e o `/api/chat` do Ollama para fora (ADR 0013). |
+| Ollama | Opcional, fora do Docker, com o `llama3.2:3b`. Alcançado pelo gateway em `host.docker.internal`, no dev por um túnel SSH. |
+| SQLite | Meus textos, pacotes importados (e qual está ativo), rascunhos da IA, sessões e cache (inclusive as travas da transcrição e da IA e os pacotes já lidos). |
 | `textos.json` | A fábrica: o pacote que vem com o app, só leitura. Vale quando nenhum pacote importado está ativo. |
 | Google Cloud Translation | Opcional, só com `GOOGLE_TRANSLATE_KEY`. Usada quando o visitante escolhe "Google API" e nos lotes que traduzem o conteúdo do `en` para es, fr, de, it e ru, guardados em `traducoes_de_conteudo` (ADR 0012). |
 
-Os textos chegam ao app pelo contrato `Catalogo`, que soma o pacote ativo e os Meus textos. A transcrição passa pelo contrato `Transcritor`, e a tradução pelo `Tradutor`. Trocar o motor é escrever outra implementação.
+Os textos chegam ao app pelo contrato `Catalogo`, que soma o pacote ativo e os Meus textos. A transcrição passa pelo contrato `Transcritor`, a tradução pelo `Tradutor` e a geração pelo `GeradorDeTextos`. Trocar o motor é escrever outra implementação.
 
 ## Pacotes e temas
 
@@ -77,6 +84,23 @@ Na tela, o bloco **Falar** (gravar, ouvir, transcrever e o resultado) vem em cim
 
 A Escuta usa o mesmo componente da frase e o mesmo bloco de gravação, mas abre com o texto escondido até a transcrição. É o que a diferencia da Fala.
 
+## Geração por IA (opcional)
+
+A IA só existe com o arquivo do token configurado no Terraform ([configuração](configuracao.md#ia-local-opcional)) e só na gestão. O visitante nunca a dispara, e nada do visitante vai para o modelo.
+
+1. **Pedido:** no painel `/ia`, o Maintainer escolhe tema, nível e tipo. O clique só grava um rascunho pendente na tabela `rascunhos_da_ia`, com até 5 à espera.
+2. **Agenda:** o `ia:processar` roda a cada minuto, com `withoutOverlapping` e trava no cache, e pega um pedido por vez. Um rascunho preso em "gerando" por mais de 5 minutos volta para a fila.
+3. **Laravel → gateway:** o `GeradorGateway` monta o prompt no servidor, a partir do tema, do CEFR e das faixas do anexo de níveis. Ele manda o JSON Schema com `en` e `pt-BR` obrigatórios e lê o token do arquivo a cada chamada. Cada erro do gateway vira uma exceção do domínio.
+4. **Gateway → Ollama:** o gateway garante:
+   - **Token:** Bearer comparado em tempo constante. Sem o arquivo, a resposta é 503 e nada passa.
+   - **Allowlist:** só o `llama3.2:3b`.
+   - **Concorrência 1:** ocupado responde 503 com `Retry-After` na hora, sem fila.
+   - **Formato da OpenAI:** só `POST /v1/chat/completions` e `GET /v1/models`, com limites de corpo, mensagens e tokens, para o Ollama poder virar outro servidor sem mudar o app.
+   - **Schema:** a resposta do modelo é validada contra o JSON Schema do pedido. Fora dele, vira erro tipado, sem o texto.
+   - **Métricas:** uma linha JSON por pedido, com tokens, tokens por segundo e tempos, nunca o prompt nem a resposta.
+5. **Validação:** o item passa pelo mesmo `ValidadorDePacote` dos pacotes. Fica **pronto** ou **reprovado**, com o texto e o motivo à vista, traduzido no idioma da tela. Uma saída fora do formato ganha uma nova tentativa; com o gateway ocupado ou fora do ar, o pedido espera sem gastar tentativa.
+6. **Aprovação:** **Aprovar** copia o item para os Meus textos pelo mesmo caminho da tela de textos, e o item entra no sorteio. **Descartar** arquiva o rascunho.
+
 ## Decisões
 
 - [0001 Stack](../.ai/adr/0001-stack.md) e [0002 Ambiente](../.ai/adr/0002-ambiente.md)
@@ -86,4 +110,5 @@ A Escuta usa o mesmo componente da frase e o mesmo bloco de gravação, mas abre
 - [0006 Tradução](../.ai/adr/0006-traducao.md)
 - [0008 Gestão de textos](../.ai/adr/0008-gestao.md)
 - [0009 CI de containers](../.ai/adr/0009-ci-containers.md) e [0010 Dependências](../.ai/adr/0010-dependencias.md)
-- [0012 Tradução do conteúdo](../.ai/adr/0012-traducao-de-conteudo.md) (planejado)
+- [0012 Tradução do conteúdo](../.ai/adr/0012-traducao-de-conteudo.md)
+- [0013 Gateway de IA](../.ai/adr/0013-gateway-de-ia.md)

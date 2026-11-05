@@ -14,14 +14,15 @@
 
 O PHParrot é um app para treinar idiomas falando. Você ouve uma frase, grava a sua voz, o Whisper transcreve o áudio no próprio servidor e o app compara a transcrição com a frase palavra por palavra, marcando o que você acertou, trocou, esqueceu ou acrescentou.
 
-São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta e traduzido), **Fala** (repetir uma frase) e **Escuta** (ouvir sem ver e repetir). O conteúdo vem em pacotes, com dez temas do dia a dia, e o visitante escolhe o tema e o nível. Uma área de gestão, protegida por token, importa, ativa e exporta pacotes e cria textos próprios.
+São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta e traduzido), **Fala** (repetir uma frase) e **Escuta** (ouvir sem ver e repetir). O conteúdo vem em pacotes, com dez temas do dia a dia, e o visitante escolhe o tema e o nível. Uma área de gestão, protegida por token, importa, ativa e exporta pacotes e cria textos próprios. Opcionalmente, com um Ollama local, a gestão gera itens novos pelo painel **IA**, e cada um só entra no treino depois de aprovado.
 
 ## Destaques técnicos
 
 - Transcrição local com o `whisper-server` (whisper.cpp) em container isolado, sem porta publicada e sem API paga.
 - Tradução pelo tradutor embutido do Chrome ou pela Google Cloud Translation, com limite por IP e teto diário.
 - Pacotes de textos validados por um comando único (`textos:validar`), com faixas de palavras por nível do A1 ao C2, usado no importador e no portão.
-- Portão de qualidade com Larastan no nível `max`, 384 testes Pest e 73 testes de JavaScript.
+- IA local opcional por um gateway próprio em FastAPI: token, um modelo permitido, uma geração por vez, saída validada por JSON Schema e log sem texto.
+- Portão de qualidade com Larastan no nível `max`, 584 testes Pest, 83 testes de JavaScript e 83 testes do gateway (pytest, ruff e mypy `--strict`).
 - Ambiente em Docker com Terraform: versões fixas, bases do Whisper e do nginx por digest e commit e hash do modelo conferidos no build.
 - Varredura de vulnerabilidades com Hadolint e Trivy, SARIF na aba Security e SBOM de cada imagem.
 - Privacidade verificada: áudio e texto do visitante não ficam em log, banco nem disco.
@@ -46,14 +47,15 @@ Sem nenhuma chave configurada, o app funciona por inteiro: a tradução usa o Ch
 
 ## Configuração
 
-Tudo o que é opcional mora no `.env`: a chave do Google para a tradução, o token da gestão e os limites de uso. As portas e o modelo do Whisper são variáveis do Terraform.
+A chave do Google para a tradução, o token da gestão e os limites de uso moram no `.env`. As portas e o modelo do Whisper são variáveis do Terraform. A IA local também vem pelo Terraform: uma variável com o caminho de um arquivo de token fora do repositório, nunca o `.env`.
 
-Detalhes, padrões e o passo a passo da chave e do token em [docs/configuracao.md](docs/configuracao.md).
+Detalhes, padrões e o passo a passo da chave e do token em [docs/configuracao.md](docs/configuracao.md). Para ligar a IA, veja [IA local](docs/configuracao.md#ia-local-opcional).
 
 ## Portões de qualidade
 
 - `docker exec phparrot-php composer gate`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer, TLint), Larastan `max`, Sloppy, `textos:validar` na fábrica e Pest.
 - `docker exec phparrot-node npm run test:js`: testes do JavaScript com `node --test`.
+- `docker build --target teste docker/gateway`: pytest, ruff e mypy `--strict` do gateway de IA, também no workflow `gateway.yml`.
 - O workflow `containers.yml` roda Hadolint, build das imagens e Trivy a cada mudança em `docker/` ou `terraform/` e toda semana.
 
 O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](docs/qualidade.md).
@@ -61,7 +63,7 @@ O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](do
 ## Documentação
 
 - [Arquitetura](docs/arquitetura.md): as peças, os pacotes e temas, o fluxo da Fala e o diagrama.
-- [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google, token e pacotes.
+- [Configuração](docs/configuracao.md): variáveis do `.env` e do Terraform, chave do Google, token, IA local e pacotes.
 - [Google API](docs/google-api.md): chave restrita, teto diário, alerta de orçamento, teste da chave e validação na tela.
 - [Qualidade](docs/qualidade.md): portão, hooks, CI de containers e limites.
 - [Escala](docs/escala.md): como o app cresce sem reescrever.
