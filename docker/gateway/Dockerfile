@@ -33,7 +33,8 @@ RUN uv run --frozen --no-sync ruff check . \
 FROM base
 
 RUN python -m pip uninstall --yes --no-input pip \
-    && useradd --system --uid 10002 --no-create-home --shell /usr/sbin/nologin gateway
+    && groupadd --system --gid 10002 gateway \
+    && useradd --system --uid 10002 --gid 10002 --no-create-home --shell /usr/sbin/nologin gateway
 
 COPY --from=dependencias /app/.venv /app/.venv
 COPY gateway ./gateway

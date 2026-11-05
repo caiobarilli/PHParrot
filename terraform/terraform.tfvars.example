@@ -1,3 +1,6 @@
 project_path = "/home/usuario/code/PHParrot"
 app_port     = 8090
 vite_port    = 5174
+gateway_token_arquivo = "/home/usuario/.config/phparrot/gateway-token"
+gateway_memoria       = 256
+ollama_url            = "http://host.docker.internal:11434"

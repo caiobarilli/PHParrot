@@ -15,7 +15,7 @@ O PHParrot vai gerar textos de treino em `en` e `pt-BR` com o `llama3.2:3b` num 
    - Bloco `host { host = "host.docker.internal", ip = "host-gateway" }`: inerte no Docker Desktop, necessário no Docker Engine.
 3. **Autenticação:**
    - Token Bearer comparado em tempo constante, como o `hash_equals` do ADR 0008.
-   - A fonte é um único arquivo de segredo fora do repositório, montado só leitura no `phparrot-gateway`, no `phparrot-php` e no `phparrot-agenda`, que roda a geração.
+   - A fonte é um único arquivo de segredo fora do repositório, montado só leitura em `/run/secrets/phparrot-gateway-token` no `phparrot-gateway`, no `phparrot-php` e no `phparrot-agenda`, que roda a geração. O Terraform recebe só o caminho (`gateway_token_arquivo`); sem ele, ou em `prod`, não há gateway nem montagem. Dono 1000 (php e agenda), grupo 10002 (o gateway roda como `10002:10002`) e modo 0640: o Docker Desktop repassa uid, gid e modo no bind mount, e qualquer outro uid fica sem leitura.
    - O token não vai para o `env` do Terraform, que grava o `env` em texto no `terraform.tfstate` (`rascunho-deploy.md`, ponto 6).
 4. **API compatível com a OpenAI:**
    - Só `POST /v1/chat/completions`, sem `stream`, e `GET /v1/models`.
@@ -48,7 +48,8 @@ Novos:
 Limites honestos:
 - Túnel fechado ou desktop desligado viram erro de upstream no gateway. O resto do app segue igual.
 - O tempo de geração depende da GPU do desktop e do túnel, e só se mede na aceitação manual.
-- O arquivo de segredo precisa existir antes do `terraform apply`, e sua rotação é manual.
+- O arquivo de segredo precisa existir antes do `terraform apply` (a variável confere), e a rotação é manual, reescrevendo o arquivo no lugar: trocar o inode (`mv`, editor) deixa o container com o valor antigo.
+- Montar o segredo recria o `phparrot-php` e o `phparrot-agenda`. O nginx resolve o `phparrot-php` só ao subir, então precisa de `docker restart phparrot-nginx` depois.
 
 A decidir antes da rodada 15.7: o item da demo (item 12) traz `en` e `pt-BR`, como o pacote exige (ADR 0011). Onde ele entra (Meus textos ou pacote rascunho, já que o formato 2 pede 3 textos e 6 frases) sai de um grilling antes da 15.7.
 

@@ -7,6 +7,15 @@ locals {
     "max-file" = "3"
   }
 
+  ia = !local.prod && var.gateway_token_arquivo != null
+
+  gateway_contexto = abspath("${path.module}/../docker/gateway")
+  gateway_arquivos = [
+    for arquivo in fileset(local.gateway_contexto, "**") : arquivo
+    if !can(regex("(^|/)(__pycache__|\\.venv|\\.mypy_cache|\\.ruff_cache|\\.pytest_cache)(/|$)", arquivo))
+  ]
+  gateway_token = "/run/secrets/phparrot-gateway-token"
+
   whisper_sha1 = {
     base  = "465707469ff3a37a2b9b8d8f89f2f99de7299dac"
     small = "55356645c2b361a969dfd0ef2c5a50d530afd8d5"
@@ -48,6 +57,16 @@ resource "docker_container" "php" {
     container_path = "/var/www/html"
   }
 
+  dynamic "volumes" {
+    for_each = local.ia ? [var.gateway_token_arquivo] : []
+
+    content {
+      host_path      = volumes.value
+      container_path = local.gateway_token
+      read_only      = true
+    }
+  }
+
   env = [
     "COMPOSER_MEMORY_LIMIT=-1",
     "COMPOSER_PROCESS_TIMEOUT=2000"
@@ -71,6 +90,16 @@ resource "docker_container" "agenda" {
   volumes {
     host_path      = local.project_path
     container_path = "/var/www/html"
+  }
+
+  dynamic "volumes" {
+    for_each = local.ia ? [var.gateway_token_arquivo] : []
+
+    content {
+      host_path      = volumes.value
+      container_path = local.gateway_token
+      read_only      = true
+    }
   }
 
   depends_on = [
@@ -203,4 +232,57 @@ resource "docker_container" "whisper" {
   tmpfs = {
     "/tmp" = "rw,noexec,nosuid,size=64m,uid=10001,gid=10001"
   }
+}
+
+resource "docker_image" "gateway" {
+  count = local.ia ? 1 : 0
+  name  = "phparrot-gateway"
+
+  triggers = {
+    codigo = sha1(join("\n", [for arquivo in local.gateway_arquivos : "${arquivo} ${filesha1("${local.gateway_contexto}/${arquivo}")}"]))
+  }
+
+  build {
+    context    = local.gateway_contexto
+    dockerfile = "Dockerfile"
+  }
+}
+
+resource "docker_container" "gateway" {
+  count       = local.ia ? 1 : 0
+  name        = "phparrot-gateway"
+  image       = docker_image.gateway[0].image_id
+  user        = "10002:10002"
+  memory      = var.gateway_memoria
+  memory_swap = var.gateway_memoria * 2
+  read_only   = true
+
+  log_driver = "json-file"
+  log_opts   = local.log_rotativo
+
+  networks_advanced {
+    name = docker_network.phparrot_network.name
+  }
+
+  host {
+    host = "host.docker.internal"
+    ip   = "host-gateway"
+  }
+
+  tmpfs = {
+    "/tmp" = "rw,noexec,nosuid,size=16m,uid=10002,gid=10002"
+  }
+
+  volumes {
+    host_path      = var.gateway_token_arquivo
+    container_path = local.gateway_token
+    read_only      = true
+  }
+
+  env = [
+    "GATEWAY_OLLAMA_URL=${var.ollama_url}",
+    "GATEWAY_MODELOS=llama3.2:3b",
+    "GATEWAY_CONCORRENCIA=1",
+    "GATEWAY_TOKEN_ARQUIVO=${local.gateway_token}",
+  ]
 }
