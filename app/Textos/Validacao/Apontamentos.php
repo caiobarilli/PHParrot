@@ -19,7 +19,7 @@ final class Apontamentos
      */
     public function erro(string $caminho, string $chave, array $dados = []): void
     {
-        $this->erros[] = new Problema($caminho, __('pacotes.erros.'.$chave, $dados));
+        $this->erros[] = new Problema($caminho, __('pacotes.erros.'.$chave, $dados), 'pacotes.erros.'.$chave, $dados);
     }
 
     /**
@@ -27,7 +27,7 @@ final class Apontamentos
      */
     public function alerta(string $caminho, string $chave, array $dados = []): void
     {
-        $this->alertas[] = new Problema($caminho, __('pacotes.erros.'.$chave, $dados));
+        $this->alertas[] = new Problema($caminho, __('pacotes.erros.'.$chave, $dados), 'pacotes.erros.'.$chave, $dados);
     }
 
     /**

@@ -14,6 +14,7 @@ use App\Textos\TipoDeItem;
 use Tests\Fixtures\GeradorFalso;
 
 use function Pest\Laravel\get;
+use function Pest\Laravel\withUnencryptedCookie;
 
 function rascunhoNoBanco(StatusDoRascunho $status, ?string $en = null, ?string $pt = null, ?string $motivo = null): RascunhoDaIa
 {
@@ -185,4 +186,34 @@ it('só faz polling enquanto há pedido na fila ou gerando', function (): void {
     $rascunho->mudarPara(StatusDoRascunho::Descartado);
 
     telaLivewire(PainelDaIa::class)->assertDontSee('wire:poll', false);
+});
+
+function reprovadoPorFaixa(): void
+{
+    RascunhoDaIa::query()->create([
+        'tema' => Tema::Comida, 'nivel' => 1, 'tipo' => TipoDeItem::Frase, 'status' => StatusDoRascunho::Reprovado,
+        'en' => 'Every morning I have a big breakfast with my whole family at home.', 'pt_br' => 'Toda manhã.',
+        'motivos' => [['chave' => 'pacotes.erros.palavras_frase', 'parametros' => ['valor' => 13, 'min' => 3, 'max' => 6, 'frase' => 1], 'prefixo' => 'en']],
+    ]);
+}
+
+it('o motivo do reprovado aparece em português na tela em português', function (): void {
+    comGestao();
+    reprovadoPorFaixa();
+
+    get('/ia')->assertOk()
+        ->assertSee('en: 13 palavras na frase 1, fora da faixa 3–6')
+        ->assertSee('Reprovado')
+        ->assertDontSee('words in sentence');
+});
+
+it('o mesmo motivo aparece em inglês na tela em inglês', function (): void {
+    comGestao();
+    reprovadoPorFaixa();
+    withUnencryptedCookie('phparrot_prefs', '{"nativa":"en","treino":"pt-BR","nivel":1,"traducao":"chrome"}');
+
+    get('/ia')->assertOk()
+        ->assertSee('en: 13 words in sentence 1, outside the range 3–6')
+        ->assertSee('Rejected')
+        ->assertDontSee('palavras na frase');
 });

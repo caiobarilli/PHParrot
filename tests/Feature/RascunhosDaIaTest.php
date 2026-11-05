@@ -116,7 +116,7 @@ it('processa o pedido mais antigo e grava pronto com en, pt-BR e duração', fun
     expect($primeiro->status)->toBe(StatusDoRascunho::Pronto)
         ->and($primeiro->en)->toBe(FRASE_N1_EN)
         ->and($primeiro->pt_br)->toBe(FRASE_N1_PT)
-        ->and($primeiro->motivo)->toBeNull()
+        ->and($primeiro->motivoNaTela())->toBeNull()
         ->and($primeiro->tentativas)->toBe(1)
         ->and($primeiro->duracao_ms)->toBeInt()
         ->and(recarregar($segundo)->status)->toBe(StatusDoRascunho::Pendente)
@@ -150,7 +150,7 @@ it('reprova pelas faixas do nível e guarda o texto e o motivo legível', functi
     $rascunho = recarregar($rascunho);
     expect($rascunho->status)->toBe(StatusDoRascunho::Reprovado)
         ->and($rascunho->en)->toBe($longa)
-        ->and($rascunho->motivo)->toBe('en: 13 palavras na frase 1, fora da faixa 3–6');
+        ->and($rascunho->motivoNaTela())->toBe('en: 13 palavras na frase 1, fora da faixa 3–6');
 });
 
 it('reprova texto com caractere proibido ou endereço da web, nas duas línguas', function (string $en, string $pt, string $trecho): void {
@@ -161,8 +161,8 @@ it('reprova texto com caractere proibido ou endereço da web, nas duas línguas'
 
     $rascunho = recarregar($rascunho);
     expect($rascunho->status)->toBe(StatusDoRascunho::Reprovado)
-        ->and($rascunho->motivo)->toContain($trecho)
-        ->and($rascunho->motivo)->toContain('endereço da web');
+        ->and($rascunho->motivoNaTela())->toContain($trecho)
+        ->and($rascunho->motivoNaTela())->toContain('endereço da web');
 })->with([
     'URL no en' => ['Go to www.example.com today.', FRASE_N1_PT, 'en:'],
     'tag no pt-BR' => [FRASE_N1_EN, 'Eu <b>como</b> em casa.', 'pt-BR:'],
@@ -181,7 +181,7 @@ it('saída inválida ou truncada ganha uma nova tentativa e depois falha', funct
 
     expect($depoisDaPrimeira->status)->toBe(StatusDoRascunho::Pendente)
         ->and($depoisDaPrimeira->tentativas)->toBe(1)
-        ->and($depoisDaPrimeira->motivo)->toBe($motivo)
+        ->and($depoisDaPrimeira->motivoNaTela())->toBe($motivo)
         ->and($depoisDaSegunda->status)->toBe(StatusDoRascunho::Falhou)
         ->and($depoisDaSegunda->tentativas)->toBe(RascunhosDaIa::MAX_TENTATIVAS)
         ->and($gerador->pedidos)->toHaveCount(2);
@@ -200,7 +200,7 @@ it('a nova tentativa que dá certo fica pronta', function (): void {
     $rascunho = recarregar($rascunho);
     expect($rascunho->status)->toBe(StatusDoRascunho::Pronto)
         ->and($rascunho->tentativas)->toBe(2)
-        ->and($rascunho->motivo)->toBeNull();
+        ->and($rascunho->motivoNaTela())->toBeNull();
 });
 
 it('ocupado ou indisponível deixa o pedido na fila sem gastar tentativa', function (GeracaoFalhou $falha): void {
@@ -214,7 +214,7 @@ it('ocupado ou indisponível deixa o pedido na fila sem gastar tentativa', funct
     $rascunho = recarregar($rascunho);
     expect($rascunho->status)->toBe(StatusDoRascunho::Pendente)
         ->and($rascunho->tentativas)->toBe(0)
-        ->and($rascunho->motivo)->toBe('Aguardando o gateway de IA.')
+        ->and($rascunho->motivoNaTela())->toBe('Aguardando o gateway de IA.')
         ->and($gerador->pedidos)->toHaveCount(4);
 })->with([
     'ocupado' => [new GeradorOcupado(10)],
@@ -233,7 +233,7 @@ it('pedido recusado pelo gateway falha na hora e vai para o log como error', fun
     unlink($log);
 
     expect($rascunho->status)->toBe(StatusDoRascunho::Falhou)
-        ->and($rascunho->motivo)->toContain('404, model_not_found')
+        ->and($rascunho->motivoNaTela())->toContain('404, model_not_found')
         ->and($registro)->toContain('.ERROR: Rascunho da IA processado.')
         ->and($registro)->toContain('"motivo":"PedidoRecusado"');
 });
@@ -384,4 +384,65 @@ it('a agenda roda o ia:processar a cada minuto, sem sobrepor, só com a IA ligad
         ->and($evento->withoutOverlapping)->toBeTrue()
         ->and($ligada)->toBeTrue()
         ->and($desligada)->toBeFalse();
+});
+
+it('guarda o motivo como chave e parâmetros e o mostra no idioma da tela', function (): void {
+    usarGerador(new GeradorFalso(null, 'Every morning I have a big breakfast with my whole family at home.', 'Frase muito particular gerada'));
+    $rascunho = pedirFrase();
+    app()->setLocale('en');
+
+    rascunhos()->processarProximo();
+
+    $rascunho = recarregar($rascunho);
+    $emIngles = $rascunho->motivoNaTela();
+    app()->setLocale('pt_BR');
+
+    expect($rascunho->motivo)->toBeNull()
+        ->and($rascunho->motivos)->toBe([[
+            'chave' => 'pacotes.erros.palavras_frase',
+            'parametros' => ['valor' => 13, 'min' => 3, 'max' => 6, 'frase' => 1],
+            'prefixo' => 'en',
+        ]])
+        ->and($emIngles)->toBe('en: 13 words in sentence 1, outside the range 3–6')
+        ->and($rascunho->motivoNaTela())->toBe('en: 13 palavras na frase 1, fora da faixa 3–6');
+});
+
+it('os motivos de espera e de falha também seguem o idioma da tela', function (GeracaoFalhou $falha, string $portugues, string $ingles): void {
+    usarGerador(new GeradorFalso($falha));
+    $rascunho = pedirFrase();
+
+    rascunhos()->processarProximo();
+
+    $rascunho = recarregar($rascunho);
+    $emPortugues = $rascunho->motivoNaTela();
+    app()->setLocale('en');
+
+    expect($emPortugues)->toBe($portugues)
+        ->and($rascunho->motivoNaTela())->toBe($ingles);
+})->with([
+    'espera' => [new GeradorOcupado(10), 'Aguardando o gateway de IA.', 'Waiting for the AI gateway.'],
+    'saída inválida' => [SaidaInvalida::doModelo(), 'O modelo não respondeu no formato pedido.', 'The model did not answer in the requested format.'],
+    'recusado' => [
+        new PedidoRecusado(404, 'model_not_found'),
+        'O gateway recusou o pedido (404, model_not_found). Confira a configuração.',
+        'The gateway refused the request (404, model_not_found). Check the configuration.',
+    ],
+]);
+
+it('um rascunho gravado antes da coluna de motivos continua mostrando o texto antigo', function (): void {
+    $antigo = RascunhoDaIa::query()->create([
+        'tema' => Tema::Comida, 'nivel' => 5, 'tipo' => TipoDeItem::Texto, 'status' => StatusDoRascunho::Reprovado,
+        'en' => 'Old text.', 'pt_br' => 'Texto antigo.', 'motivo' => 'en: 15 words in sentence 3, outside the range 6–10',
+    ]);
+
+    expect(recarregar($antigo)->motivoNaTela())->toBe('en: 15 words in sentence 3, outside the range 6–10');
+});
+
+it('motivo gravado com formato estranho é ignorado sem quebrar a tela', function (): void {
+    $rascunho = RascunhoDaIa::query()->create([
+        'tema' => Tema::Comida, 'nivel' => 1, 'tipo' => TipoDeItem::Frase, 'status' => StatusDoRascunho::Falhou,
+        'motivos' => [['chave' => 'ia.motivo.invalida', 'parametros' => [], 'prefixo' => null], ['chave' => 1], 'lixo'],
+    ]);
+
+    expect(recarregar($rascunho)->motivoNaTela())->toBe('O modelo não respondeu no formato pedido.');
 });

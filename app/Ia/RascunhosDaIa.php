@@ -157,20 +157,20 @@ final readonly class RascunhosDaIa
         try {
             $item = $this->gerador->gerar($rascunho->tema, $rascunho->nivelDoItem(), $rascunho->tipo);
         } catch (GeradorOcupado|GeradorIndisponivel $espera) {
-            $this->concluir($rascunho, StatusDoRascunho::Pendente, $inicio, ['motivo' => __('ia.motivo.aguardando')], $espera::class);
+            $this->concluir($rascunho, StatusDoRascunho::Pendente, $inicio, ['motivos' => [new Motivo('ia.motivo.aguardando')]], $espera::class);
 
             return ResultadoDoProcessamento::Aguardando;
         } catch (SaidaInvalida|SaidaTruncada $saida) {
             $tentativas = $rascunho->tentativas + 1;
             $status = $tentativas >= self::MAX_TENTATIVAS ? StatusDoRascunho::Falhou : StatusDoRascunho::Pendente;
             $chave = $saida instanceof SaidaTruncada ? 'truncada' : 'invalida';
-            $this->concluir($rascunho, $status, $inicio, ['tentativas' => $tentativas, 'motivo' => __('ia.motivo.'.$chave)], $saida::class);
+            $this->concluir($rascunho, $status, $inicio, ['tentativas' => $tentativas, 'motivos' => [new Motivo('ia.motivo.'.$chave)]], $saida::class);
 
             return ResultadoDoProcessamento::Processado;
         } catch (PedidoRecusado $recusa) {
             $this->concluir($rascunho, StatusDoRascunho::Falhou, $inicio, [
                 'tentativas' => $rascunho->tentativas + 1,
-                'motivo' => __('ia.motivo.recusado', ['status' => $recusa->status, 'codigo' => $recusa->codigo]),
+                'motivos' => [new Motivo('ia.motivo.recusado', ['status' => $recusa->status, 'codigo' => $recusa->codigo])],
             ], $recusa::class, 'error');
 
             return ResultadoDoProcessamento::Processado;
@@ -181,7 +181,7 @@ final readonly class RascunhosDaIa
             'en' => $item->en,
             'pt_br' => $item->ptBr,
             'tentativas' => $rascunho->tentativas + 1,
-            'motivo' => $problemas === [] ? null : implode('; ', $problemas),
+            'motivos' => $problemas === [] ? null : $problemas,
         ], $problemas === [] ? 'gerado' : 'validacao');
 
         return ResultadoDoProcessamento::Processado;

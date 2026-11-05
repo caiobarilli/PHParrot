@@ -6,7 +6,10 @@ namespace App\Textos\Validacao;
 
 final readonly class Problema
 {
-    public function __construct(public string $caminho, public string $motivo) {}
+    /**
+     * @param  array<string, int|string>  $dados
+     */
+    public function __construct(public string $caminho, public string $motivo, public string $chave = '', public array $dados = []) {}
 
     public function linha(): string
     {

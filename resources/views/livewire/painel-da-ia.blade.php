@@ -72,8 +72,8 @@
       @if ($rascunho->pt_br !== null)
       <p class="text-[15px]" lang="pt-BR"><span class="tag mr-1">PT-BR</span>{{ $rascunho->pt_br }}</p>
       @endif
-      @if ($rascunho->motivo !== null)
-      <p class="text-[12px] text-mut">{{ $rascunho->motivo }}</p>
+      @if ($rascunho->motivoNaTela() !== null)
+      <p class="text-[12px] text-mut">{{ $rascunho->motivoNaTela() }}</p>
       @endif
       @if ($rascunho->status->podeIrPara($aprovar) || $rascunho->status->podeIrPara($descartar))
       <div class="flex flex-wrap gap-2">

@@ -22,14 +22,14 @@ final readonly class ValidacaoDoItem
     public function __construct(private ValidadorDePacote $validador = new ValidadorDePacote) {}
 
     /**
-     * @return list<string>
+     * @return list<Motivo>
      */
     public function problemas(ItemGerado $item): array
     {
         $relatorio = $this->validador->validar($this->comoPacote($item), Contexto::Importacao);
 
         return array_map(
-            fn (Problema $problema): string => str_replace(self::CAMINHO_DO_ITEM, '', $problema->linha()),
+            fn (Problema $problema): Motivo => Motivo::doProblema($problema, self::CAMINHO_DO_ITEM),
             array_slice($relatorio->erros, 0, self::MAX_MOTIVOS),
         );
     }
