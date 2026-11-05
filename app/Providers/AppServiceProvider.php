@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Gestao\LimiteDoEntrar;
 use App\Http\Middleware\ExigirGestao;
+use App\Ia\GeradorDeTextos;
+use App\Ia\GeradorGateway;
 use App\Preferencias\Preferencias;
 use App\Textos\Catalogo;
 use App\Textos\Idioma;
@@ -46,6 +48,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Transcritor::class, fn (): Transcritor => new TranscritorWhisperServer(
             config()->string('phparrot.transcricao.url'),
             config()->integer('phparrot.transcricao.duracao_ms'),
+        ));
+
+        $this->app->bind(GeradorDeTextos::class, fn (): GeradorDeTextos => new GeradorGateway(
+            config()->string('phparrot.ia.url'),
+            config()->string('phparrot.ia.token_arquivo'),
+            config()->string('phparrot.ia.modelo'),
+            config()->integer('phparrot.ia.timeout'),
+            config()->integer('phparrot.ia.connect_timeout'),
         ));
 
         $this->app->bind(Tradutor::class, fn (Application $app): Tradutor => new TradutorGoogle(

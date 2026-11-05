@@ -18,7 +18,8 @@ it('o canal diário guarda o arquivo em storage/logs e lê a retenção do .env'
 it('o Terraform gira o log de todos os containers, menos o do Whisper, que não guarda log', function (): void {
     $terraform = (string) file_get_contents(base_path('terraform/main.tf'));
 
-    expect(substr_count($terraform, 'log_opts   = local.log_rotativo'))->toBe(4)
+    expect(substr_count($terraform, 'log_opts   = local.log_rotativo'))->toBe(5)
+        ->and(preg_match('/resource "docker_container" "gateway" \{.*?log_opts\s+= local\.log_rotativo/s', $terraform))->toBe(1)
         ->and($terraform)->toContain('"max-size" = "10m"')
         ->and($terraform)->toContain('"max-file" = "3"')
         ->and(preg_match('/resource "docker_container" "whisper" \{.*?log_driver\s+= "none"/s', $terraform))->toBe(1);

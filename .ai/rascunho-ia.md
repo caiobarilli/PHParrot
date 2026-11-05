@@ -25,7 +25,7 @@ Prepara o grilling da entrega 15. Nada daqui está implementado. As fontes foram
 ## Desenho proposto
 
 1. **Contrato `GeradorDeTextos`:**
-   - entrada: tema, nível, tipo e quantidade;
+   - entrada: tema, nível e tipo (`TipoDeItem`), um item por chamada (feito na 15.6, em `app/Ia/`);
    - saída: itens do formato 2;
    - implementações: `GeradorGateway` (ADR 0013), um gerador pago escolhido no grilling e um `GeradorFalso` nos testes;
    - o motor é escolhido no `.env` (`PHPARROT_IA_MOTOR`), como o Whisper pela URL.
@@ -41,7 +41,7 @@ Substitui a premissa anterior: o Ollama do PHPorto aberto na rede com `OLLAMA_HO
 **Caminho:** Laravel → `http://phparrot-gateway:8000` (rede interna, Bearer) → `host.docker.internal:11434` → túnel SSH aberto à mão no WSL → Ollama 0.40.13 num desktop, preso ao `127.0.0.1`. O Ollama não se abre na rede, e nenhuma regra de firewall entra.
 
 **Contrato mínimo:**
-- **Do Laravel ao gateway:** formato da OpenAI, `POST /v1/chat/completions` sem stream e `GET /v1/models`, com o JSON Schema em `response_format`. O Laravel nunca chama o Ollama direto.
+- **Do Laravel ao gateway:** formato da OpenAI, `POST /v1/chat/completions` sem stream e `GET /v1/models`, com o JSON Schema em `response_format`. O Laravel nunca chama o Ollama direto. O `GeradorGateway` usa 90 s de timeout (acima dos 60 s de leitura do gateway) e 5 s de conexão, lê o token do arquivo a cada chamada e confere de novo as chaves `en` e `pt-BR`. Cada `code` do gateway vira uma exceção filha de `GeracaoFalhou`: `GeradorIndisponivel`, `GeradorOcupado` (com o `Retry-After`), `SaidaInvalida`, `SaidaTruncada` ou `PedidoRecusado` (400, 401, 404 e 413, registrado como `error`).
 - **Do gateway ao Ollama:** `POST /api/chat` com `stream: false` e `format`. O gateway valida a resposta contra o schema e recusa modelo fora da allowlist (`llama3.2:3b`).
 - **Concorrência:** 1 no gateway (503 com `Retry-After`) e `Cache::lock` no Laravel.
 - **Escopo da demo:** um item por pedido (um tema, um nível) com `en` e `pt-BR`, pela agenda, fora do PHP-FPM. Tempo e `options.num_ctx` se medem na aceitação.
@@ -90,7 +90,7 @@ Preços por 1 milhão de tokens, entrada / saída, da página oficial de cada um
 ## Como testar
 
 - **Sem modelo real:** `GeradorFalso` com fixture de um nível; `Http::fake` com as respostas de cada motor (ok, JSON quebrado, schema errado, item fora da faixa, timeout, 401 e 429); testes da agenda, da trava e do painel; um teste de que a chave e o prompt não aparecem no log e outro de que o pacote gerado entra inativo.
-- **Aceitação com o Ollama:** um comando `ia:testar` e um grupo Pest `ollama`, fora do `composer gate`, que só roda com o gateway e o túnel respondendo. Ele gera um item, exige que passe pelo `textos:validar`, mede o tempo e registra o resultado na fila.
+- **Aceitação com o Ollama:** `php artisan ia:testar {tema} {nivel} [--tipo=frase]` e o grupo Pest `ollama` (`pest --group=ollama`), excluído no `phpunit.xml` e por isso fora do `composer gate` e do CI, que só roda com o gateway e o túnel respondendo. Ele gera um item, exige que passe pelo `textos:validar`, mede o tempo e registra o resultado na fila.
 - **Aceitação com o pago:** a mesma coisa com uma chave real, uma vez, como o `traducao:testar-google`.
 
 ## Perguntas abertas

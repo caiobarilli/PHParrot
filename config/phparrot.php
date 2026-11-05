@@ -20,6 +20,14 @@ return [
         'url' => env('PHPARROT_WHISPER_URL', 'http://phparrot-whisper:8080'),
     ],
 
+    'ia' => [
+        'url' => 'http://phparrot-gateway:8000',
+        'token_arquivo' => '/run/secrets/phparrot-gateway-token',
+        'modelo' => 'llama3.2:3b',
+        'timeout' => 90,
+        'connect_timeout' => 5,
+    ],
+
     'backup' => [
         'pasta' => env('PHPARROT_BACKUP_PASTA', storage_path('backups')),
         'conexao' => null,
