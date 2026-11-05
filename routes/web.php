@@ -16,6 +16,7 @@ use App\Livewire\Escuta;
 use App\Livewire\Fala;
 use App\Livewire\GestaoDePacotes;
 use App\Livewire\Leitura;
+use App\Livewire\PainelDaIa;
 use App\Livewire\Textos;
 use App\Livewire\TraducaoDeConteudo;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware(ExigirGestao::class)->group(function (): void {
     Route::post('pacotes/importar/confirmar', ConfirmarSubstituicaoController::class)->name('pacotes.importar.confirmar');
     Route::get('pacotes/{slug}/exportar', ExportarPacoteController::class)->where('slug', '[a-z0-9-]+')->name('pacotes.exportar');
     Route::livewire('traducoes', TraducaoDeConteudo::class)->name('traducoes');
+    Route::livewire('ia', PainelDaIa::class)->name('ia');
     Route::get('traducoes/exportar/{idioma}', ExportarComTraducaoController::class)->where('idioma', '[a-zA-Z-]+')->name('traducoes.exportar');
     Route::post('banco/apagar', ApagarBancoController::class)->name('banco.apagar');
     Route::post('sair', SairController::class)->name('sair');

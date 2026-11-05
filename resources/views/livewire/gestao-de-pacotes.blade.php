@@ -4,6 +4,7 @@
   <div class="flex flex-wrap gap-2">
     <a href="{{ route('textos') }}" class="btn btn-sm btn-ghost"><x-icone nome="textos" />{{ __('gestao.textos.titulo') }}</a>
     <a href="{{ route('traducoes') }}" class="btn btn-sm btn-ghost"><x-icone nome="traduzir" />{{ __('traducoes.link') }}</a>
+    <a href="{{ route('ia') }}" class="btn btn-sm btn-ghost"><x-icone nome="gerar" />{{ __('ia.link') }}</a>
   </div>
 </div>
 <p class="text-[13px] text-mut">{{ __('pacotes.ajuda') }}</p>

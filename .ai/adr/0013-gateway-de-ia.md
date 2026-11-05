@@ -50,7 +50,7 @@ Limites honestos:
 - O arquivo de segredo precisa existir antes do `terraform apply` (a variável confere), e a rotação é manual, reescrevendo o arquivo no lugar: trocar o inode (`mv`, editor) deixa o container com o valor antigo.
 - Montar o segredo recria o `phparrot-php` e o `phparrot-agenda`. O nginx resolve o `phparrot-php` só ao subir, então precisa de `docker restart phparrot-nginx` depois.
 
-A decidir antes da rodada 15.7: o item da demo (item 12) traz `en` e `pt-BR`, como o pacote exige (ADR 0011). Onde ele entra (Meus textos ou pacote rascunho, já que o formato 2 pede 3 textos e 6 frases) sai de um grilling antes da 15.7.
+Decidido na 15.7 (Maintainer): o item da demo traz `en` e `pt-BR` e vai para a tabela `rascunhos_da_ia`, nunca direto para o treino. No painel `/ia` o Maintainer aprova, o que copia o item para os Meus textos por `MeusTextos::criar`, ou descarta. O pedido só entra na fila; o `ia:processar` roda a cada minuto na agenda, com `withoutOverlapping` e `Cache::lock`, um pedido por vez e até 5 à espera. O item passa pelo próprio `ValidadorDePacote`, como pacote de um item fora do `meus-textos`, então as faixas são erro: reprovado fica com o texto e o motivo à vista. `SaidaInvalida` e `SaidaTruncada` ganham uma nova tentativa, `GeradorOcupado` e `GeradorIndisponivel` esperam o próximo minuto sem gastar tentativa, e `PedidoRecusado` falha na hora.
 
 Fontes:
 - https://github.com/ollama/ollama/blob/main/docs/api.md (`/api/chat`, `format`)

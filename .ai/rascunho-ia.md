@@ -31,8 +31,8 @@ Prepara o grilling da entrega 15. Nada daqui está implementado. As fontes foram
    - o motor é escolhido no `.env` (`PHPARROT_IA_MOTOR`), como o Whisper pela URL.
 2. **Prompt montado no servidor** a partir do tema, do nível, das faixas do anexo de níveis, de exemplos da fábrica e do JSON Schema dos itens. Nenhum texto do visitante entra no prompt.
 3. **Saída estruturada:** `format` com JSON Schema no Ollama, `output_config.format` na Anthropic, `response_format` com `json_schema` na OpenAI e `response_mime_type` `application/json` com schema no Gemini. Mesmo assim, a saída passa pelo validador. Item reprovado volta uma vez com os motivos e, se falhar de novo, o nível fica marcado como "falhou".
-4. **Execução como na tradução do conteúdo:** a tela registra o pedido (tema × níveis), a agenda gera um nível por vez com `Cache::lock`, e o painel mostra o andamento. Nada roda dentro do clique.
-5. **Painel na gestão (`/ia`, atrás do token):** motor e modelo ativos, se o motor responde, pedidos e níveis prontos, "Gerar tema" e "Cancelar", e o pacote rascunho resultante, com link para `/pacotes`.
+4. **Execução como na tradução do conteúdo (feito na 15.7):** o painel só cria o pedido (tema, nível e tipo) na tabela `rascunhos_da_ia`; o `ia:processar` roda a cada minuto na agenda, com `withoutOverlapping`, `Cache::lock` e até 5 pedidos à espera, gera um item, valida e grava pronto, reprovado ou falhou. Um "gerando" com mais de 5 minutos volta para a fila. Nada roda dentro do clique.
+5. **Painel na gestão (`/ia`, atrás da sessão do ADR 0008, feito na 15.7):** pedido por tema, nível e tipo, aviso de IA desligada, lista com status, `en`, `pt-BR` escapados, motivo e duração, `wire:poll` só com pedido na fila, e Aprovar (copia para os Meus textos) ou Descartar.
 
 ## Ollama local, pelo gateway (ADR 0013)
 
@@ -95,14 +95,14 @@ Preços por 1 milhão de tokens, entrada / saída, da página oficial de cada um
 
 ## Perguntas abertas
 
-1. O primeiro motor da entrega 15 é só o Ollama, só um pago, ou os dois com um gerador falso?
+1. O primeiro motor da entrega 15 é só o Ollama, só um pago, ou os dois com um gerador falso? **Respondida (ADR 0013):** só o Ollama, pelo gateway, com o `GeradorFalso` nos testes.
 2. Qual provedor pago e qual modelo? A sugestão é testar um modelo médio contra o Ollama no mesmo nível antes de fixar.
-3. Os temas novos sob pedido entram na 15, trocando o enum `Tema` por temas no banco, ou ficam para depois?
-4. O gerado entra como um pacote rascunho por tema, ou como Meus textos marcados "gerado"?
-5. A chamada aos pagos vai pelo cliente HTTP do Laravel ou pelo SDK oficial do provedor?
+3. Os temas novos sob pedido entram na 15, trocando o enum `Tema` por temas no banco, ou ficam para depois? **Respondida:** ficam para depois; o enum `Tema` não mudou.
+4. O gerado entra como um pacote rascunho por tema, ou como Meus textos marcados "gerado"? **Respondida (15.7):** nenhum dos dois: tabela própria de rascunhos, e o aprovado vira um Meus textos comum.
+5. A chamada aos pagos vai pelo cliente HTTP do Laravel ou pelo SDK oficial do provedor? **Em parte:** o gateway é chamado pelo `Http` do Laravel; para os pagos, segue aberta.
 6. Há um teto de gasto por mês no app para a IA, como o contador do Google, ou só o alerta no console do provedor?
 7. Os comentários de pronúncia (depois da 15): aceitamos mandar a transcrição a um modelo, mesmo local?
-8. O Ollama do PHPorto pode ser usado pela VM de produção, ou a IA fica só no dev? Isso liga com a pergunta 5 do deploy.
+8. O Ollama do PHPorto pode ser usado pela VM de produção, ou a IA fica só no dev? Isso liga com a pergunta 5 do deploy. **Respondida (ADR 0013, decisão 11):** a IA fica só no dev, por túnel.
 
 ## Fontes oficiais
 
