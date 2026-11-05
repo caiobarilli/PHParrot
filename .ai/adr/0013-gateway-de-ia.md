@@ -10,18 +10,17 @@ O PHParrot vai gerar textos de treino em `en` e `pt-BR` com o `llama3.2:3b` num 
 
 1. **Gateway próprio:** em Python com FastAPI, no lugar do LiteLLM. O Ollama sai do "Fora" do `teto.md` só para a geração pelo gateway. A tradução e o comentário de pronúncia continuam fora.
 2. **Container:**
-   - Código em `docker/gateway/`. O `phparrot-gateway` fica na `phparrot-network`, na porta interna 8000, sem porta publicada no host. O Laravel o chama por `http://phparrot-gateway:8000`.
+   - Código em `docker/gateway/`. O `phparrot-gateway` fica na `phparrot-network`, na porta interna 8000, sem porta publicada no host. O Laravel o chama por `http://phparrot-gateway:8000`. A configuração vem das variáveis `GATEWAY_*`, e configuração inválida impede a subida.
    - `memory` definido e log `json-file` rotativo (`local.log_rotativo`). Imagem multi-stage por digest, `USER` numérico sem root.
    - Bloco `host { host = "host.docker.internal", ip = "host-gateway" }`: inerte no Docker Desktop, necessário no Docker Engine.
 3. **Autenticação:**
-   - Token Bearer comparado em tempo constante, como o `hash_equals` do ADR 0008.
-   - A fonte é um único arquivo de segredo fora do repositório, montado só leitura em `/run/secrets/phparrot-gateway-token` no `phparrot-gateway`, no `phparrot-php` e no `phparrot-agenda`, que roda a geração. O Terraform recebe só o caminho (`gateway_token_arquivo`); sem ele, ou em `prod`, não há gateway nem montagem. Dono 1000 (php e agenda), grupo 10002 (o gateway roda como `10002:10002`) e modo 0640: o Docker Desktop repassa uid, gid e modo no bind mount, e qualquer outro uid fica sem leitura.
-   - O token não vai para o `env` do Terraform, que grava o `env` em texto no `terraform.tfstate` (`rascunho-deploy.md`, ponto 6).
+   - Token Bearer comparado em tempo constante (`hmac.compare_digest`, como o `hash_equals` do ADR 0008) e lido do arquivo a cada pedido, para a rotação no lugar valer sem reiniciar. Fail closed: arquivo ausente, ilegível ou vazio dá 503; sem token, malformado ou errado dá 401 com `WWW-Authenticate: Bearer`. O `/health` fica sem auth, por causa do `HEALTHCHECK`.
+   - A fonte é um único arquivo de segredo fora do repositório, montado só leitura em `/run/secrets/phparrot-gateway-token` no `phparrot-gateway`, no `phparrot-php` e no `phparrot-agenda`, que roda a geração. O Terraform recebe só o caminho (`gateway_token_arquivo`); sem ele, ou em `prod`, não há gateway nem montagem. Dono 1000 (php e agenda), grupo 10002 (o gateway roda como `10002:10002`) e modo 0640: o Docker Desktop repassa uid, gid e modo no bind mount, e qualquer outro uid fica sem leitura. O token não vai para o `env` do Terraform, que o gravaria em texto no `terraform.tfstate` (`rascunho-deploy.md`, ponto 6).
 4. **API compatível com a OpenAI:**
    - Só `POST /v1/chat/completions`, sem `stream`, e `GET /v1/models`.
    - Por baixo, o gateway chama o `POST /api/chat` do Ollama com `stream: false` e `format`. Trocar o Ollama por vLLM muda o gateway, não o app.
-5. **Allowlist de modelos:** só `llama3.2:3b`. Modelo fora da lista é recusado antes de chegar ao Ollama.
-6. **Concorrência 1:** um semáforo no gateway. Ocupado, responde 503 com `Retry-After`. No Laravel, `Cache::lock`, como no `/transcrever` (ADR 0007, item 5).
+5. **Allowlist de modelos:** só `llama3.2:3b`. Modelo fora da lista é recusado antes de chegar ao Ollama, com 404 `model_not_found`, como a OpenAI. Todo erro sai no formato `{"error": {message, type, param, code}}`.
+6. **Concorrência 1:** um limitador com `GATEWAY_CONCORRENCIA` vagas, sem fila: cheio, responde 503 na hora, com `Retry-After: 5`. No Laravel, `Cache::lock`, como no `/transcrever` (ADR 0007, item 5).
 7. **Saída estruturada:**
    - O Laravel manda o JSON Schema no `response_format` do pedido. O gateway o repassa ao `format` do Ollama e valida a resposta contra ele.
    - Resposta que não é JSON ou não segue o schema vira um erro tipado, sem o conteúdo da resposta.
@@ -29,7 +28,7 @@ O PHParrot vai gerar textos de treino em `en` e `pt-BR` com o `llama3.2:3b` num 
 8. **Métricas:** uma linha de log JSON por pedido, com duração, tokens, tokens/s, modelo e status. Nunca o prompt nem a resposta, com teste disso. O Prometheus fica para depois.
 9. **Ferramentas Python:**
    - pytest, ruff e mypy `--strict` no estágio `teste` da imagem, cujo build é o portão no `lint-staged` e no CI. Os testes usam upstream falso (`respx` ou `httpx.MockTransport`). A aceitação com o Ollama real fica fora do CI, que não tem GPU nem Ollama.
-   - Dependências pelo `uv`: versões exatas no `pyproject.toml` e `uv.lock` com hashes, instalado com `uv sync --frozen`. A imagem final sai sem o `pip` da base, que não serve em execução e traz CVEs HIGH no `_vendor`.
+   - Dependências pelo `uv`: versões exatas no `pyproject.toml` e `uv.lock` com hashes, instalado com `uv sync --frozen`. A imagem final sai sem o `pip` da base, que não serve em execução e traz CVEs HIGH no `_vendor`. O ruff ignora só o N818 (sufixo `Error` em exceção), por causa dos nomes em português.
 10. **Sem comentários no Python:** o `.husky/check-comentarios.mjs` passa a cobrir `.py`, aceitando só `# type:` e `# noqa`.
 11. **Só no dev:** a IA não vai para a VM de produção. O túnel é aberto à mão; o `autossh` fica para depois.
 12. **Escopo da demo:**
