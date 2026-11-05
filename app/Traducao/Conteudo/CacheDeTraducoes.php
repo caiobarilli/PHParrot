@@ -8,6 +8,7 @@ use App\Models\TraducaoDeConteudo;
 use App\Textos\Idioma;
 use App\Textos\ItemDeTexto;
 use App\Traducao\TradutorGoogle;
+use Illuminate\Support\Collection;
 
 final class CacheDeTraducoes
 {
@@ -87,15 +88,12 @@ final class CacheDeTraducoes
         $emUso = array_flip($hashesEmUso);
         $orfas = TraducaoDeConteudo::query()->pluck('hash', 'id')
             ->filter(fn (mixed $hash): bool => ! is_string($hash) || ! isset($emUso[$hash]))
-            ->keys()
-            ->all();
+            ->keys();
 
-        foreach (array_chunk($orfas, 500) as $lote) {
-            TraducaoDeConteudo::query()->whereIn('id', $lote)->delete();
-        }
+        $orfas->chunk(500)->each(fn (Collection $lote): mixed => TraducaoDeConteudo::query()->whereIn('id', $lote->all())->delete());
 
         $this->mapa = null;
 
-        return count($orfas);
+        return $orfas->count();
     }
 }

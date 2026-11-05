@@ -274,6 +274,23 @@ it('limpar traduções apaga só as órfãs, à mão e na ativação de um pacot
     expect(LinhaDoCache::query()->count())->toBe($total - 1);
 });
 
+it('limpar órfãs de línguas e pacotes diferentes não apaga nada além delas', function (): void {
+    $cache = app(CacheDeTraducoes::class);
+    $emUso = ['Comida em uso.', 'Fábrica em uso.'];
+    $orfas = ['Comida órfã.', 'Fábrica órfã.', 'Viagem órfã.'];
+
+    foreach ([Idioma::Ru, Idioma::Es, Idioma::De] as $idioma) {
+        $cache->salvar($idioma, collect([...$emUso, ...$orfas])->mapWithKeys(fn (string $texto): array => [CacheDeTraducoes::hash($texto) => $idioma->value.': '.$texto])->all());
+    }
+
+    $hashesEmUso = array_map(CacheDeTraducoes::hash(...), $emUso);
+    $antes = LinhaDoCache::query()->whereIn('hash', $hashesEmUso)->orderBy('id')->pluck('id')->all();
+
+    expect($cache->limparOrfas($hashesEmUso))->toBe(9)
+        ->and(LinhaDoCache::query()->orderBy('id')->pluck('id')->all())->toBe($antes)
+        ->and($antes)->toHaveCount(6);
+});
+
 it('o contador soma por mês os caracteres da Leitura e dos lotes, sem bloquear nada', function (): void {
     fingirGoogle();
     travelTo(now()->setDate(2026, 11, 10));
