@@ -49,6 +49,7 @@ FROM debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe
 ARG MODELO=base
 
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg libgomp1 \
+    && apt-get upgrade -y --no-install-recommends apt libapt-pkg7.0 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin whisper \
