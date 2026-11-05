@@ -33,3 +33,8 @@ terraform.tfstate.*
 !terraform.tfvars.example
 /.claude/settings.local.json
 /tests/Browser/Screenshots
+/docker/gateway/.venv
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/

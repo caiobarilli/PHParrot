@@ -27,7 +27,9 @@ O PHParrot vai gerar textos de treino em `en` e `pt-BR` com o `llama3.2:3b` num 
    - Resposta que não é JSON ou não segue o schema vira um erro tipado, sem o conteúdo da resposta.
    - O gateway não conhece o formato 2 dos pacotes. A saída do modelo é dado não confiável: no Laravel, passa pelo `ValidadorDePacote` e entra como pacote inativo (ADR 0011), que só o Maintainer ativa em `/pacotes`.
 8. **Métricas:** uma linha de log JSON por pedido, com duração, tokens, tokens/s, modelo e status. Nunca o prompt nem a resposta, com teste disso. O Prometheus fica para depois.
-9. **Ferramentas Python:** pytest, ruff e mypy `--strict`, dentro do container. Os testes usam upstream falso (`respx` ou `httpx.MockTransport`). A aceitação com o Ollama real fica fora do CI, que não tem GPU nem Ollama.
+9. **Ferramentas Python:**
+   - pytest, ruff e mypy `--strict` no estágio `teste` da imagem, cujo build é o portão no `lint-staged` e no CI. Os testes usam upstream falso (`respx` ou `httpx.MockTransport`). A aceitação com o Ollama real fica fora do CI, que não tem GPU nem Ollama.
+   - Dependências pelo `uv`: versões exatas no `pyproject.toml` e `uv.lock` com hashes, instalado com `uv sync --frozen`. A imagem final sai sem o `pip` da base, que não serve em execução e traz CVEs HIGH no `_vendor`.
 10. **Sem comentários no Python:** o `.husky/check-comentarios.mjs` passa a cobrir `.py`, aceitando só `# type:` e `# noqa`.
 11. **Só no dev:** a IA não vai para a VM de produção. O túnel é aberto à mão; o `autossh` fica para depois.
 12. **Escopo da demo:**

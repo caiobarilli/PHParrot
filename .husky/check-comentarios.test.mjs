@@ -118,3 +118,30 @@ test('fora do escopo não é olhado: markdown, CSS, vendor e build', () => {
 test('diff vazio passa', () => {
   assert.equal(rodar('').code, 0)
 })
+
+test('comentário com # em Python barra, sozinho ou no fim da linha', () => {
+  const { code, stderr } = rodar(diffCom(['x = 1', '# explica o porquê'], 'docker/gateway/gateway/app.py'))
+
+  assert.equal(code, 1)
+  assert.match(stderr, /docker\/gateway\/gateway\/app\.py:2/)
+  assert.equal(rodar(diffCom(['total = a + b  # soma'], 'docker/gateway/gateway/app.py')).code, 1)
+})
+
+test('em Python, só # type: e # noqa passam', () => {
+  const linhas = ['x = y()  # type: ignore[no-untyped-call]', 'import os  # noqa: F401', 'z = 1  # noqa', '# type: ignore']
+
+  assert.equal(rodar(diffCom(linhas, 'docker/gateway/gateway/app.py')).code, 0)
+  assert.equal(rodar(diffCom(['x = 1  # typed'], 'docker/gateway/gateway/app.py')).code, 1)
+  assert.equal(rodar(diffCom(['x = 1  # noqanada'], 'docker/gateway/gateway/app.py')).code, 1)
+})
+
+test('docstring em Python barra', () => {
+  assert.equal(rodar(diffCom(['def f() -> None:', '    """Faz a coisa."""'], 'docker/gateway/gateway/app.py')).code, 1)
+  assert.equal(rodar(diffCom(["    '''", '    texto', "    '''"], 'docker/gateway/gateway/app.py')).code, 1)
+})
+
+test('em Python, # dentro de string e // de divisão inteira não são comentário', () => {
+  const linhas = ['cor = "#fff"', "sep = '#'", 'metade = total // 2', 'url = "http://exemplo.test/#ancora"', 'm = f"{a!r} # {b}"']
+
+  assert.equal(rodar(diffCom(linhas, 'docker/gateway/tests/test_x.py')).code, 0)
+})

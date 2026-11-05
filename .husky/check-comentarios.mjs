@@ -57,6 +57,10 @@ function tipoDoArquivo(arquivo) {
     return 'js'
   }
 
+  if (arquivo.endsWith('.py')) {
+    return 'py'
+  }
+
   return null
 }
 
@@ -146,8 +150,60 @@ function comentarioEmbutido(texto, tipo) {
   return null
 }
 
+const DIRETIVA_PYTHON = /^(type:|noqa(:|\s|$))/
+
+function comentarioPython(texto) {
+  let aspas = null
+
+  for (let i = 0; i < texto.length; i += 1) {
+    const caractere = texto[i]
+
+    if (caractere === '\\') {
+      i += 1
+      continue
+    }
+
+    if (aspas !== null) {
+      if (caractere === aspas) {
+        aspas = null
+      }
+
+      continue
+    }
+
+    if (caractere === '\'' || caractere === '"') {
+      aspas = caractere
+      continue
+    }
+
+    if (caractere === '#') {
+      return texto.slice(i + 1)
+    }
+  }
+
+  return null
+}
+
+function analisarPython(linha, texto) {
+  if (/^[rbuf]*("""|''')/i.test(linha)) {
+    return 'docstring'
+  }
+
+  const comentario = comentarioPython(texto)
+
+  if (comentario === null) {
+    return null
+  }
+
+  return DIRETIVA_PYTHON.test(comentario.trim()) ? null : 'comentário'
+}
+
 function analisar({ texto, tipo }) {
   const linha = texto.trim()
+
+  if (tipo === 'py') {
+    return analisarPython(linha, texto)
+  }
 
   if (tipo === 'blade') {
     return linha.includes('{{--') || linha.includes('<!--') ? 'comentário Blade' : null
@@ -207,7 +263,7 @@ if (achados.length > 0) {
     console.error(`comentarios: ${arquivo}:${linha} ${motivo}: ${texto.trim().slice(0, 120)}`)
   }
 
-  console.error('Zero comentário em PHP, Blade e JS. Fica só PHPDoc com tag de tipo e diretiva de ferramenta; o porquê vai para teste, nome ou .ai/.')
+  console.error('Zero comentário em PHP, Blade, JS e Python. Fica só PHPDoc com tag de tipo, diretiva de ferramenta e, no Python, # type: e # noqa; o porquê vai para teste, nome ou .ai/.')
   process.exit(1)
 }
 
