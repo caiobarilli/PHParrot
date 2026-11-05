@@ -48,9 +48,12 @@ Substitui a premissa anterior: o Ollama do PHPorto aberto na rede com `OLLAMA_HO
 - **Desligado:** túnel fechado ou desktop desligado viram erro de upstream no gateway. O painel avisa, e o treino nunca depende da IA.
 - **Do container ao host:** o bloco `host { host = "host.docker.internal", ip = "host-gateway" }` vai no `phparrot-gateway`, inerte no Docker Desktop.
 
-**O que ainda precisa ser confirmado no desktop:**
-1. Que o 0.40.13 aceita `format` com JSON Schema no `llama3.2:3b`.
-2. A política de uso da GPU compartilhada: `keep_alive`, `OLLAMA_NUM_PARALLEL` e `OLLAMA_MAX_LOADED_MODELS`.
+**Confirmado na rodada 15.5 (05/11/2026), do `phparrot-php` pelo túnel:** o 0.40.13 aceita `format` com JSON Schema no `llama3.2:3b`, e as 4 respostas vieram em JSON válido no schema.
+- **Campos:** `message.content`, `done_reason`, `prompt_eval_count`, `eval_count`, `eval_duration`, `load_duration` e `total_duration`, com as durações em ns.
+- **Tempo:** uma frase A1 em `en` e `pt` (~27 tokens) leva 0,6 s com o modelo carregado e 11,5 s a frio (10,5 s de carga). Um texto B2 de ~100 palavras nas duas línguas (271 tokens) leva 6,2 s. Cerca de 48 tokens/s.
+- **Corte:** com `num_predict` baixo, o `done_reason` é `length`, e o JSON sai cortado e inválido.
+
+**O que ainda precisa ser confirmado no desktop:** a política de uso da GPU compartilhada (`keep_alive`, `OLLAMA_NUM_PARALLEL` e `OLLAMA_MAX_LOADED_MODELS`).
 
 ## Provedores pagos por chave
 

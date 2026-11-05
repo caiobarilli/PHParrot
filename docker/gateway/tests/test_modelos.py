@@ -21,7 +21,7 @@ def test_models_lista_so_a_allowlist_no_formato_da_openai(cliente: TestClient) -
 
 
 def test_models_com_dois_modelos_lista_os_dois_na_ordem(arquivo_do_token: Path) -> None:
-    config = Config(token_arquivo=arquivo_do_token, modelos=(MODELO, "qwen3:4b"), concorrencia=1)
+    config = Config(arquivo_do_token, (MODELO, "qwen3:4b"), 1, "http://ollama.test:11434")
 
     with TestClient(criar_app(config)) as cliente:
         ids = [modelo["id"] for modelo in cliente.get("/v1/models", headers=autorizacao()).json()["data"]]

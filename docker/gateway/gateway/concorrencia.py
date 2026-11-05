@@ -4,7 +4,7 @@ from contextlib import contextmanager
 
 from gateway.erros import ErroOpenAI
 
-ESPERA_SUGERIDA_EM_SEGUNDOS = 5
+ESPERA_SUGERIDA_EM_SEGUNDOS = 10
 
 
 class Limitador:

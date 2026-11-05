@@ -8,6 +8,7 @@ VALIDO = {
     "GATEWAY_TOKEN_ARQUIVO": "/run/secrets/phparrot-gateway-token",
     "GATEWAY_MODELOS": "llama3.2:3b",
     "GATEWAY_CONCORRENCIA": "1",
+    "GATEWAY_OLLAMA_URL": "http://host.docker.internal:11434/",
 }
 
 
@@ -18,6 +19,7 @@ def test_le_o_ambiente_com_tipos() -> None:
         token_arquivo=Path("/run/secrets/phparrot-gateway-token"),
         modelos=("llama3.2:3b", "qwen3:4b"),
         concorrencia=1,
+        ollama_url="http://host.docker.internal:11434",
     )
 
 
@@ -29,6 +31,7 @@ def test_le_o_ambiente_com_tipos() -> None:
         ("GATEWAY_CONCORRENCIA", "0"),
         ("GATEWAY_CONCORRENCIA", "um"),
         ("GATEWAY_CONCORRENCIA", ""),
+        ("GATEWAY_OLLAMA_URL", "host.docker.internal:11434"),
     ],
 )
 def test_configuracao_invalida_impede_a_subida(chave: str, valor: str) -> None:

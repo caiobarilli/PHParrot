@@ -13,6 +13,7 @@ class Config:
     token_arquivo: Path
     modelos: tuple[str, ...]
     concorrencia: int
+    ollama_url: str
 
     @classmethod
     def do_ambiente(cls, ambiente: Mapping[str, str] | None = None) -> "Config":
@@ -33,4 +34,13 @@ class Config:
         if concorrencia < 1:
             raise ConfiguracaoInvalida("GATEWAY_CONCORRENCIA precisa ser pelo menos 1")
 
-        return cls(token_arquivo=Path(token_arquivo), modelos=modelos, concorrencia=concorrencia)
+        ollama_url = valores.get("GATEWAY_OLLAMA_URL", "").strip().rstrip("/")
+        if not ollama_url.startswith(("http://", "https://")):
+            raise ConfiguracaoInvalida("GATEWAY_OLLAMA_URL precisa começar com http:// ou https://")
+
+        return cls(
+            token_arquivo=Path(token_arquivo),
+            modelos=modelos,
+            concorrencia=concorrencia,
+            ollama_url=ollama_url,
+        )

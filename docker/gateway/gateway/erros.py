@@ -51,7 +51,12 @@ async def tratar_erro_de_validacao(_: Request, erro: Exception) -> JSONResponse:
     return resposta_de_erro(ErroOpenAI(400, "Pedido inválido.", "invalid_request_error", "invalid_request"))
 
 
+async def tratar_erro_inesperado(_: Request, erro: Exception) -> JSONResponse:
+    return resposta_de_erro(ErroOpenAI(500, "Erro interno do gateway.", "server_error", "erro_interno"))
+
+
 def registrar_tratadores(app: FastAPI) -> None:
+    app.add_exception_handler(Exception, tratar_erro_inesperado)
     app.add_exception_handler(ErroOpenAI, tratar_erro_openai)
     app.add_exception_handler(HTTPException, tratar_erro_http)
     app.add_exception_handler(RequestValidationError, tratar_erro_de_validacao)
