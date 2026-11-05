@@ -1,8 +1,8 @@
 # Fila
 
-Teto: 60 linhas
+Teto: 70 linhas
 
-Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer integra na `main` e envia. Estado: `feito`, `em curso` ou `pendente`.
+Entregas do PLANO (o plano original, que nunca entrou no repositório) e as que vieram depois, em rodadas: cada uma numa branch local, que o Maintainer integra na `main` e envia. Estado: `feito`, `em curso` ou `pendente`.
 
 | # | Entrega | Estado | Conteúdo |
 |---|---|---|---|
@@ -20,7 +20,13 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 | 12 | Tradução do conteúdo | feito (rodada 14) | Lotes com cache, container de agenda, painel na gestão, russo e números nas línguas novas (ADR 0012) |
 | 13 | Conteúdo dos 10 temas | feito (fábrica `2026.11.2`, 900 itens; rodadas 13 a 13c e 14) | Autor em inglês e especialista em pt-BR, um tema por vez, validados e revisados pelo Maintainer |
 | 14 | Teste da Google API | pendente (guia `docs/google-api.md` e `traducao:testar-google` prontos na rodada 17) | Chave real, restrita, com cota e alerta no console |
-| 15 | Integração com IA | pendente | Gerar temas e textos sob pedido, com Ollama local ou provedor pago por chave |
+| 15 | Integração com IA | em curso (15.1: ADR 0013 e docs) | Gerar textos sob pedido com o `llama3.2:3b` no Ollama local, pelo gateway próprio `phparrot-gateway` (ADR 0013). Rascunho do grilling em `.ai/rascunho-ia.md` (rodada 19). Provedor pago e temas novos ficam para depois |
+| 15.2 | Esqueleto do gateway | pendente | `docker/gateway/` com FastAPI e `GET /health`; pytest, ruff e mypy na imagem; job Python no CI; gateway na matriz do `containers.yml`; Dependabot (docker e pip); `check-comentarios` e `lint-staged` com `.py` |
+| 15.3 | Container no Terraform | pendente | `docker_image` com triggers pelo hash do fileset do código, `docker_container`, `host-gateway`, `memory`, log, segredo montado, `gateway_memoria` e `ollama_url`. `terraform plan` só com recursos novos, o Maintainer aplica, e `curl` do `phparrot-php` em `http://phparrot-gateway:8000/health` |
+| 15.4 | Auth, allowlist e concorrência | pendente | pytest com upstream falso: 401, modelo recusado e dois pedidos simultâneos → 503 |
+| 15.5 | Proxy, schema e métricas | pendente | `/v1/chat/completions` e `/v1/models` sobre o `/api/chat`, validação pelo schema e log de métricas sem prompt nem resposta, com pytest. Manual: `curl` do `phparrot-php` gerando um JSON pequeno |
+| 15.6 | Cliente Laravel | pendente | Bloco `ia` no `config/phparrot.php`, contrato `GeradorDeTextos`, `GeradorGateway` com `Http`, bind e `Http::fake` (ok, 401, 503, JSON inválido, timeout, log sem texto). `composer gate` verde |
+| 15.7 | Geração na gestão | pendente | Comando artisan na agenda que gera um item com `en` e `pt-BR`, passa pelo `ValidadorDePacote` e grava um pacote inativo; painel mínimo. Aceitação real com o Ollama, vista em `/pacotes` |
 | 16 | Deploy | pendente (rodada 20: `ambiente` dev/prod, log com rotação, `banco:backup` e `banco:restaurar`) | VM no Hyper-V, Cloudflare, deploy automático pelo GitHub Actions e proteção da `main` |
 
 ## Diferenças do design (validação no Chromium do WSL)
@@ -55,6 +61,5 @@ Entregas do `PLANO.md`, em rodadas: cada uma numa branch local, que o Maintainer
 
 - Entrega 1: setup em um comando: feito (rodada 16). `bin/phparrot setup` sobe e confere tudo, sem tocar no `.env` existente, e `bin/phparrot dev` roda o Vite no `phparrot-node` e o `pail` no `phparrot-php`. A fila fica `sync`, sem migration de `jobs`.
 - Entrega 9: `HEALTHCHECK` nas imagens (DS-0026, LOW no Trivy config). O `ubuntu-latest` passa para o Ubuntu 26 desde 19/10/2026 (notice do CI); fixar `ubuntu-24.04` se algo quebrar.
-- Entrega 15: rascunho do grilling em `.ai/rascunho-ia.md` (rodada 19), com o contrato do Ollama, três provedores pagos, o custo de um tema e 8 perguntas abertas.
 - Entrega 16: rascunho do grilling em `.ai/rascunho-deploy.md` (rodada 19), com Tunnel, deploy puxado pela VM, ruleset, backup por `VACUUM INTO` e 9 perguntas abertas.
 - Dependabot: Renovate para o whisper.cpp (tag, commit e hash do modelo), se a atualização manual pesar. Auto-merge de patch e digest depois da proteção da `main`.

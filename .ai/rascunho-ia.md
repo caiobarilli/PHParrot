@@ -2,7 +2,7 @@
 
 Teto: 120 linhas
 
-Prepara o grilling da entrega 15. Nada daqui está implementado. As fontes foram lidas em 01/11/2026 e estão no fim.
+Prepara o grilling da entrega 15. Nada daqui está implementado. As fontes foram lidas em 01/11/2026 e estão no fim. Em 05/11/2026, o caminho até o Ollama passou a ser o gateway do ADR 0013, que vale sobre este rascunho onde os dois divergirem.
 
 ## Estado atual
 
@@ -27,30 +27,30 @@ Prepara o grilling da entrega 15. Nada daqui está implementado. As fontes foram
 1. **Contrato `GeradorDeTextos`:**
    - entrada: tema, nível, tipo e quantidade;
    - saída: itens do formato 2;
-   - implementações: `GeradorOllama`, um gerador pago escolhido no grilling e um `GeradorFalso` nos testes;
+   - implementações: `GeradorGateway` (ADR 0013), um gerador pago escolhido no grilling e um `GeradorFalso` nos testes;
    - o motor é escolhido no `.env` (`PHPARROT_IA_MOTOR`), como o Whisper pela URL.
 2. **Prompt montado no servidor** a partir do tema, do nível, das faixas do anexo de níveis, de exemplos da fábrica e do JSON Schema dos itens. Nenhum texto do visitante entra no prompt.
 3. **Saída estruturada:** `format` com JSON Schema no Ollama, `output_config.format` na Anthropic, `response_format` com `json_schema` na OpenAI e `response_mime_type` `application/json` com schema no Gemini. Mesmo assim, a saída passa pelo validador. Item reprovado volta uma vez com os motivos e, se falhar de novo, o nível fica marcado como "falhou".
 4. **Execução como na tradução do conteúdo:** a tela registra o pedido (tema × níveis), a agenda gera um nível por vez com `Cache::lock`, e o painel mostra o andamento. Nada roda dentro do clique.
 5. **Painel na gestão (`/ia`, atrás do token):** motor e modelo ativos, se o motor responde, pedidos e níveis prontos, "Gerar tema" e "Cancelar", e o pacote rascunho resultante, com link para `/pacotes`.
 
-## Ollama local, pelo PHPorto
+## Ollama local, pelo gateway (ADR 0013)
 
-O plano é usar o Ollama que o projeto PHPorto gerencia, com `qwen3:4b` ou `llama3.2:3b` numa GTX 1650 de 4 GB. Não acessei nada do PHPorto.
+Substitui a premissa anterior: o Ollama do PHPorto aberto na rede com `OLLAMA_HOST=0.0.0.0`, alcançado direto pelo Laravel.
+
+**Caminho:** Laravel → `http://phparrot-gateway:8000` (rede interna, Bearer) → `host.docker.internal:11434` → túnel SSH aberto à mão no WSL → Ollama 0.40.13 num desktop, preso ao `127.0.0.1`. O Ollama não se abre na rede, e nenhuma regra de firewall entra.
 
 **Contrato mínimo:**
-- **Endpoint:** `PHPARROT_OLLAMA_URL=http://host.docker.internal:11434`. Chamada: `POST /api/chat` com `stream: false` e `format` (schema). Saúde: `GET /api/version`. Modelos: `GET /api/tags`, para conferir o modelo antes de gerar.
-- **Modelo:** `PHPARROT_OLLAMA_MODELO`, sem padrão escondido.
-- **Timeouts:** 2 s na saúde e cerca de 600 s numa geração, porque um nível inteiro pode levar minutos numa GPU de 4 GB. Isso roda pela agenda, fora do PHP-FPM.
-- **Contexto:** o Ollama usa 4096 tokens por padrão (`OLLAMA_CONTEXT_LENGTH`). Prompt e saída de um nível passam disso. O pedido manda `options.num_ctx`, e o valor tem de caber na VRAM.
-- **Desligado:** a saúde falha, o painel mostra "Ollama indisponível" e o pedido fica pendente, sem consumir tentativa. O treino nunca depende da IA.
-- **Do container ao host:** o Docker Desktop resolve `host.docker.internal` sozinho. No Docker Engine sem o Desktop, o container precisa de `--add-host host.docker.internal=host-gateway`. No Terraform, isso é um bloco `host { host = "host.docker.internal", ip = "host-gateway" }` no `phparrot-agenda` e no `phparrot-php`.
+- **Do Laravel ao gateway:** formato da OpenAI, `POST /v1/chat/completions` sem stream e `GET /v1/models`, com o JSON Schema em `response_format`. O Laravel nunca chama o Ollama direto.
+- **Do gateway ao Ollama:** `POST /api/chat` com `stream: false` e `format`. O gateway valida a resposta contra o schema e recusa modelo fora da allowlist (`llama3.2:3b`).
+- **Concorrência:** 1 no gateway (503 com `Retry-After`) e `Cache::lock` no Laravel.
+- **Escopo da demo:** um item por pedido (um tema, um nível) com `en` e `pt-BR`, pela agenda, fora do PHP-FPM. Tempo e `options.num_ctx` se medem na aceitação.
+- **Desligado:** túnel fechado ou desktop desligado viram erro de upstream no gateway. O painel avisa, e o treino nunca depende da IA.
+- **Do container ao host:** o bloco `host { host = "host.docker.internal", ip = "host-gateway" }` vai no `phparrot-gateway`, inerte no Docker Desktop.
 
-**O que precisa ser confirmado no PHPorto:**
-1. Onde o Ollama roda: no Windows ou no WSL. Por padrão ele escuta só em `127.0.0.1:11434`, e o container não alcança. É preciso `OLLAMA_HOST` (por exemplo `0.0.0.0:11434`) e uma regra de firewall restrita.
-2. A versão do Ollama, que precisa aceitar `format` com JSON Schema, e os modelos já baixados.
-3. A política de uso da GPU compartilhada: `keep_alive`, `OLLAMA_NUM_PARALLEL` e `OLLAMA_MAX_LOADED_MODELS`. Uma geração longa do PHParrot não pode travar o PHPorto.
-4. Se ele fica ligado sempre ou só sob demanda, e quem é o dono da atualização.
+**O que ainda precisa ser confirmado no desktop:**
+1. Que o 0.40.13 aceita `format` com JSON Schema no `llama3.2:3b`.
+2. A política de uso da GPU compartilhada: `keep_alive`, `OLLAMA_NUM_PARALLEL` e `OLLAMA_MAX_LOADED_MODELS`.
 
 ## Provedores pagos por chave
 
@@ -87,7 +87,7 @@ Preços por 1 milhão de tokens, entrada / saída, da página oficial de cada um
 ## Como testar
 
 - **Sem modelo real:** `GeradorFalso` com fixture de um nível; `Http::fake` com as respostas de cada motor (ok, JSON quebrado, schema errado, item fora da faixa, timeout, 401 e 429); testes da agenda, da trava e do painel; um teste de que a chave e o prompt não aparecem no log e outro de que o pacote gerado entra inativo.
-- **Aceitação com o Ollama:** um comando `ia:testar` e um grupo Pest `ollama`, fora do `composer gate`, que só roda com `PHPARROT_OLLAMA_URL` respondendo. Ele gera um nível de um tema, exige que passe pelo `textos:validar`, mede o tempo e registra o resultado na fila.
+- **Aceitação com o Ollama:** um comando `ia:testar` e um grupo Pest `ollama`, fora do `composer gate`, que só roda com o gateway e o túnel respondendo. Ele gera um item, exige que passe pelo `textos:validar`, mede o tempo e registra o resultado na fila.
 - **Aceitação com o pago:** a mesma coisa com uma chave real, uma vez, como o `traducao:testar-google`.
 
 ## Perguntas abertas
