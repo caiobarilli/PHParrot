@@ -19,7 +19,7 @@ O app é público e sem login. A gestão (criar, editar e apagar textos, exporta
    - Duas etapas, palavra "apagar" e flag conferida de novo no servidor, sem pedir o token outra vez. A exportação é oferecida na etapa 1.
    - Apaga só a tabela `textos`, numa transação.
 5. **Migrations:** as iniciais são reescritas, porque ainda não houve deploy.
-   - Ficam `create_sessions_table` (só `sessions`) e a `cache`.
+   - Ficam `create_sessions_table` (só `sessions`) e a `cache`. A `sessions.user_id` fica como `unsignedBigInteger` nulo, com índice e sem `foreignId`: o `DatabaseSessionHandler::addUserInformation` grava `user_id` sempre que o `Guard` está no container, e o alias `auth.driver` o deixa lá.
    - Saem `users`, `password_reset_tokens`, `jobs`, o `User` e a `UserFactory`. `QUEUE_CONNECTION=sync`, e o `config/auth.php` é ajustado, com o PHPStan conferindo.
 6. **Tabela `textos`:** a coluna `traducoes` é JSON no formato de um item do `textos.json`. A validação dos idiomas ativos fica na aplicação.
 7. **Backup:** a cópia do arquivo SQLite fica para o deploy.
