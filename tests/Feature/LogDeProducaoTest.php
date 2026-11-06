@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Monolog\Handler\NullHandler;
+
 it('o .env.example manda o log para o canal diário, com retenção', function (): void {
     $exemplo = (string) file_get_contents(base_path('.env.example'));
 
@@ -23,4 +25,10 @@ it('o Terraform gira o log de todos os containers, menos o do Whisper, que não 
         ->and($terraform)->toContain('"max-size" = "10m"')
         ->and($terraform)->toContain('"max-file" = "3"')
         ->and(preg_match('/resource "docker_container" "whisper" \{.*?log_driver\s+= "none"/s', $terraform))->toBe(1);
+});
+
+it('o ambiente de teste manda o log para o canal nulo e não escreve no log do dev', function (): void {
+    expect(config('logging.default'))->toBe('descarte')
+        ->and(config('logging.channels.descarte.handler'))->toBe(NullHandler::class)
+        ->and((string) file_get_contents(base_path('phpunit.xml')))->toContain('<env name="LOG_CHANNEL" value="descarte"/>');
 });
