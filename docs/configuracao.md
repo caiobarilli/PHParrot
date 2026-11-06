@@ -147,9 +147,24 @@ O `phparrot-gateway` resolve `host.docker.internal` pelo `host-gateway`, e a `ol
 
 | Cenário | Como | Testado |
 |---|---|---|
-| Outra máquina, por túnel SSH no WSL | O Ollama fica preso ao `127.0.0.1` da máquina dele. No WSL, um túnel como `ssh -N -L 11434:127.0.0.1:11434 usuario@maquina-do-ollama` traz a porta para o `localhost` do WSL, e o Docker Desktop a alcança por `host.docker.internal`. O túnel é aberto à mão e cai com a sessão. | Sim, é o dev do Maintainer. |
+| Outra máquina, por túnel SSH aberto dentro do WSL | O Ollama fica preso ao `127.0.0.1` da máquina dele, e o túnel traz a porta para o WSL. Veja "Túnel SSH testado", logo abaixo. | Sim, com `0.0.0.0` no WSL e Docker Desktop. É o dev do Maintainer. |
 | Mesma máquina, com Docker Desktop | O Ollama no Windows ou no WSL, no padrão `127.0.0.1:11434`, e a `ollama_url` padrão. No WSL, a porta chega ao container pelo mesmo caminho do túnel. | Não. É a configuração esperada. |
 | Docker Engine no Linux | `host.docker.internal` vira o IP da ponte do Docker no host (em geral `172.17.0.1`). Um Ollama em `127.0.0.1` não é visível de dentro do container: ele precisa escutar nesse IP (`OLLAMA_HOST=172.17.0.1:11434`) ou em `0.0.0.0`, com o firewall fechando a porta para fora. | Não. É a configuração esperada. |
+
+#### Túnel SSH testado
+
+Aberto dentro do WSL, com o bind em `0.0.0.0`:
+
+```sh
+ssh -N -L 0.0.0.0:11434:127.0.0.1:11434 usuario@maquina-do-ollama
+```
+
+O container chega ao Ollama por `host.docker.internal` → `wslrelay` → túnel, com o Docker Desktop.
+
+- Com o WSL em NAT, a porta `11434` fica visível ao Windows e aos containers, e não à rede local.
+- O Ollama da outra máquina continua preso ao `127.0.0.1` dela.
+- O túnel é aberto à mão e cai com a sessão.
+- Com o bind em `127.0.0.1` (`-L 11434:127.0.0.1:11434`), o `wslrelay` deve encaminhar a porta ao Windows, mas isso não foi testado.
 
 O Ollama não tem autenticação. Não o exponha à internet: a única porta de entrada para ele é o gateway, que não tem porta publicada.
 
