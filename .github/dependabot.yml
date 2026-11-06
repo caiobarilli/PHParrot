@@ -6,7 +6,6 @@ updates:
       - /docker/php
       - /docker/whisper
       - /docker/nginx
-      - /docker/gateway
     schedule:
       interval: weekly
       day: monday
@@ -26,6 +25,31 @@ updates:
         update-types:
           - major
       docker:
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker
+    directory: /docker/gateway
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "build"
+    ignore:
+      - dependency-name: "python"
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-major"
+    groups:
+      docker-gateway-major:
+        patterns:
+          - "*"
+        update-types:
+          - major
+      docker-gateway:
         patterns:
           - "*"
 
