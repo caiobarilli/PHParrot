@@ -40,6 +40,11 @@ Uso: bin/phparrot <comando> [dev|prod]
           build se resources/, os lockfiles e o vite.config.js não mudaram.
   dev     Vite com recarga no phparrot-node e os logs do Laravel (pail) no
           phparrot-php. Ctrl+C para os dois.
+  contrato-gateway
+          Extrai o openapi.json da imagem do gateway fixada em
+          docker/gateway/Dockerfile para storage/app/private/gateway/. O teste
+          de contrato (tests/Feature/ContratoDoGatewayTest.php) lê esse arquivo.
+          Rode de novo quando o FROM mudar.
 TEXTO
 }
 
@@ -123,6 +128,36 @@ assets() {
     construir_assets
 }
 
+imagem_do_gateway() {
+    sed -nE 's/^FROM[[:space:]]+([^[:space:]]+).*/\1/p' docker/gateway/Dockerfile | head -n 1
+}
+
+extrair_contrato_do_gateway() {
+    local imagem destino
+    imagem="$(imagem_do_gateway)"
+    [ -n "$imagem" ] || falha "não achei o FROM em docker/gateway/Dockerfile."
+    destino=storage/app/private/gateway
+
+    if [ -s "$destino/openapi.json" ] && [ "$(cat "$destino/openapi.imagem" 2>/dev/null || true)" = "$imagem" ]; then
+        info "Contrato do gateway em dia: $imagem."
+        return
+    fi
+
+    mkdir -p "$destino"
+    docker run --rm --entrypoint cat "$imagem" /app/openapi.json >"$destino/openapi.json.novo" \
+        || { rm -f "$destino/openapi.json.novo"; falha "não consegui extrair o /app/openapi.json de $imagem."; }
+    mv "$destino/openapi.json.novo" "$destino/openapi.json"
+    printf '%s\n' "$imagem" >"$destino/openapi.imagem"
+    info "Contrato do gateway extraído de $imagem para $destino/openapi.json."
+}
+
+contrato_gateway() {
+    fora_do_container
+    exigir docker "Instale o Docker."
+    passo "Contrato do gateway (openapi.json da imagem fixada)"
+    extrair_contrato_do_gateway
+}
+
 exigir_producao() {
     local sobre
     sobre="$(no_php php artisan about --only=environment --json)"
@@ -173,6 +208,11 @@ setup() {
         no_php composer install --no-interaction --no-progress --quiet
     fi
     info "Prontas."
+
+    if [ "$ambiente" = dev ]; then
+        passo "Contrato do gateway (openapi.json da imagem fixada)"
+        extrair_contrato_do_gateway
+    fi
 
     passo "Chave do app e banco"
     local estado chave fila
@@ -264,6 +304,7 @@ case "${1:-}" in
     setup) setup "${2:-dev}" ;;
     assets) assets ;;
     dev) dev ;;
+    contrato-gateway) contrato_gateway ;;
     -h | --help | help | '') ajuda ;;
     *)
         ajuda >&2
