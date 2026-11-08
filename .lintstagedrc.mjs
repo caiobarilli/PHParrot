@@ -27,7 +27,5 @@ export default {
 
   'resources/js/*.{js,mjs}': () => [node('--test "resources/js/**/*.test.mjs"')],
 
-  'docker/gateway/{**/*.py,pyproject.toml,uv.lock,Dockerfile}': () => ['docker build --quiet --target teste docker/gateway'],
-
   '.husky/*.mjs': () => [node('--test .husky/check-privacidade.test.mjs .husky/check-comentarios.test.mjs')],
 }

@@ -38,11 +38,6 @@ updates:
     open-pull-requests-limit: 3
     commit-message:
       prefix: "build"
-    ignore:
-      - dependency-name: "python"
-        update-types:
-          - "version-update:semver-minor"
-          - "version-update:semver-major"
     groups:
       docker-gateway-major:
         patterns:
@@ -50,26 +45,6 @@ updates:
         update-types:
           - major
       docker-gateway:
-        patterns:
-          - "*"
-
-  - package-ecosystem: uv
-    directory: /docker/gateway
-    schedule:
-      interval: weekly
-      day: monday
-      time: "07:00"
-      timezone: America/Sao_Paulo
-    open-pull-requests-limit: 3
-    commit-message:
-      prefix: "chore(deps)"
-    groups:
-      uv-major:
-        patterns:
-          - "*"
-        update-types:
-          - major
-      uv:
         patterns:
           - "*"
 
