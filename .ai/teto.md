@@ -12,7 +12,7 @@ Treino de idiomas em três telas, aberto ao público e sem login. Hoje o par com
 - Voz do navegador (`speechSynthesis`), com a voz da língua do texto.
 - Gravação pelo `MediaRecorder` e transcrição local com `whisper-server` em container próprio (ADR 0007), com modelo multilíngue.
 - Gestão de textos atrás de um token único no `.env` (`PHPARROT_TOKEN`, ADR 0008): criar, editar, apagar, traduzir e exportar os textos do SQLite, importar, ativar, exportar e apagar pacotes, e Apagar banco.
-- Geração de textos de treino por IA, só no dev e atrás da gestão, pelo `phparrot-gateway` com o Ollama local (ADR 0013).
+- Geração de textos de treino por IA, só no dev e atrás da gestão, pelo `phparrot-gateway`, a imagem publicada do `llm-gateway`, com o Ollama local (ADR 0013 e ADR 0014).
 - Laravel 13, Livewire 4, Tailwind 4 e SQLite.
 - O visual do PHPorto, com a aparência Claro, Escuro ou Sistema.
 

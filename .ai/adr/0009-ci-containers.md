@@ -14,6 +14,7 @@ O `ci.yml` só cobre o app. As imagens `php`, `whisper` e `nginx` e o `terraform
 4. **Trivy v0.76.1:** nas três imagens e em modo config (Dockerfiles e `terraform/`).
    - Falha só com CRITICAL ou HIGH que já têm correção (`ignore-unfixed`). Hoje o php e o whisper têm centenas de HIGH do Debian sem correção, que travariam o CI sem ação possível.
    - A varredura semanal pega CVE nova em imagem parada.
+   - O `zlib1g` do whisper sobe no estágio final, com `dpkg --compare-versions` no build, porque a base traz a versão com 2 HIGH (DSA-6613-1). A linha sai quando a base trouxer a `+deb13u1`.
 5. **SARIF:** um arquivo por alvo (`trivy-php`, `-whisper`, `-nginx`, `-config`), no critério do portão. Só o job `sarif` tem `security-events: write`.
 6. **SBOM:** CycloneDX de cada imagem, como artifact do run.
 7. **Endurecimento:**

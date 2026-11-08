@@ -49,5 +49,8 @@ jobs:
       - name: Testes de JavaScript
         run: npm run test:js
 
+      - name: Contrato do gateway
+        run: bin/phparrot contrato-gateway
+
       - name: Portão de qualidade
         run: composer gate

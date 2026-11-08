@@ -49,8 +49,10 @@ FROM debian:13.7-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe
 ARG MODELO=base
 
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg libgomp1 \
-    && apt-get upgrade -y --no-install-recommends apt libapt-pkg7.0 \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get upgrade -y --no-install-recommends apt libapt-pkg7.0 zlib1g \
+    && rm -rf /var/lib/apt/lists/* \
+    && dpkg-query -W -f='zlib1g ${Version}\n' zlib1g \
+    && dpkg --compare-versions "$(dpkg-query -W -f='${Version}' zlib1g)" ge '1:1.3.dfsg+really1.3.1-1+deb13u1'
 
 RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin whisper \
     && mkdir -p /models

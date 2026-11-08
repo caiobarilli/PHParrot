@@ -21,10 +21,10 @@ São três telas, com textos em dez níveis: **Leitura** (texto lido em voz alta
 - Transcrição local com o `whisper-server` (whisper.cpp) em container isolado, sem porta publicada e sem API paga.
 - Tradução pelo tradutor embutido do Chrome ou pela Google Cloud Translation, com limite por IP e teto diário.
 - Pacotes de textos validados por um comando único (`textos:validar`), com faixas de palavras por nível do A1 ao C2, usado no importador e no portão.
-- IA local opcional por um gateway próprio em FastAPI: token, um modelo permitido, uma geração por vez, saída validada por JSON Schema e log sem texto.
-- Portão de qualidade com Larastan no nível `max`, 584 testes Pest, 83 testes de JavaScript e 83 testes do gateway (pytest, ruff e mypy `--strict`).
+- IA local opcional pelo [llm-gateway](https://github.com/caiobarilli/llm-gateway), num repositório próprio e consumido como imagem publicada fixada por digest: token, um modelo permitido, uma geração por vez, saída validada por JSON Schema e log sem texto. Um teste confere o contrato da imagem com o que o app usa.
+- Portão de qualidade com Larastan no nível `max`, 610 testes Pest e 83 testes de JavaScript.
 - Ambiente em Docker com Terraform: versões fixas, bases do Whisper e do nginx por digest e commit e hash do modelo conferidos no build.
-- Varredura de vulnerabilidades com Hadolint e Trivy, SARIF na aba Security e SBOM de cada imagem.
+- Varredura de vulnerabilidades com Hadolint e Trivy, SARIF na aba Security e SBOM de cada imagem, menos a do gateway, cujo SBOM vem da release do `llm-gateway`.
 - Privacidade verificada: áudio e texto do visitante não ficam em log, banco nem disco.
 
 ## Como rodar
@@ -37,7 +37,7 @@ cd PHParrot
 bin/phparrot setup
 ```
 
-O `setup` cria o `.env` a partir do `.env.example` (só se ele não existir), sobe os containers pelo Terraform, instala as dependências do PHP e do JavaScript, gera a chave do app, migra o banco SQLite, gera os assets e confere se o app responde. No primeiro uso, o Terraform compila o whisper.cpp e baixa o modelo, e isso leva alguns minutos. Depois, o app abre em http://localhost:8090.
+O `setup` cria o `.env` a partir do `.env.example` (só se ele não existir), sobe os containers pelo Terraform, instala as dependências do PHP e do JavaScript, extrai o contrato do gateway, gera a chave do app, migra o banco SQLite, gera os assets e confere se o app responde. No primeiro uso, o Terraform compila o whisper.cpp e baixa o modelo, e isso leva alguns minutos; o `setup` também baixa a imagem do gateway, só para extrair o contrato dela. Depois, o app abre em http://localhost:8090.
 
 O comando pode rodar de novo a qualquer momento: ele não mexe no `.env` que já existe, mantém a chave e o banco e só aplica o Terraform quando há algo a criar ou mudar. Se o plano destruir ou recriar algum container, ele para e pede para aplicar à mão.
 
@@ -55,7 +55,7 @@ Detalhes, padrões e o passo a passo da chave e do token em [docs/configuracao.m
 
 - `docker exec phparrot-php composer gate`: Duster (Pint, PHP_CodeSniffer, PHP-CS-Fixer, TLint), Larastan `max`, Sloppy, `textos:validar` na fábrica e Pest.
 - `docker exec phparrot-node npm run test:js`: testes do JavaScript com `node --test`.
-- `docker build --target teste docker/gateway`: pytest, ruff e mypy `--strict` do gateway de IA, também no workflow `gateway.yml`.
+- `bin/phparrot contrato-gateway`: extrai o `openapi.json` da imagem do gateway fixada, que o `ContratoDoGatewayTest` (dentro do `composer gate`) lê. O código do gateway e os testes dele ficam no `llm-gateway`.
 - O workflow `containers.yml` roda Hadolint, build das imagens e Trivy a cada mudança em `docker/` ou `terraform/` e toda semana.
 
 O CI roda os dois portões em cada push e PR. Detalhes em [docs/qualidade.md](docs/qualidade.md).
