@@ -43,6 +43,11 @@ variable "ollama_url" {
   default = "http://host.docker.internal:11434"
 }
 
+variable "gateway_imagem" {
+  type    = string
+  default = null
+}
+
 variable "gateway_token_arquivo" {
   type    = string
   default = null

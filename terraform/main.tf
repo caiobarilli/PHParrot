@@ -16,6 +16,11 @@ locals {
   ]
   gateway_token = "/run/secrets/phparrot-gateway-token"
 
+  gateway_origem    = regex("(?m)^FROM\\s+(\\S+)", file("${local.gateway_contexto}/Dockerfile"))[0]
+  gateway_construir = local.ia && var.gateway_imagem == null
+  gateway_local     = local.ia && var.gateway_imagem != null
+  gateway_imagem_id = local.gateway_construir ? docker_image.gateway[0].image_id : (local.gateway_local ? data.docker_image.gateway_local[0].id : null)
+
   whisper_sha1 = {
     base  = "465707469ff3a37a2b9b8d8f89f2f99de7299dac"
     small = "55356645c2b361a969dfd0ef2c5a50d530afd8d5"
@@ -235,7 +240,7 @@ resource "docker_container" "whisper" {
 }
 
 resource "docker_image" "gateway" {
-  count = local.ia ? 1 : 0
+  count = local.gateway_construir ? 1 : 0
   name  = "phparrot-gateway"
 
   triggers = {
@@ -248,17 +253,28 @@ resource "docker_image" "gateway" {
   }
 }
 
+data "docker_image" "gateway_local" {
+  count = local.gateway_local ? 1 : 0
+  name  = var.gateway_imagem
+}
+
 resource "docker_container" "gateway" {
   count       = local.ia ? 1 : 0
   name        = "phparrot-gateway"
-  image       = docker_image.gateway[0].image_id
+  image       = local.gateway_imagem_id
   user        = "10002:10002"
   memory      = var.gateway_memoria
   memory_swap = var.gateway_memoria * 2
   read_only   = true
 
+  security_opts = ["no-new-privileges"]
+
   log_driver = "json-file"
   log_opts   = local.log_rotativo
+
+  capabilities {
+    drop = ["ALL"]
+  }
 
   networks_advanced {
     name = docker_network.phparrot_network.name
