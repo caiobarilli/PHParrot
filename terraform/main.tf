@@ -10,11 +10,8 @@ locals {
   ia = !local.prod && var.gateway_token_arquivo != null
 
   gateway_contexto = abspath("${path.module}/../docker/gateway")
-  gateway_arquivos = [
-    for arquivo in fileset(local.gateway_contexto, "**") : arquivo
-    if !can(regex("(^|/)(__pycache__|\\.venv|\\.mypy_cache|\\.ruff_cache|\\.pytest_cache)(/|$)", arquivo))
-  ]
-  gateway_token = "/run/secrets/phparrot-gateway-token"
+  gateway_arquivos = fileset(local.gateway_contexto, "**")
+  gateway_token    = "/run/secrets/phparrot-gateway-token"
 
   gateway_origem    = regex("(?m)^FROM\\s+(\\S+)", file("${local.gateway_contexto}/Dockerfile"))[0]
   gateway_construir = local.ia && var.gateway_imagem == null

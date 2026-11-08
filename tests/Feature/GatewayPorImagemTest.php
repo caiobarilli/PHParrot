@@ -54,10 +54,28 @@ it('o Terraform mostra qual imagem do gateway está em uso', function (): void {
         ->and($saidas)->toContain('fora do Dockerfile');
 });
 
+it('o docker/gateway guarda só o Dockerfile e o repositório não tem mais código Python', function (): void {
+    $arquivos = array_map('basename', glob(base_path('docker/gateway/{*,.[!.]*}'), GLOB_BRACE) ?: []);
+    $python = [];
+
+    foreach (['app', 'bin', 'config', 'database', 'docker', 'routes', 'terraform', 'tests', '.husky', '.github'] as $pasta) {
+        $caminho = base_path($pasta);
+
+        foreach (is_dir($caminho) ? new RecursiveIteratorIterator(new RecursiveDirectoryIterator($caminho, FilesystemIterator::SKIP_DOTS)) : [] as $arquivo) {
+            if ($arquivo instanceof SplFileInfo && $arquivo->getExtension() === 'py') {
+                $python[] = $arquivo->getPathname();
+            }
+        }
+    }
+
+    expect($arquivos)->toBe(['Dockerfile'])
+        ->and($python)->toBe([]);
+});
+
 it('o contexto do gateway mantém o nome phparrot-gateway e o segredo no mesmo caminho', function (): void {
     $terraform = (string) file_get_contents(base_path('terraform/main.tf'));
 
     expect($terraform)->toContain('gateway_contexto = abspath("${path.module}/../docker/gateway")')
         ->and($terraform)->toContain('name        = "phparrot-gateway"')
-        ->and($terraform)->toContain('gateway_token = "/run/secrets/phparrot-gateway-token"');
+        ->and(preg_match('#gateway_token\s+= "/run/secrets/phparrot-gateway-token"#', $terraform))->toBe(1);
 });
