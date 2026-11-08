@@ -12,7 +12,7 @@ flowchart LR
     db[("SQLite<br/>Meus textos, pacotes,<br/>sessões, cache")]
     json["textos.json<br/>(fábrica)"]
     google["Google Cloud Translation v2<br/>(opcional)"]
-    gateway["phparrot-gateway<br/>FastAPI, sem porta (opcional)"]
+    gateway["phparrot-gateway<br/>imagem do llm-gateway, sem porta (opcional)"]
     ollama["Ollama com llama3.2:3b<br/>fora do Docker (opcional)"]
 
     nav -- "HTTP :8090" --> nginx
@@ -37,7 +37,7 @@ flowchart LR
 | `phparrot-php` | Laravel 13 com Livewire 4. Rotas `POST /transcrever` e `POST /traduzir` com limite por IP e teto diário, a gestão atrás do token e o catálogo de textos. |
 | `phparrot-agenda` | A mesma imagem do PHP rodando `schedule:work`, sem porta publicada. A cada 10 minutos, `textos:traduzir` traduz o próximo lote do conteúdo (ADR 0012). Com a IA ligada, `ia:processar` gera um rascunho por minuto (ADR 0013). |
 | `phparrot-whisper` | `whisper-server` do whisper.cpp v1.9.5, compilado do fonte com commit conferido e um patch revisado. Sem porta no host, `/tmp` em memória e sem log. |
-| `phparrot-gateway` | Opcional. FastAPI em Python 3.13, sem porta no host, rootfs só leitura e usuário 10002. Fala o formato da OpenAI para dentro e o `/api/chat` do Ollama para fora (ADR 0013). |
+| `phparrot-gateway` | Opcional. A imagem publicada do `llm-gateway` (repositório próprio), fixada por digest, sem porta no host, rootfs só leitura, sem capabilities e usuário 10002. Fala o formato da OpenAI para dentro e o `/api/chat` do Ollama para fora (ADR 0013 e ADR 0014). |
 | Ollama | Opcional, fora do Docker, com o `llama3.2:3b`. Alcançado pelo gateway em `host.docker.internal`, no dev por um túnel SSH. |
 | SQLite | Meus textos, pacotes importados (e qual está ativo), rascunhos da IA, sessões e cache (inclusive as travas da transcrição e da IA e os pacotes já lidos). |
 | `textos.json` | A fábrica: o pacote que vem com o app, só leitura. Vale quando nenhum pacote importado está ativo. |

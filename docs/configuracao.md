@@ -43,6 +43,7 @@ Passe com `-var`, por exemplo `terraform -chdir=terraform apply -var app_port=80
 | `gateway_token_arquivo` | Caminho absoluto do arquivo com o token do gateway de IA. Vazio, a IA não sobe. Veja "IA local". | vazio |
 | `ollama_url` | Endereço do Ollama, visto de dentro do `phparrot-gateway`. | `http://host.docker.internal:11434` |
 | `gateway_memoria` | Limite de memória do container do gateway, em MB. | `256` |
+| `gateway_imagem` | Tag de uma imagem local do gateway (por exemplo `llm-gateway:local`) para usar no lugar da publicada. Vazio, o Terraform constrói pelo `docker/gateway/Dockerfile`. Veja "Imagem do gateway". | vazio |
 
 O `terraform.tfvars.example` mostra o formato. Se copiá-lo, ajuste o `project_path` ou apague a linha.
 
@@ -136,10 +137,19 @@ terraform -chdir=terraform apply
 docker restart phparrot-nginx
 ```
 
-- O plano cria a imagem e o container do gateway e recria o `phparrot-php` e o `phparrot-agenda`, que passam a montar o arquivo em `/run/secrets/phparrot-gateway-token`. Como há recriação, o `bin/phparrot setup` para e pede o `apply` à mão.
+- O plano cria a imagem do gateway (construída sobre a imagem publicada do `llm-gateway`) e o container dele, e recria o `phparrot-php` e o `phparrot-agenda`, que passam a montar o arquivo em `/run/secrets/phparrot-gateway-token`. Como há recriação, o `bin/phparrot setup` para e pede o `apply` à mão.
 - O nginx resolve o `phparrot-php` só ao subir. O PHP recriado ganha outro IP, e o `restart` evita o 502. Isso só é preciso na primeira vez.
 - A variável confere se o caminho é absoluto e se o arquivo existe.
 - Com `ambiente = "prod"`, a IA não sobe, mesmo com a variável.
+
+### Imagem do gateway
+
+O código do gateway não mora aqui: o `docker/gateway/Dockerfile` tem duas linhas, o `FROM` da imagem `ghcr.io/caiobarilli/llm-gateway` por tag e digest e o `USER 10002:10002`. O pacote é público, então o primeiro build baixa a imagem sem credencial, e isso precisa de rede. A divisão está no [ADR 0014](../.ai/adr/0014-gateway-por-imagem.md).
+
+- **Primeiro `apply` depois dessa mudança:** ele recria a imagem e o container do gateway (o `plan` mostra 2 a criar e 2 a destruir, porque o `image_id` muda). O `phparrot-php` e o `phparrot-agenda` não mudam, e o nginx não precisa reiniciar. O `bin/phparrot setup` para nesse caso e pede o `apply` à mão.
+- **Imagem local:** no repositório do `llm-gateway`, `docker build -t llm-gateway:local .`; depois ponha `gateway_imagem = "llm-gateway:local"` no `terraform.tfvars` e rode o `apply`. O Terraform lê a imagem do Docker, sem construir, e o `plan` falha se ela não existir. `terraform -chdir=terraform output gateway_imagem` mostra qual imagem está em uso, para o override não ser esquecido. Para voltar à publicada, apague a linha e rode o `apply`.
+- **Subir a versão:** o Dependabot abre um PR no `FROM`. Rode `bin/phparrot contrato-gateway` (fora do container) e o `composer gate`: o `ContratoDoGatewayTest` falha se o contrato mudou de forma incompatível com o que o app usa. Depois do merge, o `apply` recria o container. Para voltar, devolva o digest anterior, que é imutável.
+- **Privilégios:** o container roda com rootfs só leitura, sem capabilities (`cap_drop ALL`) e com `no-new-privileges`. O limite de processos (`pids_limit`) não está aplicado, porque o provider do Docker não tem esse atributo (ADR 0014).
 
 ### 3. Onde está o Ollama
 
