@@ -1,6 +1,6 @@
 # Pitfalls
 
-Teto: 80 linhas
+Teto: 90 linhas
 
 Só o que o git ou o código desta árvore mostram.
 
@@ -75,3 +75,9 @@ Evidência: `bin/phparrot` (`exigir_producao` usa `artisan about --json`).
 Com outras mudanças na árvore, o gate verde não prova o commit. Isolado: `git add` só os arquivos do commit, `git stash push --keep-index --include-untracked`, gate, commit e `git stash pop`. Com gate vermelho, antes do `pop`, só descarte um arquivo da árvore depois de conferir com `git show stash@{0}:<arquivo> | cmp - <arquivo>`.
 
 Evidência: o `composer gate` em `composer.json` (`scripts.gate`) roda lint, Larastan e Pest no projeto todo.
+
+## O `zlib1g` da base do Whisper tem dois HIGH, e o upgrade do `apt` não o incluía
+
+O Trivy v0.76.1 (`CRITICAL,HIGH`, `ignore-unfixed`, `exit-code 1`) barrou a imagem `phparrot-whisper` (debian 13.7): `zlib1g 1:1.3.dfsg+really1.3.1-1+b1`, com CVE-2026-76844 e CVE-2026-85091 (estouros de heap do zlib, DSA-6613-1 do Debian, corrigidos em `+deb13u1`). O título que o Trivy mostra para o primeiro cita `webpack-dev-middleware` e está errado. Era o único achado.
+
+Evidência: `docker/whisper/Dockerfile:52` inclui o `zlib1g` no `apt-get upgrade`, e `:54-55` imprimem a versão e falham o build se ela ficar abaixo da `+deb13u1`. Depois disso, o Trivy de imagem sai com 0. A linha sai quando a base trouxer a correção: `docker run --rm --entrypoint dpkg-query <base> -W zlib1g`.
