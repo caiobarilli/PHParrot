@@ -13,7 +13,7 @@
         "husky": "^9.1.7",
         "laravel-vite-plugin": "^3.2",
         "lint-staged": "^17.0.8",
-        "tailwindcss": "^4.3.4",
+        "tailwindcss": "^4.3.5",
         "vite": "^8.0.0"
     }
 }
