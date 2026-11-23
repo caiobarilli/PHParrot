@@ -18,6 +18,10 @@ updates:
       - dependency-name: "nginx"
         update-types:
           - "version-update:semver-minor"
+      # remover quando sair PHP 8.6 estável
+      - dependency-name: "php"
+        versions:
+          - ">=8.6"
     groups:
       docker-major:
         patterns:
