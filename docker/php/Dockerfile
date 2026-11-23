@@ -1,4 +1,4 @@
-FROM php:8.5.13-fpm@sha256:7fd2766bd3bb6efcfb49591e4bf014e123c18f01149093bd508525c6bdf0cf9f
+FROM php:8.6.0RC7-fpm@sha256:b5768ffb45da5bcf5c453ef491f8cd525c8f4f2c83d812f731ce802a843c0404
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     git \
