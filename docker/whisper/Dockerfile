@@ -49,7 +49,7 @@ FROM debian:13.7-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070
 ARG MODELO=base
 
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg libgomp1 \
-    && apt-get upgrade -y --no-install-recommends apt libapt-pkg7.0 zlib1g \
+    && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/* \
     && dpkg-query -W -f='zlib1g ${Version}\n' zlib1g \
     && dpkg --compare-versions "$(dpkg-query -W -f='${Version}' zlib1g)" ge '1:1.3.dfsg+really1.3.1-1+deb13u1'
